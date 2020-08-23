@@ -18,12 +18,24 @@ wget --no-check-certificate \
     https://api.github.com/users/stepney141/starred\?per_page=100\&page={1..3} \
     | jq add -s \
     | jq '.[] | [ .full_name, .html_url, .description ] | @csv' -r \
-    > stars_repo.txt
+    > starred_repos.txt
 # ?と&のエスケープは必須
 # GitHub側でのstar数表示は225個(2020-08-17時点)なので、とりあえず100件ずつ3回叩けばOK
 # ブレース展開を使用してwgetでjsonを一気に3つ入手 -> jqに渡して結合 -> さらにjqに渡して「リポジトリ名」「URL」「リポジトリ説明文」のみを抽出、CSV化 -> txtに出力
 # curlの使い方をよく知らないのでwgetを使った
 
+## 1-3. 改訂版
+# ちゃんとしたCSV形式にする
+echo "full_name,html_url,description" \
+> starred_repos.csv && \
+wget --no-check-certificate \
+    --header="Accept: application/vnd.github.v3+json" \
+    --header="Authorization: bearer $ACCESS_TOKEN" \
+    -q -O - \
+    https://api.github.com/user/starred\?per_page=100\&page={1..3} \
+    | jq add -s \
+    | jq '.[] | [ .full_name, .html_url, .description ] | @csv' -r \
+>> starred_repos.csv 
 
 # 2. 現在認証しているユーザー自身の情報を取得するREST APIを使い、同じことをする
 
@@ -55,7 +67,19 @@ wget --no-check-certificate \
     https://api.github.com/user/starred\?per_page=100\&page={1..3} \
     | jq add -s \
     | jq '.[] | [ .full_name, .html_url, .description ] | @csv' -r \
-    > stars_repo_auth.txt
+    > starred_repos_auth.txt
+
+## 2-3. 改訂版
+echo "full_name,html_url,description" \
+> starred_repos_auth.csv && \
+wget --no-check-certificate \
+    --header="Accept: application/vnd.github.v3+json" \
+    --header="Authorization: bearer $ACCESS_TOKEN" \
+    -q -O - \
+    https://api.github.com/user/starred\?per_page=100\&page={1..3} \
+    | jq add -s \
+    | jq '.[] | [ .full_name, .html_url, .description ] | @csv' -r \
+>> starred_repos_auth.csv 
 
 # 参考文献
 ## https://docs.github.com/en/rest/reference/activity#list-repositories-starred-by-a-user
