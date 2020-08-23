@@ -30,12 +30,12 @@ echo "full_name,html_url,description" \
 > starred_repos.csv && \
 wget --no-check-certificate \
     --header="Accept: application/vnd.github.v3+json" \
-    --header="Authorization: bearer $ACCESS_TOKEN" \
     -q -O - \
-    https://api.github.com/user/starred\?per_page=100\&page={1..3} \
+    https://api.github.com/users/stepney141/starred\?per_page=100\&page={1..3} \
     | jq add -s \
     | jq '.[] | [ .full_name, .html_url, .description ] | @csv' -r \
 >> starred_repos.csv 
+
 
 # 2. 現在認証しているユーザー自身の情報を取得するREST APIを使い、同じことをする
 
