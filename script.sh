@@ -11,4 +11,4 @@ wget --no-check-certificate \
 
 git add .
 git commit -m "updated starred_repos.csv"
-git push origin
+git push origin master
