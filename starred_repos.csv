@@ -6,15 +6,15 @@ full_name,html_url,description,stargazers_count
 "rhasumi/dynamicmodels","https://github.com/rhasumi/dynamicmodels","『動学マクロ経済学へのいざない』プログラム",4
 "AssemblyScript/assemblyscript","https://github.com/AssemblyScript/assemblyscript","Definitely not a TypeScript to WebAssembly compiler 🚀",10207
 "sindresorhus/css-in-readme-like-wat","https://github.com/sindresorhus/css-in-readme-like-wat","Style your readme using CSS with this simple trick",1429
-"liamg/gitjacker","https://github.com/liamg/gitjacker","🔪 :octocat: Leak git repositories from misconfigured websites",1120
+"liamg/gitjacker","https://github.com/liamg/gitjacker","🔪 :octocat: Leak git repositories from misconfigured websites",1123
 "glinscott/Garbochess-JS","https://github.com/glinscott/Garbochess-JS","A strong javascript chess engine using WebWorkers",259
 "gsingh93/gdl-parser","https://github.com/gsingh93/gdl-parser","A parser for GDL (game description language)",6
 "GlukKazan/DagazServer","https://github.com/GlukKazan/DagazServer",,2
 "LipersInSlums/LipersInSlums.github.io","https://github.com/LipersInSlums/LipersInSlums.github.io",,1
 "p-ranav/awesome-hpp","https://github.com/p-ranav/awesome-hpp","A curated list of awesome header-only C++ libraries",992
 "azu/awesome-commit-english","https://github.com/azu/awesome-commit-english","コミット英語についての記事まとめ",766
-"sindresorhus/github-markdown-css","https://github.com/sindresorhus/github-markdown-css","The minimal amount of CSS to replicate the GitHub Markdown style",5070
-"AlDanial/cloc","https://github.com/AlDanial/cloc","cloc counts blank lines, comment lines, and physical lines of source code in many programming languages.",10458
+"sindresorhus/github-markdown-css","https://github.com/sindresorhus/github-markdown-css","The minimal amount of CSS to replicate the GitHub Markdown style",5071
+"AlDanial/cloc","https://github.com/AlDanial/cloc","cloc counts blank lines, comment lines, and physical lines of source code in many programming languages.",10461
 "emilk/hobogo","https://github.com/emilk/hobogo","Rust + WASM experiment",25
 "emilk/egui","https://github.com/emilk/egui","egui: Immediate mode GUI written in Rust, made for WASM",1008
 "niklasf/python-chess","https://github.com/niklasf/python-chess","A pure Python chess library with move generation and validation, PGN parsing and writing, Polyglot opening book reading, Gaviota tablebase probing, Syzygy tablebase probing and UCI/XBoard engine communication",1152
@@ -23,7 +23,7 @@ full_name,html_url,description,stargazers_count
 "moebooru/moebooru","https://github.com/moebooru/moebooru","Moebooru, a fork of danbooru1 that has been heavily modified",325
 "sozysozbot/cerke","https://github.com/sozysozbot/cerke","パイグ将棋/机戦/cerke/cetkaik/cet2 kaik",3
 "sozysozbot/cerke_modeling","https://github.com/sozysozbot/cerke_modeling",,1
-"sindresorhus/awesome","https://github.com/sindresorhus/awesome","😎 Awesome lists about all kinds of interesting topics",145975
+"sindresorhus/awesome","https://github.com/sindresorhus/awesome","😎 Awesome lists about all kinds of interesting topics",145999
 "Bogdan-Lyashenko/codecrumbs","https://github.com/Bogdan-Lyashenko/codecrumbs","Learn, design or document codebase by putting breadcrumbs in source code. Live updates, multi-language support and more.",2397
 "Gedevan-Aleksizde/20190703_ML_ECON","https://github.com/Gedevan-Aleksizde/20190703_ML_ECON","Tokyo.R #80 計量経済学と機械学習の関係 –AI はさだめ, さだめは反事実 ",4
 "QwerbyKing/VC-US","https://github.com/QwerbyKing/VC-US","Visual Chess: Undercarriage Syndicate is a chess framework designed with compatibility with Betza Notation",1
@@ -45,7 +45,7 @@ full_name,html_url,description,stargazers_count
 "snakajima/game-compiler","https://github.com/snakajima/game-compiler","Game 80 compiler, which I've created when I was 18 ('79)",16
 "akicho8/shogi-player","https://github.com/akicho8/shogi-player","将棋の棋譜を再生したり盤面を編集したりします",25
 "yaneurao/Ayane","https://github.com/yaneurao/Ayane","python Adaptor to YaneuraOu",22
-"ymgaq/AQ","https://github.com/ymgaq/AQ","A Go game engine. Download here: http://github.com/ymgaq/AQ/releases",294
+"ymgaq/AQ","https://github.com/ymgaq/AQ","A Go game engine. Download here: http://github.com/ymgaq/AQ/releases",295
 "ymgaq/Pyaq","https://github.com/ymgaq/Pyaq","PyaqはPythonのみで実装された囲碁プログラムです。深層学習を学ぶための教育目的のコードです。",108
 "boardgameio/boardgame.io","https://github.com/boardgameio/boardgame.io","State Management for Turn-Based Games",8292
 "ddugovic/Stockfish","https://github.com/ddugovic/Stockfish","Multi-variant fork of popular UCI chess engine",93
@@ -57,18 +57,18 @@ full_name,html_url,description,stargazers_count
 "mi-g/joclyboard","https://github.com/mi-g/joclyboard","Multiplatform 3D/2D desktop application for playing board games",29
 "greymd/teip","https://github.com/greymd/teip","Select partial standard input and replace with the result of another command efficiently",252
 "jw0k/serial2ti83","https://github.com/jw0k/serial2ti83","A program for Arduino Uno that makes it possible to connect a TI-83 calculator to a computer",25
-"jwasham/coding-interview-university","https://github.com/jwasham/coding-interview-university","A complete computer science study plan to become a software engineer.",142456
+"jwasham/coding-interview-university","https://github.com/jwasham/coding-interview-university","A complete computer science study plan to become a software engineer.",142462
 "yaneurao/YaneuraOu","https://github.com/yaneurao/YaneuraOu","YaneuraOu is the World's Strongest Shogi engine(AI player) , WCSC29 1st winner , educational and USI compliant engine.",281
 "na2hiro/Shogi.js","https://github.com/na2hiro/Shogi.js","A simple shogi library for JavaScript / TypeScript",37
 "fulldecent/system-bus-radio","https://github.com/fulldecent/system-bus-radio","Transmits AM radio on computers without radio transmitting hardware.",4980
 "na2hiro/json-kifu-format","https://github.com/na2hiro/json-kifu-format","JSON棋譜フォーマット(JKF)の定義とKIF, KI2, CSAからの変換ライブラリ",66
-"chromedp/chromedp","https://github.com/chromedp/chromedp","A faster, simpler way to drive browsers supporting the Chrome DevTools Protocol.",5502
-"postmanlabs/newman","https://github.com/postmanlabs/newman","Newman is a command-line collection runner for Postman",4840
+"chromedp/chromedp","https://github.com/chromedp/chromedp","A faster, simpler way to drive browsers supporting the Chrome DevTools Protocol.",5503
+"postmanlabs/newman","https://github.com/postmanlabs/newman","Newman is a command-line collection runner for Postman",4841
 "approvers/RADWIMPS","https://github.com/approvers/RADWIMPS","君の then-then-then 世は Promise で Future",214
 "LumaKernel/dotfiles","https://github.com/LumaKernel/dotfiles","⭐ My own world.",6
-"subhra74/xdm","https://github.com/subhra74/xdm","Powerfull download accelerator and video downloader",1729
+"subhra74/xdm","https://github.com/subhra74/xdm","Powerfull download accelerator and video downloader",1730
 "tanakh/easy-scraper","https://github.com/tanakh/easy-scraper","Easy scraping library",151
-"fujitsu/A64FX","https://github.com/fujitsu/A64FX",,332
+"fujitsu/A64FX","https://github.com/fujitsu/A64FX",,333
 "gfngfn/SATySFi","https://github.com/gfngfn/SATySFi","A statically-typed, functional typesetting system",782
 "Neutrino-1/esp-oled-firebase","https://github.com/Neutrino-1/esp-oled-firebase","0.91"" inch OLED and an esp8266-12E, which is integrated to firebase to fetch text file and send and receive a text message",79
 "go-shiori/shiori","https://github.com/go-shiori/shiori","Simple bookmark manager built with Go",4550
@@ -78,30 +78,30 @@ full_name,html_url,description,stargazers_count
 "FujiMakoto/twitter-saucenao","https://github.com/FujiMakoto/twitter-saucenao","A Twitter bot that utilizes the SauceNao API to find the source of images or anime screencaps",119
 "ceceradio/twitter-block-chain","https://github.com/ceceradio/twitter-block-chain","Chrome extension to block all users on a followers/following page.",174
 "IndieVisualLab/UnityGraphicsProgrammingSeries","https://github.com/IndieVisualLab/UnityGraphicsProgrammingSeries","書籍「Unity Graphics Programming」シリーズのPDFコレクション",516
-"mitmath/18337","https://github.com/mitmath/18337","18.337 - Parallel Computing and Scientific Machine Learning",646
+"mitmath/18337","https://github.com/mitmath/18337","18.337 - Parallel Computing and Scientific Machine Learning",647
 "Reputeless/Xoshiro-cpp","https://github.com/Reputeless/Xoshiro-cpp","Header-only Xoshiro/Xoroshiro PRNG wrapper library for modern C++ (C++17/C++20)",66
 "akameco/pixiv-app-api","https://github.com/akameco/pixiv-app-api","Promise base pixiv API client",162
 "bokuweb/lifegameboy","https://github.com/bokuweb/lifegameboy","🦀 Conway's Game of Life written in Rust on GameBoyAdvance",48
 "acorn/twitter-bookmarks-search","https://github.com/acorn/twitter-bookmarks-search","WebExtension that adds ability search all your bookmarked tweets!",47
-"soulmachine/machine-learning-cheat-sheet","https://github.com/soulmachine/machine-learning-cheat-sheet","Classical equations and diagrams in machine learning",3334
+"soulmachine/machine-learning-cheat-sheet","https://github.com/soulmachine/machine-learning-cheat-sheet","Classical equations and diagrams in machine learning",3337
 "onitama/OpenHSP","https://github.com/onitama/OpenHSP","Hot Soup Processor",89
-"nagadomi/waifu2x","https://github.com/nagadomi/waifu2x","Image Super-Resolution for Anime-Style Art",19806
+"nagadomi/waifu2x","https://github.com/nagadomi/waifu2x","Image Super-Resolution for Anime-Style Art",19811
 "lltcggie/waifu2x-caffe","https://github.com/lltcggie/waifu2x-caffe","waifu2xのCaffe版",5324
 "jsvine/markovify","https://github.com/jsvine/markovify","A simple, extensible Markov chain generator.",2599
 "yuiseki/twint-gyazo","https://github.com/yuiseki/twint-gyazo","Pythonで書かれた、Twitterの指定したユーザーの画像を全部Gyazoにアップロードするスクリプト",39
 "koshian2/DeepCreamPyBook","https://github.com/koshian2/DeepCreamPyBook",,4
 "danbooru/danbooru","https://github.com/danbooru/danbooru","A taggable image board written in Rails 6.",997
-"LandGrey/pydictor","https://github.com/LandGrey/pydictor","A powerful and useful hacker dictionary builder for a brute-force attack",1563
+"LandGrey/pydictor","https://github.com/LandGrey/pydictor","A powerful and useful hacker dictionary builder for a brute-force attack",1564
 "violentmonkey/violentmonkey","https://github.com/violentmonkey/violentmonkey","Violentmonkey provides userscripts support for browsers. It works on browsers with WebExtensions support.",1768
 "5ebec/arcard-template","https://github.com/5ebec/arcard-template","📇 AR Business Card Template",5
 "Mottl/GetOldTweets3","https://github.com/Mottl/GetOldTweets3","A Python 3 library and a corresponding command line utility for accessing old tweets",303
 "discord/discord-api-docs","https://github.com/discord/discord-api-docs","Official Discord API Documentation",2333
-"wenyan-lang/wenyan","https://github.com/wenyan-lang/wenyan","文言文編程語言 A programming language for the ancient Chinese.",16731
+"wenyan-lang/wenyan","https://github.com/wenyan-lang/wenyan","文言文編程語言 A programming language for the ancient Chinese.",16732
 "2SC1815J/ndldl_utils","https://github.com/2SC1815J/ndldl_utils","国立国会図書館デジタルコレクション閲覧画面向けユーザスクリプト（アドレスバーを現在表示中のコマのURLに更新など）",5
-"taspinar/twitterscraper","https://github.com/taspinar/twitterscraper","Scrape Twitter for Tweets",1526
+"taspinar/twitterscraper","https://github.com/taspinar/twitterscraper","Scrape Twitter for Tweets",1527
 "bisguzar/twitter-scraper","https://github.com/bisguzar/twitter-scraper","Scrape the Twitter Frontend API without authentication.",2583
-"twintproject/twint","https://github.com/twintproject/twint","An advanced Twitter scraping & OSINT tool written in Python that doesn't use Twitter's API, allowing you to scrape a user's followers, following, Tweets and more while evading most API limitations.",8582
-"akameco/PixivDeck","https://github.com/akameco/PixivDeck",":two_hearts: pixiv client for Desktop like TweetDeck :two_hearts:",399
+"twintproject/twint","https://github.com/twintproject/twint","An advanced Twitter scraping & OSINT tool written in Python that doesn't use Twitter's API, allowing you to scrape a user's followers, following, Tweets and more while evading most API limitations.",8584
+"akameco/PixivDeck","https://github.com/akameco/PixivDeck",":two_hearts: pixiv client for Desktop like TweetDeck :two_hearts:",400
 "Xdynix/PixivPixie","https://github.com/Xdynix/PixivPixie","User-friendly Pixiv API based on PixivPy",18
 "kiwibrowser/android","https://github.com/kiwibrowser/android","This repository is archived, and is now transferred to https://github.com/kiwibrowser/src",563
 "crclayton/Flat-50G","https://github.com/crclayton/Flat-50G","A modern skin for the emu48 HP-50G emulator. ",19
@@ -130,21 +130,21 @@ full_name,html_url,description,stargazers_count
 "bolero-MURAKAMI/Sprout","https://github.com/bolero-MURAKAMI/Sprout","C++11/14 constexpr based Containers, Algorithms, Random numbers, Parsing, Ray tracing, Synthesizer, and others.",709
 "0918nobita/Portfolio","https://github.com/0918nobita/Portfolio","ポートフォリオ",6
 "zhanrnl/PyMusAnim","https://github.com/zhanrnl/PyMusAnim","Clone of Stephen Malinowski's Music Animation Machine in Python",22
-"pirate/ArchiveBox","https://github.com/pirate/ArchiveBox","🗃 The open source self-hosted web archive. Takes browser history/bookmarks/Pocket/Pinboard/etc., saves HTML, JS, PDFs, media, and more...",7520
+"pirate/ArchiveBox","https://github.com/pirate/ArchiveBox","🗃 The open source self-hosted web archive. Takes browser history/bookmarks/Pocket/Pinboard/etc., saves HTML, JS, PDFs, media, and more...",7521
 "sys-fork/helloworld_freestanding","https://github.com/sys-fork/helloworld_freestanding",,4
-"joke2k/faker","https://github.com/joke2k/faker","Faker is a Python package that generates fake data for you.",11289
+"joke2k/faker","https://github.com/joke2k/faker","Faker is a Python package that generates fake data for you.",11312
 "internetarchive/wayback","https://github.com/internetarchive/wayback","IA's public Wayback Machine (moved from SourceForge)",413
 "sunsetyuhi/fem_py","https://github.com/sunsetyuhi/fem_py","FEM programs written in Python 3.",6
 "terjanq/JS-Alpha","https://github.com/terjanq/JS-Alpha","Funny project to create an encoder/obfuscator that converts any javascript code into a code that only consist of /[a-z().]/ characters",56
 "pastpages/archiveis","https://github.com/pastpages/archiveis","A simple Python wrapper for the archive.is capturing service",133
 "ShinyaKato/saizeriya-1000yen-knapsack","https://github.com/ShinyaKato/saizeriya-1000yen-knapsack","「サイゼリヤで1000円あれば最大何kcal摂れるのか」を動的計画法で解いてみた",12
 "microsoft/SPTAG","https://github.com/microsoft/SPTAG","A distributed approximate nearest neighborhood search (ANN) library which provides a high quality vector index build, search and distributed online serving toolkits for large scale vector search scenario.",3826
-"stewartmcgown/uds","https://github.com/stewartmcgown/uds","Unlimited Drive Storage by splitting binary files into base64",4090
+"stewartmcgown/uds","https://github.com/stewartmcgown/uds","Unlimited Drive Storage by splitting binary files into base64",4091
 "stefano/wasm-forth","https://github.com/stefano/wasm-forth","A Forth implementation compiling to WebAssembly.",82
 "bartobri/no-more-secrets","https://github.com/bartobri/no-more-secrets","A command line tool that recreates the famous data decryption effect seen in the 1992 movie Sneakers.",4769
 "oitofelix/8f-userrpl-kernel","https://github.com/oitofelix/8f-userrpl-kernel","8F UserRPL Kernel",1
 "scala-text/scala_text","https://github.com/scala-text/scala_text","Scala学習用テキスト",436
-"Kasugaccho/DungeonTemplateLibrary","https://github.com/Kasugaccho/DungeonTemplateLibrary","🌏: Dungeon free resources (terrain & roguelike generation)",529
+"Kasugaccho/DungeonTemplateLibrary","https://github.com/Kasugaccho/DungeonTemplateLibrary","🌏: Dungeon free resources (terrain & roguelike generation)",530
 "o2sh/onefetch","https://github.com/o2sh/onefetch","Git repository summary on your terminal",2497
 "kenkoooo/AtCoderProblems","https://github.com/kenkoooo/AtCoderProblems","Extend your AtCoder",620
 "jiro4989/textimg","https://github.com/jiro4989/textimg","Command to convert from color text (ANSI or 256) to image.",59
@@ -158,7 +158,7 @@ full_name,html_url,description,stargazers_count
 "rust-embedded/rust-raspberrypi-OS-tutorials","https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials",":books: Learn to write an embedded OS in Rust :crab:",2859
 "boricj/ripem","https://github.com/boricj/ripem","Native programming on HP Prime G1 the hard way",17
 "FabioLolix/LinuxTimeline","https://github.com/FabioLolix/LinuxTimeline","Linux Distributions Timeline",586
-"GitSquared/edex-ui","https://github.com/GitSquared/edex-ui","A cross-platform, customizable science fiction terminal emulator with advanced monitoring & touchscreen support.",23322
+"GitSquared/edex-ui","https://github.com/GitSquared/edex-ui","A cross-platform, customizable science fiction terminal emulator with advanced monitoring & touchscreen support.",23331
 "egison/differential-geometry","https://github.com/egison/differential-geometry","Egison programs for basic calculations in differential geometry",5
 "webrecorder/warcit","https://github.com/webrecorder/warcit","Convert Directories, Files and ZIP Files to Web Archives (WARC)",47
 "greymd/cureutils","https://github.com/greymd/cureutils","Useful command line tool for Japanese battle heroine Pretty Cure (Precure).",45
@@ -172,7 +172,7 @@ full_name,html_url,description,stargazers_count
 "relarar/Blender-AnimeHairSupporter","https://github.com/relarar/Blender-AnimeHairSupporter","Blender用のアニメ髪作成支援アドオン",68
 "Taremin/Blender-AnimeHairSupporter","https://github.com/Taremin/Blender-AnimeHairSupporter","Blender用のアニメ髪作成支援アドオン",22
 "oduwsdl/ipwb","https://github.com/oduwsdl/ipwb","InterPlanetary Wayback: A distributed and persistent archive replay system using IPFS",329
-"prasmussen/gdrive","https://github.com/prasmussen/gdrive","Google Drive CLI Client",6857
+"prasmussen/gdrive","https://github.com/prasmussen/gdrive","Google Drive CLI Client",6858
 "trycycle/wikipedia-downloader","https://github.com/trycycle/wikipedia-downloader","A Python script for downloading Wikipedia data dump files",1
 "ciffelia/EgoSearcher","https://github.com/ciffelia/EgoSearcher",,3
 "WikiTeam/wikiteam","https://github.com/WikiTeam/wikiteam","Tools for downloading and preserving wikis. We archive wikis, from Wikipedia to tiniest wikis. As of 2020, WikiTeam has preserved more than 250,000 wikis.",378
@@ -184,9 +184,9 @@ full_name,html_url,description,stargazers_count
 "taba256/nicoseiga-download","https://github.com/taba256/nicoseiga-download","ニコニコ静画(マンガ)の作品を、zipファイルに圧縮してダウンロードできます。",5
 "internetarchive/heritrix3","https://github.com/internetarchive/heritrix3","Heritrix is the Internet Archive's open-source, extensible, web-scale, archival-quality web crawler project.  ",1844
 "iipc/awesome-web-archiving","https://github.com/iipc/awesome-web-archiving","An Awesome List for getting started with web archiving",780
-"EbookFoundation/free-programming-books","https://github.com/EbookFoundation/free-programming-books",":books: Freely available programming books",165458
-"netdata/netdata","https://github.com/netdata/netdata","Real-time performance monitoring, done right! https://www.netdata.cloud",49429
-"tldr-pages/tldr","https://github.com/tldr-pages/tldr","📚 Collaborative cheatsheets for console commands",29459
+"EbookFoundation/free-programming-books","https://github.com/EbookFoundation/free-programming-books",":books: Freely available programming books",165482
+"netdata/netdata","https://github.com/netdata/netdata","Real-time performance monitoring, done right! https://www.netdata.cloud",49431
+"tldr-pages/tldr","https://github.com/tldr-pages/tldr","📚 Collaborative cheatsheets for console commands",29460
 "ilia-luk/pimpMyVscodeTerminal","https://github.com/ilia-luk/pimpMyVscodeTerminal","Pimp my vscode terminal with tmux sessions",3
 "zettsu-t/cPlusPlusFriend","https://github.com/zettsu-t/cPlusPlusFriend","The programmer-tan bot",7
 "erikw/tmux-powerline","https://github.com/erikw/tmux-powerline","Statusbar configuration for tmux that looks like vim-powerline and consist of dynamic segments.",2714
@@ -203,7 +203,7 @@ full_name,html_url,description,stargazers_count
 "kaityo256/sevendayshpc","https://github.com/kaityo256/sevendayshpc","一週間でなれる！スパコンプログラマ",236
 "tenpoku1000/tenpoku-book","https://github.com/tenpoku1000/tenpoku-book","電子書籍： x64 UEFI 対応 OS 自作入門 https://tenpoku1000.gitbook.io/tenpoku-book/",37
 "cambecc/air","https://github.com/cambecc/air","a project to visualize Tokyo wind and air pollutants",412
-"DV8FromTheWorld/JDA","https://github.com/DV8FromTheWorld/JDA","Java wrapper for the popular chat & VOIP service: Discord https://discord.com",1672
+"DV8FromTheWorld/JDA","https://github.com/DV8FromTheWorld/JDA","Java wrapper for the popular chat & VOIP service: Discord https://discord.com",1673
 "jagrosh/MusicBot","https://github.com/jagrosh/MusicBot","🎶 A Discord music bot that's easy to set up and run yourself!",958
 "JDA-Applications/JDA-Utilities","https://github.com/JDA-Applications/JDA-Utilities","A series of tools and utilities for JDA to assist in bot creation",135
 "typelevel/cats","https://github.com/typelevel/cats","Lightweight, modular, and extensible library for functional programming.",4108
@@ -216,12 +216,12 @@ full_name,html_url,description,stargazers_count
 "nDroidProject/nDroid-bootloader","https://github.com/nDroidProject/nDroid-bootloader","nDroid Bootloader Source Tree",10
 "evanw/webgl-water","https://github.com/evanw/webgl-water","WebGL Water Demo",571
 "wapiflapi/binglide","https://github.com/wapiflapi/binglide","Visual reverse engineering tool. Veles is better, use it. Don't use this.",564
-"s-matyukevich/raspberry-pi-os","https://github.com/s-matyukevich/raspberry-pi-os","Learning operating system development using Linux kernel and Raspberry Pi",9581
+"s-matyukevich/raspberry-pi-os","https://github.com/s-matyukevich/raspberry-pi-os","Learning operating system development using Linux kernel and Raspberry Pi",9583
 "uchan-nos/git-extract-tags","https://github.com/uchan-nos/git-extract-tags","A tool to support git-based textbook writing",3
 "wakabame/2D_wave_FTCS","https://github.com/wakabame/2D_wave_FTCS","solve wave equation by Forward in Time and Centered Difference method and create gif file",2
 "itchyny/lightline.vim","https://github.com/itchyny/lightline.vim","A light and configurable statusline/tabline plugin for Vim",5072
 "kory33/scala-proofs","https://github.com/kory33/scala-proofs","An attempt to build axiomatic, formal set theory on top of Scala.",32
-"Rapptz/discord.py","https://github.com/Rapptz/discord.py","An API wrapper for Discord written in Python.",5916
+"Rapptz/discord.py","https://github.com/Rapptz/discord.py","An API wrapper for Discord written in Python.",5917
 "hikalium/randlogo","https://github.com/hikalium/randlogo","Random logo generator",5
 "NARKOZ/hacker-scripts","https://github.com/NARKOZ/hacker-scripts","Based on a true story",40244
 "aozorabunko/aozorabunko","https://github.com/aozorabunko/aozorabunko",,632
@@ -237,25 +237,25 @@ full_name,html_url,description,stargazers_count
 "CE-Programming/toolchain","https://github.com/CE-Programming/toolchain","Toolchain and libraries for C/C++ programming on the TI-84+ CE calculator series",209
 "Vane11ope/.files","https://github.com/Vane11ope/.files",,6
 "ac100v/bad_apple_fx-9860gii","https://github.com/ac100v/bad_apple_fx-9860gii","Bad Apple!! demonstration on CASIO fx-9860GII",4
-"tonsky/FiraCode","https://github.com/tonsky/FiraCode","Free monospaced font with programming ligatures",51961
+"tonsky/FiraCode","https://github.com/tonsky/FiraCode","Free monospaced font with programming ligatures",51962
 "EzoeRyou/cpp17book","https://github.com/EzoeRyou/cpp17book","textbook for C++17",350
 "EzoeRyou/cpp-book","https://github.com/EzoeRyou/cpp-book","C++11 textbook",555
 "EzoeRyou/cpp14-appendix","https://github.com/EzoeRyou/cpp14-appendix","Appendix for C++14 features",43
 "alberthdev/spasm-ng","https://github.com/alberthdev/spasm-ng","SPASM-ng is a z80 assembler with extra features to support development for TI calculators. ",51
 "KnightOS/kernel","https://github.com/KnightOS/kernel","Kernel for z80 calculators",241
 "utz82/HoustonTracker2","https://github.com/utz82/HoustonTracker2","A music editor for TI graphing calculators",153
-"csound/csound","https://github.com/csound/csound","Main repository for Csound",797
-"chrislgarry/Apollo-11","https://github.com/chrislgarry/Apollo-11","Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.",49597
+"csound/csound","https://github.com/csound/csound","Main repository for Csound",798
+"chrislgarry/Apollo-11","https://github.com/chrislgarry/Apollo-11","Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.",49598
 "algon-320/KIDE","https://github.com/algon-320/KIDE","コンパイル・実行・サンプルケーステスト・提出などを自動化する競プロ用ツール (linux/mac向け)",6
 "KnightOS/KnightOS","https://github.com/KnightOS/KnightOS","OS for z80 calculators",1166
 "parrotgeek1/TI-Nspire","https://github.com/parrotgeek1/TI-Nspire","A collection of information, tools, and exploits for TI-Nspire calculators.  Please read license!",20
 "numworks/epsilon","https://github.com/numworks/epsilon","Modern graphing calculator operating system.",1081
-"Siv3D/OpenSiv3D","https://github.com/Siv3D/OpenSiv3D","🦖 C++17/C++20 framework for creative coding",458
+"Siv3D/OpenSiv3D","https://github.com/Siv3D/OpenSiv3D","🦖 C++17/C++20 framework for creative coding",457
 "ndless-nspire/Luna","https://github.com/ndless-nspire/Luna","Create TNS files from Lua and XML",18
 "0xFireball/nspire-nd","https://github.com/0xFireball/nspire-nd","a simple cross-platform (desktop+ndless) 2d graphics lib",2
 "osdev-jp/osdev-jp.github.io","https://github.com/osdev-jp/osdev-jp.github.io",,98
 "tangrs/nspire-linux-loader2","https://github.com/tangrs/nspire-linux-loader2","A Linux bootloader for Nspire. Supports ATAG and DTB booting.",45
-"online-judge-tools/oj","https://github.com/online-judge-tools/oj","Tools for various online judges. Downloading sample cases, generating additional test cases, testing your code, and submitting it.",454
+"online-judge-tools/oj","https://github.com/online-judge-tools/oj","Tools for various online judges. Downloading sample cases, generating additional test cases, testing your code, and submitting it.",455
 "formulahendry/vscode-code-runner","https://github.com/formulahendry/vscode-code-runner","Code Runner for Visual Studio Code",1182
 "Excale/nLaunchy","https://github.com/Excale/nLaunchy","Set of programs and crafted OS updates enabling users to install and launch arbitrary OS updates (especially Linux) on the TI-Nspire calculator.",43
 "Vogtinator/nGL","https://github.com/Vogtinator/nGL","3D graphics lib for Ndless (and possibly other systems)",21
