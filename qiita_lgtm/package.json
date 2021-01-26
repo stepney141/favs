@@ -1,7 +1,7 @@
 {
   "name": "qiita_lgtm",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "puppeteer_qiita.js",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
