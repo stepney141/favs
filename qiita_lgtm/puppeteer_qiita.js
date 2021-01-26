@@ -6,11 +6,18 @@ require("dotenv").config();
 const userid = "stepney141";
 let page_max;
 let page_num = 1;
-let urldata = [];
+let urlData = [];
+let titleData = [];
+let authorData = [];
+let lgtmData = [];
+let createdDateData = [];
+let articleData = [];
 
 // vars for twitter
 const user_name = process.env.TWITTER_ACCOUNT;
 const password = process.env.TWITTER_PASSWORD;
+
+const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
 
 async function getLgtm(browser) {
   let page = await browser.newPage();
@@ -34,15 +41,55 @@ async function getLgtm(browser) {
     }
 
     // get article urls
-    const articleDataHandles = await page.$x(
+    const articleUrlHandles = await page.$x(
       '/html/body/div[1]/div[3]/div/div[2]/div/div/div[3]/div/div[2]/a[contains(@href, "qiita.com")]'
     );
-    for (const data of articleDataHandles) {
-      urldata.push(await (await data.getProperty("href")).jsonValue());
+    for (const data of articleUrlHandles) {
+      urlData.push(await (await data.getProperty("href")).jsonValue());
+    }
+
+    // get article titles
+    const articleTitleHandles = await page.$x(
+      '/html/body/div[1]/div[3]/div/div[2]/div/div/div[3]/div/div[2]/a[contains(@href, "qiita.com")]'
+    );
+    for (const data of articleTitleHandles) {
+      titleData.push(await (await data.getProperty("innerHTML")).jsonValue());
+    }
+
+    // get article authors
+    const articleAuthorHandles = await page.$x(
+      "/html/body/div[1]/div[3]/div/div[2]/div/div/div[3]/div/div[3]/div[1]/a"
+    );
+    for (const data of articleAuthorHandles) {
+      authorData.push(await (await data.getProperty("innerHTML")).jsonValue());
+    }
+
+    // get article LGTM counts
+    const articleLgtmHandles = await page.$x(
+      "/html/body/div[1]/div[3]/div/div[2]/div/div/div[3]/div/div[3]/div[2]"
+    );
+    for (const data of articleLgtmHandles) {
+      // lgtmData.push(Number(await page.evaluate((name) => name.innerText, data)));
+      lgtmData.push(
+        Number(await (await data.getProperty("innerText")).jsonValue())
+      );
+    }
+
+    // get article created dates
+    const articleCreatedDateHandles = await page.$x(
+      "/html/body/div[1]/div[3]/div/div[2]/div/div/div[3]/div/div[3]/div[3]"
+    );
+    for (const data of articleCreatedDateHandles) {
+      createdDateData.push(
+        await (await data.getProperty("innerHTML")).jsonValue()
+      );
     }
 
     page_num++;
   } while (page_max >= page_num);
+
+  articleData.push(urlData, titleData, authorData, lgtmData, createdDateData);
+  articleData = transposeArray(articleData);
 }
 
 // Log in to qiita before scraping in order to avoid annoying prompts that recommend creating a new account
@@ -76,7 +123,7 @@ async function output(data) {
   try {
     await fs.writeFile(
       "./lgtm_article_url.json",
-      JSON.stringify(data, null, "\t"),
+      JSON.stringify(data, null, "  "),
       (e) => {
         if (e) console.log("error: ", e);
       }
@@ -101,7 +148,7 @@ async function output(data) {
 
   await qiitaLogin(browser);
   await getLgtm(browser);
-  await output(urldata);
+  await output(articleData);
 
   console.log(
     "The processsing took " +
