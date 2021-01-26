@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
+const papa = require("papaparse");
 require("dotenv").config();
 
 // vars for qiita
@@ -17,6 +18,7 @@ let articleData = [];
 const user_name = process.env.TWITTER_ACCOUNT;
 const password = process.env.TWITTER_PASSWORD;
 
+// ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
 const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
 
 async function getLgtm(browser) {
@@ -90,6 +92,7 @@ async function getLgtm(browser) {
 
   articleData.push(urlData, titleData, authorData, lgtmData, createdDateData);
   articleData = transposeArray(articleData);
+  articleData.unshift(["url", "title", "user_id", "likes_count", "created_at"]);
 }
 
 // Log in to qiita before scraping in order to avoid annoying prompts that recommend creating a new account
@@ -119,18 +122,29 @@ async function qiitaLogin(browser) {
   });
 }
 
-async function output(data) {
+async function output(arrayData) {
+  const jsonData = JSON.stringify(arrayData, null, "  ");
+
+  try {
+    await fs.writeFile("./lgtm_article_url.json", jsonData, (e) => {
+      if (e) console.log("error: ", e);
+    });
+    console.log("json output completed");
+  } catch (e) {
+    console.log("error: ", e.message);
+  }
+
   try {
     await fs.writeFile(
-      "./lgtm_article_url.json",
-      JSON.stringify(data, null, "  "),
+      "./lgtm_article_url.csv",
+      papa.unparse(jsonData),
       (e) => {
         if (e) console.log("error: ", e);
       }
     );
-    console.log("output completed");
+    console.log("csv output completed");
   } catch (e) {
-    console.log(e.message);
+    console.log("error: ", e.message);
   }
 }
 
@@ -146,7 +160,7 @@ async function output(data) {
     // slowMo: 50,
   });
 
-  await qiitaLogin(browser);
+  // await qiitaLogin(browser);
   await getLgtm(browser);
   await output(articleData);
 

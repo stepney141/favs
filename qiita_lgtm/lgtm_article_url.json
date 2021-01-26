@@ -1,5 +1,19 @@
 [
   [
+    "url",
+    "title",
+    "user_id",
+    "likes_count",
+    "created_at"
+  ],
+  [
+    "https://qiita.com/kznrluk/items/790f1b154d1b6d4de398",
+    "JavaScriptで二次元配列の行列を転置するワンライナー",
+    "kznrluk",
+    46,
+    "2018/01/14"
+  ],
+  [
     "https://qiita.com/k1832/items/87a8cf609b4ccf2c6195",
     "Puppeteerを使って簡単にWebスクレイピングする",
     "k1832",
@@ -318,7 +332,7 @@
     "https://qiita.com/TakahikoKawasaki/items/200951e5b5929f840a1f",
     "OAuth 2.0 全フローの図解と動画",
     "TakahikoKawasaki",
-    2548,
+    2549,
     "2017/04/28"
   ],
   [
