@@ -24,7 +24,7 @@ async function getLgtm(browser) {
     await page.goto(`https://qiita.com/${userid}/lgtms?page=${page_num}`, {
       waitUntil: "domcontentloaded",
     });
-    await page.screenshot({ path: `scroll-${page_num}.png` });
+    // await page.screenshot({ path: `scroll-${page_num}.png` });
 
     // const data = await page.$x(
     //   "/html/body/div[1]/div[3]/div/div[2]/div/div/div[3]/div/div[2]/a[2]"
@@ -35,10 +35,11 @@ async function getLgtm(browser) {
   }
 }
 
+// Log in to qiita before scraping in order to avoid annoying prompts that recommend creating a new account
 async function qiitaLogin(browser) {
   let page = await browser.newPage();
 
-  // Login to qiita with twitter authorization
+  // Log in to qiita with twitter authorization
   await page.goto("https://qiita.com/login", {
     waitUntil: "networkidle2",
   });
@@ -72,7 +73,6 @@ async function qiitaLogin(browser) {
   });
 
   await qiitaLogin(browser);
-
   await getLgtm(browser);
 
   await browser.close();
