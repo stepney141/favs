@@ -1,0 +1,12 @@
+node_modules
+*/node_modules
+
+.env
+*/.env
+
+test.png
+*/test.png
+*test*.png
+*/*test*.png
+
+qiita_lgtm/*.png
