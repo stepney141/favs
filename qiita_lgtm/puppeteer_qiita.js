@@ -22,6 +22,7 @@ async function getLgtm(browser) {
 
     if (page_num == 1) {
       // get max cursor number
+      // ref: https://swfz.hatenablog.com/entry/2020/07/23/010044
       const elementHandles = await page.$x(
         "/html/body/div[1]/div[3]/div/div[2]/div/div/div[3]/ul/li[2]/span"
       );
@@ -95,7 +96,7 @@ async function output(data) {
       height: 700,
     },
     headless: true,
-    slowMo: 50,
+    // slowMo: 50,
   });
 
   await qiitaLogin(browser);
