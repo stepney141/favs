@@ -90,9 +90,9 @@ async function getLgtm(browser) {
     page_num++;
   } while (page_max >= page_num);
 
-  articleData.push(urlData, titleData, authorData, lgtmData, createdDateData);
+  articleData.push(titleData, urlData, authorData, lgtmData, createdDateData);
   articleData = transposeArray(articleData);
-  articleData.unshift(["url", "title", "user_id", "likes_count", "created_at"]);
+  articleData.unshift(["title", "url", "user_id", "likes_count", "created_at"]);
 }
 
 // Log in to qiita before scraping in order to avoid annoying prompts that recommend creating a new account
