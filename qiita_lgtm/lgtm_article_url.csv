@@ -1,28 +1,44 @@
 title,url,user_id,likes_count,created_at
+VSCode Remote Containerが良い,https://qiita.com/d0ne1s/items/d2649801c6f804019db7,d0ne1s,209,2020/03/22
+/usr/local と /opt の使い分け,https://qiita.com/akiakishitai/items/69bb68f4f6fbd6a88016,akiakishitai,36,2019/10/03
+俺様サーバー構築記 - Arch Linux + ZFS に Xfce をインストール →回復術とやり直し@ノートパソコン(BIOS),https://qiita.com/katz_engineer/items/f42a2536c74b9123bc33,katz_engineer,2,2019/02/08
+scriptなどでログを取るときに変な文字(制御文字)のない状態で読めるようにする,https://qiita.com/networkelements/items/aa4aec5417306b4c7e71,networkelements,22,2016/04/17
+開発時にログを見るならtailよりもless！！,https://qiita.com/yusabana/items/b5cc2a706be8c031043e,yusabana,445,2015/04/15
+bashのSECONDS変数で簡単に処理時間を測定する,https://qiita.com/mikeda/items/c6bb68dd1e4ba6434fb7,mikeda,114,2014/09/02
+「クロスコンパイラを一気に作る」を最近の環境で実行しようとしたら,https://qiita.com/kaizen_nagoya/items/3f65a3aa9b176b8738b2,kaizen_nagoya,4,2018/11/01
+bash Tips - コマンド置換と算術式展開、パラメータ展開,https://qiita.com/mashumashu/items/bbc3a79bc779fe8c4f99,mashumashu,186,2014/08/17
+シェルの入出力制御あれこれ,https://qiita.com/tag1216/items/7ce35b7c27d371165e56,tag1216,482,2015/02/18
+Shell scriptノウハウ集(覚え書き),https://qiita.com/soushiy/items/62992d69f607c21d65ac,soushiy,2,2016/01/20
+LINUX testコマンドについて,https://qiita.com/kazuooooo/items/163d07f694016ebd6048,kazuooooo,13,2018/09/27
+マクドナルドで一日分の栄養を取れる組み合わせを計算したら衝撃の結果に,https://qiita.com/takobaya391076/items/49b15c1fa36734b3fa53,takobaya391076,991,2021/02/20
+初心者向けシェルスクリプトの基本コマンドの紹介,https://qiita.com/zayarwinttun/items/0dae4cb66d8f4bd2a337,zayarwinttun,2446,2015/12/12
+[Linux]「tail -f」での監視はもう古い!?超絶便利なlessコマンド,https://qiita.com/shuntaro_tamura/items/faaebb3282c37a718b76,shuntaro_tamura,130,2015/06/19
+【シェル芸人への道】Bashの変数展開と真摯に向き合う,https://qiita.com/t_nakayama0714/items/80b4c94de43643f4be51,t_nakayama0714,431,2017/11/18
+シェルスクリプトの罠を避ける三つの tips,https://qiita.com/magicant/items/f3554274ee500bddaca8,magicant,545,2016/12/08
 JavaScript製FlashPlayer「swf2js」swfをそのままHTML5に変換。,https://qiita.com/ienaga/items/c9f04d6cd9874d4ec1a7,ienaga,307,2015/12/16
 DockerでC++開発環境構築（Alpine版）,https://qiita.com/yuzutarogo/items/d60ba007eae969be53ae,yuzutarogo,4,2020/04/29
 RaspberryPiにDockerを構築する,https://qiita.com/k_ken/items/0f2d6af2618618982723,k_ken,98,2020/03/12
 多段SSHやポートフォワーディングを '.ssh/config' に書く,https://qiita.com/lasta/items/41e95a2fdded18c34dae,lasta,402,2014/05/14
-ちょっと高度なJavaScriptの話,https://qiita.com/renesisu727/items/0447fce8a9e00817f1f5,renesisu727,308,2021/01/15
-Go言語の初心者が見ると幸せになれる場所　#golang,https://qiita.com/tenntenn/items/0e33a4959250d1a55045,tenntenn,3821,2013/05/11
+ちょっと高度なJavaScriptの話,https://qiita.com/renesisu727/items/0447fce8a9e00817f1f5,renesisu727,310,2021/01/15
+Go言語の初心者が見ると幸せになれる場所　#golang,https://qiita.com/tenntenn/items/0e33a4959250d1a55045,tenntenn,3824,2013/05/11
 p5.jsで音楽を可視化する,https://qiita.com/dave/items/3a4038549e1956cb5e2e,dave,5,2020/12/07
 [Solved] 日本語文章中、英単語の両端にスペースをつける人,https://qiita.com/CodeOne/items/43d2b8e4247b020652b2,CodeOne,160,2019/02/11
 OSINTによるセキュリティ情報調査方法まとめ,https://qiita.com/osada/items/c75c34ce716ee4ffba8f,osada,233,2017/05/07
-JavaScriptに参照渡し/値渡しなど存在しない,https://qiita.com/yuta0801/items/f8690a6e129c594de5fb,yuta0801,355,2019/04/18
-JavaScriptの「this」は「4種類」？？,https://qiita.com/takeharu/items/9935ce476a17d6258e27,takeharu,2288,2013/04/09
+JavaScriptに参照渡し/値渡しなど存在しない,https://qiita.com/yuta0801/items/f8690a6e129c594de5fb,yuta0801,356,2019/04/18
+JavaScriptの「this」は「4種類」？？,https://qiita.com/takeharu/items/9935ce476a17d6258e27,takeharu,2289,2013/04/09
 イマドキのJavaScriptの書き方2018,https://qiita.com/shibukawa/items/19ab5c381bbb2e09d0d9,shibukawa,5417,2017/12/26
-Lodash/Underscoreは必要ない（かも）,https://qiita.com/ossan-engineer/items/ad5313d84da82c6ac421,ossan-engineer,456,2016/02/27
+Lodash/Underscoreは必要ない（かも）,https://qiita.com/ossan-engineer/items/ad5313d84da82c6ac421,ossan-engineer,457,2016/02/27
 「JavaScript初級者のためのコーディングガイド」に補足を試みる,https://qiita.com/ms2sato/items/94ed459640a1d89cb4de,ms2sato,456,2017/01/03
 JavaScript: var/letのスコープとletによる巻き上げ,https://qiita.com/jonakp/items/c943c8d457871fa6ceb6,jonakp,6,2020/01/13
-Node.js Stream を使いこなす,https://qiita.com/masakura/items/5683e8e3e655bfda6756,masakura,268,2017/07/19
+Node.js Stream を使いこなす,https://qiita.com/masakura/items/5683e8e3e655bfda6756,masakura,269,2017/07/19
 javascriptイディオム集,https://qiita.com/cocottejs/items/cb2623316a0c82b603c4,cocottejs,363,2015/06/16
 とある JavaScript 知らないマンの ES5 奮闘記,https://qiita.com/sta/items/6fe02a69caccf92bda1e,sta,12,2018/03/30
-Unityで「まとも」なテキスト描画を行いたい,https://qiita.com/suzuna-honda/items/6f98eee62c64c25e63be,suzuna-honda,60,2020/12/23
+Unityで「まとも」なテキスト描画を行いたい,https://qiita.com/suzuna-honda/items/6f98eee62c64c25e63be,suzuna-honda,61,2020/12/23
 NTT(数論変換)のやさしい解説,https://qiita.com/Sen_comp/items/9401382df736e51564c1,Sen_comp,4,2021/02/06
 Mastodonを運用している時に参考にさせて頂いているサイト 2020年7月8日 版,https://qiita.com/syumari/items/a212f791f5961d84789a,syumari,5,2020/03/21
-今日こそJavaScriptの非同期処理とPromiseを理解しよう！,https://qiita.com/bow_arrow/items/a88cf7a444fb6045b8e4,bow_arrow,391,2021/01/30
+今日こそJavaScriptの非同期処理とPromiseを理解しよう！,https://qiita.com/bow_arrow/items/a88cf7a444fb6045b8e4,bow_arrow,394,2021/01/30
 pixivpyを分析する,https://qiita.com/yuki_2020/items/798f491fa6b01169df81,yuki_2020,2,2021/01/01
-海外「なぜ日本はハードウェアの時代と同じようにソフトウェアに秀でることができない？」,https://qiita.com/e99h2121/items/419c3bd39d8dea40f21a,e99h2121,1461,2021/01/30
+海外「なぜ日本はハードウェアの時代と同じようにソフトウェアに秀でることができない？」,https://qiita.com/e99h2121/items/419c3bd39d8dea40f21a,e99h2121,1472,2021/01/30
 GitHub Hacking ~GitHubを容量無制限のクラウドストレージとして使用する試み~,https://qiita.com/taptappun/items/e499dfa937cd8f04d74d,taptappun,21,2020/12/06
 競プロに便利な C++17 新機能まとめ,https://qiita.com/Reputeless/items/db7dda0096f3ae91d450,Reputeless,281,2020/01/31
 どこでも動く dotfiles の作り方,https://qiita.com/rainbartown/items/d7f59fe4047733c14e8b,rainbartown,8,2020/12/12
@@ -32,12 +48,12 @@ JavaScriptで二次元配列の行列を転置するワンライナー,https://q
 Puppeteerを使って簡単にWebスクレイピングする,https://qiita.com/k1832/items/87a8cf609b4ccf2c6195,k1832,54,2019/12/20
 QiitaのストックとLGTMを「はてなブックマーク」に移行する,https://qiita.com/mima_ita/items/4966a60d4405b313df50,mima_ita,2,2020/04/02
 The Bitter Lesson (AIに関する苦い教訓) を翻訳してみた,https://qiita.com/Yoshiyuki03/items/91f35512cd4915bc54f7,Yoshiyuki03,5,2019/05/07
-Rustで競技プログラミング スターターキット,https://qiita.com/hatoo@github/items/fa14ad36a1b568d14f3e,hatoo@github,207,2018/03/15
+Rustで競技プログラミング スターターキット,https://qiita.com/hatoo@github/items/fa14ad36a1b568d14f3e,hatoo@github,208,2018/03/15
 今日マージされたプルリクエストのタイトル一覧を表示するgitコマンド,https://qiita.com/mishimay/items/baa23f3b8c2cd62cf817,mishimay,28,2015/12/24
 命名規則まとめ,https://qiita.com/deerboy/items/f035b9044edf9a51aff7,deerboy,56,2017/12/04
 統計検定 1 級に合格する方法,https://qiita.com/drken/items/089b8443305df047b44e,drken,909,2018/02/19
-Mastodon 保守メモ,https://qiita.com/neustrashimy/items/bf4997f181f893130041,neustrashimy,88,2018/01/18
-【Node.js】puppeteer基本情報＆逆引き,https://qiita.com/vicugna-pacos/items/a52e22d08856d1041316,vicugna-pacos,37,2019/12/14
+Mastodon 保守メモ,https://qiita.com/neustrashimy/items/bf4997f181f893130041,neustrashimy,87,2018/01/18
+【Node.js】puppeteer基本情報＆逆引き,https://qiita.com/vicugna-pacos/items/a52e22d08856d1041316,vicugna-pacos,39,2019/12/14
 リアル調査案件で使ったPuppeteer,https://qiita.com/ovrmrw/items/9de343f36f6d5e14ba80,ovrmrw,75,2018/05/22
 やってみたら簡単！ディープラーニング・オセロを作って自分を負かすまで強くした話(その1),https://qiita.com/TokyoYoshida/items/07bd3cdca6a7e50c3114,TokyoYoshida,270,2021/01/11
 オレオレアーキテクチャの電磁石式自作CPUをネットワークにした話,https://qiita.com/38912Pataro/items/8b8f1669ce7317953f4c,38912Pataro,237,2021/01/02
@@ -45,16 +61,16 @@ YAMLで履歴書を作る,https://qiita.com/kaityo256/items/e3884d0109223c324baf
 puppeteerでよく使うであろう処理の書き方,https://qiita.com/rh_taro/items/32bb6851303cbc613124,rh_taro,382,2018/02/19
 全ブランチをリモートリポジトリからpullする,https://qiita.com/muraikenta/items/e590a380191971f9c4c3,muraikenta,68,2015/08/09
 RUNTEQの講師をやってみてわかった初学者にありがちなパターン20選（前編）,https://qiita.com/DaichiSaito/items/52448ebfcb0db768dcf3,DaichiSaito,57,2019/12/01
-人は寒すぎると何になる？～7400Tweetを分析して見えた答え～,https://qiita.com/odanny/items/6727b3f813dd4e0ff406,odanny,309,2021/01/02
+人は寒すぎると何になる？～7400Tweetを分析して見えた答え～,https://qiita.com/odanny/items/6727b3f813dd4e0ff406,odanny,310,2021/01/02
 忙しい研究者のためのテストコードとドキュメントの書き方,https://qiita.com/hmkz/items/0689cd85fb3e1adcda1a,hmkz,804,2018/05/25
 Raspberry PI シリーズで分散環境構築(その1:モデル別、ディスクレスクライアント化の可否まとめ),https://qiita.com/p_cub/items/e81dd0f49b3f6fb024a5,p_cub,6,2020/06/03
-新卒１年目が荒れ果てた開発環境に１年間でCIを導入し単体テストを布教した話,https://qiita.com/autotaker1984/items/894bf0df0009c621da11,autotaker1984,1323,2020/11/28
-プログラミングスクールのメンターを辞めました,https://qiita.com/rhiroe/items/4349b9f412364aa2c729,rhiroe,1211,2020/12/27
-7万行のJavaScriptコードをTypeScriptに移行した話,https://qiita.com/tonio0720/items/875ad9bea922e39564f2,tonio0720,306,2020/12/09
+新卒１年目が荒れ果てた開発環境に１年間でCIを導入し単体テストを布教した話,https://qiita.com/autotaker1984/items/894bf0df0009c621da11,autotaker1984,1325,2020/11/28
+プログラミングスクールのメンターを辞めました,https://qiita.com/rhiroe/items/4349b9f412364aa2c729,rhiroe,1210,2020/12/27
+7万行のJavaScriptコードをTypeScriptに移行した話,https://qiita.com/tonio0720/items/875ad9bea922e39564f2,tonio0720,307,2020/12/09
 桃太郎電鉄の「いけるかな」を実現する高速なアルゴリズムの実装と考察,https://qiita.com/ashiba/items/4d2ff52c5f295018057e,ashiba,656,2020/12/16
 M-1グランプリのデータを切る　~本当に評価されているものとは~　#kuac2020,https://qiita.com/shima_shima_ss/items/bab22967cbfd8e5e9552,shima_shima_ss,6,2020/12/14
 続・遺伝的アルゴリズム、完全に理解した,https://qiita.com/2000_4000/items/5e29113b8bf1f559f2de,2000_4000,5,2020/12/14
-引っ越しすることになったので機械学習を使って全力で自分の住む家を決めようとした話,https://qiita.com/pao2/items/24728936ee6f6674ae37,pao2,1080,2020/12/11
+引っ越しすることになったので機械学習を使って全力で自分の住む家を決めようとした話,https://qiita.com/pao2/items/24728936ee6f6674ae37,pao2,1081,2020/12/11
 [DeepLearning] 計算グラフについて理解する,https://qiita.com/edo_m18/items/7c95593ed5844b5a0c3b,edo_m18,54,2018/09/11
 【クソアプリ】PHP関数名しりとり,https://qiita.com/namosuke/items/96082b5fcbd72d33a530,namosuke,144,2020/12/09
 (完全)準同型暗号の最前線1（入門編）,https://qiita.com/nindanaoto/items/98335ad4d32b927effa9,nindanaoto,14,2020/12/07
@@ -74,25 +90,25 @@ MVCパターン再考,https://qiita.com/ffggss/items/15943c6c3908a6f25cb5,ffggss
 underscore.jsリファレンス,https://qiita.com/f1000/items/47b2ace7d1fbc4795184,f1000,23,2019/02/13
 依存関係に立ち向かうための地図を作ろう,https://qiita.com/lempiji/items/7eadd41befad186f3a91,lempiji,10,2019/12/10
 ツイッターのAPIをOAuth2 Client Credentials Grantで叩く,https://qiita.com/toshiya/items/71bc5ec9f7ccf19161bd,toshiya,18,2016/05/21
-OAuth 2.0 全フローの図解と動画,https://qiita.com/TakahikoKawasaki/items/200951e5b5929f840a1f,TakahikoKawasaki,2579,2017/04/28
+OAuth 2.0 全フローの図解と動画,https://qiita.com/TakahikoKawasaki/items/200951e5b5929f840a1f,TakahikoKawasaki,2581,2017/04/28
 GitHub等を用いて論文のプログラムを公開する手順メモ,https://qiita.com/ossyaritoori/items/7b4ea25be441c3e30b45,ossyaritoori,11,2018/03/28
 SVGからPDFへの変換はHeadless Chromeでやろう,https://qiita.com/s417-lama/items/747be70c35204d4e1b39,s417-lama,9,2020/04/29
-findでファイル名のみ表示,https://qiita.com/skkzsh/items/40b661a043c9b60f8426,skkzsh,80,2013/02/28
+findでファイル名のみ表示,https://qiita.com/skkzsh/items/40b661a043c9b60f8426,skkzsh,81,2013/02/28
 JavaScriptのリファクタリングツール「jscodeshift」の使い方,https://qiita.com/toshi-toma/items/93f1dfdf0a820fe6fccc,toshi-toma,184,2019/12/02
-Graphvizとdot言語でグラフを描く方法のまとめ,https://qiita.com/rubytomato@github/items/51779135bc4b77c8c20d,rubytomato@github,768,2015/09/14
+Graphvizとdot言語でグラフを描く方法のまとめ,https://qiita.com/rubytomato@github/items/51779135bc4b77c8c20d,rubytomato@github,769,2015/09/14
 Graphvizでハマったこと,https://qiita.com/yyano/items/e223431580b59642ca06,yyano,11,2014/12/01
 Google『reCAPTCHA』を突破！『2Captcha』でブラウザ操作の完全自動化に挑む,https://qiita.com/derodero24/items/7d36f4617a40fbb36b11,derodero24,275,2020/11/07
 [Linux]コマンドでファイルに行の挿入をする方法,https://qiita.com/bamchoh/items/fc6e6b00606bdf81fd60,bamchoh,83,2013/05/04
-Gitにおけるブランチ戦略について調べてみた,https://qiita.com/trsn_si/items/cfecbf7dff20c64628ea,trsn_si,92,2020/01/26
-JavaScriptを読んでて「なにこれ！？」と思うけれど調べられない記法8選。,https://qiita.com/ukiuni@github/items/5f3d8620187905aea3d4,ukiuni@github,3155,2015/04/17
+Gitにおけるブランチ戦略について調べてみた,https://qiita.com/trsn_si/items/cfecbf7dff20c64628ea,trsn_si,93,2020/01/26
+JavaScriptを読んでて「なにこれ！？」と思うけれど調べられない記法8選。,https://qiita.com/ukiuni@github/items/5f3d8620187905aea3d4,ukiuni@github,3156,2015/04/17
 "何度も""HelloWorld!""を出力するとスキルが伸びるらしい",https://qiita.com/yuki_works/items/cd14ce472e515063269d,yuki_works,344,2020/10/29
 AIに五等分の花嫁の正妻を判定させてみた,https://qiita.com/revvve44/items/4efe6722986777312b5c,revvve44,225,2020/11/03
 アルゴリズムで実社会を捉える～評価関数の作り方～,https://qiita.com/tsukammo/items/de70b49dcd8912e78505,tsukammo,55,2019/12/24
-バージョンにあれこれ考えを巡らせてみる,https://qiita.com/t_nakayama0714/items/c312bc5edcce6c214856,t_nakayama0714,256,2017/01/26
+バージョンにあれこれ考えを巡らせてみる,https://qiita.com/t_nakayama0714/items/c312bc5edcce6c214856,t_nakayama0714,258,2017/01/26
 大名行列を特異値分解してみる,https://qiita.com/kaityo256/items/78b16c58228e131f8144,kaityo256,176,2020/10/21
 Twitterの「あいみょんの○○って歌詞に共感する」から，あいみょんの歌を生成する,https://qiita.com/nya3_neko2/items/0b4747a5744e1e6f73ec,nya3_neko2,121,2020/10/20
 レトロエンジニアのための近代Webフロントエンド事情,https://qiita.com/uctakeoff/items/ce8da368d020273c6064,uctakeoff,1169,2016/11/12
-Reactを使うとなぜjQueryが要らなくなるのか,https://qiita.com/naruto/items/fdb61bc743395f8d8faf,naruto,4301,2016/05/09
+Reactを使うとなぜjQueryが要らなくなるのか,https://qiita.com/naruto/items/fdb61bc743395f8d8faf,naruto,4300,2016/05/09
 Scalaで論理体系を作る話 - 1. 命題論理その1,https://qiita.com/Kory__3/items/96efec755f4045b95518,Kory__3,56,2019/01/09
 githubのmarkdown-cssをぶっこ抜く方法,https://qiita.com/__mick/items/c80fab6c185a41882880,__mick,58,2018/04/26
 If Programming Was An Anime をPythonとCで考察する,https://qiita.com/recuraki/items/5b0ee89a77c2080bdcad,recuraki,2,2020/10/15
@@ -106,7 +122,7 @@ AI(機械学習) × イラスト リンク集,https://qiita.com/wagasa2/items/f0
 Poetry - Pipenv の代替,https://qiita.com/propella/items/28f2c83d1e50891b6a6b,propella,9,2020/03/30
 140文字以上のツイートを取得する,https://qiita.com/hitsumabushi845/items/f7fd87106381fc65fc86,hitsumabushi845,42,2016/09/21
 git push の反対は git pull ではない,https://qiita.com/usamik26/items/28be7d2c221a7a53c2c3,usamik26,119,2012/12/08
-1分でも早く仕事を終わらせるためにVSCodeにできること,https://qiita.com/EaE/items/4ca1b35396eba682a86f,EaE,1952,2020/09/29
+1分でも早く仕事を終わらせるためにVSCodeにできること,https://qiita.com/EaE/items/4ca1b35396eba682a86f,EaE,1953,2020/09/29
 全盛期のJeff Dean伝説,https://qiita.com/umegaya/items/ef69461d6f4967d5c623,umegaya,997,2016/01/09
 JavaScriptから即時関数を排除する,https://qiita.com/raccy/items/310b4353a757296f797f,raccy,199,2017/03/26
 CC0 ライセンスのソースコードを GitHub にあげるまで,https://qiita.com/spiegel-im-spiegel/items/cc3d9cc46cc931b0e921,spiegel-im-spiegel,47,2015/08/17
@@ -115,55 +131,55 @@ VSCodeをIDE化する方法,https://qiita.com/Midoliy/items/d19dc8c1c97078b1e640
 Python＋Reactでレンズ検索データベースを構築した時の技術的な話,https://qiita.com/YSRKEN/items/3c2eb775413a96b65f3c,YSRKEN,1,2020/09/26
 Pythonで写真のExifから焦点距離情報とレンズ情報を抽出した話,https://qiita.com/YSRKEN/items/d52fe9d26673dc93e59b,YSRKEN,6,2020/07/04
 画面をデザインするということ,https://qiita.com/megumu-u/items/73b728ad1d381717d731,megumu-u,1300,2020/09/14
-Awesome JavaScript  : 素晴らしい JavaScript ライブラリ・リソースの数々,https://qiita.com/hatai/items/5bf899bfe8f5d86d2096,hatai,646,2017/02/03
+Awesome JavaScript  : 素晴らしい JavaScript ライブラリ・リソースの数々,https://qiita.com/hatai/items/5bf899bfe8f5d86d2096,hatai,648,2017/02/03
 GitHubでフォーク元の差分を取り込む,https://qiita.com/hrtkmztn/items/3544c419a3f6fc3534fb,hrtkmztn,282,2012/04/16
 " 全国の一流インテグラーが創造したおっぱい関数をPythonで再現してみた",https://qiita.com/k_eita/items/abf851d1b9c9a69a4faa,k_eita,29,2018/08/22
 ディープラーニングを用いたエロ画像の収集と自動化,https://qiita.com/yokaigundan/items/e8a2b53ab1e6676d309b,yokaigundan,305,2017/03/31
-OSS活動をはじめて5ヶ月の振り返りと学んだこと,https://qiita.com/ryo2132/items/0ea06e93ac26f2c83736,ryo2132,977,2020/06/15
-炎上プロジェクトでの過ごし方,https://qiita.com/syunduel/items/66b10851d653710ae0ab,syunduel,54,2020/01/29
-今さら聞けないWebSocket~WebSocketとは~,https://qiita.com/chihiro/items/9d280704c6eff8603389,chihiro,504,2017/05/04
+OSS活動をはじめて5ヶ月の振り返りと学んだこと,https://qiita.com/ryo2132/items/0ea06e93ac26f2c83736,ryo2132,978,2020/06/15
+炎上プロジェクトでの過ごし方,https://qiita.com/syunduel/items/66b10851d653710ae0ab,syunduel,55,2020/01/29
+今さら聞けないWebSocket~WebSocketとは~,https://qiita.com/chihiro/items/9d280704c6eff8603389,chihiro,505,2017/05/04
 サーバーレス将棋 AI - WebSocket 編,https://qiita.com/na-o-ys/items/b121629a4119fee968df,na-o-ys,15,2019/12/05
-Git で「追跡ブランチ」って言うのやめましょう,https://qiita.com/uasi/items/69368c17c79e99aaddbf,uasi,577,2016/02/08
+Git で「追跡ブランチ」って言うのやめましょう,https://qiita.com/uasi/items/69368c17c79e99aaddbf,uasi,579,2016/02/08
 GitHubでFork元の更新を取り込む,https://qiita.com/taknb2nch/items/521c98690c9bd9afebab,taknb2nch,35,2018/08/06
 GitHubでフォーク先から上流リポジトリにPRを送るときにやること,https://qiita.com/ymasaoka/items/5434239c1b7ff7d4706b,ymasaoka,2,2020/06/08
 Clean Architectureの構造的な過ちについて,https://qiita.com/bigen1925/items/4acb08db76abd6036472,bigen1925,10,2020/08/15
 C++でうっかり無限ループを書くと鼻から悪魔が出てくる,https://qiita.com/tkmtSo/items/de3148dd1dcb70f38d6a,tkmtSo,353,2019/01/22
 Clean Architectureで分からなかったところを整理する,https://qiita.com/gki/items/91386b082c57123f1ba0,gki,251,2017/02/03
-Gatsby.js を完全TypeScript化する,https://qiita.com/Takepepe/items/144209f860fbe4d5e9bb,Takepepe,238,2019/11/08
+Gatsby.js を完全TypeScript化する,https://qiita.com/Takepepe/items/144209f860fbe4d5e9bb,Takepepe,240,2019/11/08
 良い README.md を書くためのテンプレート（翻訳）,https://qiita.com/KamataRyo/items/466255fc33da12274c72,KamataRyo,90,2018/12/28
 GitHub 別リポジトリに push する方法,https://qiita.com/takamicii/items/b0d1cc92fd172468fbf3,takamicii,105,2015/06/13
 TypeScript入門Q&amp;A(フロントエンド初心者向け),https://qiita.com/sena_v/items/78970883362e8c8837c2,sena_v,67,2020/02/21
 モダン JavaScript プログラミングを始めるために知っておきたい技術セット,https://qiita.com/Go-Noji/items/25a30b8cadef86abc2b0,Go-Noji,357,2019/05/24
-アジャイル開発を支えるためのCI/CD,https://qiita.com/newta/items/64e3d2dfd8dad69a3185,newta,260,2016/12/03
+アジャイル開発を支えるためのCI/CD,https://qiita.com/newta/items/64e3d2dfd8dad69a3185,newta,259,2016/12/03
 ぷよぷよAIを作りやすくしてみた,https://qiita.com/TukamotoRyuzo/items/acbbbe059af2e382837d,TukamotoRyuzo,64,2019/08/12
 SSHできるサーバーへのSCPを使わないファイル転送方法とその速度比較,https://qiita.com/tomoyk/items/bf18eec969486b6fc3c4,tomoyk,9,2019/05/19
 はじめてのブラウザ拡張開発,https://qiita.com/szk0u/items/f11d2fc6f67040dc8c14,szk0u,23,2018/04/30
 名前解決・疎通確認する際の基本的なLinuxコマンド,https://qiita.com/shoda_k/items/fcf6d0e9c39d42a568af,shoda_k,23,2018/12/10
 大量のホスト名に対して名前解決した結果をCSVにしたい,https://qiita.com/webdevjp/items/9e693d84517cec81c3e7,webdevjp,15,2016/05/11
-Gitでやりたいこと、ここで見つかる,https://qiita.com/shimotaroo/items/b73d896ace10894fd290,shimotaroo,1053,2020/08/29
-Linuxのデスクトップ環境をi3からswayへ移行してみた,https://qiita.com/yutakatay/items/6aa10c9bd1bb71c15636,yutakatay,13,2020/05/04
+Gitでやりたいこと、ここで見つかる,https://qiita.com/shimotaroo/items/b73d896ace10894fd290,shimotaroo,1052,2020/08/29
+Linuxのデスクトップ環境をi3からswayへ移行してみた,https://qiita.com/yutkat/items/6aa10c9bd1bb71c15636,yutkat,13,2020/05/04
 HSL / HSV より人間に寄り添った色表現 CIE L*C*h を使いたい,https://qiita.com/luncheon/items/937f8a7503421993b258,luncheon,79,2020/09/07
-Chrome拡張　備忘録　１から１０まで,https://qiita.com/Tachibana446/items/696bb93bd4a23525cbb0,Tachibana446,76,2017/02/13
-Chrome 拡張機能のマニフェストファイルの書き方,https://qiita.com/mdstoy/items/9866544e37987337dc79,mdstoy,540,2014/05/07
-外部に公開しないミニマムなchrome拡張機能を作るのは1時間も使わずにできる,https://qiita.com/Ancient_Scapes/items/822409167ae3a0b76dbe,Ancient_Scapes,354,2019/09/30
-TypeScriptをプロダクト開発に使う上でのベストプラクティスと心得,https://qiita.com/jagaapple/items/ce0da04be28c35dc7d4f,jagaapple,1233,2020/02/04
+Chrome拡張　備忘録　１から１０まで,https://qiita.com/Tachibana446/items/696bb93bd4a23525cbb0,Tachibana446,77,2017/02/13
+Chrome 拡張機能のマニフェストファイルの書き方,https://qiita.com/mdstoy/items/9866544e37987337dc79,mdstoy,541,2014/05/07
+外部に公開しないミニマムなchrome拡張機能を作るのは1時間も使わずにできる,https://qiita.com/Ancient_Scapes/items/822409167ae3a0b76dbe,Ancient_Scapes,356,2019/09/30
+TypeScriptをプロダクト開発に使う上でのベストプラクティスと心得,https://qiita.com/jagaapple/items/ce0da04be28c35dc7d4f,jagaapple,1234,2020/02/04
 "TypeScriptの""型""を学びたいあなたへ。type-challengesのすゝめ",https://qiita.com/ryo2132/items/925b96838dd8cca7cebd,ryo2132,444,2020/09/05
 旧石器時代のポインタをご利用の皆様へ ～provenance入門～,https://qiita.com/__pandaman64__/items/1788a90ae5be79cc908b,__pandaman64__,399,2020/09/06
 素因数分解を O(n^(1/4)) でする,https://qiita.com/Kiri8128/items/eca965fe86ea5f4cbb98,Kiri8128,36,2020/03/28
 微分方程式を数値計算するときの話（ode45の中身）,https://qiita.com/taka_horibe/items/8838b08f88f1a55fb9a7,taka_horibe,96,2019/12/16
 数値計算の常識 概要（個人的メモ）,https://qiita.com/shima_x/items/7e1e2d1e19ca35cc70ad,shima_x,99,2015/09/11
-【TS】TypeScript 4.0 の新機能,https://qiita.com/wwalpha/items/e17a066853a24ee42d13,wwalpha,12,2020/08/21
+【TS】TypeScript 4.0 の新機能,https://qiita.com/wwalpha/items/e17a066853a24ee42d13,wwalpha,13,2020/08/21
 「タイプセーフプリキュア！」を支える技術,https://qiita.com/igrep/items/5496fa405fae00b5a737,igrep,40,2016/12/18
 Twitter上の指定ユーザーのツイートから目的の画像のみを自動収集する,https://qiita.com/tf0101/items/099fbfce3ad7992e1baa,tf0101,82,2019/03/15
 GoでYAMLを扱うすべての人を幸せにするべく、ライブラリをスクラッチから書いた話,https://qiita.com/goccy/items/86abe72b472993b5516a,goccy,153,2019/12/05
-WindowsでDocker環境を試してみる,https://qiita.com/fkooo/items/d2fddef9091b906675ca,fkooo,374,2017/12/20
-TypeScript チュートリアル,https://qiita.com/EBIHARA_kenji/items/31b7c1c62426bdabd263,EBIHARA_kenji,258,2018/06/27
+WindowsでDocker環境を試してみる,https://qiita.com/fkooo/items/d2fddef9091b906675ca,fkooo,375,2017/12/20
+TypeScript チュートリアル,https://qiita.com/EBIHARA_kenji/items/31b7c1c62426bdabd263,EBIHARA_kenji,259,2018/06/27
 webpackをかんたんに使う（Zero Configulation）,https://qiita.com/hashrock/items/3f1df615e68ee8aad9e8,hashrock,17,2020/08/17
 フロントエンド開発の３ステップ（npmことはじめ）,https://qiita.com/hashrock/items/15f4a4961183cfbb2658,hashrock,1543,2015/04/12
 TypeScript + Node.js プロジェクトのはじめかた2020,https://qiita.com/notakaos/items/3bbd2293e2ff286d9f49,notakaos,646,2019/02/08
 Linux上でのL2TP/IPSecのクライアント設定,https://qiita.com/__cooper/items/4b5ab7ae40b0e95f0d19,__cooper,58,2016/08/19
-【AtCoder】普通の人である私が緑になるまでにしたこと,https://qiita.com/Kota-Y/items/396ab3c57830dad65cfb,Kota-Y,651,2020/08/23
-ローカルのプロジェクトをGitHubへアップロードする方法,https://qiita.com/devzip8/items/28ac253ea295ad6c2b73,devzip8,336,2016/04/17
+【AtCoder】普通の人である私が緑になるまでにしたこと,https://qiita.com/Kota-Y/items/396ab3c57830dad65cfb,Kota-Y,653,2020/08/23
+ローカルのプロジェクトをGitHubへアップロードする方法,https://qiita.com/devzip8/items/28ac253ea295ad6c2b73,devzip8,338,2016/04/17
 コンピュータ業界でよく出る英語,https://qiita.com/tfutada/items/d1b17cd4008876c17bf4,tfutada,1421,2017/10/23
 複数のgitアカウントを使用する場合,https://qiita.com/yamataku29/items/4744c9c70ad793c83b82,yamataku29,124,2017/12/18
 GitHubで複数のアカウントを使う場合のSSHの設定,https://qiita.com/merrill/items/80a8d8a152e2483fa587,merrill,48,2015/06/06
@@ -173,12 +189,12 @@ Rustでマンカラ(ボードゲーム)の思考エンジンを作る,https://qi
 プログラムを読まない人のための Stockfish 評価値アルゴリズム解説 (1),https://qiita.com/anjyu108/items/43f3bfd5a5387660373a,anjyu108,7,2020/05/05
 プログラムを読まない人のための Stockfish 評価値アルゴリズム解説 (2),https://qiita.com/anjyu108/items/6fcd84ed09fddae4f04b,anjyu108,4,2020/05/12
 Pythonでハノンっぽい楽譜を作ったお話,https://qiita.com/bamboo_music_ac/items/75e606e112fc5dae78a5,bamboo_music_ac,126,2020/08/18
-TypeScript学習ロードマップ,https://qiita.com/irico/items/33744e15a4e0ca52d6bc,irico,1484,2020/08/17
-仕事で使えるLinux ワンライナー集,https://qiita.com/ryuichi1208/items/55b73d8ae75993dc10c1,ryuichi1208,829,2018/12/20
+TypeScript学習ロードマップ,https://qiita.com/irico/items/33744e15a4e0ca52d6bc,irico,1487,2020/08/17
+仕事で使えるLinux ワンライナー集,https://qiita.com/ryuichi1208/items/55b73d8ae75993dc10c1,ryuichi1208,830,2018/12/20
 MySQLで3億レコード物理削除した話,https://qiita.com/ningenMe/items/57bd66359d89b691ba0d,ningenMe,613,2020/08/16
 CUDAより高速化可能で簡単なOpenACCのランタイム関数で実行中のPGI Unified Binaryの演算デバイスを切り替えられるのか検証してみた,https://qiita.com/mayutsuna/items/0be8acb436dca9b1c6b6,mayutsuna,34,2019/11/20
-クラウドサービスを活用して README にバッジをペタペタ貼る,https://qiita.com/dtan4/items/13b0ea9edf5b99926446,dtan4,370,2015/10/31
-よく使うcurlコマンドのオプション,https://qiita.com/ryuichi1208/items/e4e1b27ff7d54a66dcd9,ryuichi1208,503,2018/11/27
+クラウドサービスを活用して README にバッジをペタペタ貼る,https://qiita.com/dtan4/items/13b0ea9edf5b99926446,dtan4,369,2015/10/31
+よく使うcurlコマンドのオプション,https://qiita.com/ryuichi1208/items/e4e1b27ff7d54a66dcd9,ryuichi1208,504,2018/11/27
 GitHub APIの仕組みを知り、APIでrepositoryを作成しよう,https://qiita.com/developer-kikikaikai/items/5f4f0e2ea274326d7157,developer-kikikaikai,11,2019/10/13
 GitHub API v3 でリポジトリを作成して、ファイルをコミットする,https://qiita.com/ngs/items/34e51186a485c705ffdb,ngs,57,2012/12/18
 ファイル名を一括変換するコマンド一覧,https://qiita.com/nock/items/7fdff17ec268dff08510,nock,7,2017/01/24
@@ -188,7 +204,7 @@ google C++スタイルガイド要約,https://qiita.com/ktsujino/items/d65637660
 なぜ大学生はプログラミングが上達しないのか,https://qiita.com/naoching7010/items/b7e016a70ff143722a3c,naoching7010,318,2020/08/08
 メルアイコン生成器 version2を作った話,https://qiita.com/zassou65535/items/57fe3bd677159cdb2528,zassou65535,168,2020/08/05
 C++と死の秘宝OpenCascade Technology,https://qiita.com/_EnumHack/items/577b087c071e4e9cd3b3,_EnumHack,87,2018/12/25
-FizzBuzz Zero ―― 人類の知識なしでFizzBuzzをマスターする,https://qiita.com/ymg_aq/items/d276357823f5b2ce46c5,ymg_aq,415,2018/05/10
+FizzBuzz Zero ―― 人類の知識なしでFizzBuzzをマスターする,https://qiita.com/ymg_aq/items/d276357823f5b2ce46c5,ymg_aq,414,2018/05/10
 JScriptで将棋のUSIプロトコルに挑戦,https://qiita.com/economist/items/83badfdde88333a56d7b,economist,1,2020/05/23
 ドメインが凍結された話,https://qiita.com/mindwood/items/5519df70bdc7f13fd119,mindwood,4,2020/01/26
 新しく利用するドメインやIPアドレスが闇サイトの使いまわしでないことを確認するには,https://qiita.com/Okura_/items/51e4370f189d639f72d3,Okura_,5,2020/02/27
@@ -203,19 +219,19 @@ C++で遺伝的アルゴリズムを使ってナップザック問題を解い�
 libshogi で将棋プログラムを作ろう (2),https://qiita.com/tsoftware/items/933df558475f4ad4d52c,tsoftware,5,2017/04/08
 "Arch Linux 快適デスクトップ環境の構築 2019 ",https://qiita.com/xorphitus/items/d543931ecd2c441e462f,xorphitus,34,2019/05/29
 音響処理の基礎 with CNN　〜機械学習で「太鼓の達人」の自動作譜をしてみた〜,https://qiita.com/woodyZootopia/items/01cc43fafe767d3edf62,woodyZootopia,334,2018/07/20
-ES2015(ES6) 入門,https://qiita.com/soarflat/items/b251caf9cb59b72beb9b,soarflat,1362,2016/12/15
+ES2015(ES6) 入門,https://qiita.com/soarflat/items/b251caf9cb59b72beb9b,soarflat,1363,2016/12/15
 HTTP通信のキャプチャをとるツールFiddlerをWindowsにインストールする,https://qiita.com/taketakekaho/items/397bc6e9afa32329edd0,taketakekaho,88,2018/10/27
-ボードゲーム実装における思考フレームワーク 〜1.ゲームの状態の管理〜,https://qiita.com/ikngtty/items/60a27c5a83e71590b300,ikngtty,16,2018/10/18
+ボードゲーム実装における思考フレームワーク 〜1.ゲームの状態の管理〜,https://qiita.com/ikngtty/items/60a27c5a83e71590b300,ikngtty,15,2018/10/18
 libshogi で将棋プログラムを作ろう (1),https://qiita.com/tsoftware/items/19f05ee3481bc9971061,tsoftware,30,2016/12/23
 C#で将棋盤を描画してみようその2.1 ～駒の描画～,https://qiita.com/pizyumi/items/e1605bd6ca8284a38070,pizyumi,4,2015/09/09
 サーバーレス将棋 AI ☖,https://qiita.com/na-o-ys/items/b04ce27732c82b6beb9b,na-o-ys,104,2016/12/02
 TypeScript + PEG.jsでデータフロープログラミング専用のDSL言語AsyncFlowを作った,https://qiita.com/kotauchisunsun/items/3ae2b0ba7c975f1b14af,kotauchisunsun,6,2018/09/20
 "HSP3で遺伝的アルゴリズムをした話 〜遺伝的アルゴリズムの概略と「ムダにクリエイティブ」な""Hello,World!""〜",https://qiita.com/AmefuriTell/items/74f4e7049994e26096cd,AmefuriTell,12,2020/07/28
 「プログラム言語なんて１つやればなんとかなる」という方にMalbolgeを勧めてみましょう,https://qiita.com/ken_hamada/items/1c1006bf84788f9c15e4,ken_hamada,19,2020/01/13
-GCPとDockerでKaggle用計算環境構築,https://qiita.com/lain21/items/a33a39d465cd08b662f1,lain21,389,2018/12/20
+GCPとDockerでKaggle用計算環境構築,https://qiita.com/lain21/items/a33a39d465cd08b662f1,lain21,391,2018/12/20
 高校生がアルゴリズムとスパコンの力で、京都の碁盤目状道路を13.9%効率化した話,https://qiita.com/e869120/items/e463500da29f76a37b15,e869120,1061,2020/02/16
-たのしい探索アルゴリズムの世界【前編：全探索、bit全探索から半分全列挙まで】,https://qiita.com/e869120/items/25cb52ba47be0fd418d6,e869120,387,2020/07/26
-プログラミングでよく使う英単語のまとめ【随時更新】,https://qiita.com/Ted-HM/items/7dde25dcffae4cdc7923,Ted-HM,8769,2015/09/11
+たのしい探索アルゴリズムの世界【前編：全探索、bit全探索から半分全列挙まで】,https://qiita.com/e869120/items/25cb52ba47be0fd418d6,e869120,388,2020/07/26
+プログラミングでよく使う英単語のまとめ【随時更新】,https://qiita.com/Ted-HM/items/7dde25dcffae4cdc7923,Ted-HM,8775,2015/09/11
 めんどくさいおじさんをブロックするプログラムを書いた,https://qiita.com/ponkio-o/items/721b648c30d8e848b2d4,ponkio-o,40,2017/10/26
 ポケットコンピュータ PC-G850VS を最近のマイコンと接続する,https://qiita.com/plageoj/items/681f3331746871c5f2f8,plageoj,2,2019/02/03
 あなたのポケコン、まだ生きています。,https://qiita.com/plageoj/items/cd828e91c2fe87f8454e,plageoj,5,2019/12/10
@@ -231,41 +247,41 @@ c9cead41b6e70b429ee0,https://qiita.com/1ed873c7e9a8edd9c695d2fa438cc1ed/items/c9
 めくるめくLinuxカーネルじゃないLinux実装の世界,https://qiita.com/okuoku/items/e3e7e73d9d5e4ff92112,okuoku,161,2020/07/15
 めくるめく粗挽きWebブラウザエンジンの世界,https://qiita.com/okuoku/items/9c942a0732e0f7cddc3a,okuoku,47,2020/03/01
 Scalaプログラマが圏論を学ぶためのオススメ文献 - 3選,https://qiita.com/hinastory/items/f29a47a32499dcc9f08a,hinastory,107,2019/07/22
-"Twitter API 登録 (アカウント申請方法) から承認されるまでの手順まとめ　※2019年8月時点の情報 ",https://qiita.com/kngsym2018/items/2524d21455aac111cdee,kngsym2018,781,2018/09/13
+"Twitter API 登録 (アカウント申請方法) から承認されるまでの手順まとめ　※2019年8月時点の情報 ",https://qiita.com/kngsym2018/items/2524d21455aac111cdee,kngsym2018,783,2018/09/13
 Twitter API 申請時の失敗と改善方法(API の使い方追加しました),https://qiita.com/aki4masaki/items/3977779d45c9cecb8de7,aki4masaki,24,2020/04/01
 秘密にしておきたかったんだけど、実はTwitterにはWebページを埋め込めるんだよね,https://qiita.com/ver1000000/items/78736a74cfdb50934d8f,ver1000000,437,2020/07/09
 【図解】Dockerの全体像を理解する -後編-,https://qiita.com/etaroid/items/40106f13d47bfcbc2572,etaroid,826,2019/01/21
-【図解】Dockerの全体像を理解する -中編-,https://qiita.com/etaroid/items/88ec3a0e2d80d7cdf87a,etaroid,1142,2019/01/20
-【図解】Dockerの全体像を理解する -前編-,https://qiita.com/etaroid/items/b1024c7d200a75b992fc,etaroid,4167,2019/01/15
-一番分かりやすい OAuth の説明,https://qiita.com/TakahikoKawasaki/items/e37caf50776e00e733be,TakahikoKawasaki,6290,2017/07/14
+【図解】Dockerの全体像を理解する -中編-,https://qiita.com/etaroid/items/88ec3a0e2d80d7cdf87a,etaroid,1143,2019/01/20
+【図解】Dockerの全体像を理解する -前編-,https://qiita.com/etaroid/items/b1024c7d200a75b992fc,etaroid,4170,2019/01/15
+一番分かりやすい OAuth の説明,https://qiita.com/TakahikoKawasaki/items/e37caf50776e00e733be,TakahikoKawasaki,6293,2017/07/14
 H.265/HEVC特許暗黒時代,https://qiita.com/yohhoy/items/c2579097a507b1fbdddb,yohhoy,346,2017/06/07
 完全に理解するアフィン変換,https://qiita.com/koshian2/items/c133e2e10c261b8646bf,koshian2,373,2019/02/10
 悲しいとき～　悲しいとき～　Chrome をインストールするために Edge や IE を起動するとき～,https://qiita.com/Siketyan/items/1cd82970c8077daf9873,Siketyan,97,2020/07/06
 Intl.DateTimeFormat による明治以前の和暦の扱い,https://qiita.com/nue_of_k/items/ea3dae4a1be9ad6ac953,nue_of_k,30,2020/07/06
 twitter4j java 検索したツイートをDB（MySQL）に格納する。,https://qiita.com/michiruFX105/items/d860fac602ab78772942,michiruFX105,2,2018/12/06
 俺のオススメする監視ツール5選！！,https://qiita.com/joe_hirata/items/e5dcfb4e730b0da2de41,joe_hirata,226,2019/03/18
-Dockerのあれこれを断捨離する,https://qiita.com/ksato9700/items/b0075dc54dfffc64b999,ksato9700,137,2019/01/26
+Dockerのあれこれを断捨離する,https://qiita.com/ksato9700/items/b0075dc54dfffc64b999,ksato9700,138,2019/01/26
 CTFに関するアレコレをまとめてみた,https://qiita.com/LorseKudos/items/05d23fbd21f9cf16eb72,LorseKudos,11,2019/01/07
 Haskellで超簡単にシングルバイナリを作る,https://qiita.com/lambda_funtaro/items/5ac47f83616f8c07d4db,lambda_funtaro,57,2020/07/04
 コマンドでDockerコンテナを停止・削除、イメージの削除をする,https://qiita.com/shisama/items/48e2eaf1dc356568b0d7,shisama,664,2018/05/24
 docker networkの削除ができない,https://qiita.com/shundayo/items/8b24af5239d9162b253c,shundayo,27,2019/07/12
 ChromeでUserAgentが凍結される日（User Agent Client Hintsの使い方）,https://qiita.com/paddy-oti/items/fae9ecca9facc9797035,paddy-oti,110,2020/02/09
 ShellでSeleniumを作る ~Shellnium~,https://qiita.com/Rasukarusan/items/70a54bd38c71a07ff7bd,Rasukarusan,107,2020/06/28
-【VS Code + Marp】Markdownから爆速・自由自在なデザインで、プレゼンスライドを作る,https://qiita.com/tomo_makes/items/aafae4021986553ae1d8,tomo_makes,1921,2020/06/28
+【VS Code + Marp】Markdownから爆速・自由自在なデザインで、プレゼンスライドを作る,https://qiita.com/tomo_makes/items/aafae4021986553ae1d8,tomo_makes,1924,2020/06/28
 Rustの型推論のおかげで逆にデバッグに苦労した。,https://qiita.com/aoriso/items/5c5454ca7ff904ffe266,aoriso,45,2020/06/28
 Dockerファイルがビルドできなかったのでコンパイラをいじめる,https://qiita.com/kaityo256/items/ac10649debc10898f903,kaityo256,103,2020/06/21
 Python を Go に書き換えるとどれくらい速くなる？ 7つの言語で Dijkstra の実行速度を比較,https://qiita.com/reki2000/items/55ef54b96b26d80ad694,reki2000,420,2020/06/20
 xrandr でHI-DPI(Retina）なLinuxでのマルチモニタの設定,https://qiita.com/sathoshi-metal/items/7540b622d4616ae07a0c,sathoshi-metal,19,2017/06/01
-i3+Arch Linux初期環境構築まとめ,https://qiita.com/Tonooo/items/256fcaffd7113b1ed018,Tonooo,39,2017/12/24
+i3+Arch Linux初期環境構築まとめ,https://qiita.com/Tonooo/items/256fcaffd7113b1ed018,Tonooo,40,2017/12/24
 論文の読み方 [和訳],https://qiita.com/cirusthenter/items/2e508c5fb3e824312918,cirusthenter,836,2020/05/10
 超高速！多倍長整数の計算手法【前編：大きな数の四則計算を圧倒的な速度で！】,https://qiita.com/square1001/items/1aa12e04934b6e749962,square1001,549,2020/06/15
 Rustに影響を与えた言語たち,https://qiita.com/hinastory/items/e97d5459b9cda45758db,hinastory,231,2020/06/14
 まだ Word で消耗してるの？ 大学のレポートを Markdown で書こう,https://qiita.com/Kumassy/items/5b6ae6b99df08fb434d9,Kumassy,382,2016/12/12
-TL;DRの意味を勘違いして使っていたら顰蹙を買ったので気をつけて使おう！,https://qiita.com/kei_0121/items/2e2e070702a82a79de8e,kei_0121,366,2018/11/01
+TL;DRの意味を勘違いして使っていたら顰蹙を買ったので気をつけて使おう！,https://qiita.com/kei_0121/items/2e2e070702a82a79de8e,kei_0121,367,2018/11/01
 Visual Studio Code で Markdown 編集環境を整える,https://qiita.com/kumapo0313/items/a59df3d74a7eaaaf3137,kumapo0313,267,2018/07/21
 VSCode の Markdown で数式を表示して PDF 化する,https://qiita.com/1gy/items/5b1f3c772b6da43cc13e,1gy,64,2018/11/23
 【Discord】双葉杏BOTの運用 ～Bot導入からPythonのインストール、スケジューラの設定まで～,https://qiita.com/HisoNWP/items/f1b2e634934be3198b98,HisoNWP,8,2018/12/05
-海外で通用するエンジニアがクスッとしてしまう17の meme,https://qiita.com/cirusthenter/items/4bae72a5bd17a53883f3,cirusthenter,814,2020/06/10
+海外で通用するエンジニアがクスッとしてしまう17の meme,https://qiita.com/cirusthenter/items/4bae72a5bd17a53883f3,cirusthenter,815,2020/06/10
 Visual Studio でインデントを増やす・減らす,https://qiita.com/Zuishin/items/8db3a93b503405d949d3,Zuishin,17,2018/10/15
 Pacmanの使い方,https://qiita.com/MoriokaReimen/items/dbe1448ce6c0f80a6ac1,MoriokaReimen,147,2016/07/30
 月ノ美兎さんの音声合成ツール(Text To Speech) を作ってみた,https://qiita.com/K2_ML/items/2804594454b39180c909,K2_ML,236,2020/05/29
@@ -282,9 +298,9 @@ PythonでPixivのブックマークした画像を一括取得したいともが
 不思議の国のSE用語,https://qiita.com/t_nakayama0714/items/478a8ed3a9ae143ad854,t_nakayama0714,3363,2016/01/08
 "a/(b+c)+b/(c+a)+c/(a+b)=4の自然数解(a,b,c)を求める",https://qiita.com/kaityo256/items/c8b703ee04088ef64983,kaityo256,194,2017/09/05
 pythonで寿司打を自動化してみた,https://qiita.com/dubianhaozhi/items/9b5d571914b1142dbcaa,dubianhaozhi,272,2020/05/14
-あのサイトで使われている技術を調べる,https://qiita.com/nightyknite/items/1258eeca403e7d449b5a,nightyknite,285,2017/12/29
-pyenvが必要かどうかフローチャート,https://qiita.com/shibukawa/items/0daab479a2fd2cb8a0e7,shibukawa,747,2016/09/30
-i3 Window Manager を使ってみて分かったおすすめ設定集,https://qiita.com/gyu-don/items/d61b03e0222a7f1ce9f7,gyu-don,51,2017/03/11
+あのサイトで使われている技術を調べる,https://qiita.com/nightyknite/items/1258eeca403e7d449b5a,nightyknite,288,2017/12/29
+pyenvが必要かどうかフローチャート,https://qiita.com/shibukawa/items/0daab479a2fd2cb8a0e7,shibukawa,748,2016/09/30
+i3 Window Manager を使ってみて分かったおすすめ設定集,https://qiita.com/gyu-don/items/d61b03e0222a7f1ce9f7,gyu-don,52,2017/03/11
 2016年にJava8+JavaFXで作ったGUIツールをリファクタリングした,https://qiita.com/jiro4989/items/2bc2cbc4ebf695ed7a2c,jiro4989,3,2020/05/11
 新しくaliasを定義する際に「-bash: alias: ○○: not found」と出てしまう場合の解決法,https://qiita.com/C_HERO/items/ede96528c1d446b535dc,C_HERO,2,2019/03/28
 dotfilesの作成・拡張の参考になりそうなリソース集,https://qiita.com/KeyMama/items/fa55a372c56806eea05f,KeyMama,103,2019/12/10
@@ -304,27 +320,27 @@ ArchiveBox + Pocket + Fessで作る、いつでもどこでもマイ魚拓（全
 GPUからHello World!,https://qiita.com/termoshtt/items/f608e9efd819fe7626d2,termoshtt,30,2020/03/28
 Qiitaの退会方法まとめ,https://qiita.com/lambda_funtaro/items/9830ca8686ab279e42b6,lambda_funtaro,630,2020/03/26
 TwitterAPIのstatuses/show/:idにはどんな情報が入っているのか【前編】,https://qiita.com/fuj1kky/items/bfed896ad1d6ca7bf44c,fuj1kky,1,2019/12/18
-2020年20年目を迎える IE6 に対応した SPA を TypeScript で作る,https://qiita.com/boiyama/items/88162dcab283ade9e28e,boiyama,145,2020/03/23
+2020年20年目を迎える IE6 に対応した SPA を TypeScript で作る,https://qiita.com/boiyama/items/88162dcab283ade9e28e,boiyama,147,2020/03/23
 VTuberのホームページをGitHubのプルリクだけで更新していったらどうなるのか？企画に参戦してみた,https://qiita.com/unsoluble_sugar/items/120f0856d497ef96010e,unsoluble_sugar,675,2020/01/18
-意外と知られてないっぽいMarkdownのリンクの書き方,https://qiita.com/h1na/items/d305d49b5a27e92d132a,h1na,290,2014/04/02
-JavaScript: 通常の関数とアロー関数の違いは「書き方だけ」ではない。異なる性質が10個ほどある。,https://qiita.com/suin/items/a44825d253d023e31e4d,suin,1478,2020/03/22
-Google Spreadsheet を簡易 Webサーバーとして動かして、手軽にWebHookを受け取る方法,https://qiita.com/kunichiko/items/7f64c7c80b44b15371a3,kunichiko,1561,2018/03/05
-C# で出来ること一覧,https://qiita.com/okazuki/items/e3a8e23f9ac2a10d8fde,okazuki,952,2020/03/22
+意外と知られてないっぽいMarkdownのリンクの書き方,https://qiita.com/h1na/items/d305d49b5a27e92d132a,h1na,291,2014/04/02
+JavaScript: 通常の関数とアロー関数の違いは「書き方だけ」ではない。異なる性質が10個ほどある。,https://qiita.com/suin/items/a44825d253d023e31e4d,suin,1477,2020/03/22
+Google Spreadsheet を簡易 Webサーバーとして動かして、手軽にWebHookを受け取る方法,https://qiita.com/kunichiko/items/7f64c7c80b44b15371a3,kunichiko,1562,2018/03/05
+C# で出来ること一覧,https://qiita.com/okazuki/items/e3a8e23f9ac2a10d8fde,okazuki,951,2020/03/22
 VScodeの設定共有（SettingSync）,https://qiita.com/torun225/items/e6823fc22e5ae79247fe,torun225,98,2018/12/09
 Visual Studio CodeのSettings Syncでtokenを再設定する方法,https://qiita.com/kinchiki/items/6bfe328fd43f72c1c122,kinchiki,28,2018/07/29
-Haskell 超入門,https://qiita.com/7shi/items/145f1234f8ec2af923ef,7shi,1167,2014/08/20
+Haskell 超入門,https://qiita.com/7shi/items/145f1234f8ec2af923ef,7shi,1168,2014/08/20
 Unityを使って学園祭でVRスプラトゥーン を自作して展示した話,https://qiita.com/cha84rakanal/items/16333cc88a2969a00c6e,cha84rakanal,24,2019/12/11
 2020年はsystemd-homedの登場でLinuxのユーザー管理が大きく変わるぞ,https://qiita.com/onokatio/items/dbae4afe7fabd2602545,onokatio,516,2020/03/17
 競プロ界隈でpython強者がやっていることをまとめてみた,https://qiita.com/goto_yuta_/items/1c104e332351ab9389a6,goto_yuta_,577,2020/03/18
 WebサイトをスクレイピングするWebクローラー20選,https://qiita.com/Octoparse_Japan/items/6cf5e43c44eb6cb110bd,Octoparse_Japan,109,2018/07/19
-Markdown記法 チートシート,https://qiita.com/Qiita/items/c686397e4a0f4f11683d,Qiita,10857,2011/11/04
-Party Parrot とは 〜イカれたオウムの歴史を紐解く〜,https://qiita.com/ayatothos/items/0c3da3d48fe8ade705e6,ayatothos,638,2019/12/17
+Markdown記法 チートシート,https://qiita.com/Qiita/items/c686397e4a0f4f11683d,Qiita,10864,2011/11/04
+Party Parrot とは 〜イカれたオウムの歴史を紐解く〜,https://qiita.com/ayatothos/items/0c3da3d48fe8ade705e6,ayatothos,637,2019/12/17
 pyenv、pyenv-virtualenv、venv、Anaconda、Pipenv。私はPipenvを使う。,https://qiita.com/KRiver1/items/c1788e616b77a9bad4dd,KRiver1,421,2019/03/29
 [Ubuntu]devilspie2でウインドウサイズと位置を調整,https://qiita.com/s-katsumata/items/318b4c58a9e32593553b,s-katsumata,4,2020/01/23
-NeovimでモダンなPython環境を構築する,https://qiita.com/lighttiger2505/items/e0ada17634516c081ee7,lighttiger2505,308,2017/04/22
-2020 年の Python パッケージ管理ベストプラクティス,https://qiita.com/sk217/items/43c994640f4843a18dbe,sk217,823,2019/12/15
+NeovimでモダンなPython環境を構築する,https://qiita.com/lighttiger2505/items/e0ada17634516c081ee7,lighttiger2505,307,2017/04/22
+2020 年の Python パッケージ管理ベストプラクティス,https://qiita.com/sk217/items/43c994640f4843a18dbe,sk217,824,2019/12/15
 pythonの環境構築戦争にイラストで終止符をどうやら打てない,https://qiita.com/ganariya/items/1bf870275bad7b5ab506,ganariya,1293,2019/10/27
-本当に正しい .bashrc と .bash_profile の使ひ分け,https://qiita.com/magicant/items/d3bb7ea1192e63fba850,magicant,1781,2014/04/16
+本当に正しい .bashrc と .bash_profile の使ひ分け,https://qiita.com/magicant/items/d3bb7ea1192e63fba850,magicant,1784,2014/04/16
 pyenvのインストール、使い方、pythonのバージョン切り替えできない時の対処法,https://qiita.com/koooooo/items/b21d87ffe2b56d0c589b,koooooo,428,2017/06/23
 2系3系共存している場合のライブラリインストールの罠[Python],https://qiita.com/takuyanin/items/44ab1c401e979c1bbcfb,takuyanin,7,2018/12/18
 Visual Studio Code の配色を好き勝手にカスタマイズした（settings.json）,https://qiita.com/deren2525/items/6bc099ae8c05e3076055,deren2525,102,2018/10/24
@@ -333,12 +349,12 @@ LGTMを戻す,https://qiita.com/sapi_kawahara/items/4e05845e285ac087feb5,sapi_ka
 LGTMはいやだ,https://qiita.com/HirosuguTakeshita/items/f015fee48f42a41045ef,HirosuguTakeshita,354,2020/03/13
 Twitter APIを使って自動でTweetする,https://qiita.com/jnakanaka1/items/bf4f450bd9dd3bd5005f,jnakanaka1,4,2019/05/07
 [ネタ]強制的にLGTMをいいねに戻す方法[Chromeエクステンション不要],https://qiita.com/Andhy/items/de9d7430ffc5b30670f5,Andhy,9,2020/03/12
-声に出して読みたい美しいPython用語18選。R18例文付き,https://qiita.com/youwht/items/519b2f955e5fb75e32c2,youwht,402,2020/03/04
+声に出して読みたい美しいPython用語18選。R18例文付き,https://qiita.com/youwht/items/519b2f955e5fb75e32c2,youwht,403,2020/03/04
 ls よりも exa を使おう！モダンな Linux コマンド達を紹介,https://qiita.com/navitime_tech/items/c249269a3b47666c784b,navitime_tech,3217,2020/02/25
 Fortranを使って流体シミュレーションで大石泉すき,https://qiita.com/implicit_none/items/9c63589003bd473054dd,implicit_none,28,2019/12/18
 23d24401467301d431b9,https://qiita.com/1ed873c7e9a8edd9c695d2fa438cc1ed/items/23d24401467301d431b9,1ed873c7e9a8edd9c695d2fa438cc1ed,33,2019/12/26
-他言語プログラマがgolangの基本を押さえる為のまとめ,https://qiita.com/tfrcm/items/e2a3d7ce7ab8868e37f7,tfrcm,1406,2018/01/01
-今からVue.jsを始める人のための「知るのを後回しにしてよい」n個のこと,https://qiita.com/fruitriin/items/3249bb24d60932bb42ee,fruitriin,845,2020/03/07
+他言語プログラマがgolangの基本を押さえる為のまとめ,https://qiita.com/tfrcm/items/e2a3d7ce7ab8868e37f7,tfrcm,1412,2018/01/01
+今からVue.jsを始める人のための「知るのを後回しにしてよい」n個のこと,https://qiita.com/fruitriin/items/3249bb24d60932bb42ee,fruitriin,846,2020/03/07
 ReactはウェブやHTMLとは特に関係のないライブラリです,https://qiita.com/kfurumiya/items/f888cb66c8ba6d15fc60,kfurumiya,642,2020/03/07
 GCPで永久無料枠を利用してサービスを立ち上げたときにしたことの備忘録,https://qiita.com/riku-shiru/items/a870edd9dc0b132e092c,riku-shiru,1091,2019/03/29
 お前らのコミットは汚い,https://qiita.com/rnitta/items/c998172872ef49be93f1,rnitta,827,2020/02/23
@@ -346,11 +362,11 @@ GCPで永久無料枠を利用してサービスを立ち上げたときにし�
 Raspberry Piの壊し方,https://qiita.com/uhey22e/items/91f6ec6f0668e3c7f222,uhey22e,117,2016/12/06
 Goで超簡易版Twitterを作ってみました（初心者向け）,https://qiita.com/kohama66/items/735e70e6e3215942b02f,kohama66,122,2020/01/16
 Pythonライブラリの「麻雀(mahjong)」って？？,https://qiita.com/FJyusk56/items/8189bcca3849532d095f,FJyusk56,480,2020/01/19
-EC2でブログを立ち上げた途端に来た、怪しい攻撃たち,https://qiita.com/KMim/items/60c1ce893c09872acd15,KMim,1826,2020/01/15
+EC2でブログを立ち上げた途端に来た、怪しい攻撃たち,https://qiita.com/KMim/items/60c1ce893c09872acd15,KMim,1825,2020/01/15
 【SCP】英語勉強用PWAアプリをNuxtで3日+αで作ってみる,https://qiita.com/quailDegu/items/b0aae2843ff5783c60e1,quailDegu,6,2019/09/22
 「Qiitaのいろいろランキング2019」への感謝と提案,https://qiita.com/kaizen_nagoya/items/40b8557a20e8d75d62b5,kaizen_nagoya,9,2019/12/31
 研究室を IoT 化したら守衛さんを監禁してしまった話,https://qiita.com/ponkio-o/items/b623cb17a2352767ace1,ponkio-o,769,2019/12/16
-【GitHub】README.mdをカッコ可愛くデザインしてアプリの魅力を120%にする,https://qiita.com/aocattleya/items/5f836e9c65ba3eb3af03,aocattleya,1330,2020/01/09
+【GitHub】README.mdをカッコ可愛くデザインしてアプリの魅力を120%にする,https://qiita.com/aocattleya/items/5f836e9c65ba3eb3af03,aocattleya,1332,2020/01/09
 [Python]NetworkXでQiitaのタグ関係図を描く,https://qiita.com/inoory/items/088f719f2fd9a2ea4ee5,inoory,174,2016/08/16
 Google Cloud Speech API vs. Amazon Transcribe,https://qiita.com/ysdyt/items/03729348edf56406ab12,ysdyt,73,2020/01/11
 twitterが280字になったので、ツイートをライブラリとしてバベって使う,https://qiita.com/akameco/items/7459ec053b6fda2d5a84,akameco,28,2017/11/11
@@ -359,7 +375,7 @@ Electron + Vue + flowtypeで最高の画像を収集するためのTwitterクラ
 Googleの画像検索APIを使って画像を大量に収集する,https://qiita.com/ysdyt/items/02a9e6b4e70f26385abc,ysdyt,141,2017/09/25
 Qiita(11)「Qiitaいいな〜自分のいいね分析」自分版,https://qiita.com/kaizen_nagoya/items/11955909b0302d9ba999,kaizen_nagoya,2,2019/02/25
 6日間でAndroidアプリを作って公開した記録,https://qiita.com/anolivetree/items/31cf92d3a0ac7342d672,anolivetree,24,2018/06/21
-MediaWiki APIを使ってWikipediaの情報を取得,https://qiita.com/yubessy/items/16d2a074be84ee67c01f,yubessy,354,2014/04/29
+MediaWiki APIを使ってWikipediaの情報を取得,https://qiita.com/yubessy/items/16d2a074be84ee67c01f,yubessy,356,2014/04/29
 Qiitaいいな〜自分のいいね分析,https://qiita.com/snona/items/35e7fde3596d0e9a6bd4,snona,15,2019/01/16
 階層構造を持つデータの可視化,https://qiita.com/yuichy/items/0fc278cee4604160e6fd,yuichy,75,2016/12/30
 XMLベースのvtk形式に関する覚書,https://qiita.com/hsimyu/items/a8fba8866c5f5c2d8b78,hsimyu,32,2017/09/14
@@ -372,7 +388,7 @@ Git・GitHubに隠された便利な機能 | GitHub Cheat Sheet（日本語訳�
 【ニコニコ動画】niconicoコンテンツ検索APIが2019/6/3よりリニューアルされる件,https://qiita.com/r-wakatsuki/items/ef0227f2adf041008762,r-wakatsuki,8,2019/04/24
 Puppeteerのセットアップから使い方まで〜ブラウザ操作の自動化〜,https://qiita.com/kanoe/items/9043a81d28a1b733b2e2,kanoe,215,2019/03/02
 漢文風プログラミング言語「文言」の基本文法を読み解いてみた,https://qiita.com/GandT/items/920af538c0a405199815,GandT,145,2019/12/18
-Unity臭さを消す方法10連発,https://qiita.com/ruccho_vector/items/014d9751e0e63c11db39,ruccho_vector,966,2019/12/18
+Unity臭さを消す方法10連発,https://qiita.com/ruccho_vector/items/014d9751e0e63c11db39,ruccho_vector,965,2019/12/18
 【Unity臭】Unity特有の安っぽさを消臭してマシな画面を作る,https://qiita.com/Plum_Very/items/06df5ed018ab23cf38c2,Plum_Very,254,2019/12/16
 Chrome Extension作成に役立つURL集,https://qiita.com/nori0__/items/fc26b1e31ecf03b5f187,nori0__,10,2019/07/28
 Chrome拡張の悪用の危険性を試す,https://qiita.com/yui540/items/13c6adc831a386445a3e,yui540,22,2017/04/08
@@ -385,18 +401,18 @@ Three.js　AR　女の子　出す　方法,https://qiita.com/FMS_Cat/items/96d3
 2019年のWebGLデバッグツール状況,https://qiita.com/naotaro0123/items/0d5fe877354562a6d1d1,naotaro0123,43,2019/12/14
 貴方はいくつ知っている？あまり知られていない便利なChrome DevToolsの機能まとめ,https://qiita.com/HayatoKamono/items/86e55a17b69f8b020010,HayatoKamono,819,2019/12/10
 Twitter APIのWrite権限を凍結された2019夏,https://qiita.com/kinmi/items/53778c020a2ce813a970,kinmi,103,2019/10/17
-今シンガポールにいますLineBotを作成し、記憶に残る仕事をしたい物語,https://qiita.com/youwht/items/014aa6e69657c5070593,youwht,791,2019/12/04
+今シンガポールにいますLineBotを作成し、記憶に残る仕事をしたい物語,https://qiita.com/youwht/items/014aa6e69657c5070593,youwht,792,2019/12/04
 chromeからvivaldiにメインブラウザを移行しました,https://qiita.com/gurume029/items/70795b88ddb25ad49385,gurume029,64,2018/11/03
 pixivのフォローユーザーの漫画・イラストを一括DL,https://qiita.com/Hirosaji/items/304de7508df4b1cae904,Hirosaji,52,2018/02/24
-いつものように本番作業してたはずなのに,https://qiita.com/2gt/items/d6906a185109e66df74f,2gt,1463,2019/12/01
+いつものように本番作業してたはずなのに,https://qiita.com/2gt/items/d6906a185109e66df74f,2gt,1462,2019/12/01
 Stardard MIDI Fileを解析して音ゲーの譜面を作る話,https://qiita.com/owts/items/8d641e8a8a423566db71,owts,24,2018/12/18
 GreasemonkeyでTweetDeckをスマホアプリ風に使えるようにする,https://qiita.com/mkizka/items/7fccc6a3e0b728d12379,mkizka,7,2019/10/04
-githubで最もやべー関数を発掘する,https://qiita.com/AngryMane/items/2be9016f82653c8cc07f,AngryMane,978,2019/11/10
+githubで最もやべー関数を発掘する,https://qiita.com/AngryMane/items/2be9016f82653c8cc07f,AngryMane,979,2019/11/10
 RESTful vs GraphQL,https://qiita.com/haoyu_ma/items/4c7a806ca1e7fe330154,haoyu_ma,8,2019/05/06
 理工系俗語辞典,https://qiita.com/github-nakasho/items/ad6ee5156fc98b64d5fc,github-nakasho,201,2019/10/21
 fluidsynthをAndroid MIDI APIの出力デバイスとして使用する,https://qiita.com/atsushieno/items/5a08fff27667e400e615,atsushieno,7,2015/12/15
 【Swift】中二病の突然の発作に備えて、CALayerで魔法陣を描く【CoreAnimation 】,https://qiita.com/type-f/items/54d54bbce01cbc71ae55,type-f,195,2019/10/15
-自称IT企業があまりにITを使わずに嫌になって野に下った俺が紹介するWindowsの自動化の方法,https://qiita.com/mima_ita/items/453bb6c313e459c44689,mima_ita,830,2019/10/17
+自称IT企業があまりにITを使わずに嫌になって野に下った俺が紹介するWindowsの自動化の方法,https://qiita.com/mima_ita/items/453bb6c313e459c44689,mima_ita,833,2019/10/17
 "画像クローラー ",https://qiita.com/taptappun/items/051e7d9d57770c7cb718,taptappun,96,2017/12/10
 日本の Twitter ユーザーが好きな言語・嫌いな言語2019,https://qiita.com/iwasaki501/items/51dc07b744d3f342008b,iwasaki501,167,2019/10/19
 ガチ調査版::2019年プログラミング言語 求人人気ランキング,https://qiita.com/bitai/items/c8941da683ebedd135fd,bitai,383,2019/10/21
@@ -416,7 +432,7 @@ html + js で風を可視化,https://qiita.com/hiyuzawa/items/dbe82feecc57ec84a8
 磁力線や電気力線(のようなもの)を可視化する,https://qiita.com/wittyfool@github/items/9a2aa4ee701f9facb307,wittyfool@github,7,2018/10/13
 JavaScriptコンソールで遊べるテトリスを作成して公開してみた,https://qiita.com/okumurakengo/items/3ce19b1a6d3118e803b7,okumurakengo,84,2019/08/13
 QRコードを人力で読み取る,https://qiita.com/amanao/items/b7c54a3c73a8301b2412,amanao,434,2018/12/31
-AtCoderで始めるPython入門,https://qiita.com/KoyanagiHitoshi/items/3286fbc65d56dd67737c,KoyanagiHitoshi,598,2019/04/04
+AtCoderで始めるPython入門,https://qiita.com/KoyanagiHitoshi/items/3286fbc65d56dd67737c,KoyanagiHitoshi,599,2019/04/04
 青空文庫APIサーバーのご紹介,https://qiita.com/ksato9700/items/626cc82c007ba8337034,ksato9700,37,2017/12/21
 青空文庫をNDC等で絞り込みつつ全文検索できるWebサイト「Aozorasearch」の紹介,https://qiita.com/myokoym/items/a97f6901d4fa12bb8cb9,myokoym,9,2017/12/03
 【2019年】データ分析・可視化に本気でおすすめのツール30選（ノーコード型ツール含め）,https://qiita.com/keisuuuuke/items/e7b5cc6a5db04f2c8d5c,keisuuuuke,598,2019/05/09
@@ -424,17 +440,17 @@ AtCoderで始めるPython入門,https://qiita.com/KoyanagiHitoshi/items/3286fbc6
 [連載]Reactとp5.jsでクソかっこいいサイトを作ろう！！(part 1),https://qiita.com/hppRC/items/e7d7f5bfd4694f673446,hppRC,18,2019/08/08
 Unityでディープラーニングする方法調べた,https://qiita.com/highno_RQ/items/7a33e7eaa6d77c93968f,highno_RQ,100,2019/08/09
 Twitterを使いこなす！検索オプションまとめ,https://qiita.com/afonomics/items/98a6b7dd011844ed797b,afonomics,62,2017/11/25
-RaspberryPiで作る監視カメラ,https://qiita.com/lis-hanzomon/items/cc1f7f316fbeb9579b28,lis-hanzomon,157,2019/04/16
+RaspberryPiで作る監視カメラ,https://qiita.com/lis-hanzomon/items/cc1f7f316fbeb9579b28,lis-hanzomon,158,2019/04/16
 蔵本モデルの高速計算,https://qiita.com/yotapoon/items/653776362a3db0f91f1e,yotapoon,40,2019/08/08
 Google Drive OCR機能を試してみた（英語）,https://qiita.com/kaizen_nagoya/items/5ad1ada6577396601eaa,kaizen_nagoya,5,2019/08/07
 リアルな眼球を描く。HTMLとCSSだけで。,https://qiita.com/ichimonji_haji/items/b6362aa808ae351affdc,ichimonji_haji,1234,2019/07/29
 [論文実装_その1] 畳み込みニューラルネットワークは何を見ているか,https://qiita.com/okn-yu/items/53bbff161c027dc04981,okn-yu,226,2019/08/04
 次にJSガッツリ書くときはTypeScriptで,https://qiita.com/yuya_presto/items/f625da7b1a4d21c6ce7a,yuya_presto,574,2017/12/26
-var/let/constの使い分けのメモ,https://qiita.com/masarufuruya/items/096e51c3e4c36c86ae27,masarufuruya,549,2017/06/01
+var/let/constの使い分けのメモ,https://qiita.com/masarufuruya/items/096e51c3e4c36c86ae27,masarufuruya,548,2017/06/01
 Twitter から香風智乃の画像を検索して保存する,https://qiita.com/koki-sato/items/c16c8e3445287698b3a8,koki-sato,46,2017/01/12
 シェルスクリプト（Bash）で作るTwitterクライアント,https://qiita.com/piroor/items/a999eeef9a67283b1e56,piroor,98,2016/12/05
 2019年版 最先端のフロントエンド開発者になるために学ぶべきこと,https://qiita.com/baby-degu/items/da30fa71b8f48fffc568,baby-degu,1507,2019/07/21
-Linuxコマンド：Windowsコマンド対応表,https://qiita.com/asmin/items/d53e71ed98a377ca7823,asmin,384,2014/03/03
+Linuxコマンド：Windowsコマンド対応表,https://qiita.com/asmin/items/d53e71ed98a377ca7823,asmin,385,2014/03/03
 ローカルで開発していたアプリをDocker化してみた（nginx+Flask+postgres）,https://qiita.com/kiyokiyo_kzsby/items/bea738fa210216c5ea65,kiyokiyo_kzsby,156,2019/07/28
 やっと理解できる！3次元・4次元・N次元物体の描画まとめ,https://qiita.com/Anko_9801/items/449d0e0fec6bf473f561,Anko_9801,72,2019/07/28
 Golangを用いた様々な計算の高速化,https://qiita.com/tutuz/items/057452fbbe9a5ae26d37,tutuz,105,2019/07/24
@@ -444,10 +460,10 @@ OAuth 2.0 クライアント認証,https://qiita.com/TakahikoKawasaki/items/63ed
 Pythonしか書きたくない人が、AWS上にWEBアプリを作ってみました。,https://qiita.com/IKEH/items/d1495a37649c25bcfc27,IKEH,214,2019/07/22
 行列行列積の高速化手法,https://qiita.com/nocturnality/items/92b3cf7d7fc5dab4a3a7,nocturnality,75,2017/02/24
 まだXMLHttpRequestを使ってるの？　fetchのすすめ,https://qiita.com/uhyo/items/91649e260165b35fecd7,uhyo,576,2018/10/09
-ちょっと変わったニューラルネットワーク Reservoir Computing,https://qiita.com/kazoo04/items/71b659ced9dc0342a2b0,kazoo04,113,2016/12/25
+ちょっと変わったニューラルネットワーク Reservoir Computing,https://qiita.com/kazoo04/items/71b659ced9dc0342a2b0,kazoo04,114,2016/12/25
 ゼロから作るReservoir Computing,https://qiita.com/pokotsun/items/dd8eb48fadeee052110b,pokotsun,72,2018/12/23
 Google Chrome拡張機能をFirefoxに移植するために行ったこと,https://qiita.com/ikemo/items/6067ae0cf686e0ca6481,ikemo,9,2019/02/19
-TypeScriptの型入門,https://qiita.com/uhyo/items/e2fdef2d3236b9bfe74a,uhyo,3313,2018/02/16
+TypeScriptの型入門,https://qiita.com/uhyo/items/e2fdef2d3236b9bfe74a,uhyo,3316,2018/02/16
 AtCoder に登録したら解くべき精選過去問 10 問を WolframScript で解いてみた,https://qiita.com/selpo/items/15d8861c0442f7bf0299,selpo,5,2019/07/14
 "Pythonで""in list""から""in set""に変えただけで爆速になった件とその理由",https://qiita.com/kitadakyou/items/6f877edd263f097e78f4,kitadakyou,729,2019/07/11
 TwitterのAPI制限 [2019/11/17現在],https://qiita.com/mpyw/items/32d44a063389236c0a65,mpyw,239,2013/12/04
@@ -467,26 +483,26 @@ Raspberry Pi2(Linux Kernel)のブートシーケンスを読む(その1) アー�
 Restlet Clientで始めるREST APIテストの自動化,https://qiita.com/84zume/items/fac99705c39d2f18ada7,84zume,137,2017/09/12
 display:none と visibility:hidden の違い,https://qiita.com/rico/items/0f645e84028d4fe00be6,rico,277,2014/05/26
 なるべく切れない回線のつくりかた（物理）v2,https://qiita.com/norisionori/items/01784500e9f4a6d0474b,norisionori,1704,2019/06/27
-"できるだけ簡単に密度汎関数理論（Density Functional Theory, DFT）を説明してみる（前編）",https://qiita.com/dc1394/items/1bb597b27d7511ce31ba,dc1394,93,2019/03/14
+"できるだけ簡単に密度汎関数理論（Density Functional Theory, DFT）を説明してみる（前編）",https://qiita.com/dc1394/items/1bb597b27d7511ce31ba,dc1394,94,2019/03/14
 TwitterAPIの申請に必要な英作文をユルく和訳してみた,https://qiita.com/tomon9086/items/7939ed83b40c9128826f,tomon9086,5,2019/02/27
-Markdown記法 サンプル集,https://qiita.com/tbpgr/items/989c6badefff69377da7,tbpgr,3265,2014/07/15
+Markdown記法 サンプル集,https://qiita.com/tbpgr/items/989c6badefff69377da7,tbpgr,3268,2014/07/15
 自然言語処理を簡単に扱えると噂のCOTOHA APIをPythonで使ってみた,https://qiita.com/gossy5454/items/83072418fb0c5f3e269f,gossy5454,128,2018/09/05
 噂のGraphvizを使ってみる,https://qiita.com/umasoya/items/c1c4e583f393b27ebb7a,umasoya,99,2015/09/28
-エンジニアが知っておきたい色についてのお話,https://qiita.com/megumu-u/items/554f3e9f8950ddddb03a,megumu-u,1337,2019/06/18
+エンジニアが知っておきたい色についてのお話,https://qiita.com/megumu-u/items/554f3e9f8950ddddb03a,megumu-u,1336,2019/06/18
 「あなたを再びプログラミングに駆り立てる映画10選」を和訳した,https://qiita.com/ohara5555/items/881ac3d076c1719ed91c,ohara5555,1559,2019/06/21
 Firebaseを使い始めたら人生が変わった(ような気がした),https://qiita.com/owen/items/c51c6ec27c9e2f5804b0,owen,1579,2018/08/31
 我偽中国語翻訳機作成了,https://qiita.com/shoichiro-k/items/5d28be844f664100387b,shoichiro-k,823,2019/06/25
 Android EngineerがFlutterという新世界に踏み込んだ話,https://qiita.com/BingSyu/items/5398e440b22c44aa1927,BingSyu,166,2018/12/05
 Android開発はFlutterでやる方がいい説,https://qiita.com/ko2ic/items/b07d3ec73513c1bd8ba6,ko2ic,640,2019/03/27
-curl コマンド 使い方メモ,https://qiita.com/yasuhiroki/items/a569d3371a66e365316f,yasuhiroki,2321,2015/12/20
+curl コマンド 使い方メモ,https://qiita.com/yasuhiroki/items/a569d3371a66e365316f,yasuhiroki,2322,2015/12/20
 pythonとフェルマーの小定理で１行FizzBuzz,https://qiita.com/chikara-n-ellipse/items/0397014503c5b8e562d5,chikara-n-ellipse,100,2019/04/25
 ConoHaのArchiveBoxアプリケーションを使ってみたよ,https://qiita.com/CloudRemix/items/691caf91efa3ef19a7ad,CloudRemix,3,2019/06/16
 Qiitaの記事をランダムに読める API / サービス を4時間ぐらいで作った (Firebase/AWS/Docker) (運用費0円※),https://qiita.com/redshoga/items/b550cdce94d7b74287d5,redshoga,173,2019/06/18
 gnuplot で matplotlib 風の美しい3次元グラフを描くテンプレート,https://qiita.com/sawa2d2/items/972315c9af42dd8bc498,sawa2d2,15,2018/08/21
 魔法使いになりたい人のためのシェーダーライブコーディング入門,https://qiita.com/kaneta1992/items/21149c78159bd27e0860,kaneta1992,735,2019/06/20
-海上自衛隊のHPが阿部寛のライバルとして名乗りをあげた,https://qiita.com/masanarih0ri/items/a56cdcce0eb98e843d4b,masanarih0ri,513,2019/06/08
+海上自衛隊のHPが阿部寛のライバルとして名乗りをあげた,https://qiita.com/masanarih0ri/items/a56cdcce0eb98e843d4b,masanarih0ri,512,2019/06/08
 地形プロシージャル生成 - パーリンノイズアルゴリズム,https://qiita.com/gis/items/ba7d715901a0e572b0e9,gis,277,2019/06/10
-モデル予測制御（MPC）による軌道追従制御,https://qiita.com/taka_horibe/items/47f86e02e2db83b0c570,taka_horibe,285,2019/01/18
+モデル予測制御（MPC）による軌道追従制御,https://qiita.com/taka_horibe/items/47f86e02e2db83b0c570,taka_horibe,284,2019/01/18
 ディープラーニング声質変換OSS「yukarinライブラリ」関連記事等一覧,https://qiita.com/BURI55/items/e9fdf381087b363c1074,BURI55,272,2019/06/12
 ポケモンデータ解析.py,https://qiita.com/maskot1977/items/2680927b58cdc4fad8d4,maskot1977,454,2019/06/14
 will-changeで目指す60fpsのぬるぬるCSSアニメーション,https://qiita.com/yuneco/items/f07d60ab21dd1de9a51d,yuneco,418,2019/06/09
@@ -502,7 +518,7 @@ IT系の技術トレンドを調べるのに使えるサービス,https://qiita.
 6日で作ったRailsアプリを譲渡するまで,https://qiita.com/svfreerider/items/d749fea1655de71d1dfd,svfreerider,566,2019/06/05
 30歳を過ぎて機械学習エンジニアに転身して半年になったのでこれまでやってきた勉強についてまとめる,https://qiita.com/tomone_hata/items/6d2f8f740976bad531e9,tomone_hata,684,2019/06/01
 知っておく価値のある珍しいHTMLタグ,https://qiita.com/rana_kualu/items/6ef80be6c5456fc3fa0d,rana_kualu,426,2019/06/03
-「Railsは終わった」と言われる理由,https://qiita.com/klriutsa/items/86ac5e94ec99c0d95b61,klriutsa,596,2019/03/05
+「Railsは終わった」と言われる理由,https://qiita.com/klriutsa/items/86ac5e94ec99c0d95b61,klriutsa,597,2019/03/05
 自宅サーバーでTwitter連携サービスを運営してたら家宅捜索された件,https://qiita.com/204504bySE/items/1ffc94d1866d96da4793,204504bySE,1752,2019/06/11
 Arch Linux インストール俺々式完全版,https://qiita.com/TsutomuNakamura/items/b60518f8788e5e998744,TsutomuNakamura,171,2018/05/17
 AtCoderに登録したら解くべき精選過去問10をTeXで解いてみた,https://qiita.com/Mopepe51/items/19ebc7c2171536580ee4,Mopepe51,47,2019/06/08
@@ -513,16 +529,16 @@ awesome-typescript-loaderはもう使わないようにしよう、その理由,
 CUDAで配列の総和を求めてみた,https://qiita.com/gyu-don/items/ef8a128fa24f6bddd342,gyu-don,36,2017/09/13
 pythonで説明するキャッシュの凄さ,https://qiita.com/NAKKA-K/items/da7133f0b80657318692,NAKKA-K,30,2017/12/28
 未踏記録（未完）,https://qiita.com/kaizen_nagoya/items/b76b223d2ddf8b0c75c2,kaizen_nagoya,1,2019/03/12
-PythonでLINEにメッセージを送る,https://qiita.com/moriita/items/5b199ac6b14ceaa4f7c9,moriita,476,2019/05/30
+PythonでLINEにメッセージを送る,https://qiita.com/moriita/items/5b199ac6b14ceaa4f7c9,moriita,477,2019/05/30
 プログラミング入門者からの卒業試験は『ブラックジャック』を開発すべし,https://qiita.com/hirossyi73/items/cf8648c31898216312e5,hirossyi73,1203,2018/04/20
 Webアプリケーション　脆弱性チェックリスト,https://qiita.com/defunty/items/c0daca880215831ed5f1,defunty,51,2018/08/28
-AtCoderのレート計算式,https://qiita.com/anqooqie/items/92005e337a0d2569bdbd,anqooqie,94,2018/07/30
+AtCoderのレート計算式,https://qiita.com/anqooqie/items/92005e337a0d2569bdbd,anqooqie,95,2018/07/30
 ルービックキューブを解くプログラムを書いてみよう(前編:キューブを操る実装),https://qiita.com/7y2n/items/a840e44dba77b1859352,7y2n,45,2018/12/14
 Chrome なら Web ページ全体のスクリーンショットが簡単に取れる,https://qiita.com/kentarosasaki/items/8f350f78193d8b222078,kentarosasaki,1016,2019/05/29
 TypeScript地獄の地図と幻の型たち,https://qiita.com/SoraKumo/items/ecb6992adedcb11ff932,SoraKumo,217,2019/05/27
 【ポエム】「文部科学省はPythonなんて使ってんじゃねえ」に対する2019-05-22現在の返答【ただの推測】,https://qiita.com/manzyun/items/d9a36a4f14f2737e1212,manzyun,25,2019/05/22
 まだVSCode拡張機能探しで消耗してるの？　VSCodeの拡張機能は意外と簡単につくれるよ！！,https://qiita.com/delmontz/items/abd075eacb1302fc184c,delmontz,308,2019/05/20
-【文字幅 半角3:全角5 も追加】Ricty を神フォントだと崇める僕が、フリーライセンスのプログラミングフォント「白源」を作った話,https://qiita.com/tawara_/items/374f3ca0a386fab8b305,tawara_,1197,2019/05/21
+【文字幅 半角3:全角5 も追加】Ricty を神フォントだと崇める僕が、フリーライセンスのプログラミングフォント「白源」を作った話,https://qiita.com/tawara_/items/374f3ca0a386fab8b305,tawara_,1199,2019/05/21
 【Python】コラ用に遊戯王カード名の組み合わせを自動検索するためのツールを作成しました【ソース公開】,https://qiita.com/YSRKEN/items/b442ada6c9e434f84d02,YSRKEN,320,2019/05/27
 ElmとWebAssemblyで迷路生成Webアプリを作った話,https://qiita.com/tomabou/items/6ef5add1dcbc4e9671e2,tomabou,91,2019/05/24
 たぶん知らないPythonマイナー文法の世界,https://qiita.com/kotauchisunsun/items/8cf50c33a8c8e1ab5452,kotauchisunsun,417,2019/05/26
@@ -537,15 +553,15 @@ Cookie以上のユーザートラッキング技術Canvas Fingerprintingを使�
 ZOZOTOWNにあったXSS,https://qiita.com/i8b4/items/7a015915fea8ca97662e,i8b4,62,2018/10/19
 VTuberでライブコーディングをやっていく,https://qiita.com/miyaoka/items/d1de877b1d3920e8475c,miyaoka,48,2018/04/16
 " 「写経」を自動化し、オートで功徳を積める仕組みを作ってみたのでございます。",https://qiita.com/youwht/items/616ccc062725fa050a34,youwht,1647,2019/05/19
-アニメーションで学ぶVim入門 ～精選10機能～,https://qiita.com/KoyanagiHitoshi/items/82ef910432552d0a4553,KoyanagiHitoshi,744,2019/05/20
+アニメーションで学ぶVim入門 ～精選10機能～,https://qiita.com/KoyanagiHitoshi/items/82ef910432552d0a4553,KoyanagiHitoshi,743,2019/05/20
 SLAM(Simultaneous Localization and Mapping)と環境計測センサについて,https://qiita.com/Crafty_as_a_Fox/items/860aa3d467397432e060,Crafty_as_a_Fox,54,2017/01/07
 "Vim初心者向け：Vimの使い方が分かるコマンド - ""vimtutor""",https://qiita.com/y-temp4/items/3032d22cb5cc6ae3117a,y-temp4,87,2016/01/27
 「サイゼリヤで1000円あれば最大何kcal摂れるのか」をSMTソルバー(Z3)で解いてみた。,https://qiita.com/tanakh/items/a1fb13f78e0576415de3,tanakh,311,2019/05/18
 twitterのタイムラインをスクレイピングする,https://qiita.com/nnahito/items/b1613b250b87f4d3b2c9,nnahito,27,2017/12/04
 ちょっと危ないStackOverflowの歩き方,https://qiita.com/yohhoy/items/f3e361aa5897e65757b4,yohhoy,26,2017/12/07
 p5.jsでビジュアルコーディングしてみる。,https://qiita.com/minamooon/items/c2d65a18fd36be693139,minamooon,201,2015/12/30
-jq コマンドを使う日常のご紹介,https://qiita.com/takeshinoda@github/items/2dec7a72930ec1f658af,takeshinoda@github,2130,2014/12/17
-個人でも使える！おすすめAPI一覧,https://qiita.com/mikan3rd/items/ba4737023f08bb2ca161,mikan3rd,3840,2018/09/17
+jq コマンドを使う日常のご紹介,https://qiita.com/takeshinoda@github/items/2dec7a72930ec1f658af,takeshinoda@github,2137,2014/12/17
+個人でも使える！おすすめAPI一覧,https://qiita.com/mikan3rd/items/ba4737023f08bb2ca161,mikan3rd,3846,2018/09/17
 ワイ「スリープソート？　寝ている間に小人さんがソートしてくれるんでっか？」,https://qiita.com/uhyo/items/6f70d94c36d8da5aa5d6,uhyo,231,2019/05/06
 競技プログラミングで使う有名グラフアルゴリズムまとめ,https://qiita.com/kazukazukazukazu/items/e5db00a3aefb1f5ed72f,kazukazukazukazu,409,2019/05/05
 curl option 覚え書き,https://qiita.com/takayukioda/items/edf371b3566bea64d046,takayukioda,595,2015/11/18
@@ -559,6 +575,46 @@ Bash $((算術式)) のすべて,https://qiita.com/akinomyoga/items/2dd3f341cf15
 FizzBuzzを1byteで実装する,https://qiita.com/ymg_aq/items/b8e5d26035180bc8797e,ymg_aq,640,2018/05/17
 ハローワールド徹底解説,https://qiita.com/kazatsuyu/items/478c55de0f75ea5904bd,kazatsuyu,275,2016/12/06
 C++ラッパーを書く ～ C++の複雑怪奇な言語仕様を理解することによるメリット,https://qiita.com/wx257osn2/items/4f49ad4170ef2a063cf5,wx257osn2,79,2017/12/29
+C初学者がC++を学習するまでの軌跡,https://qiita.com/gis/items/49dd3e6f11846c8dedab,gis,53,2017/12/21
+エンジニアの情報収集法まとめ,https://qiita.com/nesheep5/items/e7196ba496e59bb2aa28,nesheep5,4632,2015/06/01
+初めてのサウンドプログラミング,https://qiita.com/kamiro/items/62f648f7201cdb0097cf,kamiro,82,2018/10/31
+バブルソートとクイックソートを可視化して比較する,https://qiita.com/gis/items/0994d7a207061c9ecbc8,gis,22,2017/12/20
+記事を書くと成長する話。,https://qiita.com/gis/items/21a5f1aed58da4b9b5b0,gis,467,2018/10/29
+地形生成(ボロノイ図法)🌏,https://qiita.com/gis/items/08710de2c57da912b822,gis,370,2018/12/18
+バイオーム生成(セルオートマトン法)🌏,https://qiita.com/gis/items/e29f98a32ba9f920346d,gis,248,2019/02/25
+洞窟の自動生成(ローグライク穴掘り法)💀,https://qiita.com/gis/items/ca6fe4065cb242f7af1e,gis,179,2019/01/28
+OCaml で数値計算,https://qiita.com/kari_tech/items/4814cd9dc046d4d64b5f,kari_tech,20,2014/12/11
+bash 配列まとめ,https://qiita.com/b4b4r07/items/e56a8e3471fb45df2f59,b4b4r07,501,2013/09/20
+Javascriptを１行で書く,https://qiita.com/Butackle/items/112d61bef9fde1d3679f,Butackle,44,2017/12/02
+3歳娘「いつから論理式が真偽値のみを返すと錯覚していた？」,https://qiita.com/Yametaro/items/17f9b2baa67440b8664a,Yametaro,666,2019/05/02
+Raspberry PiでGPGPU,https://qiita.com/9_ties/items/2e85318989170f967e4b,9_ties,199,2015/11/25
+WebはHTML/CSSから学びはじめるべきか｜HTMLも知らない人にIonic本をしてもらった知見,https://qiita.com/rdlabo/items/8686ffdf9a5e76a68983,rdlabo,267,2018/01/18
+組織の新言語導入(JS→TypeScript→Elm)で成したかった組織づくりの話,https://qiita.com/hosomichi/items/6c107f32d70bdb47fa35,hosomichi,85,2018/12/19
+glm - グラフィックスプログラミングのためのC++数学系ライブラリー,https://qiita.com/usagi/items/f34976a3d3011506ff7d,usagi,109,2014/12/24
+Travis CIで自動テストして、結果をGitHubのトップページに表示する,https://qiita.com/hoshimado/items/4090d8e64beb8a7f95e1,hoshimado,22,2018/07/24
+WebAPIについての説明,https://qiita.com/busyoumono99/items/9b5ffd35dd521bafce47,busyoumono99,2976,2015/02/14
+Bashの括弧のノウハウ（まとめ）,https://qiita.com/Ping/items/f9b5175085026462b082,Ping,110,2018/08/22
+Bootstrap の開発メンバーになった話,https://qiita.com/ysds/items/047f6be1fc01d94fa67a,ysds,651,2019/05/02
+Pythonマイナー環境列伝 ～あなたはいくつのPython環境を知っているか？～,https://qiita.com/kotauchisunsun/items/e4f65ad392cd00b60495,kotauchisunsun,62,2017/06/17
+Web APIとは何なのか,https://qiita.com/NagaokaKenichi/items/df4c8455ab527aeacf02,NagaokaKenichi,1062,2016/07/04
+Pythonで迷路を解く - アルゴリズムクイックリファレンス６章の補足 -,https://qiita.com/sasanquaneuf/items/77bf6518b4bf97bcd15b,sasanquaneuf,28,2016/01/20
+全探索アルゴリズム入門,https://qiita.com/MasayaMizuhara/items/86099ad721a329e1d6cd,MasayaMizuhara,320,2014/08/23
+pomera DM200 の Linux 化のメモ,https://qiita.com/alt-core/items/d62c6447c607fbf6e8bf,alt-core,37,2018/03/08
+ライブラリとフレームワークの違い,https://qiita.com/heroyct/items/779cd66100a051056332,heroyct,48,2015/07/05
+フレームワークとライブラリの違い,https://qiita.com/azuki8/items/ad7710fdefaedc63e3f7,azuki8,335,2017/08/30
+暗号技術勉強メモ,https://qiita.com/opengl-8080/items/85df520e2d8c4e19be8e,opengl-8080,683,2019/04/30
+GitHubを使ってMarkdown文書を５ステップでホームページとして公開する方法,https://qiita.com/MahoTakara/items/3800e9dc83b530d0a050,MahoTakara,91,2018/01/05
+Web魚拓が作られた時に、魚拓内容を書き換え強制リダイレクトする,https://qiita.com/haminiku/items/506a47ab8c713a325358,haminiku,163,2015/11/02
+リーダブルコード要約とリーダブルコード要約の活用方法,https://qiita.com/AKB428/items/20e81ccc8d9998b5535d,AKB428,807,2015/07/07
+C++初心者のみんな、単体テストとCIを組めるようになって君もライブラリ製作者の仲間入りしよう！,https://qiita.com/yumetodo/items/5886b2c0c421c24c909b,yumetodo,134,2019/04/29
+【TermUX】AndroidでLinuxのソフトウェアやプログラムを使う,https://qiita.com/HirotakaKikushima/items/985d5f47e001a850a899,HirotakaKikushima,27,2018/02/24
+[Kotlin] Kotlin初学者が学習時に参考にした情報等,https://qiita.com/r_sui/items/2e141ffb493ca5f20c7e,r_sui,105,2017/06/02
+プログラミング初学者向け勉強会がマルチ商法の狩り場になっている件,https://qiita.com/poly_soft/items/9c63a8acb6732154b6db,poly_soft,379,2019/04/27
+ソートを極める！ 〜 なぜソートを学ぶのか 〜,https://qiita.com/drken/items/44c60118ab3703f7727f,drken,1934,2018/04/05
+主専攻実習：定理証明班はなにをやっているのか,https://qiita.com/Ningensei848/items/c5b3eee132d20907d407,Ningensei848,2,2018/12/11
+[GLSL] Shadertoyのシェーダ芸人になるためのTips集,https://qiita.com/edo_m18/items/1532aceb9d470174caaf,edo_m18,126,2019/04/24
+pͪoͣnͬpͣoͥnͭpͣa͡inͥを支える技術,https://qiita.com/ykhirao/items/9ca1fbd294883e06dbd6,ykhirao,617,2019/04/25
+サイクルコンピューターをガチで作ってみたら、割とできてしまったという話,https://qiita.com/hishi/items/8f77fd4655027fac7c7d,hishi,575,2019/04/25
 C++ のテンプレート型引数に制約を付ける,https://qiita.com/SaitoAtsushi/items/8da8ae7f6b84b1d806e4,SaitoAtsushi,28,2019/04/25
 "コードリーディング(Bash)：システム情報表示ツール""neofetch""",https://qiita.com/Nao1215/items/61bd64619ada4356030c,Nao1215,7,2018/09/24
 Clojure/ClojureScript関連リンク集,https://qiita.com/lagenorhynque/items/68c314c288b75a9492ba,lagenorhynque,92,2018/10/08
@@ -578,7 +634,7 @@ golangでweb画像収集クローラーを作る,https://qiita.com/7yan00/items/
 スクレイピングの倫理①海外のトラブル事例,https://qiita.com/umihico/items/bab223a959d8cfa7b11f,umihico,60,2018/11/09
 Jetson Nanoの機械学習ベンチマークテスト,https://qiita.com/triwave33/items/efc9f1b2d4b1faf9870f,triwave33,12,2019/04/16
 Go言語：文法基礎まとめ,https://qiita.com/HiromuMasuda0228/items/65b9a593275f769f6b69,HiromuMasuda0228,269,2018/06/17
-多様なフォーマットに対応！ドキュメント変換ツールPandocを知ろう,https://qiita.com/sky_y/items/80bcd0f353ef5b8980ee,sky_y,1130,2012/12/24
+多様なフォーマットに対応！ドキュメント変換ツールPandocを知ろう,https://qiita.com/sky_y/items/80bcd0f353ef5b8980ee,sky_y,1132,2012/12/24
 cURLでHTTPステータスコードだけを取得する,https://qiita.com/mazgi/items/585348b6cdff3e320726,mazgi,297,2013/12/30
 【毎秒1万リクエスト!?】Go言語で始める爆速Webスクレイピング【Golang】,https://qiita.com/Azunyan1111/items/a1b6c58dc868814efb51,Azunyan1111,218,2017/11/06
 EmojiCompat を使って、Android 絵文字サポートしてみた,https://qiita.com/taki4227/items/35da50f9874acdda46d9,taki4227,9,2018/04/03
@@ -592,9 +648,9 @@ HP 電卓,https://qiita.com/jp_yen/items/23fcc11076eb91879ce3,jp_yen,2,2019/03/0
 カシオのカラーグラフ関数電卓 fx-CG50 に MicroPython がのったゾ,https://qiita.com/inachi/items/41dbe628be64cfea4193,inachi,13,2018/12/05
 特定ユーザーの Yahoo! ブログ を wget でまるごと保存する,https://qiita.com/kerupani129/items/533f89101bf54dd7c99e,kerupani129,4,2019/03/20
 知っているようで意外と知らない、DDoSの基礎知識,https://qiita.com/ueyasu/items/064839f9289c3db63c26,ueyasu,754,2016/09/04
-【クラウドDB比較】無料枠で提供されるサービスレベル,https://qiita.com/nh321/items/e8c63b02e3fa9c28837f,nh321,116,2018/11/03
+【クラウドDB比較】無料枠で提供されるサービスレベル,https://qiita.com/nh321/items/e8c63b02e3fa9c28837f,nh321,117,2018/11/03
 Hugoで新規記事を作成するときのTips的なメモ,https://qiita.com/n0bisuke/items/4701481c3bca4df81b0b,n0bisuke,58,2016/06/09
-GitHubでssh接続する手順~公開鍵・秘密鍵の生成から~,https://qiita.com/shizuma/items/2b2f873a0034839e47ce,shizuma,2680,2015/05/29
+GitHubでssh接続する手順~公開鍵・秘密鍵の生成から~,https://qiita.com/shizuma/items/2b2f873a0034839e47ce,shizuma,2685,2015/05/29
 ブラウザがJavaScriptを直接サポートしない世界,https://qiita.com/uint256_t/items/4f80220c5c61ec5b3ff1,uint256_t,271,2019/04/03
 一人旅が捗るWebサービスを思いついたので、開発から公開まで全部一人でやってみた話,https://qiita.com/noranuk0/items/96e83cee1e448cd57569,noranuk0,389,2019/03/23
 URL と URI の違い,https://qiita.com/Zuishin/items/3bd56117ab08ec2ec818,Zuishin,390,2017/04/15
@@ -602,28 +658,28 @@ AtCoderの問題を分類しました,https://qiita.com/KoyanagiHitoshi/items/32
 ssh公開鍵認証を実装する,https://qiita.com/HamaTech/items/21bb9761f326c4d4aa65,HamaTech,458,2014/07/01
 Raspberry PiでマザーボードのBIOS修復,https://qiita.com/r-ni/items/4c579d7d5ece93892762,r-ni,39,2018/12/03
 Rustのリンク集,https://qiita.com/mosh/items/7e327dafbe53b72ad99d,mosh,169,2018/07/11
-Visual Studio Codeで競プロ環境構築(導入編),https://qiita.com/AokabiC/items/e9312856f588dd9303ed,AokabiC,567,2019/03/27
+Visual Studio Codeで競プロ環境構築(導入編),https://qiita.com/AokabiC/items/e9312856f588dd9303ed,AokabiC,568,2019/03/27
 非デザイナーのためのWebデザイン開発ガイド - デザインは感性ではない、スキルだ,https://qiita.com/rana_kualu/items/6955a2e4bc3284c361a5,rana_kualu,572,2019/03/18
 デザインコード抽出/共有/履歴/管理ツール『Avocode』,https://qiita.com/ulwlu/items/d34d0f925f16f4b52946,ulwlu,623,2019/03/16
 実践/現場のPythonスクレイピング流儀,https://qiita.com/ulwlu/items/c84501993635c72540a7,ulwlu,1313,2019/03/18
-MapboxとGoogle Mapsを比べながらMapboxの本当の素晴らしさを発掘する,https://qiita.com/nazomikan/items/3ad5e53b24901fd82ba7,nazomikan,188,2017/12/01
+MapboxとGoogle Mapsを比べながらMapboxの本当の素晴らしさを発掘する,https://qiita.com/nazomikan/items/3ad5e53b24901fd82ba7,nazomikan,189,2017/12/01
 独自の音声圧縮をJavaScriptで作ってみた,https://qiita.com/as_kuya/items/8acaa265bc740d925f4c,as_kuya,161,2019/03/23
-VSCodeでなるべくマウスを使わない開発環境をがんばる,https://qiita.com/y-tsutsu/items/cfe89c0168f40a8fb353,y-tsutsu,776,2019/03/11
-今日からはじめるUnity,https://qiita.com/nmxi/items/7950fb12ef925efa276d,nmxi,1583,2018/07/14
+VSCodeでなるべくマウスを使わない開発環境をがんばる,https://qiita.com/y-tsutsu/items/cfe89c0168f40a8fb353,y-tsutsu,777,2019/03/11
+今日からはじめるUnity,https://qiita.com/nmxi/items/7950fb12ef925efa276d,nmxi,1584,2018/07/14
 【続】平成の次の元号を、AIだけで決めさせる物語（＠テレビ取材）,https://qiita.com/youwht/items/7b1118ecd91bd2e232bb,youwht,1214,2019/03/11
 侍エンジニア塾の解約・返金に成功したので公開するby弁護士プログラマ,https://qiita.com/ideki1991/items/b9da8273f05613c593ed,ideki1991,511,2019/02/04
 無限アラートは不正プログラムとして逮捕されるらしいので警察にゴールドバッハ予想を証明してもらおう,https://qiita.com/yuta0801/items/82872d551caf47f2c7af,yuta0801,493,2019/03/05
-AtCoder に登録したら次にやること ～ これだけ解けば十分闘える！過去問精選 10 問 ～,https://qiita.com/drken/items/fd4e5e3630d0f5859067,drken,5530,2018/03/13
-ブラウザでVS codeが使えるクラウド IDEの大本命「Coder」,https://qiita.com/MegaBlackLabel/items/bbec97db769667962bce,MegaBlackLabel,1382,2019/02/28
-Webアプリ無料運営のススメ：FirebaseとNuxt(Vue)なら最強！,https://qiita.com/y_kawase/items/fb9f747d88af151f981a,y_kawase,1733,2019/02/18
+AtCoder に登録したら次にやること ～ これだけ解けば十分闘える！過去問精選 10 問 ～,https://qiita.com/drken/items/fd4e5e3630d0f5859067,drken,5537,2018/03/13
+ブラウザでVS codeが使えるクラウド IDEの大本命「Coder」,https://qiita.com/MegaBlackLabel/items/bbec97db769667962bce,MegaBlackLabel,1383,2019/02/28
+Webアプリ無料運営のススメ：FirebaseとNuxt(Vue)なら最強！,https://qiita.com/y_kawase/items/fb9f747d88af151f981a,y_kawase,1734,2019/02/18
 化学系研究者が完全未経験からWeb系自社開発企業に転職するまで,https://qiita.com/fuku_tech/items/b8db09720c6d38eb27b9,fuku_tech,669,2019/02/26
 我が名は神龍……どんなテストもひとつだけ自動化してやろう,https://qiita.com/tsuemura/items/56ba9942565963858d8f,tsuemura,1491,2019/02/24
 ubuntu ユーザを追加して sudo 権限をつける,https://qiita.com/white_aspara25/items/c1b9d02310b4731bfbaa,white_aspara25,325,2014/09/05
 オマエ スマホ ゲンシジン 魏延 ナル,https://qiita.com/youwht/items/6c7712bfc7fd088223a2,youwht,195,2019/02/17
 絶対に競プロ以外では書いてはいけない！書いたら○されると思え！なテクニック集,https://qiita.com/kotaro912214/items/575fd778d062703304ea,kotaro912214,316,2019/02/19
 Githubのリポジトリ「TIL」を使って小さなアウトプットを習慣化する,https://qiita.com/nemui_/items/239335b4ed0c3c797add,nemui_,607,2019/02/16
-📃 Webページをそのままの状態でローカルに保存するツールを作った話,https://qiita.com/yarnaimo/items/66f3b71077d15a22699d,yarnaimo,763,2019/02/16
-" プログラミング言語Rustのススメ",https://qiita.com/elipmoc101/items/3c8b6d8332a9019e578c,elipmoc101,1375,2018/11/04
+📃 Webページをそのままの状態でローカルに保存するツールを作った話,https://qiita.com/yarnaimo/items/66f3b71077d15a22699d,yarnaimo,764,2019/02/16
+" プログラミング言語Rustのススメ",https://qiita.com/elipmoc101/items/3c8b6d8332a9019e578c,elipmoc101,1378,2018/11/04
 ニコニコ静画の画像をオリジナルサイズで保存するRubyスクリプト,https://qiita.com/mataneko_boy/items/b99f2b3d3e43f56a28cd,mataneko_boy,5,2018/02/06
 オレ プログラム ウゴカス   オマエ ゲンシジン ナル,https://qiita.com/Harusugi/items/f499e8707b36d0f570c4,Harusugi,2199,2019/02/12
 React 公式ドキュメントの日本語翻訳を経験して感じた公式ドキュメント翻訳の魅力,https://qiita.com/gotchane/items/a1057ce68135b55673cf,gotchane,236,2019/02/12
@@ -648,14 +704,14 @@ CloudGarageを使って長く使えるオンラインストレージ環境を作
 Bashの便利な構文だがよく忘れてしまうものの備忘録,https://qiita.com/Ping/items/57fd75465dfada76e633,Ping,971,2015/11/26
 【危険シェル芸】禁じられた闇の魔術とその防衛術💥,https://qiita.com/_-_-_-_-_/items/214d537aae2c1488692c,_-_-_-_-_,942,2018/12/22
 "コードに頻出する語形変化が難しい英単語: register, success, fail, data, statusなど",https://qiita.com/suin/items/cbef2dd0dba9c02e491f,suin,368,2018/12/28
-世の中の小説作家と編集者は今すぐ Word や G Suite を窓から投げ捨てて Git と GitHub の使い方を覚えるべきだ,https://qiita.com/ktkraoichi/items/f6ad43c2da0b3136d6be,ktkraoichi,1117,2019/01/03
-低レイヤーを学ぶための技術書をまとめてみる,https://qiita.com/hareku/items/3383be7aee616e04b80f,hareku,758,2019/01/08
+世の中の小説作家と編集者は今すぐ Word や G Suite を窓から投げ捨てて Git と GitHub の使い方を覚えるべきだ,https://qiita.com/ktkraoichi/items/f6ad43c2da0b3136d6be,ktkraoichi,1118,2019/01/03
+低レイヤーを学ぶための技術書をまとめてみる,https://qiita.com/hareku/items/3383be7aee616e04b80f,hareku,760,2019/01/08
 Qiitaやブログのタイトルは自分で考える必要なんてなかったんだ,https://qiita.com/YumaInaura/items/0d8427bfe2d7be476d0d,YumaInaura,593,2019/01/10
 Haskellをかけない中年,https://qiita.com/Yametaro/items/e163affa4b2db48f9957,Yametaro,246,2019/01/19
 Haskellをかける少女,https://qiita.com/Yametaro/items/11dcd3ec26027ff30214,Yametaro,436,2019/01/18
 Haskellでフィボナッチ数列 〜Haskellで非実用的なコードを書いて悦に入るのはやめろ〜,https://qiita.com/mod_poppo/items/4f78d135bb43b7fd1743,mod_poppo,147,2019/01/19
-Linuxの権限確認と変更(chmod)（超初心者向け）,https://qiita.com/shisama/items/5f4c4fa768642aad9e06,shisama,1697,2016/04/25
-"手軽なメトリクス視覚化ツールを探して (Netdata, Prometheus, Telegraf)",https://qiita.com/kikuchi_kentaro/items/8ab93b73012ee8aea717,kikuchi_kentaro,43,2018/12/05
+Linuxの権限確認と変更(chmod)（超初心者向け）,https://qiita.com/shisama/items/5f4c4fa768642aad9e06,shisama,1703,2016/04/25
+"手軽なメトリクス視覚化ツールを探して (Netdata, Prometheus, Telegraf)",https://qiita.com/kikuchi_kentaro/items/8ab93b73012ee8aea717,kikuchi_kentaro,44,2018/12/05
 MySQLでCSV出力しようとしたら --secure-file-priv option のエラーになった,https://qiita.com/kiyodori/items/7281a5bdcfbcbbe03c68,kiyodori,28,2017/02/18
 Ubuntu 16.04におけるmysqlのインストールと設定、エラー対応のまとめ,https://qiita.com/donaldchi/items/afeabaffc8be39577ef0,donaldchi,16,2017/07/06
 Wikipediaの大量データをMySQLに保存する,https://qiita.com/grachro/items/11e59d16a929d27e274e,grachro,43,2016/01/25
@@ -668,14 +724,14 @@ jsサイトをスクレイピングするなら、seleniumよりsplash！,https:
 SeleniumからStableになったHeadless Chrome/Firefoxを使ってみる,https://qiita.com/orangain/items/6a166a65f5546df72a9d,orangain,111,2018/05/06
 chmod? chown? よくわからんって人のための、ファイル権限系まとめ,https://qiita.com/t-a-run/items/239ed690ece7a011804a,t-a-run,342,2016/08/30
 Git add できない場合の対処法,https://qiita.com/hmuronaka/items/29f54f65a6b26540698a,hmuronaka,35,2014/08/19
-【Git】基本コマンド,https://qiita.com/konweb/items/621722f67fdd8f86a017,konweb,1732,2014/07/12
+【Git】基本コマンド,https://qiita.com/konweb/items/621722f67fdd8f86a017,konweb,1734,2014/07/12
 どの環境でも使えるシェルスクリプトを書くためのメモ ver4.60,https://qiita.com/richmikan@github/items/bd4b21cf1fe503ab2e5c,richmikan@github,356,2014/01/12
-さいつよのターミナル環境を構築しよう,https://qiita.com/b4b4r07/items/09815eda8ef72e0b472e,b4b4r07,1883,2015/10/28
+さいつよのターミナル環境を構築しよう,https://qiita.com/b4b4r07/items/09815eda8ef72e0b472e,b4b4r07,1882,2015/10/28
 spacemacsについて ~~spacemacsが最強で最高で神エディタであると思い始めた件~~,https://qiita.com/nobkz/items/994c6b3e6f42a0e33fef,nobkz,264,2016/05/22
 ターミナル 作業効率化 tips集,https://qiita.com/shizuma/items/86470203ac8ea6b4d53f,shizuma,1059,2015/11/28
 Dockerでプログラマが最低限知るべきことが、最速でわかるチュートリアル,https://qiita.com/woz/items/43462398765f8036f3a8,woz,1254,2018/10/09
 公開鍵認証方式でのssh接続・設定・トラブルシューティング法,https://qiita.com/StoneDot/items/a38a35baf50e2cba2b67,StoneDot,113,2016/10/03
-インフラエンジニアじゃなくても押さえておきたいSSHの基礎知識,https://qiita.com/tag1216/items/5d06bad7468f731f590e,tag1216,3951,2015/02/23
+インフラエンジニアじゃなくても押さえておきたいSSHの基礎知識,https://qiita.com/tag1216/items/5d06bad7468f731f590e,tag1216,3952,2015/02/23
 sshの鍵認証でパスワード無しでログインする・ssh-copy-id,https://qiita.com/sakanashi/items/542ae428d9de9c7c59dc,sakanashi,17,2017/10/04
 2017年版 SSH公開鍵認証で使用する秘密鍵ペアの作り方,https://qiita.com/wnoguchi/items/a72a042bb8159c35d056,wnoguchi,238,2017/12/09
 Instagramから大量の画像を集める,https://qiita.com/taptappun/items/b4bc01f812704642d399,taptappun,78,2018/12/31
@@ -683,19 +739,19 @@ Linuxコマンドを連続して使うには,https://qiita.com/egawa_kun/items/7
 lessコマンド（よく使いそうなものだけ版）,https://qiita.com/inokou/items/a73bac8c7e03951d07be,inokou,123,2015/08/29
 tail -fやtailfを使うのはやめてless +Fを使おう,https://qiita.com/genre/items/8d935526571ccfe171ae,genre,142,2015/08/28
 VS CodeでリモートのWorkspaceを編集する,https://qiita.com/jerrywdlee/items/b239958d3df04364875d,jerrywdlee,15,2018/12/19
-【find・grep】特定の文字列を含むファイルのリストを取得する方法。,https://qiita.com/pokari_dz/items/0f14a21e3ca3df025d21,pokari_dz,615,2016/10/12
+【find・grep】特定の文字列を含むファイルのリストを取得する方法。,https://qiita.com/pokari_dz/items/0f14a21e3ca3df025d21,pokari_dz,616,2016/10/12
 VSCodeをカッコよくするTheme拡張7つ,https://qiita.com/ksakiyama134/items/9971620dd5fb51c75f2a,ksakiyama134,125,2018/12/01
 ２つのファイルの共通行を抽出する方法,https://qiita.com/mekagazira/items/1a1791a42e435cefd5f6,mekagazira,52,2015/01/09
 ソートしないで重複行を削除する,https://qiita.com/arcizan/items/9cf19cd982fa65f87546,arcizan,196,2014/09/27
 unix系でディレクトリ階層状態を知りたい,https://qiita.com/tagosaku324/items/d71bfbd466cb4bd56bf1,tagosaku324,1,2017/01/17
 scpコマンドでサーバー上のファイルorディレクトリをローカルに落としてくる,https://qiita.com/katsukii/items/225cd3de6d3d06a9abcb,katsukii,851,2015/02/08
-C++でクリーンなコードの書き方,https://qiita.com/elipmoc101/items/01003c82dbd2e464a071,elipmoc101,393,2018/12/14
+C++でクリーンなコードの書き方,https://qiita.com/elipmoc101/items/01003c82dbd2e464a071,elipmoc101,395,2018/12/14
 とにかく「e」が書かれているだけのリポジトリが面白い,https://qiita.com/wagase/items/867c38f57fe0bce86495,wagase,395,2018/12/12
 wgetを使って200 OKが返るかを判定,https://qiita.com/n_slender/items/8b7b4292a11f9a1f8f88,n_slender,6,2015/10/29
 ubuntu 18.04 LTS にアップグレードする(コマンドライン編),https://qiita.com/TsutomuNakamura/items/bbd712e3afe5f4bacfac,TsutomuNakamura,50,2018/04/29
 Vim script で機械学習,https://qiita.com/mattn/items/cdadb93da73d77144ec6,mattn,336,2018/12/25
 シェルスクリプトを書くときに気をつける9箇条,https://qiita.com/b4b4r07/items/9ea50f9ff94973c99ebe,b4b4r07,1429,2013/09/24
-制御理論としての動的計画法,https://qiita.com/animegazer/items/4158462e5a3efaba9d7b,animegazer,328,2018/12/24
+制御理論としての動的計画法,https://qiita.com/animegazer/items/4158462e5a3efaba9d7b,animegazer,329,2018/12/24
 とても強い計算量クラスのコンピュータとその実現方法,https://qiita.com/iKodack/items/d606a09f0a40b95bf2b6,iKodack,537,2018/12/19
 Python3基礎文法,https://qiita.com/Fendo181/items/a934e4f94021115efb2e,Fendo181,369,2017/02/21
 .bash_profileと.bashrcなんて使い分けなくてよかったんや！,https://qiita.com/dark-space/items/cf25001f89c41341a9fd,dark-space,695,2018/03/13
@@ -705,32 +761,32 @@ wgetでページとそれに付随するCSS・JSなどを保存する,https://qi
 「Docker」を全く知らない人のために「Docker」の魅力を伝えるための「Docker」入門,https://qiita.com/bremen/items/4604f530fe25786240db,bremen,1281,2018/03/02
 【sed / awk / grep】文字列の置換・抽出・検索と正規表現 | Linux Cheat Sheet,https://qiita.com/shuntaro_tamura/items/e4e942e7186934fae5e7,shuntaro_tamura,157,2018/05/29
 ログインが楽しくなる！screenfetchを使ってCentOSで遊んでみた,https://qiita.com/shimatter/items/63eefae88fecd4ed3281,shimatter,12,2018/02/15
-GitHub に AWS キーペアを上げると抜かれるってほんと？？？試してみよー！,https://qiita.com/saitotak/items/813ac6c2057ac64d5fef,saitotak,2320,2018/02/24
+GitHub に AWS キーペアを上げると抜かれるってほんと？？？試してみよー！,https://qiita.com/saitotak/items/813ac6c2057ac64d5fef,saitotak,2319,2018/02/24
 上司のターミナルにマトリックスを走らせよう！,https://qiita.com/sion_cojp/items/4c8579733deaab79e621,sion_cojp,149,2015/12/12
-クォータニオン (Quaternion) を総整理！ ～ 三次元物体の回転と姿勢を鮮やかに扱う ～,https://qiita.com/drken/items/0639cf34cce14e8d58a5,drken,920,2018/12/03
-インフラエンジニアと謎のサーバ,https://qiita.com/kanga/items/979b0bdc4653e025483a,kanga,1249,2018/12/06
+クォータニオン (Quaternion) を総整理！ ～ 三次元物体の回転と姿勢を鮮やかに扱う ～,https://qiita.com/drken/items/0639cf34cce14e8d58a5,drken,923,2018/12/03
+インフラエンジニアと謎のサーバ,https://qiita.com/kanga/items/979b0bdc4653e025483a,kanga,1250,2018/12/06
 「例外」がないからGo言語はイケてないとかって言ってるヤツが本当にイケてない件,https://qiita.com/Maki-Daisuke/items/80cbc26ca43cca3de4e4,Maki-Daisuke,861,2018/12/08
 新卒からの質問をソシャゲっぽい仕組みにしたら捗った話,https://qiita.com/ysktsuna/items/fced3a9515c8f585ca50,ysktsuna,2732,2018/12/04
 sedでこういう時はどう書く?,https://qiita.com/hirohiro77/items/7fe2f68781c41777e507,hirohiro77,1380,2016/03/04
 grepでこういう時はどうする?,https://qiita.com/hirohiro77/items/771ffb64dddceabf69a3,hirohiro77,518,2016/03/10
 scpコマンド チートシート,https://qiita.com/rock619/items/2bbbe379ae0fdd2ae00f,rock619,224,2018/05/31
-お前らのSSH Keysの作り方は間違っている,https://qiita.com/suthio/items/2760e4cff0e185fe2db9,suthio,2041,2015/10/01
+お前らのSSH Keysの作り方は間違っている,https://qiita.com/suthio/items/2760e4cff0e185fe2db9,suthio,2044,2015/10/01
 サーバー監視ツール netdata,https://qiita.com/bezeklik/items/effb70453a58415ad5dc,bezeklik,34,2017/04/21
 C++erを簡易的にレベル分けすることで初心者詐欺を減らそうという試み,https://qiita.com/yumetodo/items/a843bd542106215bbc84,yumetodo,377,2016/05/12
 さくらのVPSでUbuntu16.04を建てた,https://qiita.com/tpywao/items/76899267b9935038d9cd,tpywao,23,2017/04/29
 正規表現の後方参照を用いて、重複した文字列を見つける方法,https://qiita.com/y-ken/items/7d5bf086be68d23e1318,y-ken,8,2015/03/11
 "リモートサーバでVimを使いたくない人が入れておくべきVSCodeの拡張機能 ~ EC2を例に ~ ",https://qiita.com/r548/items/268d9fe7a6f0de6aa012,r548,131,2017/12/09
 Docker 入門にはインストールなしで使える「Play with Docker」がいいと思う,https://qiita.com/tag1216/items/ec7228440f6eaf849cd6,tag1216,797,2018/11/21
-エンジニアが情報収集とトレンドを追うのに読むと良いサイト,https://qiita.com/ryuichi1208/items/604a68abb91949e79ece,ryuichi1208,3025,2018/11/29
+エンジニアが情報収集とトレンドを追うのに読むと良いサイト,https://qiita.com/ryuichi1208/items/604a68abb91949e79ece,ryuichi1208,3027,2018/11/29
 最低限知っておくべきネットワーク系コマンド,https://qiita.com/ryuichi1208/items/eeb98d5a94d71c55aa34,ryuichi1208,619,2018/11/26
 古典4次Runge-Kutta法の精度確認,https://qiita.com/kaityo256/items/e3428deb394b3ad1e739,kaityo256,34,2018/12/05
 たった7行でテトリスを実装「七行プログラミング」とは,https://qiita.com/ryuichi1208/items/f9e6ac2b99bbe4fc82d3,ryuichi1208,1205,2018/11/27
 AtCoder見てたらテクいコードが読めるようになった話,https://qiita.com/Yametaro/items/f7d689336b2e3f339e54,Yametaro,670,2018/11/30
 Webスクレイピングマスターが教える「スクレイピング対策」@09/16追記,https://qiita.com/Azunyan1111/items/a1964c18e409fe6718fd,Azunyan1111,377,2018/09/13
-curlコマンドでapiを叩く,https://qiita.com/buntafujikawa/items/758425773b2239feb9a7,buntafujikawa,605,2016/12/26
+curlコマンドでapiを叩く,https://qiita.com/buntafujikawa/items/758425773b2239feb9a7,buntafujikawa,606,2016/12/26
 Dockerを使って1サーバで複数Webサービスを運用するためのマイベストプラクティス,https://qiita.com/miyasakura_/items/5cd3b05aa9c5e4f3f4be,miyasakura_,1383,2016/03/23
 CentOSの初期設定で最低限やること(@さくらのVPS),https://qiita.com/yupsy/items/b7cce7a504eed4e31c79,yupsy,161,2014/05/19
-[初心者向け]流行りのプログラミング言語の一言概要(2018年版),https://qiita.com/ryuichi1208/items/cecd868dfa53c9808777,ryuichi1208,308,2018/11/16
+[初心者向け]流行りのプログラミング言語の一言概要(2018年版),https://qiita.com/ryuichi1208/items/cecd868dfa53c9808777,ryuichi1208,307,2018/11/16
 開発が捗る Visual Studio Code 拡張機能,https://qiita.com/Yuta_Yamamoto/items/fbeb7b31173b3e787fc2,Yuta_Yamamoto,1068,2018/11/15
 Python Webスクレイピング 実践入門,https://qiita.com/Azunyan1111/items/9b3d16428d2bcc7c9406,Azunyan1111,1303,2016/12/02
 Visual Studio CodeでSSHごしにファイルを編集する,https://qiita.com/informationsea/items/5c9f05c81a41fb885460,informationsea,871,2018/11/23
@@ -744,16 +800,16 @@ tmuxを効率よく使って開発を爆速にする最高の設定,https://qiit
 Ruby-&gt;Go-&gt;Scalaという習得順序がエンジニアの爆速の成長に最適である理由,https://qiita.com/poly_soft/items/1feaa1ec5ecab08dc6db,poly_soft,1277,2018/11/04
 「今後必要になるプログラム言語」にひたすらマサカリを飛ばす,https://qiita.com/alter/items/389dba835cccf4e54e11,alter,422,2018/11/07
 DDoS攻撃されたらそこで試合終了!? レンサバから利用停止を宣告される前にできる8つの対策,https://qiita.com/suin/items/58ddfc5b6186b1b8a4af,suin,574,2014/05/20
-Apacheとnginxどちらを採用すべきかメリット・デメリット比較,https://qiita.com/pink/items/7709218310b5cf11eabe,pink,154,2014/11/27
+Apacheとnginxどちらを採用すべきかメリット・デメリット比較,https://qiita.com/pink/items/7709218310b5cf11eabe,pink,153,2014/11/27
 さくらVPSでWebサーバを稼働させる,https://qiita.com/medalotte/items/46fe4e9d25e6dff24d25,medalotte,15,2018/01/05
-ApacheとNginxについて比較,https://qiita.com/kamihork/items/49e2a363da7d840a4149,kamihork,893,2018/06/15
+ApacheとNginxについて比較,https://qiita.com/kamihork/items/49e2a363da7d840a4149,kamihork,894,2018/06/15
 conohaたんに質問しまくってみた,https://qiita.com/ma7ma7pipipi/items/20261abd7cfb6e3f2882,ma7ma7pipipi,11,2018/01/23
 ConoHa WING で Nextcloud を立てるついでに、中身みてみる,https://qiita.com/naa0yama/items/1a5dd279d6bcb3f87bbf,naa0yama,9,2018/09/26
 サーバー上（Ubuntu16.04）で、Webブラウザを自動実行することで、Web上の特定のデータを定点観測する（２）〜Webスクレイピング編〜,https://qiita.com/gano/items/6c599c531b0e68ac6414,gano,19,2016/08/31
 ConohaにVPSを設置して、SSHログイン、ポート番号変更、rootログイン禁止までを30分で！,https://qiita.com/ongaeshi/items/bb17ebfbd4d22057c8fd,ongaeshi,253,2015/08/01
 極小WebアプリをURLに埋め込んで超ポータブルなWebアプリを作りたい！,https://qiita.com/nwtgck/items/f6363a159a5edbfcc3b4,nwtgck,690,2018/10/31
 汎用言語表現モデルBERTを日本語で動かす(PyTorch),https://qiita.com/Kosuke-Szk/items/4b74b5cce84f423b7125,Kosuke-Szk,996,2018/11/01
-Chrome拡張の開発方法まとめ　その1：概念編,https://qiita.com/k7a/items/26d7a22233ecdf48fed8,k7a,1104,2016/03/14
+Chrome拡張の開発方法まとめ　その1：概念編,https://qiita.com/k7a/items/26d7a22233ecdf48fed8,k7a,1105,2016/03/14
 インストールするだけでVSCodeをカッコよくする拡張4つ,https://qiita.com/ksakiyama134/items/8ca98295897dc1280644,ksakiyama134,1483,2018/11/04
 全ての開発者が学ぶべき5つの言語,https://qiita.com/poly_soft/items/e89bc757596cfdfba784,poly_soft,1348,2018/11/03
 JavaScriptの歴史をざっくりまとめたよ!,https://qiita.com/DeployCat/items/c900a6f62862954d62e0,DeployCat,268,2017/02/24
@@ -761,7 +817,7 @@ JavaScriptの歴史をざっくりまとめたよ!,https://qiita.com/DeployCat/i
 【比較してみた】みんなが使っている個人開発（Webサービス）向けPaaS・ホスティングサービス,https://qiita.com/nh321/items/0373a740e56fad6a49d8,nh321,451,2018/10/28
 「今後必要になるプログラム言語」を読むに当たって,https://qiita.com/pik/items/1c95d69debee4aedffea,pik,314,2018/11/07
 国内オブジェクトストレージの料金比較,https://qiita.com/CloudRemix/items/e51f76cc0fb838413914,CloudRemix,18,2017/10/04
-「AWS is 何」を3行でまとめてみるよ,https://qiita.com/kohashi/items/1bb952313fb695f12577,kohashi,3867,2016/06/28
+「AWS is 何」を3行でまとめてみるよ,https://qiita.com/kohashi/items/1bb952313fb695f12577,kohashi,3868,2016/06/28
 AtCoder Beginner ContestのA問題の最短コードを読む（旧）,https://qiita.com/kotatsugame/items/184bfd63d9b21f214475,kotatsugame,70,2018/08/26
 競技プログラミングって何？ (はじめての高校生向け),https://qiita.com/sifue/items/d582f3af426f524e5394,sifue,269,2017/06/30
 HTTPとPOSTとGET,https://qiita.com/Sekky0905/items/dff3d0da059d6f5bfabf,Sekky0905,737,2017/02/25
@@ -769,16 +825,16 @@ HTTPとPOSTとGET,https://qiita.com/Sekky0905/items/dff3d0da059d6f5bfabf,Sekky09
 あなたの時間を無限に奪うQiita記事集できました（特に初心者にオススメ！）,https://qiita.com/youwht/items/3ba161572b2fc233e100,youwht,757,2018/10/21
 wgetでサイト全体をまるごとダウンロードする(認証後ページも),https://qiita.com/suin/items/7241135f1684636652ac,suin,74,2016/02/26
 WSL導入時にしたこと,https://qiita.com/aegis_m/items/1bf07d4e84f5d6af3c8c,aegis_m,27,2018/03/16
-初心者3人でwebサービス(webアプリ)を作ったので、立ち上げからリリースまでを時系列に書いていく,https://qiita.com/yuno_miyako/items/d6595719ae7065927499,yuno_miyako,699,2018/10/16
+初心者3人でwebサービス(webアプリ)を作ったので、立ち上げからリリースまでを時系列に書いていく,https://qiita.com/yuno_miyako/items/d6595719ae7065927499,yuno_miyako,700,2018/10/16
 Javaですべての上場企業のと地方自治体のサイトをスクレイピングして大変だったこと,https://qiita.com/shogookamoto/items/88137020c7414e25fd5e,shogookamoto,162,2015/09/19
-フロント未学習の大学生が1週間でVue.jsを使ったポートフォリオを作った話,https://qiita.com/p1ass/items/a01578b782f17f573510,p1ass,1062,2018/10/11
-お前らのターミナルはダサい,https://qiita.com/kinchiki/items/57e9391128d07819c321,kinchiki,2009,2016/12/20
+フロント未学習の大学生が1週間でVue.jsを使ったポートフォリオを作った話,https://qiita.com/p1ass/items/a01578b782f17f573510,p1ass,1061,2018/10/11
+お前らのターミナルはダサい,https://qiita.com/kinchiki/items/57e9391128d07819c321,kinchiki,2011,2016/12/20
 お前らのTouch Barはダサい,https://qiita.com/2357gi/items/8235093de77aa3e5fecc,2357gi,649,2018/10/11
 侍エンジニア塾のC言語のサンプルがヤバすぎる。,https://qiita.com/hamichamp/items/7b7a7ee091a6856ac900,hamichamp,783,2018/10/16
 閉鎖サービスを丸ごとアーカイブする（ジオシティーズ編）,https://qiita.com/CloudRemix/items/6a67bb93b88c8b48c8ee,CloudRemix,9,2018/10/14
 mitmproxyを使ってどんなサイトでもクローリング・スクレイピングする,https://qiita.com/yamitzky/items/44a3ea178c750f356b4a,yamitzky,31,2016/12/19
-Python Webスクレイピング テクニック集「取得できない値は無い」JavaScript対応@追記あり6/12,https://qiita.com/Azunyan1111/items/b161b998790b1db2ff7a,Azunyan1111,1871,2018/02/22
-Webスクレイピングの注意事項一覧,https://qiita.com/nezuq/items/c5e827e1827e7cb29011,nezuq,1390,2014/07/27
+Python Webスクレイピング テクニック集「取得できない値は無い」JavaScript対応@追記あり6/12,https://qiita.com/Azunyan1111/items/b161b998790b1db2ff7a,Azunyan1111,1872,2018/02/22
+Webスクレイピングの注意事項一覧,https://qiita.com/nezuq/items/c5e827e1827e7cb29011,nezuq,1391,2014/07/27
 Web廃墟を作るときに心がけるべき7箇条,https://qiita.com/ssdkfk/items/4d62455a15feafc745c6,ssdkfk,865,2017/08/31
 wgetでこういう時はこうする!!,https://qiita.com/hirohiro77/items/b774908436ec032df719,hirohiro77,310,2016/03/07
 初心者向け、「上手い」シェルスクリプトの書き方メモ,https://qiita.com/m-yamashita/items/889c116b92dc0bf4ea7d,m-yamashita,4322,2015/02/02
@@ -786,61 +842,61 @@ wgetでこういう時はこうする!!,https://qiita.com/hirohiro77/items/b7749
 JuliaでTightBinding模型を作ってみた,https://qiita.com/cometscome_phys/items/2bc0859cec8bb12e8d83,cometscome_phys,19,2018/10/04
 ブックマークレットを作るときのTips,https://qiita.com/xtetsuji/items/e8b61bb39c41b7a9345e,xtetsuji,121,2014/02/22
 UIデザインは人の好奇心に依存している,https://qiita.com/Mister_K/items/6b9bd54d6226e260c308,Mister_K,575,2018/09/26
-VSCodeのオススメ拡張機能 24 選   (とTipsをいくつか),https://qiita.com/sensuikan1973/items/74cf5383c02dbcd82234,sensuikan1973,5223,2018/09/30
-エンジニアは全員技術記事を書くことを習慣化した方がいいぞ,https://qiita.com/HiromuMasuda0228/items/a71dea7ef4d77a30b118,HiromuMasuda0228,2442,2018/10/04
-CSSアニメーション 入門,https://qiita.com/soarflat/items/4a302e0cafa21477707f,soarflat,1428,2016/08/19
+VSCodeのオススメ拡張機能 24 選   (とTipsをいくつか),https://qiita.com/sensuikan1973/items/74cf5383c02dbcd82234,sensuikan1973,5224,2018/09/30
+エンジニアは全員技術記事を書くことを習慣化した方がいいぞ,https://qiita.com/HiromuMasuda0228/items/a71dea7ef4d77a30b118,HiromuMasuda0228,2443,2018/10/04
+CSSアニメーション 入門,https://qiita.com/soarflat/items/4a302e0cafa21477707f,soarflat,1429,2016/08/19
 世界で一番ピュアな論理型プログラミング言語Hilbert(ヒルベルト)をRubyで作った.,https://qiita.com/gogotanaka/items/97ae187156541c8eaa9d,gogotanaka,406,2014/11/18
 ジオシティーズのデータを保存する方法,https://qiita.com/YujiSoftware/items/8085a6d5d1edcdf5028e,YujiSoftware,7,2018/10/03
 ＣＴＦを始めるときにおすすめな本とか,https://qiita.com/4hiziri/items/98b5e1f8b1824d0bc841,4hiziri,224,2017/12/12
 ウェブサイトを丸ごと保存するHTTrack,https://qiita.com/lranran/items/72e5f0b49149409efb04,lranran,61,2017/03/27
 プロダクトのドキュメントにプルリクエストを送れる仕組みがすごい,https://qiita.com/amay077/items/8823376f307235a7f651,amay077,475,2018/06/12
 データ可視化チートシート,https://qiita.com/m_mizutani/items/26971c29fa990617a935,m_mizutani,277,2016/03/06
-D3.js を使ってみる,https://qiita.com/ynakayama/items/362049808223c191d252,ynakayama,355,2014/07/16
-Chrome拡張の高速な英語辞書ツールをつくりました(Mouse Dictionary),https://qiita.com/wtetsu/items/c43232c6c44918e977c9,wtetsu,4640,2018/09/05
+D3.js を使ってみる,https://qiita.com/ynakayama/items/362049808223c191d252,ynakayama,357,2014/07/16
+Chrome拡張の高速な英語辞書ツールをつくりました(Mouse Dictionary),https://qiita.com/wtetsu/items/c43232c6c44918e977c9,wtetsu,4641,2018/09/05
 HTMLとCSSでSVGを使うためのメモ,https://qiita.com/yamamiweb/items/011d6b264a5af568783b,yamamiweb,127,2016/07/27
-出来る限り短く説明するReact.js入門,https://qiita.com/rgbkids/items/8ec309d1bf5e203d2b19,rgbkids,1998,2015/06/21
+出来る限り短く説明するReact.js入門,https://qiita.com/rgbkids/items/8ec309d1bf5e203d2b19,rgbkids,2005,2015/06/21
 10年モノのインフラを3年がかりでカイゼンした,https://qiita.com/sasasin/items/30585a3a117d64973645,sasasin,734,2018/09/17
 モダンなHSP環境を構築しよう [2018年],https://qiita.com/YSRKEN/items/449816a7c03e3091e604,YSRKEN,7,2018/09/22
 （ポエム）今風のソフトウェアプロジェクト構成の常識観,https://qiita.com/knjname/items/f9ffccf2291746db12c2,knjname,8,2018/06/12
 HSPで本格的にプログラムを書きたい人向けのtips,https://qiita.com/YSRKEN/items/7fd6d95e358cc78377d4,YSRKEN,11,2015/10/16
 関数型言語のウソとホント,https://qiita.com/hiruberuto/items/26a813ab2b188ca39019,hiruberuto,1603,2015/01/06
 レジストリを汚さないためのツールを作りました,https://qiita.com/Silica/items/ab558aba898dd7e678ff,Silica,128,2018/09/20
-Angular入門 未経験から1ヶ月でサービス作れるようにする  その1. インストール,https://qiita.com/seteen/items/87b6caf746a65b0397ee,seteen,76,2018/07/17
+Angular入門 未経験から1ヶ月でサービス作れるようにする  その1. インストール,https://qiita.com/seteen/items/87b6caf746a65b0397ee,seteen,77,2018/07/17
 20兆円がかかった数学の問題にディープラーニングを適用してみる(前編),https://qiita.com/snuffkin/items/df5c65a67c058854c57b,snuffkin,64,2017/12/18
 統計処理の超基本函数 / グラフ電卓 TI-Nspire,https://qiita.com/cyq04000/items/18b2792e7d599e66e985,cyq04000,1,2018/05/11
-Reactで誰もがやりたかった10の機能。アプリ構想はあるけど作れない人の壁をぶっ壊す。,https://qiita.com/y_kawase/items/8f1b5a303400a09c4923,y_kawase,1854,2018/09/03
+Reactで誰もがやりたかった10の機能。アプリ構想はあるけど作れない人の壁をぶっ壊す。,https://qiita.com/y_kawase/items/8f1b5a303400a09c4923,y_kawase,1855,2018/09/03
 オンラインでプログラミングして実行できるサイト,https://qiita.com/tttamaki/items/2b009aa957cfa4895d50,tttamaki,327,2016/04/28
-Q.どっちがランダムな点の分布でしょう？　A.どっちもランダムです！,https://qiita.com/Marimoiro/items/6336db80262fc9214c4c,Marimoiro,301,2018/08/23
+Q.どっちがランダムな点の分布でしょう？　A.どっちもランダムです！,https://qiita.com/Marimoiro/items/6336db80262fc9214c4c,Marimoiro,302,2018/08/23
 最適化アルゴリズムを評価するベンチマーク関数まとめ,https://qiita.com/tomitomi3/items/d4318bf7afbc1c835dda,tomitomi3,241,2015/12/09
 Windows10とUbuntu16.04のデュアルブート環境構築,https://qiita.com/medalotte/items/4bb5cfa709e93d044f1c,medalotte,130,2017/09/06
-無料で整える趣味チームの開発環境,https://qiita.com/t_nakayama0714/items/c0eb5e298524c127bccd,t_nakayama0714,398,2017/09/19
+無料で整える趣味チームの開発環境,https://qiita.com/t_nakayama0714/items/c0eb5e298524c127bccd,t_nakayama0714,397,2017/09/19
 [Pythonによる科学・技術計算] FTCS法(陽解法)による1次元・2次元波動方程式の数値解法，双曲型偏微分方程式,https://qiita.com/sci_Haru/items/8535f435ffa1febcd445,sci_Haru,23,2017/08/29
 Python を使ってお手軽に数学 gif を作ってみよう,https://qiita.com/wakabame/items/c3648501eb0f2b921ddf,wakabame,81,2018/03/09
 改訂版: プログラマーが効果的な可視化を作成する （前編）,https://qiita.com/keiono/items/9042bf58224ca54bdb45,keiono,1220,2014/08/26
 エヴァンゲリオンでわかってしまうJavaScript,https://qiita.com/hirokidaichi/items/346d5aa8b194cfe1b6aa,hirokidaichi,603,2014/06/11
 Twitterのツイートを分析して、どういうツイートがRTされやすいのか分析してみた,https://qiita.com/kkdmgs110/items/8e2074d4e70339a1ccb5,kkdmgs110,317,2018/08/19
 GitHubで過去１年分毎日草を生やすワンライナー,https://qiita.com/inabajunmr/items/6c4bd0cc01e80adc9c84,inabajunmr,108,2018/08/21
-プログラマが知っているとよい色使い(JIS安全色),https://qiita.com/kaizen_nagoya/items/cb7eb3199b0b98904a35,kaizen_nagoya,1473,2018/08/14
-「世界最悪のログイン処理コード」を解説してみた,https://qiita.com/YSRKEN/items/0095cf75be3f607b0f98,YSRKEN,1648,2018/08/11
+プログラマが知っているとよい色使い(JIS安全色),https://qiita.com/kaizen_nagoya/items/cb7eb3199b0b98904a35,kaizen_nagoya,1474,2018/08/14
+「世界最悪のログイン処理コード」を解説してみた,https://qiita.com/YSRKEN/items/0095cf75be3f607b0f98,YSRKEN,1649,2018/08/11
 Angular入門 未経験から1ヶ月でサービス作れるようにする,https://qiita.com/seteen/items/43908e33e08a39612a07,seteen,189,2018/07/25
 2017年～2018年4月までのディープラーニングを用いたText to speech手法まとめ,https://qiita.com/tosaka2/items/3564050fe0ccea360610,tosaka2,84,2018/04/01
 AIが見つけた、埋もれたQiita良記事100選,https://qiita.com/youwht/items/900fb5f4e80b11e593a6,youwht,894,2018/07/12
 今話題のAIをweb上で誰でも気軽に作れる「AIメーカー」を作ってみた,https://qiita.com/2zn01/items/0d3147c9d9d804ad9880,2zn01,645,2018/07/22
-"個人開発者向けサーバ環境の選び方まとめ（heroku,aws,firebaseなどなど）",https://qiita.com/you8/items/670bfa6573cec2494c96,you8,2035,2018/04/04
+"個人開発者向けサーバ環境の選び方まとめ（heroku,aws,firebaseなどなど）",https://qiita.com/you8/items/670bfa6573cec2494c96,you8,2036,2018/04/04
 Pythonで実用Discord Bot(discordpy解説),https://qiita.com/1ntegrale9/items/9d570ef8175cf178468f,1ntegrale9,583,2018/06/07
 【Python入門】いまさらだけどパイソニスタとして必要な文法を網羅してみた,https://qiita.com/gold-kou/items/9713f6fd82baf1eccd6a,gold-kou,1159,2018/04/19
 「アセンブラへの道」組立語(assembler)・機械語(machine language)・CPU,https://qiita.com/kaizen_nagoya/items/46f2333c2647b0e692b2,kaizen_nagoya,305,2018/06/30
 Visual Studio CodeでPython開発環境を整える,https://qiita.com/84zume/items/27d143f529396c9fa1cc,84zume,91,2017/03/18
 人工生命を実装して世界大戦、人類滅亡への一歩を踏み出す,https://qiita.com/sage-git/items/183999c1006999959d68,sage-git,167,2018/06/01
-アルゴリズムとは何か！？ ～ 文系理系問わず楽しめる精選 6 問 ～,https://qiita.com/drken/items/f909b79ee03e679c7142,drken,2090,2018/04/19
+アルゴリズムとは何か！？ ～ 文系理系問わず楽しめる精選 6 問 ～,https://qiita.com/drken/items/f909b79ee03e679c7142,drken,2092,2018/04/19
 最小二乗法による N 次函数近似 / 擬似逆行列による計算法 / グラフ電卓 TI-Nspire を使って,https://qiita.com/cyq04000/items/e482d66354115c35a7ec,cyq04000,2,2018/04/03
-フロントエンドのコンポーネント設計に立ち向かう,https://qiita.com/seya/items/8814e905693f00cdade2,seya,1706,2018/04/02
-ゲームでよくされるチート手法とその対策 〜アプリケーションハッキング編〜,https://qiita.com/taptappun/items/b759df240c919d55c408,taptappun,1378,2018/03/20
+フロントエンドのコンポーネント設計に立ち向かう,https://qiita.com/seya/items/8814e905693f00cdade2,seya,1708,2018/04/02
+ゲームでよくされるチート手法とその対策 〜アプリケーションハッキング編〜,https://qiita.com/taptappun/items/b759df240c919d55c408,taptappun,1379,2018/03/20
 文系エンジニアが機械学習に入門するために小学校の算数から高校数学までを一気に復習してみました。,https://qiita.com/poly_soft/items/8ea0fc85577f0726f098,poly_soft,2214,2016/07/23
 コマンドを間違えるたびに美少女に罵られたい！,https://qiita.com/onokatio/items/4930e4b23339edd05d47,onokatio,487,2017/10/22
 Cureutilsを使ったプリティでキュアキュアなターミナルライフの実現,https://qiita.com/greymd/items/666a26459aa1bd4cb06c,greymd,165,2016/12/13
 プログラマーの君！ 騙されるな！ シェルスクリプトはそう書いちゃ駄目だ！！ という話,https://qiita.com/piroor/items/77233173707a0baa6360,piroor,2515,2016/12/08
-C言語を使うならMakeを使おうよ,https://qiita.com/j8takagi/items/74232a00cc33623f7844,j8takagi,407,2015/12/23
+C言語を使うならMakeを使おうよ,https://qiita.com/j8takagi/items/74232a00cc33623f7844,j8takagi,409,2015/12/23
 Juliaに触って見ようと思った時に便利なリンク集(2017年末版),https://qiita.com/currypurin/items/92e6f6d75cf6c587f5ef,currypurin,39,2017/12/26
 Discordをみだりに採用されると困る,https://qiita.com/nekova/items/ffe7b3620334530e6bb4,nekova,158,2017/12/25
 【追記あり】使いやすいけど使いづらいプログラミング言語「HSP」について,https://qiita.com/YSRKEN/items/0c059abfb8685051cb16,YSRKEN,55,2015/10/16
@@ -857,11 +913,11 @@ Macに別れを告げて、クラウド中心の開発生活を始めるまで,h
 Visual Studio Code の git 連携機能と git コマンドについて (2018/05/23),https://qiita.com/satokaz/items/4660ce57ca8eb456a096,satokaz,494,2017/04/18
 C++の標準ライブラリを一行で一括でインクルードする,https://qiita.com/berlysia/items/6368ebe5d033e3ace43b,berlysia,76,2015/05/17
 Rustで書いた自作OSをRaspberry Pi Zeroで動かす,https://qiita.com/mopp/items/826f192095961c811690,mopp,291,2015/12/25
-心臓が止まったらSNSに「死にました」と投稿する,https://qiita.com/inamori/items/9fccb65528f28f3a81bc,inamori,1332,2017/08/14
+心臓が止まったらSNSに「死にました」と投稿する,https://qiita.com/inamori/items/9fccb65528f28f3a81bc,inamori,1336,2017/08/14
 競プロ初心者が書く｢標準入出力からはじめる競プロ入門｣,https://qiita.com/blackcurrant/items/312ea2471900132fbd6a,blackcurrant,179,2016/12/09
 C++でMMDを読み込むライブラリを作った,https://qiita.com/benikabocha/items/ae9d48e314f51746f453,benikabocha,46,2017/01/09
 魔術とプロコン,https://qiita.com/k3_kaimu/items/56adecfd5ab0d4408ddf,k3_kaimu,24,2014/12/02
-プログラミング勉強を加速させる7つの習慣,https://qiita.com/YudaiTsukamoto/items/42a8df22ca4c6b327dfd,YudaiTsukamoto,3238,2016/12/16
+プログラミング勉強を加速させる7つの習慣,https://qiita.com/YudaiTsukamoto/items/42a8df22ca4c6b327dfd,YudaiTsukamoto,3237,2016/12/16
 お手元のマシンとスパコンを比較する方法-スパコン用ベンチマークソフトを動かしてみる,https://qiita.com/shibacow/items/753e1d46882152e46757,shibacow,11,2015/11/13
 HPCと10年戦ってわかったこと,https://qiita.com/kaityo256/items/9bbfa07beb9163ddee14,kaityo256,179,2016/05/13
 アセンブラに手を出してみる,https://qiita.com/edo_m18/items/83c63cd69f119d0b9831,edo_m18,302,2015/04/13
