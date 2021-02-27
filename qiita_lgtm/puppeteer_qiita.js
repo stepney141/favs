@@ -9,9 +9,9 @@ let page_max;
 let page_num = 1;
 let urlData = [];
 let titleData = [];
-let authorData = [];
+// let authorData = [];
 let lgtmData = [];
-let createdDateData = [];
+// let createdDateData = [];
 let articleData = [];
 
 // vars for twitter
@@ -90,9 +90,9 @@ async function getLgtm(browser) {
         page_num++;
     } while (page_max >= page_num);
 
-    articleData.push(titleData, urlData, authorData, lgtmData, createdDateData);
+    articleData.push(titleData, urlData, lgtmData);
     articleData = transposeArray(articleData);
-    articleData.unshift(["title", "url", "user_id", "likes_count", "created_at"]);
+    articleData.unshift(["title", "url", "likes_count"]);
 }
 
 // Log in to qiita before scraping in order to avoid annoying prompts that recommend creating a new account
