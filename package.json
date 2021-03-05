@@ -1,12 +1,12 @@
 {
-  "name": "qiita_lgtm",
+  "name": "favs",
   "version": "1.0.0",
-  "main": "puppeteer_qiita.js",
+  "author": "stepney141 <stepney141andi.c.i@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
     "fs": "^0.0.1-security",
     "papaparse": "^5.3.0",
-    "puppeteer": "^5.5.0"
+    "puppeteer": "^8.0.0"
   }
 }

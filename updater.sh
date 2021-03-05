@@ -11,15 +11,12 @@ wget --no-check-certificate \
     | jq '.[] | [ .full_name, .html_url, .description, .stargazers_count ] | @csv' -r \
 >> starred_repos.csv
 
-date1="`date --iso-8601=minutes`"
-git add .
-git commit -m "updated starred_repos.csv: $date1"
-
 cd ../qiita_lgtm
 node ./puppeteer_qiita.js
 
-date2="`date --iso-8601=minutes`"
+cd ..
+date1="`date --iso-8601=minutes`"
 git add .
-git commit -m "updated lgtm_article_url.csv: $date2"
+git commit -m "updated: $date1"
 
 git push origin master
