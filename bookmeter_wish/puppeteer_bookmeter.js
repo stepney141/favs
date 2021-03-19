@@ -11,25 +11,31 @@ const booksUrlXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/
 let booksUrlData = [];
         
 async function bookmeterScraper(browser) {
-    let page = await browser.newPage();
+    try {
+        let page = await browser.newPage();
 
-    do {
-        await page.goto(`${baseURI}/users/1003258/books/wish?page=${page_num}`, {
-            waitUntil: "networkidle2",
-        });
+        do {
+            await page.goto(`${baseURI}/users/1003258/books/wish?page=${page_num}`, {
+                waitUntil: "networkidle2",
+            });
 
-        // 本の情報のbookmeter内部リンクを取得
-        const booksUrlHandle = await page.$x(booksUrlXPath);
-        for (const data of booksUrlHandle) {
-            booksUrlData.push(await (await data.getProperty("href")).jsonValue());
-        }
+            // 本の情報のbookmeter内部リンクを取得
+            const booksUrlHandle = await page.$x(booksUrlXPath);
+            for (const data of booksUrlHandle) {
+                booksUrlData.push(await (await data.getProperty("href")).jsonValue());
+            }
 
-        page_num++;
+            page_num++;
 
-    } while (
-        // XPathで本の情報を取得し、そのelementHandleに要素が存在するか否かでループの終了を判定
-        await (await page.$x(isBookExistXPath)).length != 0
-    );
+        } while (
+            // XPathで本の情報を取得し、そのelementHandleに要素が存在するか否かでループの終了を判定
+            await (await page.$x(isBookExistXPath)).length != 0
+        );
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
+    return true;
 }
 
 async function output(arrayData) {
@@ -44,10 +50,12 @@ async function output(arrayData) {
                 if (e) console.log("error: ", e);
             }
         );
-        console.log("csv output: completed!");
     } catch (e) {
         console.log("error: ", e.message);
+        return false;
     }
+    console.log("csv output: completed!");
+    return true;
 }
 
 (async () => {
