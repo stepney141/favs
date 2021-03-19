@@ -14,6 +14,9 @@ wget --no-check-certificate \
 cd ../qiita_lgtm
 node ./puppeteer_qiita.js
 
+cd ../bookmeter_wish
+node ./puppeteer_bookmeter.js
+
 cd ..
 date1="`date --iso-8601=minutes`"
 git add .

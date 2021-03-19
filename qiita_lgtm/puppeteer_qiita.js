@@ -92,7 +92,7 @@ async function getLgtm(browser) {
 
     articleData.push(titleData, urlData, lgtmData);
     articleData = transposeArray(articleData);
-    articleData.unshift(["title", "url", "likes_count"]);
+    articleData.unshift(["title", "url", "likes_count"]); // insert the header into CSV
 }
 
 // Log in to qiita before scraping in order to avoid annoying prompts that recommend creating a new account
