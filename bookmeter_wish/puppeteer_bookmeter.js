@@ -24,8 +24,8 @@ let wishBooksData = [];
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
 const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
 
+// Amazon詳細リンクはアカウントにログインしなければ表示されないため、ログインする
 async function bookmeterLogin(browser) {
-    
     try {
         let page = await browser.newPage();
 
@@ -48,6 +48,7 @@ async function bookmeterLogin(browser) {
 
     } catch (e) {
         console.log(e);
+        await browser.close();
         return false;
     }
     return true;
@@ -67,8 +68,6 @@ async function bookmeterScraper(browser) {
 
             // 本の情報のbookmeter内部リンクを取得
             const booksUrlHandle = await page.$x(booksUrlXPath);
-            // console.log("ABC");
-            // console.log(booksUrlHandle);
             for (const data of booksUrlHandle) {
                 booksUrlData.push(
                     await (await data.getProperty("href")).jsonValue()
@@ -77,11 +76,12 @@ async function bookmeterScraper(browser) {
 
             //Amazon詳細ページを取得
             const amazonLinkHandle = await page.$x(amazonLinkXPath);
-            // console.log("123");
-            // console.log(amazonLinkHandle);
             for (const data of amazonLinkHandle) {
+                let amazonLinks = await (await data.getProperty("href")).jsonValue();
                 amazonLinkData.push(
-                    await (await data.getProperty("href")).jsonValue()
+                    // Amazonへのリンクに含まれる余計なクエリを削除
+                    // ref: http://absg.hatenablog.com/entry/2016/03/17/190831
+                    amazonLinks.replace(/ref=as_li_tf_tl\?.*$/,"")
                 );
             }
 
@@ -98,6 +98,7 @@ async function bookmeterScraper(browser) {
 
     } catch (e) {
         console.log(e);
+        await browser.close();
         return false;
     }
     return true;
@@ -128,8 +129,8 @@ async function output(arrayData) {
 
     const browser = await puppeteer.launch({
         defaultViewport: {width: 1000, height: 1000},
-        // headless: true,
-        headless: false,
+        headless: true,
+        // headless: false,
     });
 
     await bookmeterLogin(browser);
