@@ -4,6 +4,7 @@ const papa = require("papaparse");
 require("dotenv").config();
 
 const baseURI = 'https://bookmeter.com';
+const userID = '1003258';
 const isBookExistXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul[1]/li';
 // const booksXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul/li';
 const booksUrlXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[2]/a';
@@ -51,8 +52,7 @@ async function bookmeterLogin(browser) {
         await browser.close();
         return false;
     }
-    return true;
-    
+    return true;    
 }
 
 async function bookmeterScraper(browser) {
@@ -60,7 +60,7 @@ async function bookmeterScraper(browser) {
         let page = await browser.newPage();
 
         do {
-            await page.goto(`${baseURI}/users/1003258/books/wish?page=${page_num}`, {
+            await page.goto(`${baseURI}/users/${userID}/books/wish?page=${page_num}`, {
                 waitUntil: "networkidle2",
             });
 
@@ -77,11 +77,12 @@ async function bookmeterScraper(browser) {
             //Amazon詳細ページを取得
             const amazonLinkHandle = await page.$x(amazonLinkXPath);
             for (const data of amazonLinkHandle) {
-                let amazonLinks = await (await data.getProperty("href")).jsonValue();
+                // let amazonLinks = await (await data.getProperty("href")).jsonValue();
                 amazonLinkData.push(
                     // Amazonへのリンクに含まれる余計なクエリを削除
                     // ref: http://absg.hatenablog.com/entry/2016/03/17/190831
-                    amazonLinks.replace(/ref=as_li_tf_tl\?.*$/,"")
+                    // amazonLinks.replace(/ref=as_li_tf_tl\?.*$/, "")
+                    (await (await data.getProperty("href")).jsonValue()).replace(/ref=as_li_tf_tl\?.*$/, "")
                 );
             }
 
