@@ -23,12 +23,14 @@ let amazonLinkData = [];
 let wishBooksData = [];
         
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
-const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
+const transposeArray = a => a[0].map((_, c) => a.map((r) => r[c]));
+
+const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
 
 // Amazon詳細リンクはアカウントにログインしなければ表示されないため、ログインする
 async function bookmeterLogin(browser) {
     try {
-        let page = await browser.newPage();
+        const page = await browser.newPage();
 
         await page.goto(`${baseURI}/login`, {
             waitUntil: "networkidle2",
@@ -57,7 +59,7 @@ async function bookmeterLogin(browser) {
 
 async function bookmeterScraper(browser) {
     try {
-        let page = await browser.newPage();
+        const page = await browser.newPage();
 
         do {
             await page.goto(`${baseURI}/users/${userID}/books/wish?page=${page_num}`, {
@@ -85,6 +87,9 @@ async function bookmeterScraper(browser) {
                     (await (await data.getProperty("href")).jsonValue()).replace(/ref=as_li_tf_tl\?.*$/, "")
                 );
             }
+
+            // 1500ms ~ 4500msの間でランダムにアクセスの間隔を空ける
+            await page.waitForTimeout(randomWait(3000, 0.5, 1.5));
 
             page_num++;
 
