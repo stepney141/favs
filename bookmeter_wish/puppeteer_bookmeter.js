@@ -18,8 +18,8 @@ const user_name = process.env.BOOKMETER_ACCOUNT;
 const password = process.env.BOOKMETER_PASSWORD;
 
 let page_num = 1;
-let booksUrlData = [];
-let amazonLinkData = [];
+let booksUrlData = ["bookmeter_url"];
+let amazonLinkData = ["amazon_url"];
 let wishBooksData = [];
         
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
@@ -89,7 +89,7 @@ async function bookmeterScraper(browser) {
             }
 
             // 1500ms ~ 4500msの間でランダムにアクセスの間隔を空ける
-            await page.waitForTimeout(randomWait(3000, 0.5, 1.5));
+            // await page.waitForTimeout(randomWait(3000, 0.5, 1.5));
 
             page_num++;
 
@@ -100,7 +100,6 @@ async function bookmeterScraper(browser) {
 
         wishBooksData.push(booksUrlData, amazonLinkData);
         wishBooksData = transposeArray(wishBooksData);
-        wishBooksData.unshift(["bookmeter_url", "amazon_url"]);
 
     } catch (e) {
         console.log(e);
@@ -135,8 +134,8 @@ async function output(arrayData) {
 
     const browser = await puppeteer.launch({
         defaultViewport: {width: 1000, height: 1000},
-        headless: true,
-        // headless: false,
+        // headless: true,
+        headless: false,
     });
 
     await bookmeterLogin(browser);
