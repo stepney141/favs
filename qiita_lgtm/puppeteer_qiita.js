@@ -40,26 +40,25 @@ async function getLgtm(browser) {
             }
 
             // get article urls
-            const articleUrlHandles = await page.$x(
+            const articleUrlHandles = page.$x(
                 '/html/body/div[1]/div[3]/div/div[2]/div[3]/div/div[2]/div/article/h2/a[contains(@href, "qiita.com")]'
             );
-            for (const data of articleUrlHandles) {
-                urlData.push(await (await data.getProperty("href")).jsonValue());
-            }
-
             // get article titles
-            const articleTitleHandles = await page.$x(
+            const articleTitleHandles = page.$x(
                 '/html/body/div[1]/div[3]/div/div[2]/div[3]/div/div[2]/div/article/h2/a[contains(@href, "qiita.com")]'
             );
-            for (const data of articleTitleHandles) {
-                titleData.push(await (await data.getProperty("innerHTML")).jsonValue());
-            }
-
             // get article LGTM counts
-            const articleLgtmHandles = await page.$x(
+            const articleLgtmHandles = page.$x(
                 "/html/body/div[1]/div[3]/div/div[2]/div[3]/div/div[2]/div/article/footer/div/div[2]/div[1]"
             );
-            for (const data of articleLgtmHandles) {
+            
+            for (const data of await articleUrlHandles) {
+                urlData.push(await (await data.getProperty("href")).jsonValue());
+            }
+            for (const data of await articleTitleHandles) {
+                titleData.push(await (await data.getProperty("innerHTML")).jsonValue());
+            }
+            for (const data of await articleLgtmHandles) {
                 // lgtmData.push(Number(await page.evaluate((name) => name.innerText, data)));
                 lgtmData.push(
                     Number(await (await data.getProperty("innerText")).jsonValue())
@@ -103,7 +102,7 @@ async function qiitaLogin(browser) {
         // Authorize my twitter account connected to qiita
         await page.type('input[name="session[username_or_email]"]', user_name);
         await page.type('input[name="session[password]"]', password);
-        page.click('input[type="submit"]');
+        await page.click('input[type="submit"]');
         await page.waitForNavigation({
             timeout: 60000,
             waitUntil: "networkidle2",

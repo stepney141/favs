@@ -36,13 +36,13 @@ async function bookmeterLogin(browser) {
             waitUntil: "networkidle2",
         });
 
-        const accountNameInputHandle = await page.$x(accountNameInputXPath);
-        const passwordInputHandle = await page.$x(passwordInputXPath);
-        const loginButtonHandle = await page.$x(loginButtonXPath);
+        const accountNameInputHandle = page.$x(accountNameInputXPath);
+        const passwordInputHandle = page.$x(passwordInputXPath);
+        const loginButtonHandle = page.$x(loginButtonXPath);
 
-        await accountNameInputHandle[0].type(user_name);
-        await passwordInputHandle[0].type(password);
-        await loginButtonHandle[0].click();
+        await (await accountNameInputHandle)[0].type(user_name);
+        await (await passwordInputHandle)[0].type(password);
+        await (await loginButtonHandle)[0].click();
         
         await page.waitForNavigation({
             timeout: 60000,
@@ -66,24 +66,18 @@ async function bookmeterScraper(browser) {
                 waitUntil: "networkidle2",
             });
 
-            // await page.waitForXPath(amazonLinkXPath);
+            const booksUrlHandle = page.$x(booksUrlXPath);
+            const amazonLinkHandle = page.$x(amazonLinkXPath);
 
-            // 本の情報のbookmeter内部リンクを取得
-            const booksUrlHandle = await page.$x(booksUrlXPath);
-            for (const data of booksUrlHandle) {
+            for (const data of await booksUrlHandle) { // 本の情報のbookmeter内部リンクを取得
                 booksUrlData.push(
                     await (await data.getProperty("href")).jsonValue()
                 );
             }
-
-            //Amazon詳細ページを取得
-            const amazonLinkHandle = await page.$x(amazonLinkXPath);
-            for (const data of amazonLinkHandle) {
-                // let amazonLinks = await (await data.getProperty("href")).jsonValue();
+            for (const data of await amazonLinkHandle) { //Amazon詳細ページを取得
                 amazonLinkData.push(
                     // Amazonへのリンクに含まれる余計なクエリを削除
                     // ref: http://absg.hatenablog.com/entry/2016/03/17/190831
-                    // amazonLinks.replace(/ref=as_li_tf_tl\?.*$/, "")
                     (await (await data.getProperty("href")).jsonValue()).replace(/ref=as_li_tf_tl\?.*$/, "")
                 );
             }
