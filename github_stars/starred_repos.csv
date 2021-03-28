@@ -17,7 +17,7 @@ full_name,html_url,description,stargazers_count
 "trueToastedCode/NdlessSDK-automated-installer","https://github.com/trueToastedCode/NdlessSDK-automated-installer","An automated NdlessSDK installer for linux.",2
 "lights0123/ndless-rs","https://github.com/lights0123/ndless-rs","Rust library for interacting with Ndless for the TI-Nspire",13
 "adobe-fonts/source-han-sans","https://github.com/adobe-fonts/source-han-sans","Source Han Sans | 思源黑体 | 思源黑體 | 思源黑體 香港 | 源ノ角ゴシック | 본고딕",8999
-"danistefanovic/build-your-own-x","https://github.com/danistefanovic/build-your-own-x","🤓 Build your own (insert technology here)",101651
+"danistefanovic/build-your-own-x","https://github.com/danistefanovic/build-your-own-x","🤓 Build your own (insert technology here)",101653
 "PyYoshi/TweetNowBrowsing","https://github.com/PyYoshi/TweetNowBrowsing","Chrome Extension",12
 "eggplants/wbsv-cli","https://github.com/eggplants/wbsv-cli","Archive a page and its all links with Wayback Machine savepagenow from CLI",9
 "alphasp/pixiv-api-client","https://github.com/alphasp/pixiv-api-client","Promise based Pixiv API client for node.js and react native",115
@@ -44,12 +44,12 @@ full_name,html_url,description,stargazers_count
 "ossf/criticality_score","https://github.com/ossf/criticality_score","Gives criticality score for an open source project",851
 "trekhleb/javascript-algorithms","https://github.com/trekhleb/javascript-algorithms","📝 Algorithms and data structures implemented in JavaScript with explanations and links to further readings",100345
 "glinscott/fishtest","https://github.com/glinscott/fishtest","Stockfish testing",146
-"beurtschipper/Depix","https://github.com/beurtschipper/Depix","Recovers passwords from pixelized screenshots",17450
+"beurtschipper/Depix","https://github.com/beurtschipper/Depix","Recovers passwords from pixelized screenshots",17451
 "mikf/gallery-dl","https://github.com/mikf/gallery-dl","Command-line program to download image galleries and collections from several image hosting sites",3117
 "cpojer/js-codemod","https://github.com/cpojer/js-codemod","Codemod scripts to transform code to next generation JS",1063
 "nmrugg/stockfish.js","https://github.com/nmrugg/stockfish.js","The Stockfish chess engine in Javascript",351
 "nozaq/shogi-rs","https://github.com/nozaq/shogi-rs","A Bitboard-based shogi library in Rust. Board representation, move generation/validation and time control utilities.",18
-"airbnb/javascript","https://github.com/airbnb/javascript","JavaScript Style Guide",106838
+"airbnb/javascript","https://github.com/airbnb/javascript","JavaScript Style Guide",106839
 "jasonwebb/morphogenesis-resources","https://github.com/jasonwebb/morphogenesis-resources","Comprehensive list of resources on the topic of digital morphogenesis (the creation of form through code). Includes links to major articles, code repos, creative projects, books, software, and more.",1291
 "utkusen/urlhunter","https://github.com/utkusen/urlhunter","a recon tool that allows searching on URLs that are exposed via shortener services",936
 "sadanandpai/javascript-code-challenges","https://github.com/sadanandpai/javascript-code-challenges","A collection of JavaScript modern interview code challenges for beginners to experts",1617
@@ -81,14 +81,14 @@ full_name,html_url,description,stargazers_count
 "sindresorhus/github-markdown-css","https://github.com/sindresorhus/github-markdown-css","The minimal amount of CSS to replicate the GitHub Markdown style",5374
 "AlDanial/cloc","https://github.com/AlDanial/cloc","cloc counts blank lines, comment lines, and physical lines of source code in many programming languages.",11274
 "emilk/hobogo","https://github.com/emilk/hobogo","Rust + WASM experiment",30
-"emilk/egui","https://github.com/emilk/egui","egui: an easy-to-use immediate mode GUI in pure Rust",1910
+"emilk/egui","https://github.com/emilk/egui","egui: an easy-to-use immediate mode GUI in pure Rust",1911
 "niklasf/python-chess","https://github.com/niklasf/python-chess","A chess library for Python, with move generation and validation, PGN parsing and writing, Polyglot opening book reading, Gaviota tablebase probing, Syzygy tablebase probing, and UCI/XBoard engine communication",1358
 "yadox666/The-Hackers-Hardware-Toolkit","https://github.com/yadox666/The-Hackers-Hardware-Toolkit","The best hacker's gadgets for Red Team pentesters and security researchers.",1729
 "edsu/itstimeihadsometimealone","https://github.com/edsu/itstimeihadsometimealone","Some code to examine and modify your experience of Twitter.",10
 "moebooru/moebooru","https://github.com/moebooru/moebooru","Moebooru, a fork of danbooru1 that has been heavily modified",348
 "sozysozbot/cerke","https://github.com/sozysozbot/cerke","パイグ将棋/机戦/cerke/cetkaik/cet2 kaik",3
 "sozysozbot/cerke_modeling","https://github.com/sozysozbot/cerke_modeling",,1
-"sindresorhus/awesome","https://github.com/sindresorhus/awesome","😎 Awesome lists about all kinds of interesting topics",155771
+"sindresorhus/awesome","https://github.com/sindresorhus/awesome","😎 Awesome lists about all kinds of interesting topics",155772
 "Bogdan-Lyashenko/codecrumbs","https://github.com/Bogdan-Lyashenko/codecrumbs","Learn, design or document codebase by putting breadcrumbs in source code. Live updates, multi-language support and more.",2466
 "Gedevan-Aleksizde/20190703_ML_ECON","https://github.com/Gedevan-Aleksizde/20190703_ML_ECON","Tokyo.R #80 計量経済学と機械学習の関係 –AI はさだめ, さだめは反事実 ",4
 "QwerbyKing/VC-US","https://github.com/QwerbyKing/VC-US","Visual Chess: Undercarriage Syndicate is a chess framework designed with compatibility with Betza Notation",1
@@ -122,7 +122,7 @@ full_name,html_url,description,stargazers_count
 "mi-g/joclyboard","https://github.com/mi-g/joclyboard","Multiplatform 3D/2D desktop application for playing board games",31
 "greymd/teip","https://github.com/greymd/teip","Select partial standard input and replace with the result of another command efficiently",280
 "jw0k/serial2ti83","https://github.com/jw0k/serial2ti83","A program for Arduino Uno that makes it possible to connect a TI-83 calculator to a computer",28
-"jwasham/coding-interview-university","https://github.com/jwasham/coding-interview-university","A complete computer science study plan to become a software engineer.",157892
+"jwasham/coding-interview-university","https://github.com/jwasham/coding-interview-university","A complete computer science study plan to become a software engineer.",157893
 "yaneurao/YaneuraOu","https://github.com/yaneurao/YaneuraOu","YaneuraOu is the World's Strongest Shogi engine(AI player) , WCSC29 1st winner , educational and USI compliant engine.",312
 "na2hiro/Shogi.js","https://github.com/na2hiro/Shogi.js","A simple shogi library for JavaScript / TypeScript",41
 "fulldecent/system-bus-radio","https://github.com/fulldecent/system-bus-radio","Transmits AM radio on computers without radio transmitting hardware.",5636
@@ -165,7 +165,7 @@ full_name,html_url,description,stargazers_count
 "2SC1815J/ndldl_utils","https://github.com/2SC1815J/ndldl_utils","国立国会図書館デジタルコレクション閲覧画面向けユーザスクリプト（アドレスバーを現在表示中のコマのURLに更新など）",5
 "taspinar/twitterscraper","https://github.com/taspinar/twitterscraper","Scrape Twitter for Tweets",1682
 "bisguzar/twitter-scraper","https://github.com/bisguzar/twitter-scraper","Scrape the Twitter Frontend API without authentication.",2746
-"twintproject/twint","https://github.com/twintproject/twint","An advanced Twitter scraping & OSINT tool written in Python that doesn't use Twitter's API, allowing you to scrape a user's followers, following, Tweets and more while evading most API limitations.",9614
+"twintproject/twint","https://github.com/twintproject/twint","An advanced Twitter scraping & OSINT tool written in Python that doesn't use Twitter's API, allowing you to scrape a user's followers, following, Tweets and more while evading most API limitations.",9615
 "akameco/PixivDeck","https://github.com/akameco/PixivDeck",":two_hearts: pixiv client for Desktop like TweetDeck :two_hearts:",411
 "Xdynix/PixivPixie","https://github.com/Xdynix/PixivPixie","User-friendly Pixiv API based on PixivPy",21
 "kiwibrowser/android","https://github.com/kiwibrowser/android","This repository is archived, and is now transferred to https://github.com/kiwibrowser/src",578
@@ -195,7 +195,7 @@ full_name,html_url,description,stargazers_count
 "bolero-MURAKAMI/Sprout","https://github.com/bolero-MURAKAMI/Sprout","C++11/14 constexpr based Containers, Algorithms, Random numbers, Parsing, Ray tracing, Synthesizer, and others.",721
 "0918nobita/Portfolio","https://github.com/0918nobita/Portfolio","ポートフォリオ",7
 "zhanrnl/PyMusAnim","https://github.com/zhanrnl/PyMusAnim","Clone of Stephen Malinowski's Music Animation Machine in Python",22
-"ArchiveBox/ArchiveBox","https://github.com/ArchiveBox/ArchiveBox","🗃 Open source self-hosted web archiving. Takes URLs/browser history/bookmarks/Pocket/Pinboard/etc., saves HTML, JS, PDFs, media, and more...",8619
+"ArchiveBox/ArchiveBox","https://github.com/ArchiveBox/ArchiveBox","🗃 Open source self-hosted web archiving. Takes URLs/browser history/bookmarks/Pocket/Pinboard/etc., saves HTML, JS, PDFs, media, and more...",8620
 "sys-fork/helloworld_freestanding","https://github.com/sys-fork/helloworld_freestanding",,4
 "joke2k/faker","https://github.com/joke2k/faker","Faker is a Python package that generates fake data for you.",12312
 "internetarchive/wayback","https://github.com/internetarchive/wayback","IA's public Wayback Machine (moved from SourceForge)",447

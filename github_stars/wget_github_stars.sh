@@ -1,4 +1,6 @@
 #!/bin/bash
+SECONDS=0
+
 echo "full_name,html_url,description,stargazers_count" \
 > starred_repos.csv && \
 wget --no-check-certificate \
@@ -9,7 +11,5 @@ wget --no-check-certificate \
     | jq '.[] | [ .full_name, .html_url, .description, .stargazers_count ] | @csv' -r \
 >> starred_repos.csv
 
-date="`date --iso-8601=minutes`"
-git add .
-git commit -m "updated starred_repos.csv: $date"
-git push origin master
+echo "GitHub Starred Repositories: CSV Output Completed!"
+echo "The processing took $SECONDS seconds"

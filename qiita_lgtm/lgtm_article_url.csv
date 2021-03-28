@@ -10,7 +10,7 @@ Node.jsでのCLIの作り方と便利なライブラリまとめ,https://qiita.c
 "イマドキな JavaScript で書かない・使わないもの: var, function, then, jQuery",https://qiita.com/kerupani129/items/b2c3619856b048c13394,13
 discordjs/rpcを使ってPCのDiscordをスマホからミュートにしたい,https://qiita.com/rkunkunr/items/7a679b9cb5674cbd074f,9
 BlenderとPythonとUnityを用いて、巨大な立体迷路を作成する。,https://qiita.com/hari64/items/37ad45de77013f3c2630,96
-Puppeteerで次ページへの遷移を待つ,https://qiita.com/hnw/items/a07e6b88d95d1656e02f,152
+Puppeteerで次ページへの遷移を待つ,https://qiita.com/hnw/items/a07e6b88d95d1656e02f,153
 Kaggleに登録したら次にやること ～ これだけやれば十分闘える！Titanicの先へ行く入門 10 Kernel ～,https://qiita.com/upura/items/3c10ff6fed4e7c3d70f0,2921
 Java 16新機能まとめ,https://qiita.com/nowokay/items/215769cdcb14d6c5412f,162
 純粋関数型スクリプト言語PureScriptのはじめかた,https://qiita.com/hiruberuto/items/2316b58162cfec150460,204
@@ -199,6 +199,26 @@ TypeScriptをプロダクト開発に使う上でのベストプラクティス�
 "TypeScriptの""型""を学びたいあなたへ。type-challengesのすゝめ",https://qiita.com/ryo2132/items/925b96838dd8cca7cebd,448
 旧石器時代のポインタをご利用の皆様へ ～provenance入門～,https://qiita.com/__pandaman64__/items/1788a90ae5be79cc908b,407
 素因数分解を O(n^(1/4)) でする,https://qiita.com/Kiri8128/items/eca965fe86ea5f4cbb98,36
+微分方程式を数値計算するときの話（ode45の中身）,https://qiita.com/taka_horibe/items/8838b08f88f1a55fb9a7,97
+数値計算の常識 概要（個人的メモ）,https://qiita.com/shima_x/items/7e1e2d1e19ca35cc70ad,101
+【TS】TypeScript 4.0 の新機能,https://qiita.com/wwalpha/items/e17a066853a24ee42d13,14
+「タイプセーフプリキュア！」を支える技術,https://qiita.com/igrep/items/5496fa405fae00b5a737,40
+Twitter上の指定ユーザーのツイートから目的の画像のみを自動収集する,https://qiita.com/tf0101/items/099fbfce3ad7992e1baa,82
+GoでYAMLを扱うすべての人を幸せにするべく、ライブラリをスクラッチから書いた話,https://qiita.com/goccy/items/86abe72b472993b5516a,154
+WindowsでDocker環境を試してみる,https://qiita.com/fkooo/items/d2fddef9091b906675ca,378
+TypeScript チュートリアル,https://qiita.com/EBIHARA_kenji/items/31b7c1c62426bdabd263,267
+webpackをかんたんに使う（Zero Configulation）,https://qiita.com/hashrock/items/3f1df615e68ee8aad9e8,20
+フロントエンド開発の３ステップ（npmことはじめ）,https://qiita.com/hashrock/items/15f4a4961183cfbb2658,1560
+TypeScript + Node.js プロジェクトのはじめかた2020,https://qiita.com/notakaos/items/3bbd2293e2ff286d9f49,664
+Linux上でのL2TP/IPSecのクライアント設定,https://qiita.com/__cooper/items/4b5ab7ae40b0e95f0d19,59
+【AtCoder】普通の人である私が緑になるまでにしたこと,https://qiita.com/Kota-Y/items/396ab3c57830dad65cfb,670
+ローカルのプロジェクトをGitHubへアップロードする方法,https://qiita.com/devzip8/items/28ac253ea295ad6c2b73,341
+コンピュータ業界でよく出る英語,https://qiita.com/tfutada/items/d1b17cd4008876c17bf4,1430
+複数のgitアカウントを使用する場合,https://qiita.com/yamataku29/items/4744c9c70ad793c83b82,137
+GitHubで複数のアカウントを使う場合のSSHの設定,https://qiita.com/merrill/items/80a8d8a152e2483fa587,48
+VAIO Z で Arch LinuxとWindows 10をデュアルブートする,https://qiita.com/mopp/items/f1912433abbed69f5f99,20
+AlphaGoを模したオセロAIを作る(1): SLポリシーネットワーク,https://qiita.com/shionhonda/items/7a3eb79f55299e743630,64
+Rustでマンカラ(ボードゲーム)の思考エンジンを作る,https://qiita.com/dsanno/items/1abd96a70f4fa927cc75,6
 プログラムを読まない人のための Stockfish 評価値アルゴリズム解説 (1),https://qiita.com/anjyu108/items/43f3bfd5a5387660373a,7
 プログラムを読まない人のための Stockfish 評価値アルゴリズム解説 (2),https://qiita.com/anjyu108/items/6fcd84ed09fddae4f04b,4
 Pythonでハノンっぽい楽譜を作ったお話,https://qiita.com/bamboo_music_ac/items/75e606e112fc5dae78a5,128
@@ -682,7 +702,7 @@ VSCodeでなるべくマウスを使わない開発環境をがんばる,https:/
 【続】平成の次の元号を、AIだけで決めさせる物語（＠テレビ取材）,https://qiita.com/youwht/items/7b1118ecd91bd2e232bb,1214
 侍エンジニア塾の解約・返金に成功したので公開するby弁護士プログラマ,https://qiita.com/ideki1991/items/b9da8273f05613c593ed,512
 無限アラートは不正プログラムとして逮捕されるらしいので警察にゴールドバッハ予想を証明してもらおう,https://qiita.com/yuta0801/items/82872d551caf47f2c7af,494
-AtCoder に登録したら次にやること ～ これだけ解けば十分闘える！過去問精選 10 問 ～,https://qiita.com/drken/items/fd4e5e3630d0f5859067,5668
+AtCoder に登録したら次にやること ～ これだけ解けば十分闘える！過去問精選 10 問 ～,https://qiita.com/drken/items/fd4e5e3630d0f5859067,5669
 ブラウザでVS codeが使えるクラウド IDEの大本命「Coder」,https://qiita.com/MegaBlackLabel/items/bbec97db769667962bce,1385
 Webアプリ無料運営のススメ：FirebaseとNuxt(Vue)なら最強！,https://qiita.com/y_kawase/items/fb9f747d88af151f981a,1737
 化学系研究者が完全未経験からWeb系自社開発企業に転職するまで,https://qiita.com/fuku_tech/items/b8db09720c6d38eb27b9,675
@@ -815,7 +835,7 @@ Ruby-&gt;Go-&gt;Scalaという習得順序がエンジニアの爆速の成長�
 DDoS攻撃されたらそこで試合終了!? レンサバから利用停止を宣告される前にできる8つの対策,https://qiita.com/suin/items/58ddfc5b6186b1b8a4af,575
 Apacheとnginxどちらを採用すべきかメリット・デメリット比較,https://qiita.com/pink/items/7709218310b5cf11eabe,153
 さくらVPSでWebサーバを稼働させる,https://qiita.com/medalotte/items/46fe4e9d25e6dff24d25,15
-ApacheとNginxについて比較,https://qiita.com/kamihork/items/49e2a363da7d840a4149,913
+ApacheとNginxについて比較,https://qiita.com/kamihork/items/49e2a363da7d840a4149,914
 conohaたんに質問しまくってみた,https://qiita.com/ma7ma7pipipi/items/20261abd7cfb6e3f2882,11
 ConoHa WING で Nextcloud を立てるついでに、中身みてみる,https://qiita.com/naa0yama/items/1a5dd279d6bcb3f87bbf,9
 サーバー上（Ubuntu16.04）で、Webブラウザを自動実行することで、Web上の特定のデータを定点観測する（２）〜Webスクレイピング編〜,https://qiita.com/gano/items/6c599c531b0e68ac6414,19

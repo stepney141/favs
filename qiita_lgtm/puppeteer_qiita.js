@@ -136,12 +136,12 @@ async function output(arrayData) {
                 if (e) console.log("error: ", e);
             }
         );
-        console.log("csv output: completed!");
 
     } catch (e) {
         console.log("error: ", e.message);
         return false;
     }
+    console.log("Qiita LGTM Articles: CSV Output Completed!");
     return true;
 }
 

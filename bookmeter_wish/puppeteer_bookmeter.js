@@ -119,7 +119,7 @@ async function output(arrayData) {
         console.log("error: ", e.message);
         return false;
     }
-    console.log("csv output: completed!");
+    console.log("Bookmeter Wished Books: CSV Output Completed!");
     return true;
 }
 
