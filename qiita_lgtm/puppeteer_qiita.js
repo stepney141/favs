@@ -25,7 +25,7 @@ async function getLgtm(browser) {
 
         do {
             await page.goto(`https://qiita.com/${userid}/lgtms?page=${page_num}`, {
-                waitUntil: "networkidle2",
+                waitUntil: ["domcontentloaded", "networkidle0"],
             });
 
             // get max cursor number
