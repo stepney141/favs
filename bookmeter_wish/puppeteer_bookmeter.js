@@ -128,8 +128,8 @@ async function output(arrayData) {
 
     const browser = await puppeteer.launch({
         defaultViewport: {width: 1000, height: 1000},
-        // headless: true,
-        headless: false,
+        headless: true,
+        // headless: false,
     });
 
     await bookmeterLogin(browser);

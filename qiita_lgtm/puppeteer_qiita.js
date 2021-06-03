@@ -153,8 +153,8 @@ async function output(arrayData) {
             width: 600,
             height: 700,
         },
-        // headless: true,
-        headless: false,
+        headless: true,
+        // headless: false,
     });
 
     // await qiitaLogin(browser);
