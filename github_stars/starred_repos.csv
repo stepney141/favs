@@ -1,4 +1,5 @@
 full_name,html_url,description,stargazers_count
+"eggplants/infosearch","https://github.com/eggplants/infosearch","2021年度「情報検索システム」ノート",1
 "alexzorin/authy","https://github.com/alexzorin/authy","Go library and program to access your Authy TOTP secrets.",288
 "sorrycc/awesome-javascript","https://github.com/sorrycc/awesome-javascript","🐢 A collection of awesome browser-side  JavaScript libraries, resources and shiny things.",23966
 "gcanti/fp-ts","https://github.com/gcanti/fp-ts","Functional programming in TypeScript",6397
@@ -40,7 +41,7 @@ full_name,html_url,description,stargazers_count
 "shotacure/CapCap","https://github.com/shotacure/CapCap","出典表記リアルタイム合成ツール",3
 "zenn-dev/zenn-editor","https://github.com/zenn-dev/zenn-editor","Convert markdown to html in Zenn format",236
 "RobinCsl/awesome-js-tooling-not-in-js","https://github.com/RobinCsl/awesome-js-tooling-not-in-js","A curated list of JavaScript tooling not written in JavaScript",556
-"scottrogowski/code2flow","https://github.com/scottrogowski/code2flow","Pretty good call graphs for dynamic languages",868
+"scottrogowski/code2flow","https://github.com/scottrogowski/code2flow","Pretty good call graphs for dynamic languages",869
 "gergob/jsProxy","https://github.com/gergob/jsProxy",,162
 "discordjs/collection","https://github.com/discordjs/collection","Utility data structure used in Discord.js",78
 "src-d/hercules","https://github.com/src-d/hercules","Gaining advanced insights from Git repository history.",1372
@@ -103,7 +104,7 @@ full_name,html_url,description,stargazers_count
 "cpojer/js-codemod","https://github.com/cpojer/js-codemod","Codemod scripts to transform code to next generation JS",1083
 "nmrugg/stockfish.js","https://github.com/nmrugg/stockfish.js","The Stockfish chess engine in Javascript",391
 "nozaq/shogi-rs","https://github.com/nozaq/shogi-rs","A Bitboard-based shogi library in Rust. Board representation, move generation/validation and time control utilities.",18
-"airbnb/javascript","https://github.com/airbnb/javascript","JavaScript Style Guide",110625
+"airbnb/javascript","https://github.com/airbnb/javascript","JavaScript Style Guide",110626
 "jasonwebb/morphogenesis-resources","https://github.com/jasonwebb/morphogenesis-resources","Comprehensive list of resources on the topic of digital morphogenesis (the creation of form through code). Includes links to major articles, code repos, creative projects, books, software, and more.",1376
 "utkusen/urlhunter","https://github.com/utkusen/urlhunter","a recon tool that allows searching on URLs that are exposed via shortener services",974
 "sadanandpai/javascript-code-challenges","https://github.com/sadanandpai/javascript-code-challenges","A collection of JavaScript modern interview code challenges for beginners to experts",1860
@@ -356,7 +357,7 @@ full_name,html_url,description,stargazers_count
 "CE-Programming/toolchain","https://github.com/CE-Programming/toolchain","Toolchain and libraries for C/C++ programming on the TI-84+ CE calculator series",247
 "Vane11ope/.files","https://github.com/Vane11ope/.files",,6
 "ac100v/bad_apple_fx-9860gii","https://github.com/ac100v/bad_apple_fx-9860gii","Bad Apple!! demonstration on CASIO fx-9860GII",7
-"tonsky/FiraCode","https://github.com/tonsky/FiraCode","Free monospaced font with programming ligatures",56894
+"tonsky/FiraCode","https://github.com/tonsky/FiraCode","Free monospaced font with programming ligatures",56895
 "EzoeRyou/cpp17book","https://github.com/EzoeRyou/cpp17book","textbook for C++17",365
 "EzoeRyou/cpp-book","https://github.com/EzoeRyou/cpp-book","C++11 textbook",566
 "EzoeRyou/cpp14-appendix","https://github.com/EzoeRyou/cpp14-appendix","Appendix for C++14 features",45
