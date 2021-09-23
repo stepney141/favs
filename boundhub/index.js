@@ -3,51 +3,69 @@ const fs = require("fs");
 const papa = require("papaparse");
 require("dotenv").config();
 
-const baseURI = 'https://bookmeter.com';
-const userID = '1003258';
-const isBookExistXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul[1]/li';
-// const booksXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul/li';
-const booksUrlXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[2]/a';
-const amazonLinkXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[4]/a';
+const baseURI = 'https://www.boundhub.com';
+const process_description = 'Boundhub Favorite Movies';
+const playlist_name = 'playlist01';
 
-const accountNameInputXPath = '//*[@id="session_email_address"]';
-const passwordInputXPath = '//*[@id="session_password"]';
-const loginButtonXPath = '//*[@id="js_sessions_new_form"]/form/div[4]/button';
+const xpath = {
+    useridInput: '//*[@id="login_username"]',
+    passwordInput: '//*[@id="login_pass"]',
+    loginButton: '/html/body/div[4]/div/div/div/div/div/form/div[2]/div[4]/input[3]',
 
-const user_name = process.env.BOOKMETER_ACCOUNT;
-const password = process.env.BOOKMETER_PASSWORD;
+    linkToPlaylist: `//a[contains(text(), "${playlist_name}")]`,
 
-let page_num = 1;
-let booksUrlData = ["bookmeter_url"];
-let amazonLinkData = ["amazon_url"];
-let wishBooksData = [];
+    linkToNextPage: '//a[contains(text(), "Next") and @data-container-id="list_videos_my_favourite_videos_pagination"]',
+    linkToAllMovies: '//*[@id="list_videos_my_favourite_videos_items"]/form/div[*]/a',
+};
+
+const user_name = process.env.BOUNDHUB_ACCOUNT;
+const password = process.env.BOUNDHUB_PASSWORD;
         
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
 const transposeArray = a => a[0].map((_, c) => a.map((r) => r[c]));
 
 const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
 
-// Amazon詳細リンクはアカウントにログインしなければ表示されないため、ログインする
-async function bookmeterLogin(browser) {
+const mouse_click = async (page, x, y, time) => {
+    try {
+        await Promise.all([
+            page.mouse.move(x, y),
+            page.waitForTimeout(time),
+            page.mouse.click(x, y)
+        ]);
+        return true;
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
+};
+
+async function login(browser) {
     try {
         const page = await browser.newPage();
 
-        await page.goto(`${baseURI}/login`, {
-            waitUntil: "networkidle2",
+        await page.goto(`${baseURI}/?login`, {
+            waitUntil: "load",
         });
 
-        const accountNameInputHandle = page.$x(accountNameInputXPath);
-        const passwordInputHandle = page.$x(passwordInputXPath);
-        const loginButtonHandle = page.$x(loginButtonXPath);
-
-        await (await accountNameInputHandle)[0].type(user_name);
-        await (await passwordInputHandle)[0].type(password);
-        await (await loginButtonHandle)[0].click();
-        
-        await page.waitForNavigation({
-            timeout: 60000,
-            waitUntil: "networkidle2",
+        await page.evaluateOnNewDocument(() => { //webdriver.navigatorを消して自動操縦であることを隠す
+            Object.defineProperty(navigator, 'webdriver', ()=>{});
+            delete navigator.__proto__.webdriver;
         });
+
+        const useridInput_Handle = page.$x(xpath.useridInput);
+        const passwordInput_Handle = page.$x(xpath.passwordInput);
+        const loginButton_Handle = page.$x(xpath.loginButton);
+
+        await (await useridInput_Handle)[0].type(user_name);
+        await (await passwordInput_Handle)[0].type(password);
+        await Promise.all([
+            page.waitForNavigation({
+                timeout: 60000,
+                waitUntil: "networkidle2",
+            }),
+            (await loginButton_Handle)[0].click(),
+        ]);
 
     } catch (e) {
         console.log(e);
@@ -57,50 +75,73 @@ async function bookmeterLogin(browser) {
     return true;    
 }
 
-async function bookmeterScraper(browser) {
+async function scraper(browser) {
+    let movieData = [];
+    let movieUrlData = ["movie_url"];
+    let movieTitleData = ["movie_title"];
+    let num = 1;
+
     try {
         const page = await browser.newPage();
+        
+        await page.goto(`${baseURI}/my/favourites/videos/`, {
+            waitUntil: "load",
+        });
 
-        do {
-            await page.goto(`${baseURI}/users/${userID}/books/wish?page=${page_num}`, {
-                waitUntil: "networkidle2",
-            });
+        await page.evaluateOnNewDocument(() => { //webdriver.navigatorを消して自動操縦であることを隠す
+            Object.defineProperty(navigator, 'webdriver', ()=>{});
+            delete navigator.__proto__.webdriver;
+        });
 
-            const booksUrlHandle = page.$x(booksUrlXPath);
-            const amazonLinkHandle = page.$x(amazonLinkXPath);
+        const linkToPlaylist_Handle = page.$x(xpath.linkToPlaylist);
 
-            for (const data of await booksUrlHandle) { // 本の情報のbookmeter内部リンクを取得
-                booksUrlData.push(
-                    await (await data.getProperty("href")).jsonValue()
+        await Promise.all([
+            mouse_click(page, 420, 465, 1000), //ドロップダウンメニューを開く
+            (await linkToPlaylist_Handle)[0].click(), //プレイリストを開く
+            page.waitForTimeout(2000)
+        ]);
+
+        for (; ;) { //infinite loop
+            console.log('count', num);
+            num++;
+
+            const linkToAllMovies_Handle = await page.$x(xpath.linkToAllMovies);
+            for (const data of linkToAllMovies_Handle) {
+                movieUrlData.push(
+                    await (await data.getProperty("href")).jsonValue() //動画の内部リンクを取得
+                );
+                movieTitleData.push(
+                    await (await data.getProperty("title")).jsonValue() //動画のタイトルを取得
                 );
             }
-            for (const data of await amazonLinkHandle) { //Amazon詳細ページを取得
-                amazonLinkData.push(
-                    // Amazonへのリンクに含まれる余計なクエリを削除
-                    // ref: http://absg.hatenablog.com/entry/2016/03/17/190831
-                    (await (await data.getProperty("href")).jsonValue()).replace(/ref=as_li_tf_tl\?.*$/, "")
-                );
+
+            const linkToNextPage_Handle = await page.$x(xpath.linkToNextPage); // XPathでページネーションのリンク情報を取得し、そのelementHandleに要素が存在するか否かでループの終了を判定
+            if (await linkToNextPage_Handle.length !== 0) {
+                await Promise.all([
+                    page.waitForResponse(
+                        (response) => {
+                            console.log(response.url());
+                            return response.url().includes('https://www.boundhub.com/my/favourites/videos/?mode=async') === true && response.status() === 200;
+                        }
+                    ),
+                    page.waitForTimeout(randomWait(3000, 0.5, 1.1)), //1500ms ~ 3300msの間でランダムにアクセスの間隔を空ける
+                    (await linkToNextPage_Handle)[0].click(), //次のページに移る
+                ]);
+            } else {
+                break;
             }
+        }
 
-            // 1500ms ~ 4500msの間でランダムにアクセスの間隔を空ける
-            // await page.waitForTimeout(randomWait(3000, 0.5, 1.5));
-
-            page_num++;
-
-        } while (
-            // XPathで本の情報を取得し、そのelementHandleに要素が存在するか否かでループの終了を判定
-            await (await page.$x(isBookExistXPath)).length != 0
-        );
-
-        wishBooksData.push(booksUrlData, amazonLinkData);
-        wishBooksData = transposeArray(wishBooksData);
+        movieData.push(movieUrlData, movieTitleData);
+        movieData = transposeArray(movieData);
 
     } catch (e) {
         console.log(e);
         await browser.close();
         return false;
     }
-    return true;
+
+    return movieData;
 }
 
 async function output(arrayData) {
@@ -108,7 +149,7 @@ async function output(arrayData) {
 
     try {
         await fs.writeFile(
-            "./bookmeter_wish_books.csv",
+            "./boundhub_faved_movies.csv",
             papa.unparse(jsonData),
             // jsonData,
             (e) => {
@@ -119,7 +160,7 @@ async function output(arrayData) {
         console.log("error: ", e.message);
         return false;
     }
-    console.log("Bookmeter Wished Books: CSV Output Completed!");
+    console.log(process_description + ": CSV Output Completed!");
     return true;
 }
 
@@ -127,14 +168,15 @@ async function output(arrayData) {
     const startTime = Date.now();
 
     const browser = await puppeteer.launch({
-        defaultViewport: {width: 1000, height: 1000},
+        defaultViewport: { width: 500, height: 1000 },
         headless: true,
-        // headless: false,
+        // devtools: true,
+        // slowMo: 20
     });
 
-    await bookmeterLogin(browser);
-    await bookmeterScraper(browser);
-    await output(wishBooksData);
+    await login(browser);
+    const movie_data = await scraper(browser);
+    await output(movie_data);
 
     console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 

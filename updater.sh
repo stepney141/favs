@@ -9,6 +9,9 @@ node ./puppeteer_qiita.js
 cd ../bookmeter_wish
 node ./puppeteer_bookmeter.js
 
+cd ../boundhub
+node ./index.js
+
 cd ..
 date1="`date --iso-8601=minutes`"
 git add .
