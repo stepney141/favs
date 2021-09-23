@@ -11,6 +11,7 @@ node ./puppeteer_bookmeter.js
 
 cd ../boundhub
 node ./index.js
+bash ./get_url_list.sh
 
 cd ..
 date1="`date --iso-8601=minutes`"
