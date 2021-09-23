@@ -6,6 +6,7 @@ require("dotenv").config();
 const baseURI = 'https://www.boundhub.com';
 const process_description = 'Boundhub Favorite Movies';
 const playlist_name = 'playlist01';
+const csv_filename = 'boundhub_faved_movies';
 
 const xpath = {
     useridInput: '//*[@id="login_username"]',
@@ -132,7 +133,7 @@ async function scraper(browser) {
             }
         }
 
-        movieData.push(movieUrlData, movieTitleData);
+        movieData.push(movieTitleData, movieUrlData);
         movieData = transposeArray(movieData);
 
     } catch (e) {
@@ -149,7 +150,7 @@ async function output(arrayData) {
 
     try {
         await fs.writeFile(
-            "./boundhub_faved_movies.csv",
+            `./${csv_filename}.csv`,
             papa.unparse(jsonData),
             // jsonData,
             (e) => {
