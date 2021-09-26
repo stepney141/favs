@@ -3,6 +3,7 @@ node_modules
 
 .env
 */.env
+env.json
 
 test.png
 */test.png
@@ -10,3 +11,5 @@ test.png
 */*test*.png
 
 qiita_lgtm/*.png
+
+deviantart_api/img
