@@ -103,8 +103,8 @@ async function scraper(browser) {
         ]);
 
         for (; ;) { //infinite loop
-            console.log('count', num);
-            num++;
+            // console.log('count', num);
+            // num++;
 
             const linkToAllMovies_Handle = await page.$x(xpath.linkToAllMovies);
             for (const data of linkToAllMovies_Handle) {
@@ -121,7 +121,7 @@ async function scraper(browser) {
                 await Promise.all([
                     page.waitForResponse(
                         (response) => {
-                            console.log(response.url());
+                            // console.log(response.url());
                             return response.url().includes('https://www.boundhub.com/my/favourites/videos/?mode=async') === true && response.status() === 200;
                         }
                     ),
