@@ -14,12 +14,21 @@ const accountNameInputXPath = '//*[@id="session_email_address"]';
 const passwordInputXPath = '//*[@id="session_password"]';
 const loginButtonXPath = '//*[@id="js_sessions_new_form"]/form/div[4]/button';
 
+// ref: https://regexr.com/3gk2s
+// ref: https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11143609671
+const amazon_asin_regex = /[A-Z0-9]{10}|[0-9-]{9,16}[0-9X]/;
+
+// ref: http://absg.hatenablog.com/entry/2016/03/17/190831
+const amazon_regex = /(^https:\/\/www.amazon.co.jp\/dp\/product\/)(.+)(?=\/ref=as_li_tf_tl\?.*$)/;
+const amazon_domain_regex = /^https:\/\/www.amazon.co.jp\/dp\/product\//;
+const amazon_query_regex = /\/ref=as_li_tf_tl\?.*$/;
+
 const user_name = process.env.BOOKMETER_ACCOUNT;
 const password = process.env.BOOKMETER_PASSWORD;
 
 let page_num = 1;
 let booksUrlData = ["bookmeter_url"];
-let amazonLinkData = ["amazon_url"];
+let asinInAmazonLinkData = ["asin_or_isbn"];
 let wishBooksData = [];
         
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
@@ -75,10 +84,10 @@ async function bookmeterScraper(browser) {
                 );
             }
             for (const data of await amazonLinkHandle) { //Amazon詳細ページを取得
-                amazonLinkData.push(
-                    // Amazonへのリンクに含まれる余計なクエリを削除
-                    // ref: http://absg.hatenablog.com/entry/2016/03/17/190831
-                    (await (await data.getProperty("href")).jsonValue()).replace(/ref=as_li_tf_tl\?.*$/, "")
+                asinInAmazonLinkData.push(
+                    // Amazonへのリンクに含まれるISBN/ASINを抽出
+                    // (await (await data.getProperty("href")).jsonValue()).replace(amazon_query_regex, "").replace(amazon_domain_regex, "")
+                    (await (await data.getProperty("href")).jsonValue()).match(amazon_asin_regex)
                 );
             }
 
@@ -92,7 +101,7 @@ async function bookmeterScraper(browser) {
             await (await page.$x(isBookExistXPath)).length != 0
         );
 
-        wishBooksData.push(booksUrlData, amazonLinkData);
+        wishBooksData.push(booksUrlData, asinInAmazonLinkData);
         wishBooksData = transposeArray(wishBooksData);
 
     } catch (e) {
