@@ -39,12 +39,13 @@ class bookmaker {
 
     constructor() {
         this.page_num = 1;
-        this.book_urls = ["bookmeter_url"];
+        this.bookmeter_urls = ["bookmeter_url"];
         this.asins_in_amazon_link = ["asin_or_isbn"];
         this.book_titles = ["book_title"];
         this.book_publishers = ["publisher"];
         this.book_authors = ["author"];
-        this.wishBooksData = [];
+        this.wishBooksData = new Map();
+        this.wishBooksData_Array = [];
     }
 
     // Amazon詳細リンクはアカウントにログインしなければ表示されないため、ログインする
@@ -81,37 +82,37 @@ class bookmaker {
         try {
             const page = await browser.newPage();
 
-            do {
+            for (; ;) {
                 await page.goto(`${baseURI}/users/${userID}/books/wish?page=${this.page_num}`, {
                     waitUntil: "networkidle2",
                 });
 
-                const booksUrlHandle = page.$x(booksUrlXPath);
-                const amazonLinkHandle = page.$x(amazonLinkXPath);
+                const booksUrlHandle = await page.$x(booksUrlXPath);
+                const amazonLinkHandle = await page.$x(amazonLinkXPath);
 
-                for (const data of await booksUrlHandle) { // 本の情報のbookmeter内部リンクを取得
-                    this.book_urls.push(
-                        await (await data.getProperty("href")).jsonValue()
-                    );
-                }
-                for (const data of await amazonLinkHandle) { //Amazon詳細ページを取得
-                    this.asins_in_amazon_link.push(
-                    // Amazonへのリンクに含まれるISBN/ASINを抽出
-                    // (await (await data.getProperty("href")).jsonValue()).replace(amazon_query_regex, "").replace(amazon_domain_regex, "")
-                        String((await (await data.getProperty("href")).jsonValue()).match(amazon_asin_regex))
-                    );
+                for (let i = 0; i < booksUrlHandle.length; i++){
+                    let bkmt_raw = await (await booksUrlHandle[i].getProperty("href")).jsonValue();
+                    let bkmt = String(bkmt_raw); //本の情報のbookmeter内部リンクを取得
+
+                    let amzn_raw = await (await amazonLinkHandle[i].getProperty("href")).jsonValue();
+                    let amzn = String(amzn_raw.match(amazon_asin_regex)); //Amazonへのリンクに含まれるISBN/ASINを抽出
+
+                    this.wishBooksData.set(bkmt, { //bookmeterの内部リンクをMapのキーにする
+                        "bookmeter_url": bkmt,
+                        "isbn_or_asin": amzn
+                    });
                 }
 
                 // 1500ms ~ 3300msの間でランダムにアクセスの間隔を空ける
                 // await page.waitForTimeout(randomWait(3000, 0.5, 1.1));
 
-                this.page_num++;
-
-            } while (
-            // XPathで本の情報を取得し、そのelementHandleに要素が存在するか否かでループの終了を判定
-                await (await page.$x(isBookExistXPath)).length != 0
-            );
-
+                // XPathで本の情報を取得し、そのelementHandleに要素が存在しなければループから抜ける
+                if (await (await page.$x(isBookExistXPath)).length == 0) {
+                    break;
+                } else {
+                    this.page_num++;
+                }
+            }
         } catch (e) {
             console.log(e);
             await browser.close();
@@ -121,32 +122,49 @@ class bookmaker {
         return true;
     }
 
-    async fetchOpenId(isbn_data) {
-        if (isbn_data !== null) {
+    async fetchOpenBD(key, books_obj) {
+        let isbn_data = books_obj["isbn_or_asin"]; //ISBNデータを取得
+
+        if (isbn_data !== "null") { //正常系
             try {
                 const response = await axios.get(`https://api.openbd.jp/v1/get?isbn=${isbn_data}`);
                 // console.log(response.data[0]);
-                if (response.data[0] === null) {
-                    const status_text = "Not_found_with_Amazon_or_OpenBD";
-                    this.book_publishers.push(status_text);
-                    this.book_authors.push(status_text);
-                    this.book_titles.push(status_text);
-                } else {
-                    this.book_publishers.push(response.data[0].summary.publishers);
-                    this.book_authors.push(response.data[0].summary.author);
-                    this.book_titles.push(response.data[0].summary.title);
+                if (response.data[0] === null) { //異常系(OpenBDで書籍情報が見つからなかった場合)
+                    const status_text = "Not_found_with_OpenBD";
+                    this.wishBooksData.set(key, {
+                        "bookmeter_url": key,
+                        "isbn_or_asin": isbn_data,
+                        "book_title": status_text,
+                        "author": status_text,
+                        "publisher": status_text,
+                        "published_date": status_text
+                    });
+                } else { //正常系(OpenBDで書籍情報が見つかった場合)
+                    const fetched_data = response.data[0].summary;
+                    // console.log(extracted_data);
+                    this.wishBooksData.set(key, {
+                        "bookmeter_url": key,
+                        "isbn_or_asin": isbn_data,
+                        "book_title": fetched_data.title,
+                        "author": fetched_data.author,
+                        "publisher": fetched_data.publisher,
+                        "published_date": fetched_data.pubdate
+                    });
                 }
             } catch (e) {
                 console.log(e);
             }
+        } else { //異常系(与えられたISBN自体がない場合)
+            const status_text = "Not_found_with_Amazon";
+            this.wishBooksData.set(key, {
+                "bookmeter_url": key,
+                "isbn_or_asin": isbn_data,
+                "book_title": status_text,
+                "author": status_text,
+                "publisher": status_text,
+                "published_date": status_text
+            });
         }
-        console.log("Bookmeter Wished Books: OpenBD Searching Completed");
-    }
-
-    configArray() {
-        this.wishBooksData.push(this.book_urls, this.asins_in_amazon_link, this.book_titles, this.book_publishers, this.book_authors);
-        console.log(this.book_urls.length, this.asins_in_amazon_link.length, this.book_titles.length, this.book_publishers.length, this.book_authors.length);
-        this.wishBooksData = transposeArray(this.wishBooksData);
     }
 
     async output(arrayData) {
@@ -168,7 +186,6 @@ class bookmaker {
         console.log("Bookmeter Wished Books: CSV Output Completed!");
         return true;
     }
-
 }
 
 (async () => {
@@ -184,13 +201,19 @@ class bookmaker {
 
     await book.bookmeterLogin(browser);
     await book.bookmeterScraper(browser);
-    for (const isbn_data of book.asins_in_amazon_link) {
-        await book.fetchOpenId(isbn_data);
-        // 1500ms ~ 3300msの間でランダムにアクセスの間隔を空ける
-        await sleep(randomWait(3000, 0.5, 1.1));
+
+    for (const [key, value] of book.wishBooksData) {
+        await book.fetchOpenBD(key, value);
+        // 1000ms x0.5 ~ x1.1 の間でランダムにアクセスの間隔を空ける
+        // await sleep(randomWait(3000, 0.5, 1.1));
     }
-    book.configArray();
-    await book.output(book.wishBooksData);
+    console.log("Bookmeter Wished Books: OpenBD Searching Completed");
+
+    for (const obj of book.wishBooksData.values()) { //Mapの値だけ抜き出してArrayにする
+        book.wishBooksData_Array.push(obj);
+    }
+
+    await book.output(book.wishBooksData_Array); //ファイル出力
 
     console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 
