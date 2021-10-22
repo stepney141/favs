@@ -36,11 +36,6 @@ class bookmaker {
 
     constructor() {
         this.page_num = 1;
-        this.bookmeter_urls = ["bookmeter_url"];
-        this.asins_in_amazon_link = ["asin_or_isbn"];
-        this.book_titles = ["book_title"];
-        this.book_publishers = ["publisher"];
-        this.book_authors = ["author"];
         this.wishBooksData = new Map();
         this.wishBooksData_Array = [];
     }
