@@ -1,6 +1,16 @@
-name: GitHub Actions Demo
+name: Favorites Updater with GitHub Actions
+
 on: [push]
+
 jobs:
+  Updater:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+
+
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
