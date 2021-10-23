@@ -10,8 +10,11 @@ cd ../bookmeter_wish
 node ./puppeteer_bookmeter.js
 
 cd ../boundhub
-node ./index.js
+node ./puppeteer_boundhub.js
 bash ./get_url_list.sh
+
+cd ../note_favs
+node ./puppeteer_note.js
 
 cd ..
 date1="`date --iso-8601=minutes`"

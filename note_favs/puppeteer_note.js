@@ -151,8 +151,8 @@ class notebook {
 
     const browser = await puppeteer.launch({
         defaultViewport: { width: 500, height: 1000 },
-        // headless: true,
-        devtools: true,
+        headless: true,
+        // devtools: true,
         // slowMo: 20
     });
 
