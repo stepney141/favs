@@ -5,32 +5,51 @@ const axios = require("axios");
 const fxp = require("fast-xml-parser");
 require("dotenv").config();
 
-const baseURI = 'https://bookmeter.com';
-const userID = '1003258';
-const isBookExistXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul[1]/li';
-// const booksXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul/li';
-const booksUrlXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[2]/a';
-const amazonLinkXPath = '/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[4]/a';
+const bookmeter_baseURI = 'https://bookmeter.com';
+const bookmeter_userID = '1003258';
+const xpath = {
+    isBookExist : '/html/body/div[1]/div[1]/section/div/div[1]/ul[1]/li',
+    booksUrl : '/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[2]/a',
+    amazonLink : '/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[4]/a',
 
-const accountNameInputXPath = '//*[@id="session_email_address"]';
-const passwordInputXPath = '//*[@id="session_password"]';
-const loginButtonXPath = '//*[@id="js_sessions_new_form"]/form/div[4]/button';
+    accountNameInput : '//*[@id="session_email_address"]',
+    passwordInput : '//*[@id="session_password"]',
+    loginButton : '//*[@id="js_sessions_new_form"]/form/div[4]/button',
+};
 
 // ref: http://absg.hatenablog.com/entry/2016/03/17/190831
 // ref: https://regexr.com/3gk2s
 // ref: https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11143609671
 const amazon_asin_regex = /[A-Z0-9]{10}|[0-9-]{9,16}[0-9X]/;
 
-const user_name = process.env.BOOKMETER_ACCOUNT;
-const password = process.env.BOOKMETER_PASSWORD;
-
-// ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
-const transposeArray = a => a[0].map((_, c) => a.map((r) => r[c]));
+const bookmeter_username = process.env.BOOKMETER_ACCOUNT;
+const bookmeter_password = process.env.BOOKMETER_PASSWORD;
+const cinii_appid = process.env.CINII_API_APPID;
+const library_id = 'FA005358'; //上智大学図書館の機関ID ref: https://ci.nii.ac.jp/library/FA005358
 
 // ref: https://qiita.com/albno273/items/c2d48fdcbf3a9a3434db
 // example: await sleep(randomWait(1000, 0.5, 1.1)); 1000ms x0.5 ~ x1.1 の間でランダムにアクセスの間隔を空ける
 const sleep = async (time) => new Promise((resolve, reject) => { setTimeout(() => { resolve(); }, time); });
 const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
+
+// ref: https://cpoint-lab.co.jp/article/202007/15928/
+const createAxiosInstance = () => {
+    // axios.create でいきなり axios を呼んだ時に使われる通信部(AxiosInstance)がインスタンス化される
+    const axiosInstance = axios.create({
+        // この第一引数オブジェクトで設定を定義
+    });
+ 
+    // interceptors.response.use で返信時に引数に入れた関数が動作する
+    axiosInstance.interceptors.response.use(
+        (response) => response, // 第一引数は通信成功時処理。受けた内容をそのまま通過
+        async (error) => { // 第二引数は通信失敗時処理
+            throw new Error(`${error.response?.statusText} ${error.response?.config.url} ${await error.response?.data}`);
+        }
+    );
+ 
+    // interceptor で共通処理を追加した通信機能を返す。
+    return axiosInstance;
+};
 
 class bookmaker {
 
@@ -38,6 +57,7 @@ class bookmaker {
         this.page_num = 1;
         this.wishBooksData = new Map();
         this.wishBooksData_Array = [];
+        this.axios = createAxiosInstance();
     }
 
     // Amazon詳細リンクはアカウントにログインしなければ表示されないため、ログインする
@@ -45,16 +65,16 @@ class bookmaker {
         try {
             const page = await browser.newPage();
 
-            await page.goto(`${baseURI}/login`, {
+            await page.goto(`${bookmeter_baseURI}/login`, {
                 waitUntil: "networkidle2",
             });
 
-            const accountNameInputHandle = page.$x(accountNameInputXPath);
-            const passwordInputHandle = page.$x(passwordInputXPath);
-            const loginButtonHandle = page.$x(loginButtonXPath);
+            const accountNameInputHandle = page.$x(xpath.accountNameInput);
+            const passwordInputHandle = page.$x(xpath.passwordInput);
+            const loginButtonHandle = page.$x(xpath.loginButton);
 
-            await (await accountNameInputHandle)[0].type(user_name);
-            await (await passwordInputHandle)[0].type(password);
+            await (await accountNameInputHandle)[0].type(bookmeter_username);
+            await (await passwordInputHandle)[0].type(bookmeter_password);
             await (await loginButtonHandle)[0].click();
         
             await page.waitForNavigation({
@@ -75,12 +95,12 @@ class bookmaker {
             const page = await browser.newPage();
 
             for (; ;) {
-                await page.goto(`${baseURI}/users/${userID}/books/wish?page=${this.page_num}`, {
+                await page.goto(`${bookmeter_baseURI}/users/${bookmeter_userID}/books/wish?page=${this.page_num}`, {
                     waitUntil: "networkidle2",
                 });
 
-                const booksUrlHandle = await page.$x(booksUrlXPath);
-                const amazonLinkHandle = await page.$x(amazonLinkXPath);
+                const booksUrlHandle = await page.$x(xpath.booksUrl);
+                const amazonLinkHandle = await page.$x(xpath.amazonLink);
 
                 for (let i = 0; i < booksUrlHandle.length; i++){
                     let bkmt_raw = await (await booksUrlHandle[i].getProperty("href")).jsonValue();
@@ -99,7 +119,7 @@ class bookmaker {
                 // await page.waitForTimeout(randomWait(3000, 0.5, 1.1));
 
                 // XPathで本の情報を取得し、そのelementHandleに要素が存在しなければループから抜ける
-                if (await (await page.$x(isBookExistXPath)).length == 0) {
+                if (await (await page.$x(xpath.isBookExist)).length == 0) {
                     break;
                 } else {
                     this.page_num++;
@@ -119,7 +139,7 @@ class bookmaker {
 
         try {
             if (isbn_data !== "null") { //正常系(与えるべきISBNがある)
-                const response = await axios.get(`https://api.openbd.jp/v1/get?isbn=${isbn_data}`);
+                const response = await this.axios.get(`https://api.openbd.jp/v1/get?isbn=${isbn_data}`);
 
                 if (response.data[0] !== null) { //正常系(該当書籍発見)
                     const fetched_data = response.data[0].summary;
@@ -134,8 +154,7 @@ class bookmaker {
                 } else { //異常系(該当書籍なし)
                     const status_text = "Not_found_with_OpenBD";
                     this.wishBooksData.set(key, {
-                        "bookmeter_url": key,
-                        "isbn_or_asin": isbn_data,
+                        ...(this.wishBooksData.get(key)),
                         "book_title": status_text,
                         "author": status_text,
                         "publisher": status_text,
@@ -145,8 +164,7 @@ class bookmaker {
             } else { //異常系(与えるべきISBN自体がない)
                 const status_text = "Not_found_with_Amazon";
                 this.wishBooksData.set(key, {
-                    "bookmeter_url": key,
-                    "isbn_or_asin": isbn_data,
+                    ...(this.wishBooksData.get(key)),
                     "book_title": status_text,
                     "author": status_text,
                     "publisher": status_text,
@@ -159,7 +177,7 @@ class bookmaker {
     }
 
     async test(isbn_data) {
-        const response = await axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn_data}`); //xml形式でレスポンスが返ってくる
+        const response = await this.axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn_data}`); //xml形式でレスポンスが返ってくる
         const json_resp = fxp.parse(response.data, { "arrayMode": true }); //xmlをjsonに変換
         const fetched_data = json_resp.rss[0].channel[0];
         console.log(fetched_data);
@@ -192,14 +210,13 @@ class bookmaker {
 
         try {
             if (isbn_data !== "null") { //正常系(与えるべきISBNがある)
-                const response = await axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn_data}`); //xml形式でレスポンスが返ってくる
+                const response = await this.axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn_data}`); //xml形式でレスポンスが返ってくる
                 const json_resp = fxp.parse(response.data, { "arrayMode": true }); //xmlをjsonに変換
                 const fetched_data = json_resp.rss[0].channel[0];
 
                 if ("item" in fetched_data) { //正常系(該当書籍発見)
                     this.wishBooksData.set(key, { //該当件数に関わらず、とりあえず配列の先頭にあるやつだけをチェックする
-                        "bookmeter_url": key,
-                        "isbn_or_asin": isbn_data,
+                        ...(this.wishBooksData.get(key)),
                         "book_title": fetched_data.item[0]['title'],
                         "author": fetched_data.item[0]['author'],
                         "publisher": fetched_data.item[0]['dc:publisher'],
@@ -208,8 +225,7 @@ class bookmaker {
                 } else { //異常系(該当書籍なし)
                     const status_text = "Not_found_with_NDL";
                     this.wishBooksData.set(key, {
-                        "bookmeter_url": key,
-                        "isbn_or_asin": isbn_data,
+                        ...(this.wishBooksData.get(key)),
                         "book_title": status_text,
                         "author": status_text,
                         "publisher": status_text,
@@ -219,8 +235,7 @@ class bookmaker {
             } else { //異常系(与えるべきISBNがない)
                 const status_text = "Not_found_with_Amazon";
                 this.wishBooksData.set(key, {
-                    "bookmeter_url": key,
-                    "isbn_or_asin": isbn_data,
+                    ...(this.wishBooksData.get(key)),
                     "book_title": status_text,
                     "author": status_text,
                     "publisher": status_text,
@@ -232,20 +247,50 @@ class bookmaker {
         }
     }
 
+    async searchSph(key, books_obj) {
+        const isbn_data = books_obj["isbn_or_asin"]; //ISBNデータを取得
+
+        try {
+            if (isbn_data !== "null") { //正常系(与えるべきISBNがある)
+                const response = await this.axios.get(`https://ci.nii.ac.jp/books/opensearch/search?appid=${cinii_appid}&format=json&fano=${library_id}&isbn=${isbn_data}`);
+                const total_results = response.data["@graph"][0]["opensearch:totalResults"];
+
+                this.wishBooksData.set(key, {
+                    ...(this.wishBooksData.get(key)),
+                    "exist_in_sophia": (total_results === "0") ? "No" : "Yes" //検索結果が0件なら「No」、それ以外なら「Yes」
+                });
+
+            } else { //異常系(与えるべきISBN自体がない)
+                this.wishBooksData.set(key, {
+                    ...(this.wishBooksData.get(key)),
+                    "exist_in_sophia": (this.wishBooksData.get(key))["book_title"] //とりあえず"book_title"の中にエラーメッセージ入っとるやろ！の精神
+                });
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     async fetchBiblioInfo() {
         for (const [key, value] of this.wishBooksData) {
             await this.searchOpenBD(key, value);
-            // await sleep(randomWait(1000, 0.5, 1.1));
+            // await sleep(1000);
         }
         console.log("Bookmeter Wished Books: OpenBD Searching Completed");
 
         for (const [key, value] of this.wishBooksData) {
             if (value["book_title"] === "Not_found_with_OpenBD") {
                 await this.searchNDL(key, value);
-                // await sleep(randomWait(1000, 0.5, 1.1));
+                await sleep(1000);
             }
         }
         console.log("Bookmeter Wished Books: NDL Searching Completed");
+
+        for (const [key, value] of this.wishBooksData) {
+            await this.searchSph(key, value);
+            await sleep(1000);
+        }
+        console.log("Bookmeter Wished Books: Sophia-Univ. Library Searching Completed");
     }
 
     async output(arrayData) {
