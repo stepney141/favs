@@ -16,6 +16,9 @@ bash ./get_url_list.sh
 cd ../note_favs
 node ./puppeteer_note.js
 
+cd ../teratail_clip
+./wget_teratail_clip.sh
+
 cd ..
 date1="`date --iso-8601=minutes`"
 git add .
