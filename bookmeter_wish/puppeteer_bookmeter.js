@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const fs = require("fs");
+const fs = require("fs").promises;
 const papa = require("papaparse");
 const axios = require("axios");
 const fxp = require("fast-xml-parser");
@@ -293,12 +293,12 @@ class bookmaker {
         console.log("Bookmeter Wished Books: Sophia-Univ. Library Searching Completed");
     }
 
-    async output(arrayData) {
+    async outputCSV(arrayData, filename) {
         const jsonData = JSON.stringify(arrayData, null, "  ");
 
         try {
             await fs.writeFile(
-                "./bookmeter_wish_books.csv",
+                `./${filename}`,
                 papa.unparse(jsonData),
                 // jsonData,
                 (e) => {
@@ -312,6 +312,37 @@ class bookmaker {
         console.log("Bookmeter Wished Books: CSV Output Completed!");
         return true;
     }
+
+    async inputCSV(filename) {
+        try {
+            const data = await fs.readFile(filename, "utf-8");
+            const parsed_obj = papa.parse(data, {
+                header: true,
+                complete: (results, file) => {
+                    return results;
+                },
+            });
+
+            return parsed_obj.data;
+        } catch (error) {
+            console.error(error.message);
+            process.exit(1); // 終了ステータス 1（一般的なエラー）としてプロセスを終了する
+        }
+    }
+
+    async checkCSV(filename) {
+        const file = await this.inputCSV(filename);
+
+        for (const obj of file) {
+            if (!this.wishBooksData.has(obj['bookmeter_url'])) { //ローカルのCSVとbookmeterのスクレイピング結果を比較
+                console.log("Bookmeter Wished Books: A diff between the local and remote is detected."); //差分を検出した場合
+                return true;
+            }
+        }
+
+        console.log("Bookmeter Wished Books: Cannot find a diff between the local and remote. The process will be aborted..."); //差分を検出しなかった場合
+        return false;
+    }
 }
 
 (async () => {
@@ -324,17 +355,20 @@ class bookmaker {
     });
 
     const book = new bookmaker();
+    const filename = 'bookmeter_wish_books.csv';
 
     await book.bookmeterLogin(browser);
     await book.bookmeterScraper(browser);
 
-    await book.fetchBiblioInfo(book.wishBooksData); //書誌情報取得
+    if (await book.checkCSV(filename)) { //ローカルのCSVとbookmeterのスクレイピング結果を比較し、差分を検出したら書誌情報を取得してCSVを新規生成
+        await book.fetchBiblioInfo(book.wishBooksData); //書誌情報取得
 
-    for (const obj of book.wishBooksData.values()) { //Mapの値だけ抜き出してArrayにする
-        book.wishBooksData_Array.push(obj);
+        for (const obj of book.wishBooksData.values()) { //Mapの値だけ抜き出してArrayにする
+            book.wishBooksData_Array.push(obj);
+        }
+
+        await book.outputCSV(book.wishBooksData_Array, filename); //ファイル出力
     }
-
-    await book.output(book.wishBooksData_Array); //ファイル出力
 
     // await book.test(4902666383);
     // await book.test(4758013241);
