@@ -1,7 +1,8 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const papa = require("papaparse");
-require("dotenv").config();
+const path = require('path');
+require("dotenv").config({path: path.join(__dirname, "../.env")});
 
 const baseURI = 'https://note.com';
 const process_description = 'note.com Favorites';
@@ -13,8 +14,8 @@ const xpath = {
     loginButton: '//*[@id="__layout"]/div/div[1]/main/div/div[2]/div[5]/button',
 };
 
-const user_name = process.env.BOUNDHUB_ACCOUNT;
-const password = process.env.BOUNDHUB_PASSWORD;
+const user_name = process.env.NOTE_ACCOUNT;
+const password = process.env.NOTE_PASSWORD;
         
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
 const transposeArray = a => a[0].map((_, c) => a.map((r) => r[c]));

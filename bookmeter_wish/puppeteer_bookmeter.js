@@ -3,7 +3,8 @@ const fs = require("fs").promises;
 const papa = require("papaparse");
 const axios = require("axios");
 const fxp = require("fast-xml-parser");
-require("dotenv").config();
+const path = require('path');
+require("dotenv").config({path: path.join(__dirname, "../.env")});
 
 const bookmeter_baseURI = 'https://bookmeter.com';
 const bookmeter_userID = '1003258';
