@@ -58,6 +58,7 @@ class bookmaker {
         this.page_num = 1;
         this.wishBooksData = new Map();
         this.wishBooksData_Array = [];
+        this.previousWishBooksData = new Map();
         this.axios = createAxiosInstance();
     }
 
@@ -131,7 +132,7 @@ class bookmaker {
             await browser.close();
             return false;
         }
-        console.log("Bookmeter Wished Books: Bookmeter Scraping Completed");
+        console.log("Bookmeter Wished Books: Bookmeter Scraping Completed!");
         return true;
     }
 
@@ -335,7 +336,11 @@ class bookmaker {
         const file = await this.inputCSV(filename);
 
         for (const obj of file) {
-            if (!this.wishBooksData.has(obj['bookmeter_url'])) { //ローカルのCSVとbookmeterのスクレイピング結果を比較
+            this.previousWishBooksData.set(obj['bookmeter_url'], { ...obj });
+        }
+
+        for (const key of this.wishBooksData.keys()) {
+            if (this.previousWishBooksData.has(key) === false) { //ローカルのCSVとbookmeterのスクレイピング結果を比較
                 console.log("Bookmeter Wished Books: A diff between the local and remote is detected."); //差分を検出した場合
                 return true;
             }
