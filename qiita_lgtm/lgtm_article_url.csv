@@ -170,7 +170,7 @@ Node.js上からmultipart/form-data形式でHTTPリクエストをする,https:/
 Gitのリポジトリ（履歴）を初期化する,https://qiita.com/mktshhr/items/578cc5b5aea5b3ed9303,76
 shigoto-lisp: はじめてLispを実装するときに 〜 パース編,https://qiita.com/t-sin/items/c961b8bba803a5d2fd4b,14
 もう一度理解する、JavaScriptの配列とコピー,https://qiita.com/Tatamo/items/444969a7ff2fbba30479,53
-Node.jsとはなにか？なぜみんな使っているのか？,https://qiita.com/non_cal/items/a8fee0b7ad96e67713eb,2394
+Node.jsとはなにか？なぜみんな使っているのか？,https://qiita.com/non_cal/items/a8fee0b7ad96e67713eb,2395
 【Python】pickle（漬け物）は仮想マシンだった——仕組みとリスク,https://qiita.com/tanuk1647/items/4c2a305c7cc4e12ef99d,48
 dependency-cruiserを使って依存関係を検証し潜在的なバグを潰す,https://qiita.com/akameco/items/e11023a59026c319b91b,48
 レガシーシステム上のJavaScriptをモダンビルドにしていくwebpack利用実例,https://qiita.com/terrierscript/items/97333a239c97094c39a6,114
@@ -641,7 +641,7 @@ Unityを使って学園祭でVRスプラトゥーンを自作して展示した�
 2020年はsystemd-homedの登場でLinuxのユーザー管理が大きく変わるぞ,https://qiita.com/onokatio/items/dbae4afe7fabd2602545,515
 競プロ界隈でpython強者がやっていることをまとめてみた,https://qiita.com/goto_yuta_/items/1c104e332351ab9389a6,575
 WebサイトをスクレイピングするWebクローラー20選,https://qiita.com/Octoparse_Japan/items/6cf5e43c44eb6cb110bd,124
-Markdown記法 チートシート,https://qiita.com/Qiita/items/c686397e4a0f4f11683d,12114
+Markdown記法 チートシート,https://qiita.com/Qiita/items/c686397e4a0f4f11683d,12115
 Party Parrot とは 〜イカれたオウムの歴史を紐解く〜,https://qiita.com/ayatothos/items/0c3da3d48fe8ade705e6,684
 pyenv、pyenv-virtualenv、venv、Anaconda、Pipenv。私はPipenvを使う。,https://qiita.com/KRiver1/items/c1788e616b77a9bad4dd,505
 [Ubuntu]devilspie2でウインドウサイズと位置を調整,https://qiita.com/s-katsumata/items/318b4c58a9e32593553b,8
@@ -956,7 +956,7 @@ HP 電卓,https://qiita.com/jp_yen/items/23fcc11076eb91879ce3,2
 知っているようで意外と知らない、DDoSの基礎知識,https://qiita.com/ueyasu/items/064839f9289c3db63c26,759
 【クラウドDB比較】無料枠で提供されるサービスレベル,https://qiita.com/nh321/items/e8c63b02e3fa9c28837f,150
 Hugoで新規記事を作成するときのTips的なメモ,https://qiita.com/n0bisuke/items/4701481c3bca4df81b0b,63
-GitHubでssh接続する手順~公開鍵・秘密鍵の生成から~,https://qiita.com/shizuma/items/2b2f873a0034839e47ce,3145
+GitHubでssh接続する手順~公開鍵・秘密鍵の生成から~,https://qiita.com/shizuma/items/2b2f873a0034839e47ce,3146
 ブラウザがJavaScriptを直接サポートしない世界,https://qiita.com/uint256_t/items/4f80220c5c61ec5b3ff1,303
 一人旅が捗るWebサービスを思いついたので、開発から公開まで全部一人でやってみた話,https://qiita.com/noranuk0/items/96e83cee1e448cd57569,393
 URL と URI の違い,https://qiita.com/Zuishin/items/3bd56117ab08ec2ec818,456
@@ -1016,7 +1016,7 @@ Qiitaやブログのタイトルは自分で考える必要なんてなかった
 Haskellをかけない中年,https://qiita.com/Yametaro/items/e163affa4b2db48f9957,249
 Haskellをかける少女,https://qiita.com/Yametaro/items/11dcd3ec26027ff30214,445
 Haskellでフィボナッチ数列 〜Haskellで非実用的なコードを書いて悦に入るのはやめろ〜,https://qiita.com/mod_poppo/items/4f78d135bb43b7fd1743,151
-Linuxの権限確認と変更(chmod)（超初心者向け）,https://qiita.com/shisama/items/5f4c4fa768642aad9e06,2047
+Linuxの権限確認と変更(chmod)（超初心者向け）,https://qiita.com/shisama/items/5f4c4fa768642aad9e06,2048
 "手軽なメトリクス視覚化ツールを探して (Netdata, Prometheus, Telegraf)",https://qiita.com/kikuchi_kentaro/items/8ab93b73012ee8aea717,52
 MySQLでCSV出力しようとしたら --secure-file-priv option のエラーになった,https://qiita.com/kiyodori/items/7281a5bdcfbcbbe03c68,31
 Ubuntu 16.04におけるmysqlのインストールと設定、エラー対応のまとめ,https://qiita.com/donaldchi/items/afeabaffc8be39577ef0,16

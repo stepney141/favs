@@ -52,7 +52,7 @@ const createAxiosInstance = () => {
     return axiosInstance;
 };
 
-class bookmaker {
+class Bookmaker {
 
     constructor() {
         this.page_num = 1;
@@ -360,13 +360,15 @@ class bookmaker {
         // headless: false,
     });
 
-    const book = new bookmaker();
+    const book = new Bookmaker();
     const filename = 'bookmeter_wish_books.csv';
 
     await book.bookmeterLogin(browser);
     await book.bookmeterScraper(browser);
 
     if (await book.checkCSV(filename)) { //ローカルのCSVとbookmeterのスクレイピング結果を比較し、差分を検出したら書誌情報を取得してCSVを新規生成
+        console.log('Bookmeter Wished Books: Fetching bibliographic information of books')
+
         await book.fetchBiblioInfo(book.wishBooksData); //書誌情報取得
 
         for (const obj of book.wishBooksData.values()) { //Mapの値だけ抜き出してArrayにする
