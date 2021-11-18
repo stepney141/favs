@@ -19,6 +19,9 @@ node ./puppeteer_note.js
 cd ../teratail_clip
 ./wget_teratail_clip.sh
 
+cd ../zenn_favs
+node ./puppeteer_zenn.js
+
 cd ..
 date1="`date --iso-8601=minutes`"
 git add .
