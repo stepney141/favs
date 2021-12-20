@@ -1,4 +1,9 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia
+https://bookmeter.com/books/5150372,4489021291,入門確率解析とルベーグ積分,森真／著,東京図書,2012-06,Yes
+https://bookmeter.com/books/19153947,4004319102,民俗学入門,菊地暁／著,岩波書店,20220124,No
+https://bookmeter.com/books/11259374,4480097635,数学基礎論,前原昭二／著 竹内外史／著,筑摩書房,20170110,No
+https://bookmeter.com/books/18661799,4758910235,現代高等英文法 学習文法から科学文法へ,八木克正／著,開拓社,20211005,Yes
+https://bookmeter.com/books/588789,4320015541,線形代数,佐武一郎／著,共立,1997-04,Yes
 https://bookmeter.com/books/14192534,4297108216,動かしてわかる CPUの作り方10講,井澤裕司／著,技術評論社,20190821,Yes
 https://bookmeter.com/books/9650618,4873117127,コンピュータシステムの理論と実装,"Nisan,Noam／著 Schocken,Shimon／著 斎藤康毅／翻訳 ショッケンサイモン／著 ほか",オライリー・ジャパン : オーム社,2015-03,No
 https://bookmeter.com/books/51820,4839909865,CPUの創りかた : IC10個のお手軽CPU設計超入門 : 初歩のデジタル回路動作の基本原理と製作,渡波郁／著,毎日コミュニケーションズ,2003-09,No
@@ -289,7 +294,6 @@ https://bookmeter.com/books/565420,4062633604,アトポス,島田荘司／著,�
 https://bookmeter.com/books/545789,4062632861,眠れぬ夜の殺人,"岡嶋二人 [著],岡嶋, 二人,",講談社,"Tue, 28 Jan 1997 09:00:00 +0900",No
 https://bookmeter.com/books/265358,4048529080,それをなすもの : 「新世紀エヴァンゲリオン」コンセプトデザインワークス,山下いくと／著 きお誠児／著,角川書店ニュータイプ,1998-03,No
 https://bookmeter.com/books/450957,4791761030,天使の世界,"マルコム・ゴドウィン 著,大瀧啓裕 訳,Godwin, Malcolm,大滝, 啓裕, 1952-,",青土社,"Wed, 01 Dec 2004 09:00:00 +0900",No
-https://bookmeter.com/books/9742919,4863760426,「呪術」の呪縛,久保田浩／著 江川純一／著,リトン,2015-03,Yes
 https://bookmeter.com/books/200742,4903713016,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,No
 https://bookmeter.com/books/183639,4903713040,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,No
 https://bookmeter.com/books/371782,4903713008,新世紀エヴァンゲリオン原画集,Gainax／著 庵野秀明／監修,ガイナックス,2000-10-14,No
