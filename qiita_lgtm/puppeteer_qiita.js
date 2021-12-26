@@ -13,6 +13,8 @@ let titleData = [];
 let lgtmData = [];
 let articleData = [];
 
+const JOB_NAME = "Qiita LGTM Articles";
+
 // vars for twitter
 const user_name = process.env.TWITTER_ACCOUNT;
 const password = process.env.TWITTER_PASSWORD;
@@ -24,6 +26,8 @@ async function getLgtm(browser) {
     try {
         const page = await browser.newPage();
 
+        console.log(`${JOB_NAME}: Qiita Scraping Started!`);
+
         do {
             await page.goto(`https://qiita.com/${userid}/lgtms?page=${page_num}`, {
                 waitUntil: ["domcontentloaded", "networkidle0"],
@@ -33,7 +37,7 @@ async function getLgtm(browser) {
             if (page_num == 1) {
                 // ref: https://swfz.hatenablog.com/entry/2020/07/23/010044
                 const paginationHandles = await page.$x(
-                    "/html/body/div[1]/div[3]/div/div[2]/div[3]/div/div[2]/div/ul/li[2]/span"
+                    '//div/div[2]/div[3]/div/div[2]/div/ul/li[2]/span'
                 );
                 page_max = Number(
                     (await (await paginationHandles[0].getProperty("innerHTML")).jsonValue()).substr(-2, 2)
@@ -42,15 +46,15 @@ async function getLgtm(browser) {
 
             // get article urls
             const articleUrlHandles = page.$x(
-                '/html/body/div[1]/div[3]/div/div[2]/div[3]/div/div[2]/div/article/h2/a[contains(@href, "qiita.com")]'
+                '//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a[contains(@href, "qiita.com")]'
             );
             // get article titles
             const articleTitleHandles = page.$x(
-                '/html/body/div[1]/div[3]/div/div[2]/div[3]/div/div[2]/div/article/h2/a[contains(@href, "qiita.com")]'
+                '//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a[contains(@href, "qiita.com")]'
             );
             // get article LGTM counts
             const articleLgtmHandles = page.$x(
-                "/html/body/div[1]/div[3]/div/div[2]/div[3]/div/div[2]/div/article/footer/div/div[2]/div[1]"
+                '//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div[1]/div[2]/div[1]'
             );
             
             for (const data of await articleUrlHandles) {
@@ -79,6 +83,7 @@ async function getLgtm(browser) {
         await browser.close();
         return false;
     }
+    console.log(`${JOB_NAME}: Qiita Scraping Completed!`);
     return true;
 }
 
@@ -142,7 +147,7 @@ async function output(arrayData) {
         console.log("error: ", e.message);
         return false;
     }
-    console.log("Qiita LGTM Articles: CSV Output Completed!");
+    console.log(`${JOB_NAME}: CSV Output Completed!`);
     return true;
 }
 
