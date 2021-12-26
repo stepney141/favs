@@ -14,6 +14,13 @@ let lgtmData = [];
 let articleData = [];
 
 const JOB_NAME = "Qiita LGTM Articles";
+const BASE_URI = 'https://qiita.com';
+const XPATH = {
+    max_pagenation_value: '//div/div[2]/div[3]/div/div[2]/div/ul/li[2]/span',
+    article_url: '//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a[contains(@href, "qiita.com")]',
+    artivle_lgtm_count: '//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div[1]/div[2]/div[1]'
+
+};
 
 // vars for twitter
 const user_name = process.env.TWITTER_ACCOUNT;
@@ -29,44 +36,34 @@ async function getLgtm(browser) {
         console.log(`${JOB_NAME}: Qiita Scraping Started!`);
 
         do {
-            await page.goto(`https://qiita.com/${userid}/lgtms?page=${page_num}`, {
+            await page.goto(`${BASE_URI}/${userid}/lgtms?page=${page_num}`, {
                 waitUntil: ["domcontentloaded", "networkidle0"],
             });
 
             // get max cursor number
             if (page_num == 1) {
                 // ref: https://swfz.hatenablog.com/entry/2020/07/23/010044
-                const paginationHandles = await page.$x(
-                    '//div/div[2]/div[3]/div/div[2]/div/ul/li[2]/span'
-                );
+                const paginationHandles = await page.$x(XPATH.max_pagenation_value);
                 page_max = Number(
                     (await (await paginationHandles[0].getProperty("innerHTML")).jsonValue()).substr(-2, 2)
                 );
             }
 
             // get article urls
-            const articleUrlHandles = page.$x(
-                '//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a[contains(@href, "qiita.com")]'
-            );
-            // get article titles
-            const articleTitleHandles = page.$x(
-                '//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a[contains(@href, "qiita.com")]'
-            );
+            const articleUrlHandles = page.$x(XPATH.article_url);
             // get article LGTM counts
-            const articleLgtmHandles = page.$x(
-                '//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div[1]/div[2]/div[1]'
-            );
+            const articleLgtmHandles = page.$x(XPATH.artivle_lgtm_count);
             
             for (const data of await articleUrlHandles) {
-                urlData.push(await (await data.getProperty("href")).jsonValue());
+                urlData.push(await (await data.getProperty("href")).jsonValue()); //記事URL取得
             }
-            for (const data of await articleTitleHandles) {
-                titleData.push(await (await data.getProperty("innerHTML")).jsonValue());
+            for (const data of await articleUrlHandles) {
+                titleData.push(await (await data.getProperty("innerHTML")).jsonValue()); //タイトル取得
             }
             for (const data of await articleLgtmHandles) {
                 // lgtmData.push(Number(await page.evaluate((name) => name.innerText, data)));
                 lgtmData.push(
-                    Number(await (await data.getProperty("innerText")).jsonValue())
+                    Number(await (await data.getProperty("innerText")).jsonValue()) //記事LGTM数取得
                 );
             }
 
