@@ -8,19 +8,22 @@ require("dotenv").config({path: path.join(__dirname, "../.env")});
 const userid = "stepney141";
 let page_max;
 let page_num = 1;
-let urlData = [];
-let titleData = [];
-let lgtmData = [];
-let articleData = [];
 
 const JOB_NAME = "Qiita LGTM Articles";
 const BASE_URI = 'https://qiita.com';
 const XPATH = {
     max_pagenation_value: '//div/div[2]/div[3]/div/div[2]/div/ul/li[2]/span',
     article_url: '//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a[contains(@href, "qiita.com")]',
-    artivle_lgtm_count: '//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div[1]/div[2]/div[1]'
-
+    artivle_lgtm_count: '//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div[1]/div[2]/div[1]',
+    author: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div[1]/p/a[1]',
+    created_at: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div/p/time' // 'dateTime'プロパティに時刻情報
 };
+
+/**
+ * @type {{url, title, lgtm, created_at, author}}
+ */
+const lgtmArticlesData = new Map();
+let lgtmArticlesData_Array = [];
 
 // vars for twitter
 const user_name = process.env.TWITTER_ACCOUNT;
@@ -28,6 +31,45 @@ const password = process.env.TWITTER_PASSWORD;
 
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
 const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
+
+/**
+ * Iterates like Python-zip
+ * @param  {...any} args
+ * @link https://python.ms/javascript--zip/
+ * @example
+ * const array1 = [
+       'apple', 'orange', 'grape',
+   ];
+   const array2 = [
+       'rabbit', 'dog', 'cat',
+   ];
+   const array3 = [
+       'car', 'bicycle', 'airplane',
+   ];
+   for (let [elm1, elm2, elm3] of zip(array1, array2, array3)) {
+       console.log(elm1, elm2, elm3);
+   }
+ */
+function* zip(...args) {
+    
+    const length = args[0].length;
+    
+    // 引数チェック
+    for (let arr of args) {
+        if (arr.length !== length){
+            throw "Lengths of arrays are not eqaul.";
+        }
+    }
+    
+    // イテレート
+    for (let index = 0; index < length; index++) {
+        let elms = [];
+        for (let arr of args) {
+            elms.push(arr[index]);
+        }
+        yield elms;
+    }
+}
 
 async function getLgtm(browser) {
     try {
@@ -49,31 +91,25 @@ async function getLgtm(browser) {
                 );
             }
 
-            // get article urls
-            const articleUrlHandles = page.$x(XPATH.article_url);
-            // get article LGTM counts
-            const articleLgtmHandles = page.$x(XPATH.artivle_lgtm_count);
-            
-            for (const data of await articleUrlHandles) {
-                urlData.push(await (await data.getProperty("href")).jsonValue()); //記事URL取得
-            }
-            for (const data of await articleUrlHandles) {
-                titleData.push(await (await data.getProperty("innerHTML")).jsonValue()); //タイトル取得
-            }
-            for (const data of await articleLgtmHandles) {
-                // lgtmData.push(Number(await page.evaluate((name) => name.innerText, data)));
-                lgtmData.push(
-                    Number(await (await data.getProperty("innerText")).jsonValue()) //記事LGTM数取得
-                );
+            const articleUrlHandles = await page.$x(XPATH.article_url); // get article urls
+            const articleLgtmHandles = await page.$x(XPATH.artivle_lgtm_count); // get article LGTM counts
+            const authorHandles = await page.$x(XPATH.author); // get author names
+            const createdAtHandles = await page.$x(XPATH.created_at); // get dates that the articles were created at
+
+            for (const [url, lgtm, created_at, author] of
+                zip(articleUrlHandles, articleLgtmHandles, createdAtHandles, authorHandles)) {
+                lgtmArticlesData.set(url, {
+                    title: await (await url.getProperty("innerHTML")).jsonValue(), //タイトル取得
+                    url: await (await url.getProperty("href")).jsonValue(), //記事URL取得
+                    lgtm: Number(await (await lgtm.getProperty("innerText")).jsonValue()), //記事LGTM数取得
+                    created_at: await (await created_at.getProperty("dateTime")).jsonValue(), //記事投稿日時取得
+                    author: await (await author.getProperty("innerHTML")).jsonValue(), //記事投稿者取得
+                });
             }
 
             page_num++;
 
         } while (page_max >= page_num);
-
-        articleData.push(titleData, urlData, lgtmData);
-        articleData = transposeArray(articleData);
-        articleData.unshift(["title", "url", "likes_count"]); // insert the header into CSV
 
     } catch (e) {
         console.log(e);
@@ -162,7 +198,11 @@ async function output(arrayData) {
 
     // await qiitaLogin(browser);
     await getLgtm(browser);
-    await output(articleData);
+
+    for (const obj of lgtmArticlesData.values()) { //Mapの値だけ抜き出してArrayにする
+        lgtmArticlesData_Array.push(obj);
+    }
+    await output(lgtmArticlesData_Array);
 
     console.log("The processsing took " + Math.round((Date.now() - startTime) / 1000) + " seconds");
 
