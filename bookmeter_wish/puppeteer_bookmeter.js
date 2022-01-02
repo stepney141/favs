@@ -341,7 +341,7 @@ class Bookmaker {
 
         for (const key of this.wishBooksData.keys()) {
             if (this.previousWishBooksData.has(key) === false) { //ローカルのCSVとbookmeterのスクレイピング結果を比較
-                console.log("Bookmeter Wished Books: A diff between the local and remote is detected."); //差分を検出した場合
+                console.log("Bookmeter Wished Books: Detected a diff between the local and remote."); //差分を検出した場合
                 return true;
             }
         }
@@ -367,7 +367,7 @@ class Bookmaker {
     await book.bookmeterScraper(browser);
 
     if (await book.checkCSV(filename)) { //ローカルのCSVとbookmeterのスクレイピング結果を比較し、差分を検出したら書誌情報を取得してCSVを新規生成
-        console.log('Bookmeter Wished Books: Fetching bibliographic information of books')
+        console.log('Bookmeter Wished Books: Fetching bibliographic information');
 
         await book.fetchBiblioInfo(book.wishBooksData); //書誌情報取得
 
