@@ -8,6 +8,7 @@ node ./puppeteer_qiita.js
 
 cd ../bookmeter_wish
 node ./puppeteer_bookmeter.js
+cat bookmeter_wish_books.csv | q -d, -H 'select * from - where exist_in_sophia="No"'> not_in_sophia.csv
 
 cd ../boundhub
 node ./puppeteer_boundhub.js
