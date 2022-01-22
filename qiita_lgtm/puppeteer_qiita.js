@@ -16,7 +16,7 @@ const XPATH = {
     article_url: '//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a[contains(@href, "qiita.com")]',
     artivle_lgtm_count: '//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div[1]/div[2]/div[1]',
     author: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div[1]/p/a[1]',
-    created_at: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div/p/time' // 'dateTime'プロパティに時刻情報
+    created_at: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div[1]/p/p/time' // 'dateTime'プロパティに時刻情報
 };
 
 /**
