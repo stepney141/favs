@@ -1,4 +1,13 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia
+https://bookmeter.com/books/18930911,4044005664,身体の大衆文化 描く・着る・歌う,安井眞奈美／編集 エルナンデスアルバロ／編集,ＫＡＤＯＫＡＷＡ,20211112,Yes
+https://bookmeter.com/books/18683397,4065250455,なぜオナニーはうしろめたいのか,赤川学／著 小堀善友／著 シオリーヌ（大貫詩織）／著 Ｓｃｈｏｏ／著 ＴＥＮＧＡヘルスケア／監修,星海社,20211027,Yes
+https://bookmeter.com/books/13639063,4863542755,組込みエンジニアの教科書,牧野進二／著 渡辺登／著,シーアンドアール研究所,2019-04,Yes
+https://bookmeter.com/books/19014404,4873119758,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,No
+https://bookmeter.com/books/15556819,4873119065,ゼロから作るDeep Learning 3,斎藤康毅／著,オライリー・ジャパン,20200420,Yes
+https://bookmeter.com/books/11128002,4873117585,ゼロから作るDeep Learning,斎藤康毅／著,オライリー・ジャパン,20160924,Yes
+https://bookmeter.com/books/19734,4106035952,拷問と処刑の西洋史,浜本隆志／著,新潮社,2007-12,Yes
+https://bookmeter.com/books/12060876,4750515183,性表現規制の文化史,白田秀彰／著,亜紀書房,20170724,Yes
+https://bookmeter.com/books/13260195,4000298739,代数系入門,松坂和夫／著,岩波書店,1976,Yes
 https://bookmeter.com/books/19323526,4627082819,数学書の読みかた,竹山美宏／著,森北出版,20220308,No
 https://bookmeter.com/books/19310128,4785312092,数学のとびら　ルベーグ積分と測度,山上滋／著,裳華房,20220228,No
 https://bookmeter.com/books/15539878,4627062710,文化進化の数理,田村光平／著,森北出版,20200409,Yes
@@ -27,7 +36,6 @@ https://bookmeter.com/books/19107702,4320122674,20世紀のトップ10アルゴ�
 https://bookmeter.com/books/15437898,4864718652,スーパーナチュラル・ウォー,オーウェン・デイヴィス／著 江口之隆／翻訳,ヒカルランド,20200430,No
 https://bookmeter.com/books/441256,4404035861,危ない食卓 : 十九世紀イギリス文学にみる食と毒,横山茂雄／著,新人物往来社,2008-12,No
 https://bookmeter.com/books/3162372,4254280041,新版 数理計画入門,福島雅夫／著,朝倉書店,20110215,Yes
-https://bookmeter.com/books/9673547,4876981663,組織と制度のミクロ経済学,堀一三／著 国本隆／著 渡邊直樹／著,京都大学学術出版会,20150310,No
 https://bookmeter.com/books/9806291,4766422538,数理経済学の源流と展開,武藤功／編著 花薗誠／著・編集,慶應義塾大学出版会,20150827,Yes
 https://bookmeter.com/books/12648144,4258290475,マクロ計量モデルの基礎と実際,植村仁一／編集,アジア経済研究所,20180130,Yes
 https://bookmeter.com/books/9849684,4130402722,テキストブック 応用一般均衡モデリング　第2版,細江宣裕／著 我澤賢之／著 橋本日出男／著,東京大学出版会,2016-01-01,Yes
@@ -39,7 +47,6 @@ https://bookmeter.com/books/1873488,4764925095,信号解析入門,越川常治�
 https://bookmeter.com/books/2262692,462707641X,工学系学生のための　複素関数攻略への一本道,板垣正文／著,森北出版,20090123,Yes
 https://bookmeter.com/books/18632238,4627870019,超巨大リスクの定量的評価,B.JohnGarrick／著 山口彰／翻訳,森北出版,20211009,Yes
 https://bookmeter.com/books/18711452,4791704096,総特集タロットの世界,"鏡リュウジ責任編集,鏡, リュウジ,",青土社,,No
-https://bookmeter.com/books/18598204,4480510761,レストランの誕生 パリと現代グルメ文化,レベッカ・Ｌ・スパング／著 小林正巳／翻訳,筑摩書房,20211011,No
 https://bookmeter.com/books/18723083,4791774191,データ視覚化の人類史,マイケル・フレンドリー／著 ハワード・ウェイナー／著 飯嶋貴子／翻訳,青土社,20211026,Yes
 https://bookmeter.com/books/9767736,4627852916,はじめて学ぶオートマトンと言語理論,藤原暁宏／著,森北,2015-07,Yes
 https://bookmeter.com/books/12739124,4627062419,Coq/SSReflect/MathCompによる定理証明,萩原学／著 アフェルト・レナルド／著,森北出版,20180418,Yes
@@ -155,7 +162,6 @@ https://bookmeter.com/books/9763356,4480432841,モチーフで読む美術史２
 https://bookmeter.com/books/406619,4480028188,路上観察学入門,"赤瀬川原平 [ほか]編,赤瀬川, 原平, 1937-2014,",筑摩書房,"Mon, 27 Oct 2014 09:00:00 +0900",No
 https://bookmeter.com/books/15086490,4750349267,アーカイブズ論 記録のちからと現代社会,スー・マケミッシュ／編 マイケル・ピゴット／編 バーバラ・リード／編 フランク・アップウォード／編 ほか,明石書店,20191225,Yes
 https://bookmeter.com/books/75211,4816919813,入門・アーカイブズの世界 : 記憶と記録を未来に : 翻訳論文集,日本アーカイブズ学会／著 記録管理学会／著,日外アソシエーツ,2006-06,Yes
-https://bookmeter.com/books/4792361,478776327X,キリシタン伝説百話,谷真介／著,梟社 : 新泉社,2012-04,No
 https://bookmeter.com/books/15543798,4344985842,サザエさんと長谷川町子,工藤美代子／著,幻冬舎,20200326,No
 https://bookmeter.com/books/17196855,4339009393,ひたすら楽して音響信号解析,森勢将雅／著,コロナ社,20210125,Yes
 https://bookmeter.com/books/519120,4480087044,快読100万語!ペーパーバックへの道,"酒井邦秀 著,酒井, 邦秀, 1945-,",筑摩書房,"Tue, 20 Apr 2004 09:00:00 +0900",No
@@ -317,7 +323,6 @@ https://bookmeter.com/books/183640,4903713024,Not_found_with_NDL,Not_found_with_
 https://bookmeter.com/books/265357,4903713059,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,No
 https://bookmeter.com/books/324394,4846008355,ヴァイブレーターの文化史,レイチェル・P・メインズ／著 佐藤雅彦／訳,論創社,20100120,No
 https://bookmeter.com/books/9795243,4905033071,新世紀エヴァンゲリオンTVアニメーション設定資料集2015 edition,,グラウンドワークス,2015-08,No
-https://bookmeter.com/books/14299154,4750348856,在野研究ビギナーズ,荒木優太／編著,明石書店,20190901,No
 https://bookmeter.com/books/13744534,4760150072,「舞姫」の主人公をバンカラとアフリカ人がボコボコにする最高の小説の世界が明治に存在したので20万字くらいかけて紹介する本,"山下泰平著,山下, 泰平,",柏書房,,No
 https://bookmeter.com/books/13894309,4801303722,文豪たちの悪口本 文豪たちの悪口本,彩図社文芸部／編,彩図社,20190524,No
 https://bookmeter.com/books/12545208,4756250122,"陰翳礼讃 ",谷崎潤一郎／著 大川裕弘／写真,パイインターナショナル,20180118,No
@@ -356,7 +361,6 @@ https://bookmeter.com/books/13615247,4130101404,イメージ学の現在,坂本�
 https://bookmeter.com/books/14003669,4905325137,現代アニメ「超」講義,"石岡良治 著,石岡, 良治,",Planets/第二次惑星開発委員会,"Fri, 06 Dec 2019 09:00:00 +0900",No
 https://bookmeter.com/books/1966114,4787233211,サブカルで読むセクシュアリティ,谷川建司／編著 王向華／編著 呉咏梅／編著,青弓社,20101122,Yes
 https://bookmeter.com/books/6713779,4815807302,アニメ・マシーン,トーマス・ラマール／訳 藤木秀朗／監修 大﨑晴美／翻訳,名古屋大学出版会,2013-05-01,Yes
-https://bookmeter.com/books/178337,4003022610,北越雪譜 改版 （岩波文庫）,鈴木牧之／著 京山人百樹／著 岡田武松／著,岩波書店,19780301,Yes
 https://bookmeter.com/books/12177405,4768308856,ヒロイン専用スーツ・武器の作りかた,西脇直人（ToonMart）／著 梅森充（トレニア）／解説 桜田美和子（トレニア）／解説,玄光社,20170828,No
 https://bookmeter.com/books/8202802,4887218184,黒の文化史,"Harvey,J.R.／著 Harvey,JohnRobert／著 富岡由美／翻訳 ほか",東洋書林,2014-07,Yes
 https://bookmeter.com/books/198593,4314000430,幻想芸術,"Brion,Marcel／著 坂崎乙郎／翻訳 マルセル・ブリヨン／著",紀伊国屋書店,1968-01,No
@@ -416,7 +420,6 @@ https://bookmeter.com/books/4045694,4479750479,魔女論 : なぜ空を飛び、
 https://bookmeter.com/books/12792026,4560096392,ヨーロッパ中世象徴史,ミシェル・パストゥロー／著 篠田勝英／翻訳,白水社,20180526,No
 https://bookmeter.com/books/419916,4480081976,英文翻訳術,"安西徹雄 著,安西, 徹雄, 1933-2008,",筑摩書房,"Mon, 23 Mar 2009 09:00:00 +0900",Yes
 https://bookmeter.com/books/72476,4794215185,訴えられた遊女ネアイラ : 古代ギリシャのスキャンダラスな裁判騒動,"Hamel,Debra／著 脇本由佳／著 藤川芳朗／翻訳 ハメルデブラ／著",草思社,2006-08,Yes
-https://bookmeter.com/books/13580328,4750515736,人喰い ロックフェラー失踪事件,カール・ホフマン／著 古屋美登里／翻訳 奥野克巳／監修,亜紀書房,20190321,Yes
 https://bookmeter.com/books/13424399,4791771419,記号とシンボルの事典,スティーヴン・ウェッブ／著 松浦俊輔／翻訳,青土社,20190126,Yes
 https://bookmeter.com/books/857490,4896948181,西洋シンボル事典 : キリスト教美術の記号とイメージ,"Heinz-Mohr,Gerd／著 佐藤茂樹／翻訳 内田俊一／翻訳 宮川尚理／翻訳 ほか",八坂書房,2003-06,Yes
 https://bookmeter.com/books/9236153,4562051256,フォト・ストーリー　英国の幽霊伝説,シャーン・エヴァンズ／著 村上リコ／監修・翻訳 田口未和／翻訳,原書房,20150126,Yes
@@ -424,7 +427,6 @@ https://bookmeter.com/books/11468277,4837957765,アメリカ海軍ＳＥＡＬ�
 https://bookmeter.com/books/12468328,4837957854,アメリカ海軍ＳＥＡＬのサバイバル・マニュアル　災害・アウトドア編,クリント・エマーソン／著 竹花秀春／翻訳,三笠書房,20171218,No
 https://bookmeter.com/books/12892792,4576180975,恐い間取り : 事故物件怪談,松原タニシ／著,二見書房,2018-07,No
 https://bookmeter.com/books/133788,4562040971,実戦スパイ技術ハンドブック,"Davies,Barry／著 伊藤綺／翻訳 TomlinsonRichard／著 デイヴィスバリー／著",原書房,2007-09,No
-https://bookmeter.com/books/574560,4150500797,スパイのためのハンドブック,"Lotz,Wolfgang／著 朝河伸英／翻訳",早川書房,1982-03,No
 https://bookmeter.com/books/6751887,4480095349,数学で何が重要か,志村五郎／著,筑摩書房,20130508,Yes
 https://bookmeter.com/books/8222637,4480096302,数学をいかに教えるか,志村五郎／著,筑摩書房,20140806,No
 https://bookmeter.com/books/4608561,4480094393,数学の好きな人のために :  続・数学をいかに使うか,"志村五郎著,志村, 五郎,",筑摩書房,,Yes
