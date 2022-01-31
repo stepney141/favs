@@ -136,6 +136,7 @@ class Bookmaker {
         return true;
     }
 
+    //OpenBD検索
     async searchOpenBD(key, books_obj) {
         const isbn_data = books_obj["isbn_or_asin"]; //ISBNデータを取得
 
@@ -146,12 +147,12 @@ class Bookmaker {
                 if (response.data[0] !== null) { //正常系(該当書籍発見)
                     const fetched_data = response.data[0].summary;
                     this.wishBooksData.set(key, {
-                        "bookmeter_url": key,
-                        "isbn_or_asin": isbn_data,
-                        "book_title": fetched_data.title,
-                        "author": fetched_data.author,
-                        "publisher": fetched_data.publisher,
-                        "published_date": fetched_data.pubdate
+                        "bookmeter_url": key ?? "",
+                        "isbn_or_asin": isbn_data ?? "",
+                        "book_title": fetched_data.title ?? "",
+                        "author": fetched_data.author ?? "",
+                        "publisher": fetched_data.publisher ?? "",
+                        "published_date": fetched_data.pubdate ?? ""
                     });
                 } else { //異常系(該当書籍なし)
                     const status_text = "Not_found_with_OpenBD";
@@ -178,35 +179,7 @@ class Bookmaker {
         }
     }
 
-    async test(isbn_data) {
-        const response = await this.axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn_data}`); //xml形式でレスポンスが返ってくる
-        const json_resp = fxp.parse(response.data, { "arrayMode": true }); //xmlをjsonに変換
-        const fetched_data = json_resp.rss[0].channel[0];
-        console.log(fetched_data);
-
-        if ("item" in fetched_data) {
-            console.log(isbn_data, 'found');
-            console.log(fetched_data.item[0]['title']);
-        } else {
-            console.log(isbn_data, 'not-found');
-        }
-
-        const jsonData = JSON.stringify(fetched_data, null, "  ");
-
-        try {
-            await fs.writeFile(
-                `./test_${isbn_data}.json`,
-                jsonData,
-                (e) => {
-                    if (e) console.log("error: ", e);
-                }
-            );
-        } catch (e) {
-            console.log("error: ", e.message);
-            return false;
-        }
-    }
-
+    // 国立国会図書館検索
     async searchNDL(key, books_obj) {
         const isbn_data = books_obj["isbn_or_asin"]; //ISBNデータを取得
 
@@ -219,10 +192,10 @@ class Bookmaker {
                 if ("item" in fetched_data) { //正常系(該当書籍発見)
                     this.wishBooksData.set(key, { //該当件数に関わらず、とりあえず配列の先頭にあるやつだけをチェックする
                         ...(this.wishBooksData.get(key)),
-                        "book_title": fetched_data.item[0]['title'],
-                        "author": fetched_data.item[0]['author'],
-                        "publisher": fetched_data.item[0]['dc:publisher'],
-                        "published_date": fetched_data.item[0]['pubDate']
+                        "book_title": fetched_data.item[0]['title'] ?? "",
+                        "author": fetched_data.item[0]['author'] ?? "",
+                        "publisher": fetched_data.item[0]['dc:publisher'] ?? "",
+                        "published_date": fetched_data.item[0]['pubDate'] ?? ""
                     });
                 } else { //異常系(該当書籍なし)
                     const status_text = "Not_found_with_NDL";
@@ -249,6 +222,7 @@ class Bookmaker {
         }
     }
 
+    //大学図書館所蔵検索
     async searchSph(key, books_obj) {
         const isbn_data = books_obj["isbn_or_asin"]; //ISBNデータを取得
 
@@ -357,7 +331,7 @@ class Bookmaker {
     const browser = await puppeteer.launch({
         defaultViewport: {width: 1000, height: 1000},
         headless: true,
-        // headless: false,
+        // devtools: true,
     });
 
     const book = new Bookmaker();
@@ -377,10 +351,6 @@ class Bookmaker {
 
         await book.outputCSV(book.wishBooksData_Array, filename); //ファイル出力
     }
-
-    // await book.test(4902666383);
-    // await book.test(4758013241);
-    // await book.test(null);
 
     console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 
