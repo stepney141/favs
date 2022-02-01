@@ -1,2 +1,2 @@
 cat bookmeter_wish_books.csv | q -d, -O -H 'SELECT isbn_or_asin, book_title, author, publisher, published_date, exist_in_sophia FROM - WHERE exist_in_sophia="No" AND book_title NOT LIKE "Not_found_with%"'> not_in_sophia.csv
-cat bookmeter_wish_books.csv | q -d, -O -H 'SELECT isbn_or_asin, book_title, author, publisher, published_date, exist_in_sophia FROM - WHERE exist_in_sophia="Yes"'> in_sophia.csv
+cat bookmeter_wish_books.csv | q -d, -O -H 'SELECT isbn_or_asin, book_title, author, publisher, published_date, exist_in_sophia, opac_link FROM - WHERE exist_in_sophia="Yes"'> in_sophia.csv

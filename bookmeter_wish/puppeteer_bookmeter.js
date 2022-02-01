@@ -231,15 +231,28 @@ class Bookmaker {
                 const response = await this.axios.get(`https://ci.nii.ac.jp/books/opensearch/search?appid=${cinii_appid}&format=json&fano=${library_id}&isbn=${isbn_data}`);
                 const total_results = response.data["@graph"][0]["opensearch:totalResults"];
 
-                this.wishBooksData.set(key, {
-                    ...(this.wishBooksData.get(key)),
-                    "exist_in_sophia": (total_results === "0") ? "No" : "Yes" //検索結果が0件なら「No」、それ以外なら「Yes」
-                });
+                if (total_results !== "0") { //検索結果が1件以上
+                    const ncid_url = response.data["@graph"][0].items[0]["@id"];
+                    const ncid = ncid_url.match(/(?<=https:\/\/ci.nii.ac.jp\/ncid\/).*/); //ciniiのURLからncidだけを抽出
+
+                    this.wishBooksData.set(key, {
+                        ...(this.wishBooksData.get(key)),
+                        "exist_in_sophia": "Yes", //検索結果が0件なら「No」、それ以外なら「Yes」
+                        "opac_link": `https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=${ncid}` //opacのリンク
+                    });
+                } else { //検索結果が0件
+                    this.wishBooksData.set(key, {
+                        ...(this.wishBooksData.get(key)),
+                        "exist_in_sophia": "No", //検索結果が0件なら「No」、それ以外なら「Yes」
+                        "opac_link": ""
+                    });
+                }
 
             } else { //異常系(与えるべきISBN自体がない)
                 this.wishBooksData.set(key, {
                     ...(this.wishBooksData.get(key)),
-                    "exist_in_sophia": (this.wishBooksData.get(key))["book_title"] //とりあえず"book_title"の中にエラーメッセージ入っとるやろ！の精神
+                    "exist_in_sophia": (this.wishBooksData.get(key))["book_title"], //とりあえず"book_title"の中にエラーメッセージ入っとるやろ！の精神
+                    "opac_link": ""
                 });
             }
         } catch (e) {
