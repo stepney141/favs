@@ -16,8 +16,8 @@ const XPATH = {
     nextPaginationButton: '//*[@id="__next"]/article/div/section/div[2]/div/div/button',
 };
 
-const zenn_email = process.env.ZENN_GOOGLE_ACCOUNT;
-const zenn_password = process.env.ZENN_GOOGLE_PASSWORD;
+const zenn_email = JSON.stringify(process.env.ZENN_GOOGLE_ACCOUNT);
+const zenn_password = JSON.stringify(process.env.ZENN_GOOGLE_PASSWORD);
 
 // ref: https://qiita.com/albno273/items/c2d48fdcbf3a9a3434db
 // example: await sleep(randomWait(1000, 0.5, 1.1)); 1000ms x0.5 ~ x1.1 の間でランダムにアクセスの間隔を空ける
