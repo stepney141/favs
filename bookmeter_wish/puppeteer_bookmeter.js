@@ -23,9 +23,9 @@ const xpath = {
 // ref: https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11143609671
 const amazon_asin_regex = /[A-Z0-9]{10}|[0-9-]{9,16}[0-9X]/;
 
-const bookmeter_username = JSON.stringify(process.env.BOOKMETER_ACCOUNT);
-const bookmeter_password = JSON.stringify(process.env.BOOKMETER_PASSWORD);
-const cinii_appid = JSON.stringify(process.env.CINII_API_APPID);
+const bookmeter_username = (process.env.BOOKMETER_ACCOUNT).toString();
+const bookmeter_password = (process.env.BOOKMETER_PASSWORD).toString();
+const cinii_appid = (process.env.CINII_API_APPID).toString();
 const library_id = 'FA005358'; //上智大学図書館の機関ID ref: https://ci.nii.ac.jp/library/FA005358
 
 // ref: https://qiita.com/albno273/items/c2d48fdcbf3a9a3434db

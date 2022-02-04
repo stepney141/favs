@@ -20,8 +20,8 @@ const xpath = {
     linkToAllMovies: '//*[@id="list_videos_my_favourite_videos_items"]/form/div[*]/a',
 };
 
-const user_name = JSON.stringify(process.env.BOUNDHUB_ACCOUNT);
-const password = JSON.stringify(process.env.BOUNDHUB_PASSWORD);
+const user_name = (process.env.BOUNDHUB_ACCOUNT).toString();
+const password = (process.env.BOUNDHUB_PASSWORD).toString();
         
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
 const transposeArray = a => a[0].map((_, c) => a.map((r) => r[c]));
