@@ -75,22 +75,24 @@ class Zennist {
             ]);
 
             // input email
-            console.log('Enter email ...');
+            console.log('Typing email ...');
             await page.type('#identifierId', zenn_email);
             await page.waitForTimeout(1000);
             await page.keyboard.press('Enter');
-            await page.waitForTimeout(2000);
+            await page.waitForNavigation({
+                waitUntil: "networkidle0"
+            });
 
             // input password
-            console.log('Enter password ...');
-            await page.waitForSelector('input[type="password"]');
-            await page.type('input[type="password"]', zenn_password);
+            console.log('Typing password ...');
+            const passwordInputHandle = page.$x('//*[@id="password"]/div[1]/div/div[1]/input');
+            await (await passwordInputHandle)[0].type(zenn_password);
             await page.waitForTimeout(1000);
             await page.keyboard.press('Enter');
 
             await page.waitForResponse((response) => {
                 return response.url().includes(`${baseURI}/auth/init`) === true && response.status() === 200;
-            }, { timeout: 0 });
+            });
 
         } catch (e) {
             console.log(e);
@@ -211,6 +213,7 @@ class Zennist {
 
     const browser = await puppeteer.launch({
         defaultViewport: { width: 1000, height: 1000 },
+        slowMo: 100,
         // headless: true,
         headless: false, //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
     });
