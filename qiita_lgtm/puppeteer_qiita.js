@@ -2,7 +2,8 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const papa = require("papaparse");
 const path = require('path');
-require("dotenv").config({path: path.join(__dirname, "../.env")});
+// require("dotenv").config({path: path.join(__dirname, "../.env")});
+require("dotenv");
 
 // vars for qiita
 const userid = "stepney141";
