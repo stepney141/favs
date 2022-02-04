@@ -214,8 +214,8 @@ class Zennist {
     const browser = await puppeteer.launch({
         defaultViewport: { width: 1000, height: 1000 },
         slowMo: 100,
-        // headless: true,
-        headless: false, //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
+        headless: true,
+        // headless: false, //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
     });
 
     const zenn = new Zennist();
