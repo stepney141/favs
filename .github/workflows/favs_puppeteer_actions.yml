@@ -36,36 +36,36 @@ jobs:
     
     - name: GitHub Stars
       shell: bash
-      run: cd ./github_stars | 
-        ./wget_github_stars.sh
+      working-directory: cd ./github_stars
+      run: bash ./wget_github_stars.sh
 
     - name: Qiita LGTM
       shell: bash
-      run: cd ../qiita_lgtm | 
-        node ./puppeteer_qiita.js
+      working-directory: ./qiita_lgtm
+      run: node ./puppeteer_qiita.js
 
     - name: Bookmeter Wished Books
       shell: bash
-      run: cd ../bookmeter_wish | 
-        node ./puppeteer_bookmeter.js
+      working-directory: ./bookmeter_wish
+      run: node ./puppeteer_bookmeter.js
         # ./is_in_sophia.sh
         # CSVをどうやっていじるか考える
 
     - name: BoundHub Faved Movies
       shell: bash
-      run: cd ../boundhub | 
-        node ./puppeteer_boundhub.js
+      working-directory: ./boundhub
+      run: node ./puppeteer_boundhub.js | 
         bash ./get_url_list.sh
 
     - name: note Faved Articles
       shell: bash
-      run: cd ../note_favs | 
-        node ./puppeteer_note.js
+      working-directory: ./note_favs
+      run: node ./puppeteer_note.js
 
     - name: Zenn Faved Articles
       shell: bash
-      run: cd ../zenn_favs | 
-        node ./puppeteer_zenn.js
+      working-directory: ./zenn_favs
+      run: node ./puppeteer_zenn.js
 
     - name: Set the current datetime
       env:
