@@ -36,7 +36,7 @@ jobs:
     
     - name: GitHub Stars
       shell: bash
-      working-directory: cd ./github_stars
+      working-directory: ./github_stars
       run: bash ./wget_github_stars.sh
 
     - name: Qiita LGTM
