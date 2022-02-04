@@ -4,8 +4,7 @@ const fs = require("fs").promises;
 const papa = require("papaparse");
 const axios = require("axios");
 const path = require('path');
-// require("dotenv").config({path: path.join(__dirname, "../.env")});
-require("dotenv");
+require("dotenv").config({path: path.join(__dirname, "../.env")});
 
 const JOB_NAME = 'Zenn.dev Favorite Articles';
 const baseURI = 'https://zenn.dev';

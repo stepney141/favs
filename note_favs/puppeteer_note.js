@@ -2,8 +2,7 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const papa = require("papaparse");
 const path = require('path');
-// require("dotenv").config({path: path.join(__dirname, "../.env")});
-require("dotenv");
+require("dotenv").config({path: path.join(__dirname, "../.env")});
 
 const baseURI = 'https://note.com';
 const process_description = 'note.com Favorites';
