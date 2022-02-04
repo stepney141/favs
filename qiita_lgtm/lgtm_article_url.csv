@@ -6,7 +6,7 @@ FizzBuzzは無慈悲な面接の女王,https://qiita.com/minebreaker/items/a70d4
 どこでも動くシェルスクリプトを書くための ～ POSIXモードの基礎知識（前編）,https://qiita.com/ko1nksm/items/14151d2dc534f558b027,13,2022-01-24T13:03:39Z,@ko1nksm
 宣言的？ Declarative?どういうこと？,https://qiita.com/Hiroyuki_OSAKI/items/f3f88ae535550e95389d,304,2018-09-28T15:39:28Z,@Hiroyuki_OSAKI
 リファクタリングでお世話になったQiita記事まとめ,https://qiita.com/shimajiri/items/05be7e1cf16465f18924,65,2022-01-24T14:48:00Z,@shimajiri
-コウメ太夫氏のネタの面白さを分析してみた【自然言語処理】,https://qiita.com/masaka_programming/items/60ed06c607e7c5afbb0a,148,2022-01-26T08:44:40Z,@masaka_programming
+コウメ太夫氏のネタの面白さを分析してみた【自然言語処理】,https://qiita.com/masaka_programming/items/60ed06c607e7c5afbb0a,149,2022-01-26T08:44:40Z,@masaka_programming
 Markdown Preview Enhancedを使いこなす,https://qiita.com/take_me/items/5ff5304b58d9feec21df,15,2021-09-21T08:29:03Z,@take_me
 世界四連覇AIエンジニアがゼロから教えるゲーム木探索入門,https://qiita.com/thun-c/items/058743a25c37c87b8aa4,469,2022-01-25T12:12:05Z,@thun-c
 MarkDownで画像コピペ！PDFドキュメントを高速で作成する。,https://qiita.com/keita69sawada/items/1fad093f5871a6fb9a62,147,2018-08-09T22:38:55Z,@keita69sawada
@@ -21,7 +21,7 @@ JavaScript の Promise は モナドではない,https://qiita.com/41semicolon/i
 3次元座標系での様々な回転表現を相互変換したり、表示するツール,https://qiita.com/iwatake2222/items/6d12edb3c42b017c6586,47,2022-01-12T05:16:18Z,@iwatake2222
 他言語ユーザがRust言語をガチめに使っての雑感 - 分散KVSを書いてみて -,https://qiita.com/ryo_grid/items/9a82d7230fbc4a0875c1,126,2022-01-10T10:49:44Z,@ryo_grid
 npm fundとは何か,https://qiita.com/yukibear/items/0fd0a02e7ef75cfdaecf,55,2019-11-07T18:35:14Z,@yukibear
-急なTypeScript案件🔥最初の30日間に使い倒したい「コードリーディング支援ツール」,https://qiita.com/suin/items/68e9ba8b8906c6d36e29,880,2022-01-10T23:14:28Z,@suin
+急なTypeScript案件🔥最初の30日間に使い倒したい「コードリーディング支援ツール」,https://qiita.com/suin/items/68e9ba8b8906c6d36e29,881,2022-01-10T23:14:28Z,@suin
 安定マッチングを使ってお仕事の割り当てをした話,https://qiita.com/_jinta/items/56878af5b309e7f4d555,25,2021-12-12T01:49:34Z,@_jinta
 Babelは何百万もの人々に使われているのに、どうして我々は飢えようとしているのか,https://qiita.com/rana_kualu/items/ddfb15b4a585918ee806,74,2021-11-22T09:54:14Z,@rana_kualu
 JavaScript ライジングスター 2021,https://qiita.com/rana_kualu/items/b23a1bccae742bd031ef,144,2022-01-09T16:00:40Z,@rana_kualu
@@ -745,7 +745,7 @@ TwitterAPIのstatuses/show/:idにはどんな情報が入っているのか【�
 2020年20年目を迎える IE6 に対応した SPA を TypeScript で作る,https://qiita.com/boiyama/items/88162dcab283ade9e28e,148,2020-03-23T10:33:47Z,@boiyama
 VTuberのホームページをGitHubのプルリクだけで更新していったらどうなるのか？企画に参戦してみた,https://qiita.com/unsoluble_sugar/items/120f0856d497ef96010e,676,2020-01-18T11:11:45Z,@unsoluble_sugar
 意外と知られてないっぽいMarkdownのリンクの書き方,https://qiita.com/h1na/items/d305d49b5a27e92d132a,332,2014-04-02T09:52:51Z,@h1na
-JavaScript: 通常の関数とアロー関数の違いは「書き方だけ」ではない。異なる性質が10個ほどある。,https://qiita.com/suin/items/a44825d253d023e31e4d,1838,2020-03-22T04:48:23Z,@suin
+JavaScript: 通常の関数とアロー関数の違いは「書き方だけ」ではない。異なる性質が10個ほどある。,https://qiita.com/suin/items/a44825d253d023e31e4d,1839,2020-03-22T04:48:23Z,@suin
 Google Spreadsheet を簡易 Webサーバーとして動かして、手軽にWebHookを受け取る方法,https://qiita.com/kunichiko/items/7f64c7c80b44b15371a3,1596,2018-03-05T02:26:00Z,@kunichiko
 C# で出来ること一覧,https://qiita.com/okazuki/items/e3a8e23f9ac2a10d8fde,1032,2020-03-22T08:55:18Z,@okazuki
 VScodeの設定共有（SettingSync）,https://qiita.com/torun225/items/e6823fc22e5ae79247fe,101,2018-12-08T18:41:24Z,@torun225
@@ -1156,7 +1156,7 @@ sshの鍵認証でパスワード無しでログインする・ssh-copy-id,https
 2017年版 SSH公開鍵認証で使用する秘密鍵ペアの作り方,https://qiita.com/wnoguchi/items/a72a042bb8159c35d056,281,2017-12-09T14:21:01Z,@wnoguchi
 Instagramから大量の画像を集める,https://qiita.com/taptappun/items/b4bc01f812704642d399,86,2018-12-30T17:39:58Z,@taptappun
 Linuxコマンドを連続して使うには,https://qiita.com/egawa_kun/items/714394609eef6be8e0bf,661,2016-07-08T03:25:53Z,@egawa_kun
-lessコマンド（よく使いそうなものだけ版）,https://qiita.com/inokou/items/a73bac8c7e03951d07be,137,2015-09-18T05:06:57Z,@inokou
+lessコマンド（よく使いそうなものだけ版）,https://qiita.com/inokou/items/a73bac8c7e03951d07be,138,2015-09-18T05:06:57Z,@inokou
 tail -fやtailfを使うのはやめてless +Fを使おう,https://qiita.com/genre/items/8d935526571ccfe171ae,164,2015-08-28T03:05:44Z,@genre
 VS CodeでリモートのWorkspaceを編集する,https://qiita.com/jerrywdlee/items/b239958d3df04364875d,16,2018-12-23T22:00:33Z,@jerrywdlee
 【find・grep】特定の文字列を含むファイルのリストを取得する方法。,https://qiita.com/pokari_dz/items/0f14a21e3ca3df025d21,737,2016-10-12T09:07:17Z,@pokari_dz
