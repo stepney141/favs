@@ -1,27 +1,50 @@
 name: Favorites Updater with GitHub Actions
 
 on: [push]
+  # schedule:
+      # - cron: "0 0 * * 6"
+      # 毎週土曜日の午前0時に起動
 
 jobs:
   Updater:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
+    - uses: actions/checkout@v2
 
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+        cache: 'npm'
+    
+    - name: Installing dependencies
+      run: npm install
 
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+    - name: Create dotenv file
+    - shell: bash
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+        touch .env
+        echo "BOOBOOKMETER_ACCOUNT=${{ secrets.BOOKMETER_ACCOUNT }}" >> .env
+        echo "BOOKMETER_PASSWORD=${{ secrets.BOOKMETER_PASSWORD }}" >> .env
+        echo "CINII_API_APPID=${{ secrets.CINII_API_APPID }}" >> .env
+        echo "BOUNDHUB_ACCOUNT=${{ secrets.BOUNDHUB_ACCOUNT }}" >> .env
+        echo "BOUNDHUB_PASSWORD=${{ secrets.BOUNDHUB_PASSWORD }}" >> .env
+        echo "NOTE_ACCOUNT=${{ secrets.NOTE_ACCOUNT }}" >> .env
+        echo "NOTE_PASSWORD=${{ secrets.NOTE_PASSWORD }}" >> .env
+        echo "TERATAIL_API_TOKEN=${{ secrets.TERATAIL_API_TOKEN }}" >> .env
+        echo "ZENN_GOOGLE_ACCOUNT=${{ secrets.ZENN_GOOGLE_ACCOUNT }}" >> .env
+        echo "ZENN_GOOGLE_PASSWORD=${{ secrets.ZENN_GOOGLE_PASSWORD }}" >> .env
+    
+    - name: Scraping
+    - shell: bash
+        run: bash ./updater-ci.sh
+
+    - name: Set the current datetime
+      env:
+        TZ: 'Asia/Tokyo'
+      run: echo "CURRENT_DATETIME=$(date --iso-8601=minutes)" >> $GITHUB_ENV
+    
+    - name: Git Auto Commit
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with: 
+        commit_message: 'updated: ${{ env.CURRENT_DATETIME }}'
