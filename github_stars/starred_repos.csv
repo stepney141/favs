@@ -1,7 +1,7 @@
 full_name,html_url,description,stargazers_count
 "sakura-cooking/takoyaki","https://github.com/sakura-cooking/takoyaki"," さくらインターネット秘伝のたこ焼きレシピ",343
 "mgechev/javascript-algorithms","https://github.com/mgechev/javascript-algorithms","💻 JavaScript implementations of computer science algorithms",7066
-"veler/DevToys","https://github.com/veler/DevToys","A Swiss Army knife for developers.",6446
+"veler/DevToys","https://github.com/veler/DevToys","A Swiss Army knife for developers.",6447
 "raphamorim/awesome-canvas","https://github.com/raphamorim/awesome-canvas","A curated list of awesome HTML5 Canvas with examples, related articles and posts.",1096
 "siketyan/house","https://github.com/siketyan/house","An issue tracker for my house.",6
 "lydiahallie/javascript-questions","https://github.com/lydiahallie/javascript-questions","A long list of (advanced) JavaScript questions, and their explanations :sparkles:  ",41154
@@ -106,7 +106,7 @@ full_name,html_url,description,stargazers_count
 "joey00072/Baji-Marathi-Programing-Language","https://github.com/joey00072/Baji-Marathi-Programing-Language","बाजी (baji) high-level,dynamically typed, interpreted first Marathi programing language.",52
 "mithrandie/csvq","https://github.com/mithrandie/csvq","SQL-like query language for csv",951
 "serenity-rs/serenity","https://github.com/serenity-rs/serenity","A Rust library for the Discord API.",2186
-"public-apis/public-apis","https://github.com/public-apis/public-apis","A collective list of free APIs",179029
+"public-apis/public-apis","https://github.com/public-apis/public-apis","A collective list of free APIs",179031
 "Tritama/portfolio","https://github.com/Tritama/portfolio",,5
 "mebiusbox/docs","https://github.com/mebiusbox/docs",,147
 "eggplants/dojinvoice_db","https://github.com/eggplants/dojinvoice_db","Make DB of Dojinvoice (DLsite)",3
@@ -117,7 +117,7 @@ full_name,html_url,description,stargazers_count
 "sorrycc/awesome-javascript","https://github.com/sorrycc/awesome-javascript","🐢 A collection of awesome browser-side  JavaScript libraries, resources and shiny things.",26669
 "gcanti/fp-ts","https://github.com/gcanti/fp-ts","Functional programming in TypeScript",7418
 "EzoeRyou/posix-commands","https://github.com/EzoeRyou/posix-commands","POSIXコマンドについてのコラム",152
-"getify/You-Dont-Know-JS","https://github.com/getify/You-Dont-Know-JS","A book series on JavaScript. @YDKJS on twitter.",149167
+"getify/You-Dont-Know-JS","https://github.com/getify/You-Dont-Know-JS","A book series on JavaScript. @YDKJS on twitter.",149168
 "mijumall/multipleRegression","https://github.com/mijumall/multipleRegression","Simple Multiple Regression model with t-test functionality",1
 "apsdehal/qunit-migrate","https://github.com/apsdehal/qunit-migrate","Migrate old QUnit tests to 2.x. Uses regex and ASTs to convert old QUnit code.",17
 "aemkei/jsfuck","https://github.com/aemkei/jsfuck","Write any JavaScript with 6 Characters: []()!+",6433
@@ -185,7 +185,7 @@ full_name,html_url,description,stargazers_count
 "trueToastedCode/NdlessSDK-automated-installer","https://github.com/trueToastedCode/NdlessSDK-automated-installer","An automated NdlessSDK installer for linux.",2
 "lights0123/ndless-rs","https://github.com/lights0123/ndless-rs","Rust library for interacting with Ndless for the TI-Nspire",17
 "adobe-fonts/source-han-sans","https://github.com/adobe-fonts/source-han-sans","Source Han Sans | 思源黑体 | 思源黑體 | 思源黑體 香港 | 源ノ角ゴシック | 본고딕",10361
-"danistefanovic/build-your-own-x","https://github.com/danistefanovic/build-your-own-x","🤓 Build your own (insert technology here)",128682
+"danistefanovic/build-your-own-x","https://github.com/danistefanovic/build-your-own-x","🤓 Build your own (insert technology here)",128684
 "PyYoshi/TweetNowBrowsing","https://github.com/PyYoshi/TweetNowBrowsing","Chrome Extension",12
 "eggplants/wbsv-cli","https://github.com/eggplants/wbsv-cli","CLI for archiving pages and its all links to Wayback Machine",11
 "alphasp/pixiv-api-client","https://github.com/alphasp/pixiv-api-client","Promise based Pixiv API client for node.js and react native",138
@@ -235,7 +235,7 @@ full_name,html_url,description,stargazers_count
 "aozorahack/aozorabunko_text","https://github.com/aozorahack/aozorabunko_text","text-only archives of www.aozora.gr.jp",45
 "itchyny/rexdep","https://github.com/itchyny/rexdep","Roughly extract dependency relation from source code",165
 "defunkt/gist","https://github.com/defunkt/gist","Potentially the best command line gister.",3703
-"lebab/lebab","https://github.com/lebab/lebab","Turn your ES5 code into readable ES6. Lebab does the opposite of what Babel does.",5486
+"lebab/lebab","https://github.com/lebab/lebab","Turn your ES5 code into readable ES6. Lebab does the opposite of what Babel does.",5487
 "rhasumi/dynamicmodels","https://github.com/rhasumi/dynamicmodels","『動学マクロ経済学へのいざない』プログラム",11
 "AssemblyScript/assemblyscript","https://github.com/AssemblyScript/assemblyscript","A TypeScript-like language for WebAssembly.",13421
 "sindresorhus/css-in-readme-like-wat","https://github.com/sindresorhus/css-in-readme-like-wat","Style your readme using CSS with this simple trick",4774
@@ -249,14 +249,14 @@ full_name,html_url,description,stargazers_count
 "sindresorhus/github-markdown-css","https://github.com/sindresorhus/github-markdown-css","The minimal amount of CSS to replicate the GitHub Markdown style",6055
 "AlDanial/cloc","https://github.com/AlDanial/cloc","cloc counts blank lines, comment lines, and physical lines of source code in many programming languages.",13406
 "emilk/hobogo","https://github.com/emilk/hobogo","Rust + WASM experiment",32
-"emilk/egui","https://github.com/emilk/egui","egui: an easy-to-use immediate mode GUI in Rust that runs on both web and native",7254
+"emilk/egui","https://github.com/emilk/egui","egui: an easy-to-use immediate mode GUI in Rust that runs on both web and native",7255
 "niklasf/python-chess","https://github.com/niklasf/python-chess","A chess library for Python, with move generation and validation, PGN parsing and writing, Polyglot opening book reading, Gaviota tablebase probing, Syzygy tablebase probing, and UCI/XBoard engine communication",1659
 "yadox666/The-Hackers-Hardware-Toolkit","https://github.com/yadox666/The-Hackers-Hardware-Toolkit","The best hacker's gadgets for Red Team pentesters and security researchers.",1841
 "edsu/itstimeihadsometimealone","https://github.com/edsu/itstimeihadsometimealone","Some code to examine and modify your experience of Twitter.",11
 "moebooru/moebooru","https://github.com/moebooru/moebooru","Moebooru, a fork of danbooru1 that has been heavily modified",392
 "sozysozbot/cerke","https://github.com/sozysozbot/cerke","パイグ将棋/机戦/cerke/cetkaik/cet2 kaik",3
 "sozysozbot/cerke_modeling","https://github.com/sozysozbot/cerke_modeling",,1
-"sindresorhus/awesome","https://github.com/sindresorhus/awesome","😎 Awesome lists about all kinds of interesting topics",187730
+"sindresorhus/awesome","https://github.com/sindresorhus/awesome","😎 Awesome lists about all kinds of interesting topics",187732
 "Bogdan-Lyashenko/codecrumbs","https://github.com/Bogdan-Lyashenko/codecrumbs","Learn, design or document codebase by putting breadcrumbs in source code. Live updates, multi-language support and more.",2591
 "Gedevan-Aleksizde/20190703_ML_ECON","https://github.com/Gedevan-Aleksizde/20190703_ML_ECON","Tokyo.R #80 計量経済学と機械学習の関係 –AI はさだめ, さだめは反事実 ",5
 "QwerbyKing/VC-US","https://github.com/QwerbyKing/VC-US","Visual Chess: Undercarriage Syndicate is a chess framework designed with compatibility with Betza Notation",1
@@ -290,7 +290,7 @@ full_name,html_url,description,stargazers_count
 "mi-g/joclyboard","https://github.com/mi-g/joclyboard","Multiplatform 3D/2D desktop application for playing board games",35
 "greymd/teip","https://github.com/greymd/teip","Select partial standard input and replace with the result of another command efficiently",314
 "jw0k/serial2ti83","https://github.com/jw0k/serial2ti83","A program for Arduino Uno that makes it possible to connect a TI-83 calculator to a computer",36
-"jwasham/coding-interview-university","https://github.com/jwasham/coding-interview-university","A complete computer science study plan to become a software engineer.",206304
+"jwasham/coding-interview-university","https://github.com/jwasham/coding-interview-university","A complete computer science study plan to become a software engineer.",206307
 "yaneurao/YaneuraOu","https://github.com/yaneurao/YaneuraOu","YaneuraOu is the World's Strongest Shogi engine(AI player) , WCSC29 1st winner , educational and USI compliant engine.",371
 "na2hiro/Shogi.js","https://github.com/na2hiro/Shogi.js","A simple shogi library for JavaScript / TypeScript",48
 "fulldecent/system-bus-radio","https://github.com/fulldecent/system-bus-radio","Transmits AM radio on computers without radio transmitting hardware.",5856
@@ -417,7 +417,7 @@ full_name,html_url,description,stargazers_count
 "taba256/nicoseiga-download","https://github.com/taba256/nicoseiga-download","ニコニコ静画(マンガ)の作品を、zipファイルに圧縮してダウンロードできます。",7
 "internetarchive/heritrix3","https://github.com/internetarchive/heritrix3","Heritrix is the Internet Archive's open-source, extensible, web-scale, archival-quality web crawler project.  ",2130
 "iipc/awesome-web-archiving","https://github.com/iipc/awesome-web-archiving","An Awesome List for getting started with web archiving",1083
-"EbookFoundation/free-programming-books","https://github.com/EbookFoundation/free-programming-books",":books: Freely available programming books",220771
+"EbookFoundation/free-programming-books","https://github.com/EbookFoundation/free-programming-books",":books: Freely available programming books",220772
 "netdata/netdata","https://github.com/netdata/netdata","Real-time performance monitoring, done right! https://www.netdata.cloud",57581
 "tldr-pages/tldr","https://github.com/tldr-pages/tldr","📚 Collaborative cheatsheets for console commands",37135
 "ilia-luk/pimpMyVscodeTerminal","https://github.com/ilia-luk/pimpMyVscodeTerminal","Pimp my vscode terminal with tmux sessions",5
@@ -470,7 +470,7 @@ full_name,html_url,description,stargazers_count
 "CE-Programming/toolchain","https://github.com/CE-Programming/toolchain","Toolchain and libraries for C/C++ programming on the TI-84+ CE calculator series",294
 "Vane11ope/.files","https://github.com/Vane11ope/.files",,6
 "ac100v/bad_apple_fx-9860gii","https://github.com/ac100v/bad_apple_fx-9860gii","Bad Apple!! demonstration on CASIO fx-9860GII",7
-"tonsky/FiraCode","https://github.com/tonsky/FiraCode","Free monospaced font with programming ligatures",61784
+"tonsky/FiraCode","https://github.com/tonsky/FiraCode","Free monospaced font with programming ligatures",61785
 "EzoeRyou/cpp17book","https://github.com/EzoeRyou/cpp17book","textbook for C++17",373
 "EzoeRyou/cpp-book","https://github.com/EzoeRyou/cpp-book","C++11 textbook",572
 "EzoeRyou/cpp14-appendix","https://github.com/EzoeRyou/cpp14-appendix","Appendix for C++14 features",45
