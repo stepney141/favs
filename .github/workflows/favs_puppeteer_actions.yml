@@ -2,8 +2,8 @@ name: Favorites Updater
 
 on: [push]
   # schedule:
-      # - cron: "0 0 * * 6"
-      # 毎週土曜日の午前0時に起動
+      # - cron: "0 0 * * 7"
+      # 毎週日曜日の午前0時に起動
 
 jobs:
   Updater:

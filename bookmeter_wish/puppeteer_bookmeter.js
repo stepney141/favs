@@ -77,12 +77,14 @@ class Bookmaker {
 
             await (await accountNameInputHandle)[0].type(bookmeter_username);
             await (await passwordInputHandle)[0].type(bookmeter_password);
-            await (await loginButtonHandle)[0].click();
         
-            await page.waitForNavigation({
-                timeout: 60000,
-                waitUntil: "networkidle2",
-            });
+            await Promise.all([
+                page.waitForNavigation({
+                    timeout: 60000,
+                    waitUntil: "networkidle2",
+                }),
+                (await loginButtonHandle)[0].click()
+            ]);
 
         } catch (e) {
             console.log(e);
@@ -345,6 +347,7 @@ class Bookmaker {
         defaultViewport: {width: 1000, height: 1000},
         headless: true,
         // devtools: true,
+        slowMo: 30
     });
 
     const book = new Bookmaker();

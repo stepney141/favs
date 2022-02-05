@@ -80,7 +80,8 @@ class Zennist {
             await page.waitForTimeout(1000);
             await page.keyboard.press('Enter');
             await page.waitForNavigation({
-                waitUntil: "networkidle0"
+                timeout: 12000,
+                waitUntil: "networkidle2"
             });
 
             // input password

@@ -63,13 +63,12 @@ class notebook {
 
             await (await useridInput_Handle)[0].type(user_name);
             await (await passwordInput_Handle)[0].type(password);
-            await Promise.all([
-                page.waitForNavigation({
-                    timeout: 60000,
-                    waitUntil: "load",
-                }),
-                (await loginButton_Handle)[0].click(),
-            ]);
+            await (await loginButton_Handle)[0].click();
+
+            await page.waitForNavigation({
+                timeout: 60000,
+                waitUntil: "load",
+            });
 
         } catch (e) {
             console.log(e);
@@ -154,7 +153,7 @@ class notebook {
         defaultViewport: { width: 500, height: 1000 },
         headless: true,
         // devtools: true,
-        slowMo: 20
+        slowMo: 50
     });
 
     const note = new notebook();
