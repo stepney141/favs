@@ -70,6 +70,8 @@ class notebook {
                 waitUntil: "load",
             });
 
+            console.log(`${process_description}: Login Completed!`);
+
         } catch (e) {
             console.log(e);
             await browser.close();
@@ -86,6 +88,8 @@ class notebook {
                 Object.defineProperty(navigator, 'webdriver', ()=>{});
                 delete navigator.__proto__.webdriver;
             });
+
+            console.log(`${process_description}: Scraping Started!`);
 
             page.on('response', async (response) => { //イベントハンドラを登録
                 if (response.url().includes('https://note.com/api/v1/notes/liked') === true && response.status() === 200) {
@@ -116,6 +120,8 @@ class notebook {
             await page.goto(`${baseURI}/notes/liked`, { //スキした記事の一覧へ飛んで処理雨を実行
                 waitUntil: "networkidle0",
             });
+
+            console.log(`${process_description}: Scraping Completed!`);
 
         } catch (e) {
             console.log(e);
