@@ -3,7 +3,7 @@ full_name,html_url,description,stargazers_count
 "akamhy/waybackpy","https://github.com/akamhy/waybackpy","Wayback Machine API interface & a command-line tool",161
 "sakura-cooking/takoyaki","https://github.com/sakura-cooking/takoyaki"," さくらインターネット秘伝のたこ焼きレシピ",347
 "mgechev/javascript-algorithms","https://github.com/mgechev/javascript-algorithms","💻 JavaScript implementations of computer science algorithms",7070
-"veler/DevToys","https://github.com/veler/DevToys","A Swiss Army knife for developers.",7414
+"veler/DevToys","https://github.com/veler/DevToys","A Swiss Army knife for developers.",7415
 "raphamorim/awesome-canvas","https://github.com/raphamorim/awesome-canvas","A curated list of awesome HTML5 Canvas with examples, related articles and posts.",1098
 "siketyan/house","https://github.com/siketyan/house","An issue tracker for my house.",6
 "lydiahallie/javascript-questions","https://github.com/lydiahallie/javascript-questions","A long list of (advanced) JavaScript questions, and their explanations :sparkles:  ",41296
@@ -13,7 +13,7 @@ full_name,html_url,description,stargazers_count
 "kurema/cpp-intro","https://github.com/kurema/cpp-intro","Beginner's guide for C++",14
 "fantasyland/fantasy-land","https://github.com/fantasyland/fantasy-land","Specification for interoperability of common algebraic structures in JavaScript",9280
 "Nyanyan/Nyanyan","https://github.com/Nyanyan/Nyanyan",,2
-"matiassingers/awesome-readme","https://github.com/matiassingers/awesome-readme","A curated list of awesome READMEs",11211
+"matiassingers/awesome-readme","https://github.com/matiassingers/awesome-readme","A curated list of awesome READMEs",11212
 "shaack/cm-pgn","https://github.com/shaack/cm-pgn","Parse and create PGNs (Portable Game Notation for chess games)",14
 "danbev/learning-v8","https://github.com/danbev/learning-v8","Project for learning V8 internals",1714
 "caderek/benny","https://github.com/caderek/benny","A dead simple benchmarking framework for JS/TS libs",503
@@ -52,7 +52,7 @@ full_name,html_url,description,stargazers_count
 "Iku/Google-Forms-to-Discord","https://github.com/Iku/Google-Forms-to-Discord","A quick way to automatically send Google Form responses to a Discord channel",387
 "roogle-rs/roogle","https://github.com/roogle-rs/roogle","A Rust API search engine",230
 "NaturalIntelligence/fast-xml-parser","https://github.com/NaturalIntelligence/fast-xml-parser","Validate XML, Parse XML and Build XML rapidly without C/C++ based libraries and no callback.",1384
-"apprenticeharper/DeDRM_tools","https://github.com/apprenticeharper/DeDRM_tools","DeDRM tools for ebooks",11894
+"apprenticeharper/DeDRM_tools","https://github.com/apprenticeharper/DeDRM_tools","DeDRM tools for ebooks",11895
 "yt-dlp/yt-dlp","https://github.com/yt-dlp/yt-dlp","A youtube-dl fork with additional features and fixes",19043
 "Yonoha/category.github.io","https://github.com/Yonoha/category.github.io","I write about category theory and its application to quantum theory.",8
 "type-challenges/type-challenges","https://github.com/type-challenges/type-challenges","Collection of TypeScript type challenges with online judge",12583
@@ -67,7 +67,7 @@ full_name,html_url,description,stargazers_count
 "puppeteer/examples","https://github.com/puppeteer/examples","Use case-driven examples for using Puppeteer and headless chrome",2140
 "ytdl-org/youtube-dl","https://github.com/ytdl-org/youtube-dl","Command-line program to download videos from YouTube.com and other video sites",106043
 "Hayao-H/Niconicome","https://github.com/Hayao-H/Niconicome","ニコニコ動画のコンテンツをダウンロードします",29
-"ffmpegwasm/ffmpeg.wasm","https://github.com/ffmpegwasm/ffmpeg.wasm","FFmpeg for browser and node, powered by WebAssembly",6937
+"ffmpegwasm/ffmpeg.wasm","https://github.com/ffmpegwasm/ffmpeg.wasm","FFmpeg for browser and node, powered by WebAssembly",6938
 "akameco/pixiv-dl","https://github.com/akameco/pixiv-dl","pixiv image downloader",11
 "eggplants/pixiv-bulk-downloader","https://github.com/eggplants/pixiv-bulk-downloader","Pixiv Bulk Downloader",4
 "st-tech/zozo-shift15m","https://github.com/st-tech/zozo-shift15m","SHIFT15M: multiobjective large-scale fashion dataset with distributional shifts",114
@@ -88,7 +88,7 @@ full_name,html_url,description,stargazers_count
 "akio-tomiya/julia_in_physics","https://github.com/akio-tomiya/julia_in_physics",,19
 "k4yt3x/pixivdaily-rust","https://github.com/k4yt3x/pixivdaily-rust","Source code for the Telegram channel @pixiv_daily",4
 "optim-corp/masked-lm-wasm","https://github.com/optim-corp/masked-lm-wasm",,15
-"zedeus/nitter","https://github.com/zedeus/nitter","Alternative Twitter front-end",3948
+"zedeus/nitter","https://github.com/zedeus/nitter","Alternative Twitter front-end",3949
 "9Axes/9axes.github.io","https://github.com/9Axes/9axes.github.io",,40
 "prismquiz/prismquiz.github.io","https://github.com/prismquiz/prismquiz.github.io",,2
 "8values/8values.github.io","https://github.com/8values/8values.github.io","The 8values political quiz",786
@@ -108,7 +108,7 @@ full_name,html_url,description,stargazers_count
 "joey00072/Baji-Marathi-Programing-Language","https://github.com/joey00072/Baji-Marathi-Programing-Language","बाजी (baji) high-level,dynamically typed, interpreted first Marathi programing language.",52
 "mithrandie/csvq","https://github.com/mithrandie/csvq","SQL-like query language for csv",955
 "serenity-rs/serenity","https://github.com/serenity-rs/serenity","A Rust library for the Discord API.",2201
-"public-apis/public-apis","https://github.com/public-apis/public-apis","A collective list of free APIs",179690
+"public-apis/public-apis","https://github.com/public-apis/public-apis","A collective list of free APIs",179691
 "Tritama/portfolio","https://github.com/Tritama/portfolio",,5
 "mebiusbox/docs","https://github.com/mebiusbox/docs",,148
 "eggplants/dojinvoice_db","https://github.com/eggplants/dojinvoice_db","Make DB of Dojinvoice (DLsite)",3
@@ -126,7 +126,7 @@ full_name,html_url,description,stargazers_count
 "fasttime/JScrewIt","https://github.com/fasttime/JScrewIt","Write any JavaScript with six characters: ! ( ) + [ ]",125
 "jsdoc/jsdoc","https://github.com/jsdoc/jsdoc","An API documentation generator for JavaScript.",12683
 "documentationjs/documentation","https://github.com/documentationjs/documentation",":book: documentation for modern JavaScript",5467
-"you-dont-need/You-Dont-Need-Lodash-Underscore","https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore","List of JavaScript methods which you can use natively + ESLint Plugin",14277
+"you-dont-need/You-Dont-Need-Lodash-Underscore","https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore","List of JavaScript methods which you can use natively + ESLint Plugin",14278
 "DBCTRADO/TVTest","https://github.com/DBCTRADO/TVTest",,265
 "tvillarete/ipod-classic-js","https://github.com/tvillarete/ipod-classic-js","An iPod Classic that connects to Apple Music and Spotify. Built with React & Styled Components",1074
 "tastejs/todomvc","https://github.com/tastejs/todomvc","Helping you select an MV* framework - Todo apps for React.js, Ember.js, Angular, and many more",27664
@@ -159,7 +159,7 @@ full_name,html_url,description,stargazers_count
 "scottrogowski/code2flow","https://github.com/scottrogowski/code2flow","Pretty good call graphs for dynamic languages",1742
 "gergob/jsProxy","https://github.com/gergob/jsProxy",,163
 "discordjs/collection","https://github.com/discordjs/collection","Utility data structure used in Discord.js",118
-"src-d/hercules","https://github.com/src-d/hercules","Gaining advanced insights from Git repository history.",1672
+"src-d/hercules","https://github.com/src-d/hercules","Gaining advanced insights from Git repository history.",1671
 "leandromoreira/digital_video_introduction","https://github.com/leandromoreira/digital_video_introduction","A hands-on introduction to video technology: image, video, codec (av1, vp9, h265) and more (ffmpeg encoding).",12323
 "berstend/puppeteer-extra","https://github.com/berstend/puppeteer-extra","💯  Teach puppeteer new tricks through plugins.",3547
 "armfxl/discord.js-cheatsheet","https://github.com/armfxl/discord.js-cheatsheet","An in-depth discord.js event cheatsheet, containing all events along with example usages.",47
@@ -187,7 +187,7 @@ full_name,html_url,description,stargazers_count
 "trueToastedCode/NdlessSDK-automated-installer","https://github.com/trueToastedCode/NdlessSDK-automated-installer","An automated NdlessSDK installer for linux.",2
 "lights0123/ndless-rs","https://github.com/lights0123/ndless-rs","Rust library for interacting with Ndless for the TI-Nspire",17
 "adobe-fonts/source-han-sans","https://github.com/adobe-fonts/source-han-sans","Source Han Sans | 思源黑体 | 思源黑體 | 思源黑體 香港 | 源ノ角ゴシック | 본고딕",10383
-"danistefanovic/build-your-own-x","https://github.com/danistefanovic/build-your-own-x","🤓 Build your own (insert technology here)",129895
+"danistefanovic/build-your-own-x","https://github.com/danistefanovic/build-your-own-x","🤓 Build your own (insert technology here)",129896
 "PyYoshi/TweetNowBrowsing","https://github.com/PyYoshi/TweetNowBrowsing","Chrome Extension",12
 "eggplants/wbsv-cli","https://github.com/eggplants/wbsv-cli","CLI for archiving pages and its all links to Wayback Machine",11
 "alphasp/pixiv-api-client","https://github.com/alphasp/pixiv-api-client","Promise based Pixiv API client for node.js and react native",138
@@ -212,14 +212,14 @@ full_name,html_url,description,stargazers_count
 "gchenfc/sci-hub-now","https://github.com/gchenfc/sci-hub-now","Free access to academic papers with just a single click! Abolish publishers, long live the open access movement! 🦅",187
 "rubenvereecken/py-vgdl","https://github.com/rubenvereecken/py-vgdl","VGDL 2.0: A video game description language for AI research",42
 "ossf/criticality_score","https://github.com/ossf/criticality_score","Gives criticality score for an open source project",983
-"trekhleb/javascript-algorithms","https://github.com/trekhleb/javascript-algorithms","📝 Algorithms and data structures implemented in JavaScript with explanations and links to further readings",134505
+"trekhleb/javascript-algorithms","https://github.com/trekhleb/javascript-algorithms","📝 Algorithms and data structures implemented in JavaScript with explanations and links to further readings",134506
 "glinscott/fishtest","https://github.com/glinscott/fishtest","Stockfish testing",179
 "beurtschipper/Depix","https://github.com/beurtschipper/Depix","Recovers passwords from pixelized screenshots",21290
 "mikf/gallery-dl","https://github.com/mikf/gallery-dl","Command-line program to download image galleries and collections from several image hosting sites",4467
 "cpojer/js-codemod","https://github.com/cpojer/js-codemod","Codemod scripts to transform code to next generation JS",1118
 "nmrugg/stockfish.js","https://github.com/nmrugg/stockfish.js","The Stockfish chess engine in Javascript",444
 "nozaq/shogi-rs","https://github.com/nozaq/shogi-rs","A Bitboard-based shogi library in Rust. Board representation, move generation/validation and time control utilities.",29
-"airbnb/javascript","https://github.com/airbnb/javascript","JavaScript Style Guide",119244
+"airbnb/javascript","https://github.com/airbnb/javascript","JavaScript Style Guide",119245
 "jasonwebb/morphogenesis-resources","https://github.com/jasonwebb/morphogenesis-resources","Comprehensive list of resources on the topic of digital morphogenesis (the creation of form through code). Includes links to major articles, code repos, creative projects, books, software, and more.",1561
 "utkusen/urlhunter","https://github.com/utkusen/urlhunter","a recon tool that allows searching on URLs that are exposed via shortener services",1188
 "sadanandpai/javascript-code-challenges","https://github.com/sadanandpai/javascript-code-challenges","A collection of JavaScript modern interview code challenges for beginners to experts",2852
@@ -258,7 +258,7 @@ full_name,html_url,description,stargazers_count
 "moebooru/moebooru","https://github.com/moebooru/moebooru","Moebooru, a fork of danbooru1 that has been heavily modified",393
 "sozysozbot/cerke","https://github.com/sozysozbot/cerke","パイグ将棋/机戦/cerke/cetkaik/cet2 kaik",3
 "sozysozbot/cerke_modeling","https://github.com/sozysozbot/cerke_modeling",,1
-"sindresorhus/awesome","https://github.com/sindresorhus/awesome","😎 Awesome lists about all kinds of interesting topics",188729
+"sindresorhus/awesome","https://github.com/sindresorhus/awesome","😎 Awesome lists about all kinds of interesting topics",188731
 "Bogdan-Lyashenko/codecrumbs","https://github.com/Bogdan-Lyashenko/codecrumbs","Learn, design or document codebase by putting breadcrumbs in source code. Live updates, multi-language support and more.",2593
 "Gedevan-Aleksizde/20190703_ML_ECON","https://github.com/Gedevan-Aleksizde/20190703_ML_ECON","Tokyo.R #80 計量経済学と機械学習の関係 –AI はさだめ, さだめは反事実 ",5
 "QwerbyKing/VC-US","https://github.com/QwerbyKing/VC-US","Visual Chess: Undercarriage Syndicate is a chess framework designed with compatibility with Betza Notation",1
@@ -267,7 +267,7 @@ full_name,html_url,description,stargazers_count
 "PKSHATechnology-Research/tdmelodic","https://github.com/PKSHATechnology-Research/tdmelodic","A Japanese accent dictionary generator",68
 "FyroxEngine/Fyrox","https://github.com/FyroxEngine/Fyrox","3D and 2D game engine written in Rust",3343
 "mi-g/jocly","https://github.com/mi-g/jocly","Javascript library and tools to provide user interface (2D, 3D, VR) and engine for playing board games",50
-"slatedocs/slate","https://github.com/slatedocs/slate","Beautiful static documentation for your API",33652
+"slatedocs/slate","https://github.com/slatedocs/slate","Beautiful static documentation for your API",33653
 "kgtkr/twitter-block-checker","https://github.com/kgtkr/twitter-block-checker",,3
 "Taraflex/Back2stackoverflow","https://github.com/Taraflex/Back2stackoverflow","Userscript for redirect to stackoverflow.com from machine-translated sites",294
 "lichess-org/chessground","https://github.com/lichess-org/chessground","Mobile/Web chess UI for lichess.org",673
