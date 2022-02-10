@@ -78,12 +78,15 @@ class Bookmaker {
 
             await (await accountNameInputHandle)[0].type(bookmeter_username);
             await (await passwordInputHandle)[0].type(bookmeter_password);
-            await (await loginButtonHandle)[0].click();
         
-            await page.waitForNavigation({
-                timeout: 60000,
-                waitUntil: "networkidle2",
-            });
+            await Promise.all([
+                page.waitForNavigation({
+                    timeout: 2 * 60 * 1000,
+                    waitUntil: "networkidle2",
+                }),
+                (await loginButtonHandle)[0].click()
+            ]);
+
 
             console.log(`${process_description}: Login Completed!`);
 
