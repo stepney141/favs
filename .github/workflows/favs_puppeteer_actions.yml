@@ -1,13 +1,30 @@
 name: Favorites Updater
 
-on: [push]
-  # schedule:
-      # - cron: "0 0 * * 6"
-      # 毎週土曜日の午前0時に起動
+on: 
+  push:
+  schedule:
+      - cron: "0 0 * * SUN"
+      # 毎週日曜日の午前0時に起動
 
 jobs:
   Updater:
     runs-on: ubuntu-latest
+
+    env:
+      LANG: "ja_JP.UTF-8"
+      BOOKMETER_ACCOUNT: ${{ secrets.BOOKMETER_ACCOUNT }}
+      BOOKMETER_PASSWORD: ${{ secrets.BOOKMETER_PASSWORD }}
+      CINII_API_APPID: ${{ secrets.CINII_API_APPID }}
+      BOUNDHUB_ACCOUNT: ${{ secrets.BOUNDHUB_ACCOUNT }}
+      BOUNDHUB_PASSWORD: ${{ secrets.BOUNDHUB_PASSWORD }}
+      NOTE_ACCOUNT: ${{ secrets.NOTE_ACCOUNT }}
+      NOTE_PASSWORD: ${{ secrets.NOTE_PASSWORD }}
+      TERATAIL_API_TOKEN: ${{ secrets.TERATAIL_API_TOKEN }}
+      ZENN_GOOGLE_ACCOUNT: ${{ secrets.ZENN_GOOGLE_ACCOUNT }}
+      ZENN_GOOGLE_PASSWORD: ${{ secrets.ZENN_GOOGLE_PASSWORD }}
+      TWITTER_ACCOUNT: ${{ secrets.TWITTER_ACCOUNT }}
+      TWITTER_PASSWORD: ${{ secrets.TWITTER_PASSWORD }}
+
     steps:
     - uses: actions/checkout@v2
 
@@ -20,19 +37,26 @@ jobs:
     - name: Installing dependencies
       run: npm install
 
-    - name: Create dotenv file
-      shell: bash
-      run: touch .env | 
-        echo "BOOBOOKMETER_ACCOUNT=${{ secrets.BOOKMETER_ACCOUNT }}" >> .env
-        echo "BOOKMETER_PASSWORD=${{ secrets.BOOKMETER_PASSWORD }}" >> .env
-        echo "CINII_API_APPID=${{ secrets.CINII_API_APPID }}" >> .env
-        echo "BOUNDHUB_ACCOUNT=${{ secrets.BOUNDHUB_ACCOUNT }}" >> .env
-        echo "BOUNDHUB_PASSWORD=${{ secrets.BOUNDHUB_PASSWORD }}" >> .env
-        echo "NOTE_ACCOUNT=${{ secrets.NOTE_ACCOUNT }}" >> .env
-        echo "NOTE_PASSWORD=${{ secrets.NOTE_PASSWORD }}" >> .env
-        echo "TERATAIL_API_TOKEN=${{ secrets.TERATAIL_API_TOKEN }}" >> .env
-        echo "ZENN_GOOGLE_ACCOUNT=${{ secrets.ZENN_GOOGLE_ACCOUNT }}" >> .env
-        echo "ZENN_GOOGLE_PASSWORD=${{ secrets.ZENN_GOOGLE_PASSWORD }}" >> .env
+    - name: Install Japanese fonts
+      run: sudo apt-get update && sudo apt-get install fonts-noto
+      # 文字化けを防ぐ生活の知恵
+      # https://qiita.com/zyyx-matsushita/items/c33f79e33f242395019e
+
+    # - name: Create dotenv file
+    #   shell: bash
+    #   run: touch .env | 
+    #     echo "BOOKMETER_ACCOUNT=${{ secrets.BOOKMETER_ACCOUNT }}" >> .env
+    #     echo "BOOKMETER_PASSWORD=${{ secrets.BOOKMETER_PASSWORD }}" >> .env
+    #     echo "CINII_API_APPID=${{ secrets.CINII_API_APPID }}" >> .env
+    #     echo "BOUNDHUB_ACCOUNT=${{ secrets.BOUNDHUB_ACCOUNT }}" >> .env
+    #     echo "BOUNDHUB_PASSWORD=${{ secrets.BOUNDHUB_PASSWORD }}" >> .env
+    #     echo "NOTE_ACCOUNT=${{ secrets.NOTE_ACCOUNT }}" >> .env
+    #     echo "NOTE_PASSWORD=${{ secrets.NOTE_PASSWORD }}" >> .env
+    #     echo "TERATAIL_API_TOKEN=${{ secrets.TERATAIL_API_TOKEN }}" >> .env
+    #     echo "ZENN_GOOGLE_ACCOUNT=${{ secrets.ZENN_GOOGLE_ACCOUNT }}" >> .env
+    #     echo "ZENN_GOOGLE_PASSWORD=${{ secrets.ZENN_GOOGLE_PASSWORD }}" >> .env
+    #     echo "TWITTER_ACCOUNT=${{ secrets.TWITTER_ACCOUNT }}" >> .env
+    #     echo "TWITTER_PASSWORD=${{ secrets.TWITTER_PASSWORD }}" >> .env
     
     - name: GitHub Stars
       shell: bash

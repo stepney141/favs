@@ -6,6 +6,7 @@ const fxp = require("fast-xml-parser");
 const path = require('path');
 require("dotenv").config({path: path.join(__dirname, "../.env")});
 
+const process_description = 'Bookmeter Wished Books';
 const bookmeter_baseURI = 'https://bookmeter.com';
 const bookmeter_userID = '1003258';
 const xpath = {
@@ -77,12 +78,17 @@ class Bookmaker {
 
             await (await accountNameInputHandle)[0].type(bookmeter_username);
             await (await passwordInputHandle)[0].type(bookmeter_password);
-            await (await loginButtonHandle)[0].click();
         
-            await page.waitForNavigation({
-                timeout: 60000,
-                waitUntil: "networkidle2",
-            });
+            await Promise.all([
+                page.waitForNavigation({
+                    timeout: 2 * 60 * 1000,
+                    waitUntil: "networkidle2",
+                }),
+                (await loginButtonHandle)[0].click()
+            ]);
+
+
+            console.log(`${process_description}: Login Completed!`);
 
         } catch (e) {
             console.log(e);
@@ -95,6 +101,8 @@ class Bookmaker {
     async bookmeterScraper(browser) {
         try {
             const page = await browser.newPage();
+
+            console.log(`${process_description}: Scraping Started!`);
 
             for (; ;) {
                 await page.goto(`${bookmeter_baseURI}/users/${bookmeter_userID}/books/wish?page=${this.page_num}`, {
@@ -345,6 +353,7 @@ class Bookmaker {
         defaultViewport: {width: 1000, height: 1000},
         headless: true,
         // devtools: true,
+        slowMo: 30
     });
 
     const book = new Bookmaker();

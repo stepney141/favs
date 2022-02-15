@@ -63,13 +63,14 @@ class notebook {
 
             await (await useridInput_Handle)[0].type(user_name);
             await (await passwordInput_Handle)[0].type(password);
-            await Promise.all([
-                page.waitForNavigation({
-                    timeout: 60000,
-                    waitUntil: "load",
-                }),
-                (await loginButton_Handle)[0].click(),
-            ]);
+            await (await loginButton_Handle)[0].click();
+
+            await page.waitForNavigation({
+                timeout: 60000,
+                waitUntil: "load",
+            });
+
+            console.log(`${process_description}: Login Completed!`);
 
         } catch (e) {
             console.log(e);
@@ -87,6 +88,8 @@ class notebook {
                 Object.defineProperty(navigator, 'webdriver', ()=>{});
                 delete navigator.__proto__.webdriver;
             });
+
+            console.log(`${process_description}: Scraping Started!`);
 
             page.on('response', async (response) => { //イベントハンドラを登録
                 if (response.url().includes('https://note.com/api/v1/notes/liked') === true && response.status() === 200) {
@@ -117,6 +120,8 @@ class notebook {
             await page.goto(`${baseURI}/notes/liked`, { //スキした記事の一覧へ飛んで処理雨を実行
                 waitUntil: "networkidle0",
             });
+
+            console.log(`${process_description}: Scraping Completed!`);
 
         } catch (e) {
             console.log(e);
@@ -154,7 +159,7 @@ class notebook {
         defaultViewport: { width: 500, height: 1000 },
         headless: true,
         // devtools: true,
-        slowMo: 20
+        slowMo: 50
     });
 
     const note = new notebook();
