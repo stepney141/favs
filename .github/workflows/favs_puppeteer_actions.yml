@@ -10,21 +10,6 @@ jobs:
   Updater:
     runs-on: ubuntu-latest
 
-    env:
-      LANG: "ja_JP.UTF-8"
-      BOOKMETER_ACCOUNT: ${{ secrets.BOOKMETER_ACCOUNT }}
-      BOOKMETER_PASSWORD: ${{ secrets.BOOKMETER_PASSWORD }}
-      CINII_API_APPID: ${{ secrets.CINII_API_APPID }}
-      BOUNDHUB_ACCOUNT: ${{ secrets.BOUNDHUB_ACCOUNT }}
-      BOUNDHUB_PASSWORD: ${{ secrets.BOUNDHUB_PASSWORD }}
-      NOTE_ACCOUNT: ${{ secrets.NOTE_ACCOUNT }}
-      NOTE_PASSWORD: ${{ secrets.NOTE_PASSWORD }}
-      TERATAIL_API_TOKEN: ${{ secrets.TERATAIL_API_TOKEN }}
-      ZENN_GOOGLE_ACCOUNT: ${{ secrets.ZENN_GOOGLE_ACCOUNT }}
-      ZENN_GOOGLE_PASSWORD: ${{ secrets.ZENN_GOOGLE_PASSWORD }}
-      TWITTER_ACCOUNT: ${{ secrets.TWITTER_ACCOUNT }}
-      TWITTER_PASSWORD: ${{ secrets.TWITTER_PASSWORD }}
-
     steps:
     - uses: actions/checkout@v2
 
@@ -34,29 +19,30 @@ jobs:
         node-version: '14.x'
         cache: 'npm'
     
-    - name: Installing dependencies
+    - name: Install dependencies
       run: npm install
 
-    - name: Install Japanese fonts
-      run: sudo apt-get update && sudo apt-get install fonts-noto
+    - name: Install Japanese fonts, xvfb, and q command
+      run: sudo apt-get update && sudo apt-get install -y fonts-noto xvfb python3-q-text-as-data
       # 文字化けを防ぐ生活の知恵
       # https://qiita.com/zyyx-matsushita/items/c33f79e33f242395019e
 
-    # - name: Create dotenv file
-    #   shell: bash
-    #   run: touch .env | 
-    #     echo "BOOKMETER_ACCOUNT=${{ secrets.BOOKMETER_ACCOUNT }}" >> .env
-    #     echo "BOOKMETER_PASSWORD=${{ secrets.BOOKMETER_PASSWORD }}" >> .env
-    #     echo "CINII_API_APPID=${{ secrets.CINII_API_APPID }}" >> .env
-    #     echo "BOUNDHUB_ACCOUNT=${{ secrets.BOUNDHUB_ACCOUNT }}" >> .env
-    #     echo "BOUNDHUB_PASSWORD=${{ secrets.BOUNDHUB_PASSWORD }}" >> .env
-    #     echo "NOTE_ACCOUNT=${{ secrets.NOTE_ACCOUNT }}" >> .env
-    #     echo "NOTE_PASSWORD=${{ secrets.NOTE_PASSWORD }}" >> .env
-    #     echo "TERATAIL_API_TOKEN=${{ secrets.TERATAIL_API_TOKEN }}" >> .env
-    #     echo "ZENN_GOOGLE_ACCOUNT=${{ secrets.ZENN_GOOGLE_ACCOUNT }}" >> .env
-    #     echo "ZENN_GOOGLE_PASSWORD=${{ secrets.ZENN_GOOGLE_PASSWORD }}" >> .env
-    #     echo "TWITTER_ACCOUNT=${{ secrets.TWITTER_ACCOUNT }}" >> .env
-    #     echo "TWITTER_PASSWORD=${{ secrets.TWITTER_PASSWORD }}" >> .env
+    - name: Create dotenv file
+      shell: bash
+      run: touch .env | 
+        echo "LANG=ja_JP.UTF-8" >> .env
+        echo "BOOKMETER_ACCOUNT=${{ secrets.BOOKMETER_ACCOUNT }}" >> .env
+        echo "BOOKMETER_PASSWORD=${{ secrets.BOOKMETER_PASSWORD }}" >> .env
+        echo "CINII_API_APPID=${{ secrets.CINII_API_APPID }}" >> .env
+        echo "BOUNDHUB_ACCOUNT=${{ secrets.BOUNDHUB_ACCOUNT }}" >> .env
+        echo "BOUNDHUB_PASSWORD=${{ secrets.BOUNDHUB_PASSWORD }}" >> .env
+        echo "NOTE_ACCOUNT=${{ secrets.NOTE_ACCOUNT }}" >> .env
+        echo "NOTE_PASSWORD=${{ secrets.NOTE_PASSWORD }}" >> .env
+        echo "TERATAIL_API_TOKEN=${{ secrets.TERATAIL_API_TOKEN }}" >> .env
+        echo "ZENN_GOOGLE_ACCOUNT=${{ secrets.ZENN_GOOGLE_ACCOUNT }}" >> .env
+        echo "ZENN_GOOGLE_PASSWORD=${{ secrets.ZENN_GOOGLE_PASSWORD }}" >> .env
+        echo "TWITTER_ACCOUNT=${{ secrets.TWITTER_ACCOUNT }}" >> .env
+        echo "TWITTER_PASSWORD=${{ secrets.TWITTER_PASSWORD }}" >> .env
     
     - name: GitHub Stars
       shell: bash
@@ -71,15 +57,12 @@ jobs:
     - name: Bookmeter Wished Books
       shell: bash
       working-directory: ./bookmeter_wish
-      run: node ./puppeteer_bookmeter.js
-        # ./is_in_sophia.sh
-        # CSVをどうやっていじるか考える
+      run: node ./puppeteer_bookmeter.js && bash ./is_in_sophia.sh
 
     - name: BoundHub Faved Movies
       shell: bash
       working-directory: ./boundhub
-      run: node ./puppeteer_boundhub.js | 
-        bash ./get_url_list.sh
+      run: node ./puppeteer_boundhub.js && bash ./get_url_list.sh
 
     - name: note Faved Articles
       shell: bash
@@ -89,7 +72,9 @@ jobs:
     - name: Zenn Faved Articles
       shell: bash
       working-directory: ./zenn_favs
-      run: node ./puppeteer_zenn.js
+      run: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' node ./puppeteer_zenn.js
+      # headless: falseで動かすための生活の知恵
+      # https://github.com/peterdanis/electron-puppeteer-demo/issues/171
 
     - name: Set the current datetime
       env:

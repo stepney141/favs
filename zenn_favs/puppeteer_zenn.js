@@ -5,6 +5,7 @@ const papa = require("papaparse");
 const axios = require("axios");
 const path = require('path');
 require("dotenv").config({path: path.join(__dirname, "../.env")});
+puppeteer.use(StealthPlugin()); // use the stealth plugin
 
 const JOB_NAME = 'Zenn.dev Favorite Articles';
 const baseURI = 'https://zenn.dev';
@@ -77,23 +78,25 @@ class Zennist {
             // input email
             console.log('Typing email ...');
             await page.type('#identifierId', zenn_email);
-            await page.waitForTimeout(1000);
-            await page.keyboard.press('Enter');
-            await page.waitForNavigation({
-                timeout: 12000,
-                waitUntil: "networkidle2"
-            });
+            await Promise.all([
+                page.waitForNavigation({
+                    timeout: 12000,
+                    waitUntil: "networkidle2"
+                }),
+                page.keyboard.press('Enter')
+            ]);
 
             // input password
             console.log('Typing password ...');
-            const passwordInputHandle = page.$x('//*[@id="password"]/div[1]/div/div[1]/input');
-            await (await passwordInputHandle)[0].type(zenn_password);
-            await page.waitForTimeout(1000);
-            await page.keyboard.press('Enter');
-
-            await page.waitForResponse((response) => {
-                return response.url().includes(`${baseURI}/auth/init`) === true && response.status() === 200;
-            });
+            const passwordInputHandle = await page.$x('//*[@id="password"]/div[1]/div/div[1]/input');
+            await page.screenshot({path: 'test.png'});
+            await (passwordInputHandle[0]).type(zenn_password);
+            await Promise.all([
+                page.waitForResponse((response) => {
+                    return response.url().includes(`${baseURI}/auth/init`) === true && response.status() === 200;
+                }),
+                page.keyboard.press('Enter')
+            ]);
 
         } catch (e) {
             console.log(e);
@@ -210,13 +213,20 @@ class Zennist {
 (async () => {
     const startTime = Date.now();
 
-    puppeteer.use(StealthPlugin()); // use the stealth plugin
-
     const browser = await puppeteer.launch({
         defaultViewport: { width: 1000, height: 1000 },
+        args: [
+            '--disable-gpu',
+            '--disable-dev-shm-usage',
+            '--disable-setuid-sandbox',
+            '--no-first-run',
+            '--no-sandbox',
+            '--no-zygote',
+            // '--single-process'
+        ],
         slowMo: 100,
-        headless: true,
-        // headless: false, //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
+        // headless: true,
+        headless: false, //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
     });
 
     const zenn = new Zennist();

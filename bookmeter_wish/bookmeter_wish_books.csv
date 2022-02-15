@@ -1,4 +1,6 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/19397288,4336073198,法の書　〔増補新訳〕　【普及版】,アレイスター・クロウリー／著 植松靖夫／翻訳,国書刊行会,20220222,No,
+https://bookmeter.com/books/19197183,4336072779,オカルトタロットの歴史,ロナルド・デッカー／著 マイケル・ダメット／著 今野喜和人／翻訳,国書刊行会,20220221,No,
 https://bookmeter.com/books/388470,4796692282,死体の本 : 善悪の彼岸を超える世紀末死人学!,,宝島社,,No,
 https://bookmeter.com/books/18788300,4582859917,新版 ぎりぎり合格への論文マニュアル,山内志朗／著,平凡社,20211117,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11054699
 https://bookmeter.com/books/18956557,4562059818,船の食事の歴史物語,サイモン・スポルディング／著 大間知知子／翻訳,原書房,20211217,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11788557
@@ -42,7 +44,7 @@ https://bookmeter.com/books/18989090,4866365366,ライトノベルの新潮流,�
 https://bookmeter.com/books/18561425,4863543638,OSSライセンスを正しく理解するための本,姉崎章博／著,シーアンドアール研究所,20211021,No,
 https://bookmeter.com/books/18523264,4839977607,AWSではじめる クラウド開発入門,真野智之／著,マイナビ出版,20210927,No,
 https://bookmeter.com/books/5150372,4489021291,入門確率解析とルベーグ積分,森真／著,東京図書,2012-06,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB09394642
-https://bookmeter.com/books/19153947,4004319102,民俗学入門,菊地暁／著,岩波書店,20220124,No,
+https://bookmeter.com/books/19153947,4004319102,民俗学入門,菊地暁／著,岩波書店,20220124,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12229007
 https://bookmeter.com/books/11259374,4480097635,数学基礎論,前原昭二／著 竹内外史／著,筑摩書房,20170110,No,
 https://bookmeter.com/books/18661799,4758910235,現代高等英文法 学習文法から科学文法へ,八木克正／著,開拓社,20211005,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10102989
 https://bookmeter.com/books/588789,4320015541,線形代数,佐武一郎／著,共立,1997-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA30139466
@@ -105,7 +107,6 @@ https://bookmeter.com/books/16509875,4151201009,地下鉄道,コルソン・ホ�
 https://bookmeter.com/books/3130580,4062920484,図説　金枝篇（下）,ジェームズ．ジョージ・フレーザー／著 メアリー・ダグラス／監修 サビーヌ・マコーマック／編集 ほか,講談社,20110512,No,
 https://bookmeter.com/books/3049271,4062920476,図説　金枝篇（上）,ジェームズ．ジョージ・フレーザー／著 メアリー・ダグラス／監修 サビーヌ・マコーマック／編集 ほか,講談社,20110412,No,
 https://bookmeter.com/books/3314815,4314010827,誤差論,"Gauss,CarlFriedrich／著 石川耕春／著 飛田武幸／著 ガウスカール・F.／著",紀伊国屋書店,1981-05,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00447427
-https://bookmeter.com/books/7431830,4863692994,緊縛の文化史　,マスター“Ｋ”／著 山本規雄／訳,すいれん舎,20131003,No,
 https://bookmeter.com/books/17947542,4909783806,親の手で病気にされる子どもたち,南部さおり／著,学芸みらい社,20210618,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC08034208
 https://bookmeter.com/books/18308738,4863134940,世界の幽霊出現録,ブライアン・インズ／著 大島聡子／翻訳 ナショナルジオグラフィック／編集,日経ナショナルジオグラフィック社,20210731,No,
 https://bookmeter.com/books/17536270,4750351334,大図鑑　コードの秘密,ポール・ルンダ／編 浜口稔／訳,明石書店,20210318,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC06203836
@@ -182,7 +183,7 @@ https://bookmeter.com/books/75211,4816919813,入門・アーカイブズの世�
 https://bookmeter.com/books/15543798,4344985842,サザエさんと長谷川町子,工藤美代子／著,幻冬舎,20200326,No,
 https://bookmeter.com/books/17196855,4339009393,ひたすら楽して音響信号解析,森勢将雅／著,コロナ社,20210125,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC05084141
 https://bookmeter.com/books/519120,4480087044,快読100万語!ペーパーバックへの道,"酒井邦秀 著,酒井, 邦秀, 1945-,",筑摩書房,"Tue, 20 Apr 2004 09:00:00 +0900",No,
-https://bookmeter.com/books/17258449,4315523275,MATH ART マス・アート 〜真理，美，そして方程式〜,スティーヴン・オーンズ／著,ニュートンプレス,20210125,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC0504654X
+https://bookmeter.com/books/17258449,4315523275,MATH ART マス・アート 〜真理，美，そして方程式〜,スティーヴン・オーンズ／著 巴山竜来／監修 赤池ともえ／翻訳,ニュートンプレス,20210125,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC0504654X
 https://bookmeter.com/books/17301119,4863134975,西洋アンティーク・ボードゲーム,エイドリアン・セビル／著 ナショナルジオグラフィック／編集 鍋倉僚介／翻訳,日経ナショナルジオグラフィック社,20210122,No,
 https://bookmeter.com/books/17462426,4865592334,踊るバロック,赤塚健太郎／著,アルテスパブリッシング,20210225,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC05590883
 https://bookmeter.com/books/14441414,4254131291,物理学者，機械学習を使う,橋本幸士／著・編集 大槻東巳／著 真野智裕／著 斎藤弘樹／著 藤田浩之／著 安藤康伸／著 ほか,朝倉書店,20191015,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29005619
@@ -207,7 +208,7 @@ https://bookmeter.com/books/499146,4004202884,読書と社会科学,内田義彦
 https://bookmeter.com/books/13226416,4260036742,研究の育て方,近藤克則／著,医学書院,20181022,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27055911
 https://bookmeter.com/books/485114,448042587X,反社会学講座,"パオロ・マッツァリーノ 著,パオロ・マッツァリーノ,",筑摩書房,"Fri, 19 Jun 2009 09:00:00 +0900",Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA82471895
 https://bookmeter.com/books/572755,4480423567,反社会学講座,"パオロ・マッツァリーノ 著,パオロ・マッツァリーノ,",筑摩書房,"Thu, 30 Aug 2007 09:00:00 +0900",Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA82471895
-https://bookmeter.com/books/16718663,4844379038,入門GUI : Webブラウザで作る本格インタラクション,"hashrock, daiiz, miyaoka, f_subal 著,hashrock,daiiz,miyaoka,f_subal,","インプレスR&amp;D,インプレス (発売)","Mon, 25 Jan 2021 09:00:00 +0900",No,
+https://bookmeter.com/books/16718663,4844379038,入門GUI : Webブラウザで作る本格インタラクション,"hashrock, daiiz, miyaoka, f_subal 著,hashrock,daiiz,miyaoka,f_subal,","インプレスR&D,インプレス (発売)","Mon, 25 Jan 2021 09:00:00 +0900",No,
 https://bookmeter.com/books/15950344,4299004507,塀の中の元極道YouTuberが明かす ヤクザの裏知識,懲役太郎／著,宝島社,20200604,No,
 https://bookmeter.com/books/16684161,4121026136,古代メソポタミア全史,小林登志子／著,中央公論新社,20201021,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC03233976
 https://bookmeter.com/books/9040015,463415062X,タロットの歴史,井上教子／著,山川出版社,2014-11,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB17486644

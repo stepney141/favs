@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 const fs = require("fs").promises;
 const papa = require("papaparse");
 const axios = require("axios");
-const fxp = require("fast-xml-parser");
+const { XMLParser } = require("fast-xml-parser");
 const path = require('path');
 require("dotenv").config({path: path.join(__dirname, "../.env")});
 
@@ -61,6 +61,7 @@ class Bookmaker {
         this.wishBooksData_Array = [];
         this.previousWishBooksData = new Map();
         this.axios = createAxiosInstance();
+        this.fxp = new XMLParser();
     }
 
     // Amazon詳細リンクはアカウントにログインしなければ表示されないため、ログインする
@@ -194,17 +195,29 @@ class Bookmaker {
         try {
             if (isbn_data !== "null") { //正常系(与えるべきISBNがある)
                 const response = await this.axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn_data}`); //xml形式でレスポンスが返ってくる
-                const json_resp = fxp.parse(response.data, { "arrayMode": true }); //xmlをjsonに変換
-                const fetched_data = json_resp.rss[0].channel[0];
+                const json_resp = this.fxp.parse(response.data); //xmlをjsonに変換
+                const fetched_data = json_resp.rss.channel;
 
                 if ("item" in fetched_data) { //正常系(該当書籍発見)
-                    this.wishBooksData.set(key, { //該当件数に関わらず、とりあえず配列の先頭にあるやつだけをチェックする
-                        ...(this.wishBooksData.get(key)),
-                        "book_title": fetched_data.item[0]['title'] ?? "",
-                        "author": fetched_data.item[0]['author'] ?? "",
-                        "publisher": fetched_data.item[0]['dc:publisher'] ?? "",
-                        "published_date": fetched_data.item[0]['pubDate'] ?? ""
-                    });
+                    /* 該当結果が単数か複数かによって、返却される値がObjectなのかArray<Object>なのか変わる
+                    fast-xml-parserの設定をいじれば多分もっとスマートにできると思うが、とりあえず目的を達成するにはこれだけ判定すれば十分 */
+                    if (Number(fetched_data['openSearch:totalResults']) == 1) { //該当件数が1件の場合
+                        this.wishBooksData.set(key, {
+                            ...(this.wishBooksData.get(key)),
+                            "book_title": fetched_data.item['title'] ?? "",
+                            "author": fetched_data.item['author'] ?? "",
+                            "publisher": fetched_data.item['dc:publisher'] ?? "",
+                            "published_date": fetched_data.item['pubDate'] ?? ""
+                        });
+                    } else if (Number(fetched_data['openSearch:totalResults']) >= 2) { //該当件数が2件以上の場合
+                        this.wishBooksData.set(key, { //該当件数に関わらず、とりあえず配列の先頭にあるやつだけをチェックする
+                            ...(this.wishBooksData.get(key)),
+                            "book_title": fetched_data.item[0]['title'] ?? "",
+                            "author": fetched_data.item[0]['author'] ?? "",
+                            "publisher": fetched_data.item[0]['dc:publisher'] ?? "",
+                            "published_date": fetched_data.item[0]['pubDate'] ?? ""
+                        });
+                    }
                 } else { //異常系(該当書籍なし)
                     const status_text = "Not_found_with_NDL";
                     this.wishBooksData.set(key, {
