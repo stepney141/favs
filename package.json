@@ -4,17 +4,17 @@
   "author": "stepney141 <stepney141andi.c.i@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.23.0",
-    "dotenv": "^8.2.0",
-    "fast-xml-parser": "^3.20.3",
+    "axios": "^0.26.0",
+    "dotenv": "^16.0.0",
+    "fast-xml-parser": "^4.0.3",
     "fs": "^0.0.1-security",
-    "papaparse": "^5.3.0",
+    "papaparse": "^5.3.1",
     "path": "^0.12.7",
-    "puppeteer": "^8.0.0",
+    "puppeteer": "^13.3.2",
     "puppeteer-extra": "^3.2.3",
     "puppeteer-extra-plugin-stealth": "^2.9.0"
   },
   "devDependencies": {
-    "eslint": "^8.2.0"
+    "eslint": "^8.9.0"
   }
 }
