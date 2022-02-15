@@ -20,14 +20,16 @@ const XPATH = {
 };
 
 /**
- * @type {{url, title, lgtm, created_at, author}}
+ * @type {Map<url, {title, lgtm, created_at, author}>}
  */
 const lgtmArticlesData = new Map();
 let lgtmArticlesData_Array = [];
 
 // vars for twitter
-const user_name = (process.env.TWITTER_ACCOUNT).toString();
-const password = (process.env.TWITTER_PASSWORD).toString();
+// const user_name = (process.env.TWITTER_ACCOUNT).toString();
+// const password = (process.env.TWITTER_PASSWORD).toString();
+const user_name = "";
+const password = "";
 
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
 const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));

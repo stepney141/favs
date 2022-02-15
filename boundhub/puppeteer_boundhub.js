@@ -172,6 +172,7 @@ async function output(arrayData) {
     const browser = await puppeteer.launch({
         defaultViewport: { width: 500, height: 1000 },
         headless: true,
+        // headless: false
         // devtools: true,
         // slowMo: 20
     });

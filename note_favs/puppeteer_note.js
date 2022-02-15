@@ -63,12 +63,14 @@ class notebook {
 
             await (await useridInput_Handle)[0].type(user_name);
             await (await passwordInput_Handle)[0].type(password);
-            await (await loginButton_Handle)[0].click();
 
-            await page.waitForNavigation({
-                timeout: 60000,
-                waitUntil: "load",
-            });
+            await Promise.all([
+                page.waitForNavigation({
+                    timeout: 60000,
+                    waitUntil: "load",
+                }),
+                (await loginButton_Handle)[0].click()
+            ]);
 
             console.log(`${process_description}: Login Completed!`);
 
