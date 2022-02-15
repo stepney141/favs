@@ -13,6 +13,20 @@ jobs:
   Updater:
     runs-on: ubuntu-latest
 
+    env:
+      BOOKMETER_ACCOUNT: ${{ secrets.BOOKMETER_ACCOUNT }}
+      BOOKMETER_PASSWORD: ${{ secrets.BOOKMETER_PASSWORD }}
+      CINII_API_APPID: ${{ secrets.CINII_API_APPID }}
+      BOUNDHUB_ACCOUNT: ${{ secrets.BOUNDHUB_ACCOUNT }}
+      BOUNDHUB_PASSWORD: ${{ secrets.BOUNDHUB_PASSWORD }}
+      NOTE_ACCOUNT: ${{ secrets.NOTE_ACCOUNT }}
+      NOTE_PASSWORD: ${{ secrets.NOTE_PASSWORD }}
+      TERATAIL_API_TOKEN: ${{ secrets.TERATAIL_API_TOKEN }}
+      ZENN_GOOGLE_ACCOUNT: ${{ secrets.ZENN_GOOGLE_ACCOUNT }}
+      ZENN_GOOGLE_PASSWORD: ${{ secrets.ZENN_GOOGLE_PASSWORD }}
+      TWITTER_ACCOUNT: ${{ secrets.TWITTER_ACCOUNT }}
+      TWITTER_PASSWORD: ${{ secrets.TWITTER_PASSWORD }}
+
     steps:
     - uses: actions/checkout@v2
 
