@@ -76,7 +76,7 @@ JISキーボードなのにUS配列の環境で文字を打つ,https://qiita.com
 OCaml でゲームボーイエミュレータを書いた話,https://qiita.com/linoscope/items/244d931aaae07df2c27e,147,2021-12-12T12:03:33Z,@linoscope
 チェスを題材に一人DDDごっこしてUnityで動かしてみた話,https://qiita.com/chorome/items/1d9521210aac893b3dd2,13,2021-12-10T02:33:38Z,@chorome
 TODO: 以外のアノテーションコメントをまとめた,https://qiita.com/taka-kawa/items/673716d77795c937d422,980,2018-08-18T14:17:23Z,@taka-kawa
-なぜエンジニアが作る画面はダサいのか…?「理由」と「対策」を徹底解説【エンジニア向け画面デザイン講座】,https://qiita.com/mskmiki/items/544149987475719e417b,5564,2021-12-08T07:36:19Z,@mskmiki
+なぜエンジニアが作る画面はダサいのか…?「理由」と「対策」を徹底解説【エンジニア向け画面デザイン講座】,https://qiita.com/mskmiki/items/544149987475719e417b,5565,2021-12-08T07:36:19Z,@mskmiki
 ググり力、それはエンジニアには必須の能力である,https://qiita.com/dodonki1223/items/955819806297ee554b31,1290,2021-12-08T21:58:11Z,@dodonki1223
 関心の分離を意識した名前設計で巨大クラスを爆殺する,https://qiita.com/MinoDriven/items/37599172b2cd27c38a33,1987,2019-10-21T02:58:22Z,@MinoDriven
 GitHub を使って個人タスク管理,https://qiita.com/okazuki/items/5a50ef367ad9659fc574,190,2021-01-14T02:56:42Z,@okazuki
@@ -103,7 +103,7 @@ V8 の Inline Caches と Hidden Class について,https://qiita.com/keiya01/ite
 VSCodeでgit add -p を快適に行う,https://qiita.com/shotana/items/3690d1c913fc0d8fdb4d,60,2020-02-02T14:34:30Z,@shotana
 1年間本番環境で WebAssembly ( by Emscripten )を使ってきた中で生じた問題とその解決策,https://qiita.com/goccy/items/1b2ff919b4b5e5a06110,102,2019-04-04T09:46:18Z,@goccy
 【追記あり】ES2022 Array#at がちょっとおかしい #fix_ecmascript_at,https://qiita.com/printf_moriken/items/da03f55cb626617c1958,81,2021-09-11T19:23:21Z,@printf_moriken
-各デザインパターンの「使いどころ」を一言でまとめてみた,https://qiita.com/cooloon/items/62f182f77f70135e31bf,112,2018-10-26T15:43:38Z,@cooloon
+各デザインパターンの「使いどころ」を一言でまとめてみた,https://qiita.com/cooloon/items/62f182f77f70135e31bf,113,2018-10-26T15:43:38Z,@cooloon
 競プロ〜ヒューリスティック/マラソン事始め〜,https://qiita.com/tanaka-a/items/3c2a1bca63759ec71e7f,98,2021-11-23T10:44:27Z,@tanaka-a
 プログラミングの楽しさを思い出したいあなたへ,https://qiita.com/riita10069/items/54dad04a4f418856e24c,375,2021-11-14T08:14:22Z,@riita10069
 ES6の構文じゃなくて、あえてそれ以前のJavaScriptの基礎を押さえる,https://qiita.com/qeema/items/ed18b793f90a56e3cf84,65,2019-11-06T03:05:45Z,@qeema
@@ -157,7 +157,7 @@ EMアルゴリズム徹底解説,https://qiita.com/kenmatsu4/items/59ea3e5dfa3d4
 抵抗値のカラーコード表は二度と見たくないので、PyTorchでリアルタイムに物体検出をして抵抗値を計算してくれるスマホアプリをリリースしてみた,https://qiita.com/bob_yama/items/6940807e92c69a30548d,38,2021-09-29T19:21:57Z,@bob_yama
 認知機能障害から考えるUX設計【『ケーキの切れない非行少年たち』を読んで】,https://qiita.com/herishiro/items/856ecd3dfba1eb583403,307,2021-09-12T23:38:44Z,@herishiro
 シェーダー芸人になりたかった6か月前の自分に教えてあげたいリンク集,https://qiita.com/kaneta1992/items/7fe9b47cc6c0836222af,654,2018-12-09T21:08:41Z,@kaneta1992
-今から始めるReact入門 〜 React の基本,https://qiita.com/TsutomuNakamura/items/72d8cf9f07a5a30be048,2196,2018-09-08T05:12:46Z,@TsutomuNakamura
+今から始めるReact入門 〜 React の基本,https://qiita.com/TsutomuNakamura/items/72d8cf9f07a5a30be048,2197,2018-09-08T05:12:46Z,@TsutomuNakamura
 TypeScriptでCLIツールを作って、npmパッケージにする,https://qiita.com/suzuki_sh/items/f3349efbfe1bdfc0c634,74,2018-07-29T14:53:52Z,@suzuki_sh
 Promise と async/await の理解度をもう1段階上げる,https://qiita.com/sotszk/items/f23199e864cba47455ce,479,2018-04-30T16:52:27Z,@sotszk
 YouTubeのチャンネルをまるごと並列で最高画質でダウンロードする方法,https://qiita.com/AKKYM/items/f5a54100e0164d47d89e,4,2019-12-22T05:29:38Z,@AKKYM
@@ -374,7 +374,7 @@ Visual Studio Code チートシート,https://qiita.com/aoinu/items/681f932ce0b1
 アルゴリズム・AtCoder のための数学【中編：数学的知識編②】,https://qiita.com/e869120/items/bd7cfd2dbd2706cb8657,189,2021-04-11T09:21:15Z,@e869120
 jqコマンドでAtCoder Beginners Selectionを解いてみた,https://qiita.com/yuchiki1000yen/items/015459bc96f11626f99b,56,2019-11-27T13:03:40Z,@yuchiki1000yen
 アルゴリズム・AtCoder のための数学【前編：数学的知識編①】,https://qiita.com/e869120/items/b4a0493aac567c6a7240,1221,2021-04-07T11:00:56Z,@e869120
-形式手法はなぜ流行っていないのか,https://qiita.com/autotaker1984/items/52cd65486a3186af080b,245,2021-03-24T17:33:46Z,@autotaker1984
+形式手法はなぜ流行っていないのか,https://qiita.com/autotaker1984/items/52cd65486a3186af080b,246,2021-03-24T17:33:46Z,@autotaker1984
 モデルやメソッドに名前を付けるときは英語の品詞に気をつけよう,https://qiita.com/jnchito/items/459d58ba652bf4763820,3676,2014-05-28T02:06:08Z,@jnchito
 【新人プログラマ応援】学習用のプログラムと仕事で書くプログラムは何が違うか,https://qiita.com/jnchito/items/c9ca22efa270ff1b7f3d,633,2021-03-30T22:32:15Z,@jnchito
 クローラ作成に必須！XPATHの記法まとめ,https://qiita.com/rllllho/items/cb1187cec0fb17fc650a,1097,2016-11-18T02:34:35Z,@rllllho
@@ -446,7 +446,7 @@ LINUX testコマンドについて,https://qiita.com/kazuooooo/items/163d07f6940
 シェルスクリプトの罠を避ける三つの tips,https://qiita.com/magicant/items/f3554274ee500bddaca8,566,2016-12-07T15:03:10Z,@magicant
 JavaScript製FlashPlayer「swf2js」swfをそのままHTML5に変換。,https://qiita.com/ienaga/items/c9f04d6cd9874d4ec1a7,312,2015-12-15T15:02:32Z,@ienaga
 DockerでC++開発環境構築（Alpine版）,https://qiita.com/yuzutarogo/items/d60ba007eae969be53ae,6,2020-04-29T04:06:59Z,@yuzutarogo
-RaspberryPiにDockerを構築する,https://qiita.com/k_ken/items/0f2d6af2618618982723,164,2020-03-12T07:52:10Z,@k_ken
+RaspberryPiにDockerを構築する,https://qiita.com/k_ken/items/0f2d6af2618618982723,165,2020-03-12T07:52:10Z,@k_ken
 多段SSHやポートフォワーディングを '.ssh/config' に書く,https://qiita.com/lasta/items/41e95a2fdded18c34dae,440,2014-05-14T07:27:11Z,@lasta
 ちょっと高度なJavaScriptの話,https://qiita.com/renesisu727/items/0447fce8a9e00817f1f5,346,2021-01-15T04:45:07Z,@renesisu727
 Go言語の初心者が見ると幸せになれる場所　#golang,https://qiita.com/tenntenn/items/0e33a4959250d1a55045,4112,2013-05-11T02:54:23Z,@tenntenn
@@ -494,7 +494,7 @@ RUNTEQの講師をやってみてわかった初学者にありがちなパタ�
 Raspberry PI シリーズで分散環境構築(その1:モデル別、ディスクレスクライアント化の可否まとめ),https://qiita.com/p_cub/items/e81dd0f49b3f6fb024a5,15,2020-06-03T05:28:00Z,@p_cub
 新卒１年目が荒れ果てた開発環境に１年間でCIを導入し単体テストを布教した話,https://qiita.com/autotaker1984/items/894bf0df0009c621da11,1390,2020-12-20T22:00:50Z,@autotaker1984
 プログラミングスクールのメンターを辞めました,https://qiita.com/rhiroe/items/4349b9f412364aa2c729,1281,2020-12-26T17:15:08Z,@rhiroe
-7万行のJavaScriptコードをTypeScriptに移行した話,https://qiita.com/tonio0720/items/875ad9bea922e39564f2,329,2020-12-09T08:04:30Z,@tonio0720
+7万行のJavaScriptコードをTypeScriptに移行した話,https://qiita.com/tonio0720/items/875ad9bea922e39564f2,330,2020-12-09T08:04:30Z,@tonio0720
 桃太郎電鉄の「いけるかな」を実現する高速なアルゴリズムの実装と考察,https://qiita.com/ashiba/items/4d2ff52c5f295018057e,666,2020-12-16T02:31:31Z,@ashiba
 M-1グランプリのデータを切る　~本当に評価されているものとは~　#kuac2020,https://qiita.com/shima_shima_ss/items/bab22967cbfd8e5e9552,6,2020-12-13T15:00:09Z,@shima_shima_ss
 続・遺伝的アルゴリズム、完全に理解した,https://qiita.com/2000_4000/items/5e29113b8bf1f559f2de,6,2020-12-14T00:32:24Z,@2000_4000
@@ -1126,7 +1126,7 @@ bashで連番を生成する方法(ブレース展開),https://qiita.com/laikuau
 bashのブレース展開についてまとめ,https://qiita.com/ine1127/items/6e5fe80f4a9c64509558,228,2015-07-07T12:34:26Z,@ine1127
 個人開発用のインフラ選び（IaaS/PaaS/VPS）,https://qiita.com/shozzy/items/4e7a1651f80365e0f2e9,68,2018-04-12T02:21:49Z,@shozzy
 CloudGarageを使って長く使えるオンラインストレージ環境を作る（Nextcloud）,https://qiita.com/CloudRemix/items/ae1500e407102affa47a,20,2017-12-22T14:59:58Z,@CloudRemix
-Bashの便利な構文だがよく忘れてしまうものの備忘録,https://qiita.com/Ping/items/57fd75465dfada76e633,1158,2015-11-26T11:13:40Z,@Ping
+Bashの便利な構文だがよく忘れてしまうものの備忘録,https://qiita.com/Ping/items/57fd75465dfada76e633,1159,2015-11-26T11:13:40Z,@Ping
 【危険シェル芸】禁じられた闇の魔術とその防衛術💥,https://qiita.com/_-_-_-_-_/items/214d537aae2c1488692c,978,2018-12-21T20:22:29Z,@_-_-_-_-_
 "コードに頻出する語形変化が難しい英単語: register, success, fail, data, statusなど",https://qiita.com/suin/items/cbef2dd0dba9c02e491f,392,2018-12-28T05:05:57Z,@suin
 世の中の小説作家と編集者は今すぐ Word や G Suite を窓から投げ捨てて Git と GitHub の使い方を覚えるべきだ,https://qiita.com/ktkraoichi/items/f6ad43c2da0b3136d6be,1163,2019-01-03T11:17:12Z,@ktkraoichi
@@ -1315,7 +1315,7 @@ Visual Studio CodeでPython開発環境を整える,https://qiita.com/84zume/ite
 人工生命を実装して世界大戦、人類滅亡への一歩を踏み出す,https://qiita.com/sage-git/items/183999c1006999959d68,169,2018-05-31T15:48:24Z,@sage-git
 アルゴリズムとは何か！？ ～ 文系理系問わず楽しめる精選 6 問 ～,https://qiita.com/drken/items/f909b79ee03e679c7142,2283,2018-04-19T00:05:44Z,@drken
 最小二乗法による N 次函数近似 / 擬似逆行列による計算法 / グラフ電卓 TI-Nspire を使って,https://qiita.com/cyq04000/items/e482d66354115c35a7ec,2,2018-04-03T01:09:04Z,@cyq04000
-フロントエンドのコンポーネント設計に立ち向かう,https://qiita.com/seya/items/8814e905693f00cdade2,2117,2018-04-01T22:22:25Z,@seya
+フロントエンドのコンポーネント設計に立ち向かう,https://qiita.com/seya/items/8814e905693f00cdade2,2118,2018-04-01T22:22:25Z,@seya
 ゲームでよくされるチート手法とその対策 〜アプリケーションハッキング編〜,https://qiita.com/taptappun/items/b759df240c919d55c408,1443,2018-03-19T17:10:19Z,@taptappun
 文系エンジニアが機械学習に入門するために小学校の算数から高校数学までを一気に復習してみました。,https://qiita.com/poly_soft/items/8ea0fc85577f0726f098,2257,2016-07-23T04:25:47Z,@poly_soft
 コマンドを間違えるたびに美少女に罵られたい！,https://qiita.com/onokatio/items/4930e4b23339edd05d47,484,2017-10-22T00:52:17Z,@onokatio
