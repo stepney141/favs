@@ -100,5 +100,5 @@ jobs:
     - name: Git Auto Commit
       uses: stefanzweifel/git-auto-commit-action@v4
       with: 
-        commit_message: 'updated: ${{ env.CURRENT_DATETIME }}'
+        commit_message: 'auto-updated: ${{ env.CURRENT_DATETIME }}'
         branch: master

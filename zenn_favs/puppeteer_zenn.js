@@ -59,8 +59,8 @@ class Zennist {
 
             await page.setExtraHTTPHeaders({
                 'accept-language': 'ja-JP',
-                'user-agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36"
             });
+            await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
 
             const pages = await browser.pages();
             // Close the new tab that chromium always opens first.
@@ -117,8 +117,8 @@ class Zennist {
 
             await page.setExtraHTTPHeaders({
                 'accept-language': 'ja-JP',
-                'user-agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36"
             });
+            await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
 
             //「いいねした投稿」のスクレイピング
             page.on('response', async (response) => { //イベントハンドラを登録
@@ -151,7 +151,7 @@ class Zennist {
             });
 
             await page.goto(`${baseURI}/dashboard/library`, {
-                waitUntil: "networkidle2",
+                waitUntil: "networkidle0",
             });
 
         } catch (e) {

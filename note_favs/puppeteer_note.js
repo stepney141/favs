@@ -50,8 +50,8 @@ class notebook {
 
             await page.setExtraHTTPHeaders({
                 'accept-language': 'ja-JP',
-                'user-agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36"
             });
+            await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
 
             await page.goto(`${baseURI}/login`, {
                 waitUntil: "load",
@@ -93,8 +93,8 @@ class notebook {
 
             await page.setExtraHTTPHeaders({
                 'accept-language': 'ja-JP',
-                'user-agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36"
             });
+            await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
         
             await page.evaluateOnNewDocument(() => { //webdriver.navigatorを消して自動操縦であることを隠す
                 Object.defineProperty(navigator, 'webdriver', ()=>{});

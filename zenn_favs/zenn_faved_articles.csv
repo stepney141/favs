@@ -1,9 +1,9 @@
 note_title,note_url,user_nickname,published_at,liked_count
 npmで管理しているライブラリのバージョンアップ手順まとめ,https://zenn.dev/link/articles/820187fd237b44,yoshii0110,2021-04-06T23:38:38.329+09:00,20
-自分のお気に入りのエディタテーマを見つけられるサービスを作った,https://zenn.dev/link/articles/6dcfca5532cbffcbf8a0,sadnessOjisan,2022-02-14T18:57:39.526+09:00,38
-富士通の撤退する「メインフレーム」ってそもそも何？,https://zenn.dev/link/articles/bc0e5acb3d6656,koduki,2022-02-14T07:56:05.966+09:00,178
-なぜRustなの？と言われた時のために,https://zenn.dev/link/articles/rust-beginners-catchup,"khale ",2022-02-12T16:36:58.333+09:00,189
-5年かけて作ったウェブアプリを Hacker News に投稿し、最初の1ドルを得た話,https://zenn.dev/link/articles/6da216dc43557a,ryohey,2022-02-12T22:54:04.742+09:00,311
+自分のお気に入りのエディタテーマを見つけられるサービスを作った,https://zenn.dev/link/articles/6dcfca5532cbffcbf8a0,sadnessOjisan,2022-02-14T18:57:39.526+09:00,41
+富士通の撤退する「メインフレーム」ってそもそも何？,https://zenn.dev/link/articles/bc0e5acb3d6656,koduki,2022-02-14T07:56:05.966+09:00,179
+なぜRustなの？と言われた時のために,https://zenn.dev/link/articles/rust-beginners-catchup,"khale ",2022-02-12T16:36:58.333+09:00,191
+5年かけて作ったウェブアプリを Hacker News に投稿し、最初の1ドルを得た話,https://zenn.dev/link/articles/6da216dc43557a,ryohey,2022-02-12T22:54:04.742+09:00,313
 GitHub Actions で簡単にバージョン番号付きリリースとリリースノートを作成する方法,https://zenn.dev/link/articles/20220211-easy-generate-release-notes,こーのいけ,2022-02-11T16:35:56.058+09:00,175
 「Rustでやると知らないうちに詰む設計」を避けるためのTipsを集めてみる,https://zenn.dev/link/scraps/93071f7c813cb9,Masaki Hara,2022-02-06T22:05:24.909+09:00,190
 はじめてのJest入門,https://zenn.dev/link/books/78676684ccdeb090f7b8,ganezasan,2021-01-23T14:10:00.162+09:00,62
@@ -13,7 +13,7 @@ p5.jsで和柄をつくろう,https://zenn.dev/link/articles/cfe736a5c4fcd0,Baba
 TypeScript 4.5 以降で ESM 対応はどうなるのか？,https://zenn.dev/link/articles/2021-10-typescript-45-esm,teppeis,2021-10-24T23:30:14.562+09:00,141
 調査:良いDXをライブラリユーザーに提供するために、TypeScriptライブラリのtsconfig設定はどうあるべきか？,https://zenn.dev/link/scraps/9f454023cefb67,suin,2022-01-31T10:41:07.609+09:00,2
 "GitHubのプロフィールをカッコよくする方法①  GitHub Readme Stats, Github Profile Trophy編",https://zenn.dev/link/articles/0411396e6b887d,A-ichi,2021-07-12T02:13:22.651+09:00,16
-githubActionsを定期実行させて、オリジナルなREADME.mdをつくる,https://zenn.dev/link/articles/5fed5e6e8f1cd7,kata,2022-01-23T17:53:54.605+09:00,34
+githubActionsを定期実行させて、オリジナルなREADME.mdをつくる,https://zenn.dev/link/articles/5fed5e6e8f1cd7,kata,2022-01-23T17:53:54.605+09:00,35
 "「ｺｲﾂ, ﾃﾞｷﾙ...!!」ってなるかもしれない再帰関数の作り方",https://zenn.dev/link/articles/dfa23c8357b274,kj455,2022-01-23T20:58:40.017+09:00,96
 ソースコードを公開したソフトウェアで収益を得ている会社,https://zenn.dev/link/articles/2021-11-29-3fe9ccd53b5395d5ad5b,名前をここに書く,2021-11-29T09:42:08.505+09:00,251
 Isabelleによるプログラム検証の例,https://zenn.dev/link/articles/a9115aee6f6982,hatsugai,2021-04-26T14:43:35.818+09:00,5
@@ -33,7 +33,7 @@ colorsなどのnpmパッケージに悪意あるコードが含まれている�
 Juliaで可視化：水素原子,https://zenn.dev/link/articles/e1103bc0d58ceb,Shuhei Ohno,2022-01-09T17:01:00.025+09:00,21
 デコレータを使ったコマンドラインパーサ「classopt」を作った,https://zenn.dev/link/articles/b12cafac19cb43,stsysd,2022-01-04T15:35:15.058+09:00,9
 TypeScriptのdeclareやinterface Windowを勘で書くのをやめる2022,https://zenn.dev/link/articles/9c4ce0f1b68350,Masaki Hara,2022-01-01T00:09:53.053+09:00,250
-フロントエンドのデザインパターン,https://zenn.dev/link/books/learning-patterns-1,Shinya Fujino,2022-01-03T12:01:24.273+09:00,641
+フロントエンドのデザインパターン,https://zenn.dev/link/books/learning-patterns-1,Shinya Fujino,2022-01-03T12:01:24.273+09:00,643
 強化学習のマンカラ環境を作った話 - マルチエージェントRLライブラリ概観,https://zenn.dev/link/articles/0bf081b7ddbbfc,Qiushi Pan,2021-12-25T05:09:25.587+09:00,6
 「コンピュータシステムの理論と実装」をSwiftで実装してみた,https://zenn.dev/link/articles/nand2tetris-swift,Yoki,2021-12-23T22:32:54.037+09:00,32
 一億総教祖時代を強力にサポートするための、お手軽聖典作成技術,https://zenn.dev/link/articles/2dd0287e32a982,hsjoihs,2021-12-23T17:22:36.902+09:00,15
@@ -58,7 +58,7 @@ React を深く知るための入り口,https://zenn.dev/link/articles/deep-dive
 Javaでもう一度学び直すオブジェクト指向プログラミングを関数型プログラミングで考え直す 〜第5章〜,https://zenn.dev/link/articles/3ced6e75d120fb,ABAB↑↓BA,2021-03-27T17:05:19.636+09:00,14
 Reactでサクッとchromeの拡張機能をつくる,https://zenn.dev/link/articles/how-to-make-chrome-extension,tokku5552,2021-11-23T10:52:55.002+09:00,108
 "文化祭入退場・混雑管理システム ""CAPPUCCINO"" 開発・運用記",https://zenn.dev/link/articles/cappuccino-system,すばる,2021-11-24T20:15:58.627+09:00,152
-Immutable.jsとImmer、ちゃんと使い分けていますか？,https://zenn.dev/link/articles/immutable-immer,uhyo,2021-03-27T17:54:45.042+09:00,98
+Immutable.jsとImmer、ちゃんと使い分けていますか？,https://zenn.dev/link/articles/immutable-immer,uhyo,2021-03-27T17:54:45.042+09:00,99
 Puppeteerを使ってZennのBookをPDF出力する,https://zenn.dev/link/articles/5cafb00d942fe9fdfebf,ganezasan,2021-01-23T23:54:12.501+09:00,27
 【入門編】Reduxによる状態管理の仕組みを理解する,https://zenn.dev/link/articles/25c10b27783093,jojo,2021-03-21T20:41:24.293+09:00,39
 JSのモジュールについてのあれこれ,https://zenn.dev/link/scraps/47abc4f7052ff7,あきひろ,2021-03-25T10:43:02.007+09:00,10
@@ -84,7 +84,7 @@ TypeScriptの全てのasを撲滅するas-safelyというOSSを作ったゾォ�
 <script>要素の構文,https://zenn.dev/link/articles/4f6c728d452295,Masaki Hara,2021-08-22T16:06:28.207+09:00,37
 二分探索を用いた酸塩基平衡シミュレーション,https://zenn.dev/link/articles/equilibrium-simulation,とが,2021-07-22T20:10:28.660+09:00,6
 i3wm，config しないなんて勿体ない！,https://zenn.dev/link/articles/i3-window-manager,とが,2021-08-08T13:54:19.802+09:00,12
-JavaScript で文字数を length で数えるのはやめようの実例,https://zenn.dev/link/articles/d21d69a5914a03,Sosuke Suzuki,2021-08-04T00:47:47.989+09:00,186
+JavaScript で文字数を length で数えるのはやめようの実例,https://zenn.dev/link/articles/d21d69a5914a03,Sosuke Suzuki,2021-08-04T00:47:47.989+09:00,187
 Zennを支える技術とサービス構成,https://zenn.dev/link/articles/zenn-dev-stack,catnose,2020-09-08T18:32:00.000+09:00,1052
 Haskell に IDE はないのか？──独断と偏見による Haskell の IDE 十年史,https://zenn.dev/link/articles/1a60baba9848a1,konn,2021-02-05T22:05:41.515+09:00,90
 "[Mastodon]10種類のWebフレームワークでActivityPub実装 一(Express, Fastify)",https://zenn.dev/link/articles/78b203b30f689f,黒ヰ樹,2020-12-23T23:55:16.999+09:00,7
@@ -127,3 +127,27 @@ Webpackの入門書,https://zenn.dev/link/books/4391b9280f823061932c,Yuri,2020-0
 数学記号記法一覧（集合・線形代数）,https://zenn.dev/link/articles/b0b3a51cac5d7fe4555b,Josh Nobus,2020-10-15T01:59:01.577+09:00,77
 猿でもわかる！discord.pyのIntentsについて！,https://zenn.dev/link/articles/discordintents,2レジ,2020-09-30T14:39:08.299+09:00,9
 カード番号をSalt無しのSHA256でトークン化するのがどのくらい危険か試してみた,https://zenn.dev/link/articles/c6ef840d06aaf0,koduki,2021-04-22T14:05:21.920+09:00,91
+リテラルなしでFizzBuzzを実装する,https://zenn.dev/link/articles/fizzbuzz-without-literal,tkz,2021-04-18T01:25:25.217+09:00,13
+JavaScriptの数値計算はどれくらい正確なのか,https://zenn.dev/link/articles/javascript-math-accuracy,uhyo,2020-11-03T18:03:11.003+09:00,45
+【リソース取得APIの比較】fetchとaxiosの4つの相違点,https://zenn.dev/link/articles/9840082d1a6633,しゅう,2020-12-16T16:25:56.581+09:00,95
+県のGo To Eat サイトが使いづらかったのでPlaywright + AppSheetで自分用アプリを作ってみた話,https://zenn.dev/link/articles/go-to-eat-to-appsheet,ryo_kawamata,2020-11-13T19:24:07.039+09:00,55
+Puppeteer使いがPlaywrightを使ってみて感じた利点,https://zenn.dev/link/articles/ed6f66ab80c7ce,84q,2021-02-02T12:56:39.462+09:00,43
+Minecraft 農業の自動化,https://zenn.dev/link/books/5c3375fcc105fc,たくのろじぃ / Takunology,2021-03-18T16:54:54.743+09:00,67
+GitHubの機能をフルに使って職務経歴書の継続的インテグレーションを実現する,https://zenn.dev/link/articles/resume-on-github,ryo_kawamata,2020-10-19T20:17:15.303+09:00,289
+これからJS沼に足を突っ込もうとしている方に贈る配列操作のいろは,https://zenn.dev/link/articles/78450a1fe35664,Ubugeeei,2021-03-10T10:55:39.156+09:00,90
+docker-compose の bind mount を1行で書くな,https://zenn.dev/link/articles/0c1db052d09921,Sarisia,2021-02-24T10:09:45.876+09:00,196
+CGのための数学,https://zenn.dev/link/books/132b654aa02124,mebiusbox,2021-02-24T11:02:00.000+09:00,474
+GitHubのTUIツールを作った,https://zenn.dev/link/articles/2021-02-22-go-github-tui,ゴリラです,2021-02-22T22:37:17.223+09:00,79
+本気で技術記事を書く時のプロセス,https://zenn.dev/link/articles/47ecabce77d68c,seya,2021-02-13T12:12:22.733+09:00,78
+時間がかかる複数のCLIタスクをRust製ツールのPueueで管理する,https://zenn.dev/link/articles/b777836712294dc22bd4,さ,2021-02-14T17:34:39.872+09:00,63
+Haskell の学習ログ (基礎~Stateモナドぐらいまで),https://zenn.dev/link/scraps/7f3f05b6db45fa,おーみー,2021-01-03T18:27:39.762+09:00,12
+ThinkPad と外付け GPU で最高のおうち開発環境をつくる,https://zenn.dev/link/articles/best-dev-env-with-x1c-and-egpu,すばる,2020-12-08T07:43:59.006+09:00,21
+家がなくなったので2ヶ月間ワーケーションしてみた,https://zenn.dev/link/articles/ec0c16665476ca,tinoji,2020-12-24T10:33:00.000+09:00,72
+AtCoder と Rust で始める！競技プログラミング入門（Rust 版 APG4b）,https://zenn.dev/link/books/apg4b-rust-ver,とが,2020-12-30T20:24:26.461+09:00,229
+Rust は何を解決しようとしたのか；メモリとリソースと所有権,https://zenn.dev/link/articles/630a64fbc9c65e29b566,karno,2021-01-12T20:13:12.272+09:00,244
+Raspberry Piは本当に壊れやすいのか,https://zenn.dev/link/articles/97b9e25d0ae41c,su,2021-01-06T22:31:02.456+09:00,317
+グラフからコミュニティ構造を抽出する 〜リッチフローによるグラフの時間発展〜,https://zenn.dev/link/articles/eebd7ea4d1fe776f1f66,lotz,2020-12-23T09:21:51.528+09:00,50
+"Rust ではじめる Twitter API ",https://zenn.dev/link/books/83ef64248646f18d246a,/bin/zsh,2020-10-03T18:06:26.478+09:00,36
+RustでつくるGit入門,https://zenn.dev/link/books/impl-git-in-rust,うじまる,2020-10-30T12:56:54.610+09:00,225
+React / Redux を実務で使うということは,https://zenn.dev/link/articles/35ace7a7cd127f9a1d08,すず,2020-10-23T13:58:00.000+09:00,639
+"2020年版: なぜ仮想 DOM / 宣言的 UI という概念が、あのときの俺達の魂を震えさせたのか ",https://zenn.dev/link/books/0c55c230f5cc754c38b9,mizchi,2020-09-20T18:23:00.000+09:00,429
