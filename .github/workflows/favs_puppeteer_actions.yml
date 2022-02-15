@@ -38,7 +38,7 @@ jobs:
       run: npm install
 
     - name: Install Japanese fonts
-      run: sudo apt install fonts-noto
+      run: sudo apt-get update && sudo apt-get install fonts-noto
       # 文字化けを防ぐ生活の知恵
       # https://qiita.com/zyyx-matsushita/items/c33f79e33f242395019e
 
