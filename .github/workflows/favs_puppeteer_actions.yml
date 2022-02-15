@@ -6,6 +6,9 @@ on:
       - cron: "0 0 * * SUN"
       # 毎週日曜日の午前0時に起動
 
+env:
+  LANG: "ja_JP.UTF-8"
+
 jobs:
   Updater:
     runs-on: ubuntu-latest
@@ -30,7 +33,6 @@ jobs:
     - name: Create dotenv file
       shell: bash
       run: touch .env | 
-        echo "LANG=ja_JP.UTF-8" >> .env
         echo "BOOKMETER_ACCOUNT=${{ secrets.BOOKMETER_ACCOUNT }}" >> .env
         echo "BOOKMETER_PASSWORD=${{ secrets.BOOKMETER_PASSWORD }}" >> .env
         echo "CINII_API_APPID=${{ secrets.CINII_API_APPID }}" >> .env
