@@ -1,9 +1,12 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/12781034,4327452831,文芸翻訳教室,越前敏弥／著,研究社,20180420,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26048036
+https://bookmeter.com/books/13485105,4627054513,逆数学 定理から公理を「証明」する,ジョン・スティルウェル／原著 田中一之／翻訳 川辺治之／翻訳,森北出版,20190209,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27733604
+https://bookmeter.com/books/19213277,4560098883,「その他の外国文学」の翻訳者,白水社編集部／編集,白水社,20220221,No,
+https://bookmeter.com/books/19197014,4065267757,みんなのユニバーサル文章術　今すぐ役に立つ「最強」の日本語ライティングの世界,安田峰俊／著 大川ぶくぶ／著,星海社,20220126,No,
 https://bookmeter.com/books/19149532,4065259797,迷走しない！英語論文の書き方　秘密は「構造」作りにあり,ヴァランヤ・チョーベー／著 成田悠輔／翻訳・監修 布施雄士／翻訳,講談社,20220127,No,
 https://bookmeter.com/books/19397288,4336073198,法の書　〔増補新訳〕　【普及版】,アレイスター・クロウリー／著 植松靖夫／翻訳,国書刊行会,20220222,No,
 https://bookmeter.com/books/19197183,4336072779,オカルトタロットの歴史,ロナルド・デッカー／著 マイケル・ダメット／著 今野喜和人／翻訳,国書刊行会,20220221,No,
 https://bookmeter.com/books/388470,4796692282,死体の本 : 善悪の彼岸を超える世紀末死人学!,,宝島社,,No,
-https://bookmeter.com/books/18788300,4582859917,新版 ぎりぎり合格への論文マニュアル,山内志朗／著,平凡社,20211117,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11054699
 https://bookmeter.com/books/18956557,4562059818,船の食事の歴史物語,サイモン・スポルディング／著 大間知知子／翻訳,原書房,20211217,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11788557
 https://bookmeter.com/books/18957407,456205980X,鉄道の食事の歴史物語,ジェリ・クィンジオ／著 大槻敦子／翻訳,原書房,20211217,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11788477
 https://bookmeter.com/books/19150191,4562059826,空と宇宙の食事の歴史物語,リチャード・フォス／著 浜本隆三／翻訳 藤原崇／翻訳,原書房,20220201,No,
@@ -48,7 +51,7 @@ https://bookmeter.com/books/5150372,4489021291,入門確率解析とルベーグ
 https://bookmeter.com/books/19153947,4004319102,民俗学入門,菊地暁／著,岩波書店,20220124,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12229007
 https://bookmeter.com/books/11259374,4480097635,数学基礎論,前原昭二／著 竹内外史／著,筑摩書房,20170110,No,
 https://bookmeter.com/books/18661799,4758910235,現代高等英文法 学習文法から科学文法へ,八木克正／著,開拓社,20211005,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10102989
-https://bookmeter.com/books/588789,4320015541,線形代数,佐武一郎／著,共立,1997-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA30139466
+https://bookmeter.com/books/588789,4320015541,線形代数,佐武一郎／著,共立出版,19970101,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA30139466
 https://bookmeter.com/books/14192534,4297108216,動かしてわかる CPUの作り方10講,井澤裕司／著,技術評論社,20190821,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28696831
 https://bookmeter.com/books/9650618,4873117127,コンピュータシステムの理論と実装,"Nisan,Noam／著 Schocken,Shimon／著 斎藤康毅／翻訳 ショッケンサイモン／著 ほか",オライリー・ジャパン : オーム社,2015-03,No,
 https://bookmeter.com/books/51820,4839909865,CPUの創りかた : IC10個のお手軽CPU設計超入門 : 初歩のデジタル回路動作の基本原理と製作,渡波郁／著,毎日コミュニケーションズ,2003-09,No,
