@@ -260,6 +260,9 @@ const output_watchlist_data = async (data, filename) => {
     }
 };
 
+/**
+ * APiを叩いてウォッチリストの情報を取得し、それをファイルに出力する
+ */
 const watchlist_extractor = async (baseURI, cookies) => {
     try {
         const filename = `${baseURI}.csv`;
@@ -269,7 +272,8 @@ const watchlist_extractor = async (baseURI, cookies) => {
 
         // ref: https://ja.javascript.info/async-iterators-generators
         for await (const [ page_title, page_url ] of fetch_watchlist(baseURI, cookies)){
-            await output_watchlist_data(`${page_title},${page_url}\n`, filename);
+            const output_data = `${page_title},${page_url}\n`;
+            await output_watchlist_data(output_data, filename);
             // await sleep(1);
         }
 
@@ -297,16 +301,20 @@ const main = async (url) => {
 };
 
 (async () => {
+    const startTime = Date.now();
+    console.log('Wikipedia Watchlists: Fetching started!');
+
     const accounts = {
         jawiki: 'ja.wikipedia.org',
         enwiki: 'en.wikipedia.org',
         wikicommons: 'commons.wikimedia.org'
     };
 
-    // await main(accounts.jawiki);
-
     for (const url of Object.values(accounts)) {
-        console.log(url);
+        console.log(`${url}: started`);
         await main(url);
+        console.log(`${url}: finished`);
     }
+
+    console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 })();

@@ -3,8 +3,8 @@ name: Favorites Updater
 on: 
   push:
   schedule:
-      - cron: "0 0 * * SUN,WED"
-      # 毎週日曜日の午前0時に起動
+      - cron: "0 0 * * SUN,THU"
+      # 毎週日・木の午前0時に起動
 
 env:
   LANG: "ja_JP.UTF-8"
@@ -26,6 +26,8 @@ jobs:
       ZENN_GOOGLE_PASSWORD: ${{ secrets.ZENN_GOOGLE_PASSWORD }}
       TWITTER_ACCOUNT: ${{ secrets.TWITTER_ACCOUNT }}
       TWITTER_PASSWORD: ${{ secrets.TWITTER_PASSWORD }}
+      WIKIPEDIA_USERNAME: ${{ secrets.WIKIPEDIA_USERNAME }}
+      WIKIPEDIA_PASSWORD: ${{ secrets.WIKIPEDIA_PASSWORD }}
 
     steps:
     - uses: actions/checkout@v2
@@ -59,6 +61,8 @@ jobs:
         echo "ZENN_GOOGLE_PASSWORD=${{ secrets.ZENN_GOOGLE_PASSWORD }}" >> .env
         echo "TWITTER_ACCOUNT=${{ secrets.TWITTER_ACCOUNT }}" >> .env
         echo "TWITTER_PASSWORD=${{ secrets.TWITTER_PASSWORD }}" >> .env
+        echo "WIKIPEDIA_USERNAME=${{ secrets.WIKIPEDIA_USERNAME }}" >> .env
+        echo "WIKIPEDIA_PASSWORD=${{ secrets.WIKIPEDIA_PASSWORD }}" >> .env
     
     - name: GitHub Stars
       shell: bash
