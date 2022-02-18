@@ -3,7 +3,7 @@ name: Favorites Updater
 on: 
   push:
   schedule:
-      - cron: "0 0 * * SUN"
+      - cron: "0 0 * * SUN,WED"
       # 毎週日曜日の午前0時に起動
 
 env:
@@ -91,6 +91,11 @@ jobs:
       run: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' node ./puppeteer_zenn.js
       # headless: falseで動かすための生活の知恵
       # https://github.com/peterdanis/electron-puppeteer-demo/issues/171
+
+    - name: Wikipedia Watchlist
+      shell: bash
+      working-directory: ./wikipedia_watchlist
+      run: node ./watchlist_extractor.js
 
     - name: Set the current datetime
       env:
