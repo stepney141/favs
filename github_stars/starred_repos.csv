@@ -4,11 +4,11 @@ full_name,html_url,description,stargazers_count
 "akamhy/waybackpy","https://github.com/akamhy/waybackpy","Wayback Machine API interface & a command-line tool",169
 "sakura-cooking/takoyaki","https://github.com/sakura-cooking/takoyaki"," さくらインターネット秘伝のたこ焼きレシピ",357
 "mgechev/javascript-algorithms","https://github.com/mgechev/javascript-algorithms","💻 JavaScript implementations of computer science algorithms",7110
-"veler/DevToys","https://github.com/veler/DevToys","A Swiss Army knife for developers.",8360
+"veler/DevToys","https://github.com/veler/DevToys","A Swiss Army knife for developers.",8361
 "raphamorim/awesome-canvas","https://github.com/raphamorim/awesome-canvas","A curated list of awesome HTML5 Canvas with examples, related articles and posts.",1107
 "siketyan/house","https://github.com/siketyan/house","An issue tracker for my house.",6
-"lydiahallie/javascript-questions","https://github.com/lydiahallie/javascript-questions","A long list of (advanced) JavaScript questions, and their explanations :sparkles:  ",41669
-"elsewhencode/project-guidelines","https://github.com/elsewhencode/project-guidelines","A set of best practices for JavaScript projects",26317
+"lydiahallie/javascript-questions","https://github.com/lydiahallie/javascript-questions","A long list of (advanced) JavaScript questions, and their explanations :sparkles:  ",41670
+"elsewhencode/project-guidelines","https://github.com/elsewhencode/project-guidelines","A set of best practices for JavaScript projects",26318
 "stoeffel/awesome-frp-js","https://github.com/stoeffel/awesome-frp-js","A curated list of awesome functional reactive programming stuff in js",280
 "aphenriques/stochastic-calculus-for-finance-solutions","https://github.com/aphenriques/stochastic-calculus-for-finance-solutions","Solutions for the exercise problems of Steven E. Shreve's Stochastic Calculus for Finance",15
 "kurema/cpp-intro","https://github.com/kurema/cpp-intro","Beginner's guide for C++",14
@@ -21,7 +21,7 @@ full_name,html_url,description,stargazers_count
 "rooklift/nibbler","https://github.com/rooklift/nibbler","Chess analysis GUI for UCI engines, with extra features for Leela (Lc0) in particular.",284
 "maksimKorzh/hgm-mailbox-trials","https://github.com/maksimKorzh/hgm-mailbox-trials","Mirror of a highly optimized for speed experimental array based chess engine by H.G. Muller",2
 "kaityo256/yaml_cv","https://github.com/kaityo256/yaml_cv","YAMLによる履歴書作成スクリプト",283
-"mame/6x6-reversi-oracle","https://github.com/mame/6x6-reversi-oracle","6x6-reversi oracle is a ""perfect"" player for reversi using 6x6 board",44
+"mame/6x6-reversi-oracle","https://github.com/mame/6x6-reversi-oracle","6x6-reversi oracle is a ""perfect"" player for reversi using 6x6 board",45
 "deepaksood619/RegexCrossword","https://github.com/deepaksood619/RegexCrossword","Solution to RegexCrossword Puzzles",27
 "lys-lang/node-ebnf","https://github.com/lys-lang/node-ebnf","Create AST PEG Parsers from formal grammars in JavaScript",71
 "wavebeem/bread-n-butter","https://github.com/wavebeem/bread-n-butter","Parser combinators for TypeScript and JavaScript",24
@@ -36,7 +36,7 @@ full_name,html_url,description,stargazers_count
 "fang2hou/nobo","https://github.com/fang2hou/nobo","A spider for fetching data from Manaba+R & CampusWeb. (Ritsumeikan Univ.)",9
 "cli-guidelines/cli-guidelines","https://github.com/cli-guidelines/cli-guidelines","A guide to help you write better command-line programs, taking traditional UNIX principles and updating them for the modern day.",1654
 "phasmatic3d/webrays","https://github.com/phasmatic3d/webrays","WebRays - Ray Tracing on the Web",38
-"fingerprintjs/fingerprintjs","https://github.com/fingerprintjs/fingerprintjs","Browser fingerprinting library with the highest accuracy and stability.",16069
+"fingerprintjs/fingerprintjs","https://github.com/fingerprintjs/fingerprintjs","Browser fingerprinting library with the highest accuracy and stability.",16070
 "Yagami360/My_NoteBook","https://github.com/Yagami360/My_NoteBook","サイエンス、テクノロジー、エンジニアリング関連の情報を記載したノート（忘備録）です。",96
 "Elucidation/ChessboardFenTensorflowJs","https://github.com/Elucidation/ChessboardFenTensorflowJs","Find chessboard FEN from a screenshot using TensorflowJs",13
 "frpays/lc0-js","https://github.com/frpays/lc0-js","The LC0 engine ported to javascript with Emscripten.",93
@@ -46,7 +46,7 @@ full_name,html_url,description,stargazers_count
 "v8/web-tooling-benchmark","https://github.com/v8/web-tooling-benchmark","JavaScript benchmark for common web developer workloads",333
 "gr2m/javascript-plugin-architecture-with-typescript-definitions","https://github.com/gr2m/javascript-plugin-architecture-with-typescript-definitions","Plugin architecture example with full TypeScript support",54
 "kurema/BookViewerApp3","https://github.com/kurema/BookViewerApp3","A powerful and beautiful viewer app for booklovers and comic fans.",33
-"ryanmcdermott/clean-code-javascript","https://github.com/ryanmcdermott/clean-code-javascript",":bathtub: Clean Code concepts adapted for JavaScript",64233
+"ryanmcdermott/clean-code-javascript","https://github.com/ryanmcdermott/clean-code-javascript",":bathtub: Clean Code concepts adapted for JavaScript",64235
 "goldbergyoni/nodebestpractices","https://github.com/goldbergyoni/nodebestpractices",":white_check_mark:  The Node.js best practices list (February 2022)",75359
 "stoeffel/awesome-fp-js","https://github.com/stoeffel/awesome-fp-js",":sunglasses: A curated list of awesome functional programming stuff in js",5523
 "qnighy/ipc_solver","https://github.com/qnighy/ipc_solver","O(N log N)-space IPC solver in OCaml",45
@@ -54,9 +54,9 @@ full_name,html_url,description,stargazers_count
 "roogle-rs/roogle","https://github.com/roogle-rs/roogle","A Rust API search engine",231
 "NaturalIntelligence/fast-xml-parser","https://github.com/NaturalIntelligence/fast-xml-parser","Validate XML, Parse XML and Build XML rapidly without C/C++ based libraries and no callback.",1400
 "apprenticeharper/DeDRM_tools","https://github.com/apprenticeharper/DeDRM_tools","DeDRM tools for ebooks",11944
-"yt-dlp/yt-dlp","https://github.com/yt-dlp/yt-dlp","A youtube-dl fork with additional features and fixes",19939
+"yt-dlp/yt-dlp","https://github.com/yt-dlp/yt-dlp","A youtube-dl fork with additional features and fixes",19940
 "Yonoha/categorical_quantum.github.io","https://github.com/Yonoha/categorical_quantum.github.io","I write about category theory and its application to quantum theory.",9
-"type-challenges/type-challenges","https://github.com/type-challenges/type-challenges","Collection of TypeScript type challenges with online judge",13101
+"type-challenges/type-challenges","https://github.com/type-challenges/type-challenges","Collection of TypeScript type challenges with online judge",13106
 "CyberShadow/aconfmgr","https://github.com/CyberShadow/aconfmgr","A configuration manager for Arch Linux",712
 "manga-download/hakuneko","https://github.com/manga-download/hakuneko","Manga & Anime Downloader for Linux, Windows & MacOS",2108
 "kbjorklu/chess","https://github.com/kbjorklu/chess","JavaScript Chess",74
@@ -66,7 +66,7 @@ full_name,html_url,description,stargazers_count
 "fnwiya/japanese-rust-companies","https://github.com/fnwiya/japanese-rust-companies","日本で Rust を利用している会社一覧",181
 "yuiseki/twiseki","https://github.com/yuiseki/twiseki","puppeteerでtwitterをスクレイピングするやつ",2
 "puppeteer/examples","https://github.com/puppeteer/examples","Use case-driven examples for using Puppeteer and headless chrome",2149
-"ytdl-org/youtube-dl","https://github.com/ytdl-org/youtube-dl","Command-line program to download videos from YouTube.com and other video sites",106535
+"ytdl-org/youtube-dl","https://github.com/ytdl-org/youtube-dl","Command-line program to download videos from YouTube.com and other video sites",106534
 "Hayao-H/Niconicome","https://github.com/Hayao-H/Niconicome","ニコニコ動画のコンテンツをダウンロードします",30
 "ffmpegwasm/ffmpeg.wasm","https://github.com/ffmpegwasm/ffmpeg.wasm","FFmpeg for browser and node, powered by WebAssembly",7051
 "akameco/pixiv-dl","https://github.com/akameco/pixiv-dl","pixiv image downloader",11
@@ -89,7 +89,7 @@ full_name,html_url,description,stargazers_count
 "akio-tomiya/julia_in_physics","https://github.com/akio-tomiya/julia_in_physics",,19
 "k4yt3x/pixivdaily-rust","https://github.com/k4yt3x/pixivdaily-rust","Source code for the Telegram channel @pixiv_daily",4
 "optim-corp/masked-lm-wasm","https://github.com/optim-corp/masked-lm-wasm",,15
-"zedeus/nitter","https://github.com/zedeus/nitter","Alternative Twitter front-end",4027
+"zedeus/nitter","https://github.com/zedeus/nitter","Alternative Twitter front-end",4028
 "9Axes/9axes.github.io","https://github.com/9Axes/9axes.github.io",,39
 "prismquiz/prismquiz.github.io","https://github.com/prismquiz/prismquiz.github.io",,2
 "8values/8values.github.io","https://github.com/8values/8values.github.io","The 8values political quiz",791
@@ -109,7 +109,7 @@ full_name,html_url,description,stargazers_count
 "joey00072/Baji-Marathi-Programing-Language","https://github.com/joey00072/Baji-Marathi-Programing-Language","बाजी (baji) high-level,dynamically typed, interpreted first Marathi programing language.",52
 "mithrandie/csvq","https://github.com/mithrandie/csvq","SQL-like query language for csv",968
 "serenity-rs/serenity","https://github.com/serenity-rs/serenity","A Rust library for the Discord API.",2242
-"public-apis/public-apis","https://github.com/public-apis/public-apis","A collective list of free APIs",181607
+"public-apis/public-apis","https://github.com/public-apis/public-apis","A collective list of free APIs",181610
 "Tritama/portfolio","https://github.com/Tritama/portfolio",,5
 "mebiusbox/docs","https://github.com/mebiusbox/docs",,150
 "eggplants/dojinvoice_db","https://github.com/eggplants/dojinvoice_db","Make DB of Dojinvoice (DLsite)",3
@@ -117,10 +117,10 @@ full_name,html_url,description,stargazers_count
 "next-l/enju_leaf","https://github.com/next-l/enju_leaf","Next-L Enju Leaf 統合図書館管理システム / integrated library system https://enju.next-l.jp/",98
 "eggplants/infosearch","https://github.com/eggplants/infosearch","2021年度「情報検索システム」ノート",1
 "alexzorin/authy","https://github.com/alexzorin/authy","Go library and program to access your Authy TOTP secrets.",407
-"sorrycc/awesome-javascript","https://github.com/sorrycc/awesome-javascript","🐢 A collection of awesome browser-side  JavaScript libraries, resources and shiny things.",26883
+"sorrycc/awesome-javascript","https://github.com/sorrycc/awesome-javascript","🐢 A collection of awesome browser-side  JavaScript libraries, resources and shiny things.",26884
 "gcanti/fp-ts","https://github.com/gcanti/fp-ts","Functional programming in TypeScript",7507
 "EzoeRyou/posix-commands","https://github.com/EzoeRyou/posix-commands","POSIXコマンドについてのコラム",152
-"getify/You-Dont-Know-JS","https://github.com/getify/You-Dont-Know-JS","A book series on JavaScript. @YDKJS on twitter.",149993
+"getify/You-Dont-Know-JS","https://github.com/getify/You-Dont-Know-JS","A book series on JavaScript. @YDKJS on twitter.",149995
 "mijumall/multipleRegression","https://github.com/mijumall/multipleRegression","Simple Multiple Regression model with t-test functionality",1
 "apsdehal/qunit-migrate","https://github.com/apsdehal/qunit-migrate","Migrate old QUnit tests to 2.x. Uses regex and ASTs to convert old QUnit code.",17
 "aemkei/jsfuck","https://github.com/aemkei/jsfuck","Write any JavaScript with 6 Characters: []()!+",6463
@@ -153,7 +153,7 @@ full_name,html_url,description,stargazers_count
 "marp-team/marp-vscode","https://github.com/marp-team/marp-vscode","Marp for VS Code: Create slide deck written in Marp Markdown on VS Code",843
 "theoremoon/ShellgeiBot-Image","https://github.com/theoremoon/ShellgeiBot-Image",,36
 "lifeinwild/tenyu","https://github.com/lifeinwild/tenyu","創作活動による経済構想",7
-"faressoft/terminalizer","https://github.com/faressoft/terminalizer","🦄 Record your terminal and generate animated gif images or share a web player",12360
+"faressoft/terminalizer","https://github.com/faressoft/terminalizer","🦄 Record your terminal and generate animated gif images or share a web player",12361
 "shotacure/CapCap","https://github.com/shotacure/CapCap","出典表記リアルタイム合成ツール",3
 "zenn-dev/zenn-editor","https://github.com/zenn-dev/zenn-editor","Convert markdown to html in Zenn format",339
 "RobinCsl/awesome-js-tooling-not-in-js","https://github.com/RobinCsl/awesome-js-tooling-not-in-js","A curated list of JavaScript tooling not written in JavaScript",684
@@ -188,7 +188,7 @@ full_name,html_url,description,stargazers_count
 "trueToastedCode/NdlessSDK-automated-installer","https://github.com/trueToastedCode/NdlessSDK-automated-installer","An automated NdlessSDK installer for linux.",3
 "lights0123/ndless-rs","https://github.com/lights0123/ndless-rs","Rust library for interacting with Ndless for the TI-Nspire",17
 "adobe-fonts/source-han-sans","https://github.com/adobe-fonts/source-han-sans","Source Han Sans | 思源黑体 | 思源黑體 | 思源黑體 香港 | 源ノ角ゴシック | 본고딕",10462
-"danistefanovic/build-your-own-x","https://github.com/danistefanovic/build-your-own-x","🤓 Build your own (insert technology here)",132579
+"danistefanovic/build-your-own-x","https://github.com/danistefanovic/build-your-own-x","🤓 Build your own (insert technology here)",132583
 "PyYoshi/TweetNowBrowsing","https://github.com/PyYoshi/TweetNowBrowsing","Chrome Extension",12
 "eggplants/wbsv-cli","https://github.com/eggplants/wbsv-cli","CLI for archiving pages and its all links to Wayback Machine",11
 "alphasp/pixiv-api-client","https://github.com/alphasp/pixiv-api-client","Promise based Pixiv API client for node.js and react native",139
@@ -213,7 +213,7 @@ full_name,html_url,description,stargazers_count
 "gchenfc/sci-hub-now","https://github.com/gchenfc/sci-hub-now","Free access to academic papers with just a single click! Abolish publishers, long live the open access movement! 🦅",197
 "rubenvereecken/py-vgdl","https://github.com/rubenvereecken/py-vgdl","VGDL 2.0: A video game description language for AI research",42
 "ossf/criticality_score","https://github.com/ossf/criticality_score","Gives criticality score for an open source project",989
-"trekhleb/javascript-algorithms","https://github.com/trekhleb/javascript-algorithms","📝 Algorithms and data structures implemented in JavaScript with explanations and links to further readings",135898
+"trekhleb/javascript-algorithms","https://github.com/trekhleb/javascript-algorithms","📝 Algorithms and data structures implemented in JavaScript with explanations and links to further readings",135899
 "glinscott/fishtest","https://github.com/glinscott/fishtest","Stockfish testing",181
 "beurtschipper/Depix","https://github.com/beurtschipper/Depix","Recovers passwords from pixelized screenshots",21749
 "mikf/gallery-dl","https://github.com/mikf/gallery-dl","Command-line program to download image galleries and collections from several image hosting sites",4509
@@ -250,7 +250,7 @@ full_name,html_url,description,stargazers_count
 "p-ranav/awesome-hpp","https://github.com/p-ranav/awesome-hpp","A curated list of awesome header-only C++ libraries",1719
 "azu/awesome-commit-english","https://github.com/azu/awesome-commit-english","コミット英語についての記事まとめ",829
 "sindresorhus/github-markdown-css","https://github.com/sindresorhus/github-markdown-css","The minimal amount of CSS to replicate the GitHub Markdown style",6106
-"AlDanial/cloc","https://github.com/AlDanial/cloc","cloc counts blank lines, comment lines, and physical lines of source code in many programming languages.",13564
+"AlDanial/cloc","https://github.com/AlDanial/cloc","cloc counts blank lines, comment lines, and physical lines of source code in many programming languages.",13565
 "emilk/hobogo","https://github.com/emilk/hobogo","Rust + WASM experiment",32
 "emilk/egui","https://github.com/emilk/egui","egui: an easy-to-use immediate mode GUI in Rust that runs on both web and native",7771
 "niklasf/python-chess","https://github.com/niklasf/python-chess","A chess library for Python, with move generation and validation, PGN parsing and writing, Polyglot opening book reading, Gaviota tablebase probing, Syzygy tablebase probing, and UCI/XBoard engine communication",1669
@@ -259,7 +259,7 @@ full_name,html_url,description,stargazers_count
 "moebooru/moebooru","https://github.com/moebooru/moebooru","Moebooru, a fork of danbooru1 that has been heavily modified",396
 "sozysozbot/cerke","https://github.com/sozysozbot/cerke","パイグ将棋/机戦/cerke/cetkaik/cet2 kaik",3
 "sozysozbot/cerke_modeling","https://github.com/sozysozbot/cerke_modeling",,1
-"sindresorhus/awesome","https://github.com/sindresorhus/awesome","😎 Awesome lists about all kinds of interesting topics",190398
+"sindresorhus/awesome","https://github.com/sindresorhus/awesome","😎 Awesome lists about all kinds of interesting topics",190400
 "Bogdan-Lyashenko/codecrumbs","https://github.com/Bogdan-Lyashenko/codecrumbs","Learn, design or document codebase by putting breadcrumbs in source code. Live updates, multi-language support and more.",2599
 "Gedevan-Aleksizde/20190703_ML_ECON","https://github.com/Gedevan-Aleksizde/20190703_ML_ECON","Tokyo.R #80 計量経済学と機械学習の関係 –AI はさだめ, さだめは反事実 ",5
 "QwerbyKing/VC-US","https://github.com/QwerbyKing/VC-US","Visual Chess: Undercarriage Syndicate is a chess framework designed with compatibility with Betza Notation",1
@@ -293,7 +293,7 @@ full_name,html_url,description,stargazers_count
 "mi-g/joclyboard","https://github.com/mi-g/joclyboard","Multiplatform 3D/2D desktop application for playing board games",35
 "greymd/teip","https://github.com/greymd/teip","Select partial standard input and replace with the result of another command efficiently",316
 "jw0k/serial2ti83","https://github.com/jw0k/serial2ti83","A program for Arduino Uno that makes it possible to connect a TI-83 calculator to a computer",37
-"jwasham/coding-interview-university","https://github.com/jwasham/coding-interview-university","A complete computer science study plan to become a software engineer.",210408
+"jwasham/coding-interview-university","https://github.com/jwasham/coding-interview-university","A complete computer science study plan to become a software engineer.",210411
 "yaneurao/YaneuraOu","https://github.com/yaneurao/YaneuraOu","YaneuraOu is the World's Strongest Shogi engine(AI player) , WCSC29 1st winner , educational and USI compliant engine.",372
 "na2hiro/Shogi.js","https://github.com/na2hiro/Shogi.js","A simple shogi library for JavaScript / TypeScript",48
 "fulldecent/system-bus-radio","https://github.com/fulldecent/system-bus-radio","Transmits AM radio on computers without radio transmitting hardware.",5871
@@ -321,7 +321,7 @@ full_name,html_url,description,stargazers_count
 "flybayer/twitter-bookmarks-search","https://github.com/flybayer/twitter-bookmarks-search","WebExtension that adds ability search all your bookmarked tweets!",113
 "soulmachine/machine-learning-cheat-sheet","https://github.com/soulmachine/machine-learning-cheat-sheet","Classical equations and diagrams in machine learning",5332
 "onitama/OpenHSP","https://github.com/onitama/OpenHSP","Hot Soup Processor (HSP3)",113
-"nagadomi/waifu2x","https://github.com/nagadomi/waifu2x","Image Super-Resolution for Anime-Style Art",23205
+"nagadomi/waifu2x","https://github.com/nagadomi/waifu2x","Image Super-Resolution for Anime-Style Art",23206
 "lltcggie/waifu2x-caffe","https://github.com/lltcggie/waifu2x-caffe","waifu2xのCaffe版",6627
 "jsvine/markovify","https://github.com/jsvine/markovify","A simple, extensible Markov chain generator.",2962
 "yuiseki/twint-gyazo","https://github.com/yuiseki/twint-gyazo","Pythonで書かれた、Twitterの指定したユーザーの画像を全部Gyazoにアップロードするスクリプト",43
@@ -374,14 +374,14 @@ full_name,html_url,description,stargazers_count
 "terjanq/JS-Alpha","https://github.com/terjanq/JS-Alpha","Funny project to create an encoder/obfuscator that converts any javascript code into a code that only consist of /[a-z().]/ characters",64
 "palewire/archiveis","https://github.com/palewire/archiveis","A simple Python wrapper for the archive.is capturing service",148
 "ShinyaKato/saizeriya-1000yen-knapsack","https://github.com/ShinyaKato/saizeriya-1000yen-knapsack","「サイゼリヤで1000円あれば最大何kcal摂れるのか」を動的計画法で解いてみた",12
-"microsoft/SPTAG","https://github.com/microsoft/SPTAG","A distributed approximate nearest neighborhood search (ANN) library which provides a high quality vector index build, search and distributed online serving toolkits for large scale vector search scenario.",4170
+"microsoft/SPTAG","https://github.com/microsoft/SPTAG","A distributed approximate nearest neighborhood search (ANN) library which provides a high quality vector index build, search and distributed online serving toolkits for large scale vector search scenario.",4171
 "stewartmcgown/uds","https://github.com/stewartmcgown/uds","Unlimited Drive Storage by splitting binary files into base64",4228
 "stefano/wasm-forth","https://github.com/stefano/wasm-forth","A Forth implementation compiling to WebAssembly.",103
 "bartobri/no-more-secrets","https://github.com/bartobri/no-more-secrets","A command line tool that recreates the famous data decryption effect seen in the 1992 movie Sneakers.",5104
 "oitofelix/8f-userrpl-kernel","https://github.com/oitofelix/8f-userrpl-kernel","8F UserRPL Kernel",2
 "scala-text/scala_text","https://github.com/scala-text/scala_text","Scala学習用テキスト",465
 "AsPJT/DungeonTemplateLibrary","https://github.com/AsPJT/DungeonTemplateLibrary","🌏: Dungeon free resources (terrain & roguelike generation)",793
-"o2sh/onefetch","https://github.com/o2sh/onefetch","Git repository summary on your terminal",4562
+"o2sh/onefetch","https://github.com/o2sh/onefetch","Git repository summary on your terminal",4563
 "kenkoooo/AtCoderProblems","https://github.com/kenkoooo/AtCoderProblems","Extend your AtCoder",921
 "jiro4989/textimg","https://github.com/jiro4989/textimg","Command to convert from color text (ANSI or 256) to image.",127
 "busyloop/lolcat","https://github.com/busyloop/lolcat","Rainbows and unicorns!",4897
@@ -393,8 +393,8 @@ full_name,html_url,description,stargazers_count
 "yt8492/SeihekiAnalyzer","https://github.com/yt8492/SeihekiAnalyzer","DLsiteの購入履歴からあなたの性癖暴きます",67
 "rust-embedded/rust-raspberrypi-OS-tutorials","https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials",":books: Learn to write an embedded OS in Rust :crab:",7714
 "boricj/ripem","https://github.com/boricj/ripem","Native programming on HP Prime G1 the hard way",22
-"FabioLolix/LinuxTimeline","https://github.com/FabioLolix/LinuxTimeline","Linux Distributions Timeline",1048
-"GitSquared/edex-ui","https://github.com/GitSquared/edex-ui","A cross-platform, customizable science fiction terminal emulator with advanced monitoring & touchscreen support.",35008
+"FabioLolix/LinuxTimeline","https://github.com/FabioLolix/LinuxTimeline","Linux Distributions Timeline",1049
+"GitSquared/edex-ui","https://github.com/GitSquared/edex-ui","A cross-platform, customizable science fiction terminal emulator with advanced monitoring & touchscreen support.",35009
 "egison/differential-geometry","https://github.com/egison/differential-geometry","Egison programs for basic calculations in differential geometry",5
 "webrecorder/warcit","https://github.com/webrecorder/warcit","Convert Directories, Files and ZIP Files to Web Archives (WARC)",62
 "greymd/cureutils","https://github.com/greymd/cureutils","Useful command line tool for Japanese battle heroine Pretty Cure (Precure).",54
@@ -408,7 +408,7 @@ full_name,html_url,description,stargazers_count
 "relarar/Blender-AnimeHairSupporter","https://github.com/relarar/Blender-AnimeHairSupporter","Blender用のアニメ髪作成支援アドオン",77
 "Taremin/Blender-AnimeHairSupporter","https://github.com/Taremin/Blender-AnimeHairSupporter","Blender用のアニメ髪作成支援アドオン",27
 "oduwsdl/ipwb","https://github.com/oduwsdl/ipwb","InterPlanetary Wayback: A distributed and persistent archive replay system using IPFS",447
-"prasmussen/gdrive","https://github.com/prasmussen/gdrive","Google Drive CLI Client",7867
+"prasmussen/gdrive","https://github.com/prasmussen/gdrive","Google Drive CLI Client",7868
 "trycycle/wikipedia-downloader","https://github.com/trycycle/wikipedia-downloader","A Python script for downloading Wikipedia data dump files",1
 "ciffelia/EgoSearcher","https://github.com/ciffelia/EgoSearcher","Automated egosearching on Twitter",3
 "WikiTeam/wikiteam","https://github.com/WikiTeam/wikiteam","Tools for downloading and preserving wikis. We archive wikis, from Wikipedia to tiniest wikis. As of 2020, WikiTeam has preserved more than 250,000 wikis.",473
@@ -420,9 +420,9 @@ full_name,html_url,description,stargazers_count
 "taba256/nicoseiga-download","https://github.com/taba256/nicoseiga-download","ニコニコ静画(マンガ)の作品を、zipファイルに圧縮してダウンロードできます。",7
 "internetarchive/heritrix3","https://github.com/internetarchive/heritrix3","Heritrix is the Internet Archive's open-source, extensible, web-scale, archival-quality web crawler project.  ",2145
 "iipc/awesome-web-archiving","https://github.com/iipc/awesome-web-archiving","An Awesome List for getting started with web archiving",1098
-"EbookFoundation/free-programming-books","https://github.com/EbookFoundation/free-programming-books",":books: Freely available programming books",222515
-"netdata/netdata","https://github.com/netdata/netdata","Real-time performance monitoring, done right! https://www.netdata.cloud",57970
-"tldr-pages/tldr","https://github.com/tldr-pages/tldr","📚 Collaborative cheatsheets for console commands",37373
+"EbookFoundation/free-programming-books","https://github.com/EbookFoundation/free-programming-books",":books: Freely available programming books",222516
+"netdata/netdata","https://github.com/netdata/netdata","Real-time performance monitoring, done right! https://www.netdata.cloud",57972
+"tldr-pages/tldr","https://github.com/tldr-pages/tldr","📚 Collaborative cheatsheets for console commands",37374
 "ilia-luk/pimpMyVscodeTerminal","https://github.com/ilia-luk/pimpMyVscodeTerminal","Pimp my vscode terminal with tmux sessions",5
 "zettsu-t/cPlusPlusFriend","https://github.com/zettsu-t/cPlusPlusFriend","The programmer-tan bot",8
 "erikw/tmux-powerline","https://github.com/erikw/tmux-powerline","A hackable statusbar for tmux consisting of dynamic & beautiful looking segments, inspired by vim-powerlline, written purely in bash.",2832
@@ -459,7 +459,7 @@ full_name,html_url,description,stargazers_count
 "kory33/scala-proofs","https://github.com/kory33/scala-proofs","An attempt to build axiomatic, formal set theory on top of Scala.",35
 "Rapptz/discord.py","https://github.com/Rapptz/discord.py","An API wrapper for Discord written in Python.",9453
 "hikalium/randlogo","https://github.com/hikalium/randlogo","Random logo generator",5
-"NARKOZ/hacker-scripts","https://github.com/NARKOZ/hacker-scripts","Based on a true story",43507
+"NARKOZ/hacker-scripts","https://github.com/NARKOZ/hacker-scripts","Based on a true story",43508
 "aozorabunko/aozorabunko","https://github.com/aozorabunko/aozorabunko",,695
 "ricsinaruto/Seq2seqChatbots","https://github.com/ricsinaruto/Seq2seqChatbots","A wrapper around tensor2tensor to flexibly train, interact, and generate data for neural chatbots.",474
 "yui540/hyper-akari","https://github.com/yui540/hyper-akari","🦋ハロー、ハイパーアカリだよ！( •̀ᴗ•́ )/ﾋﾟﾛﾘﾝ🦋",87

@@ -9,7 +9,7 @@ ImageMagick の geometry 仕様,https://qiita.com/yoya/items/704fdfbd881f166125d
 FizzBuzzは無慈悲な面接の女王,https://qiita.com/minebreaker/items/a70d444b5faa6af61440,107,2021-12-04T15:04:47Z,@minebreaker
 駆け出しエンジニアが１年以内に「エンジニア」を辞めてしまう問題,https://qiita.com/yosaprog/items/d57531cf30285dd550e2,288,2022-02-01T01:22:05Z,@yosaprog
 「リファレンス読めばわかるよ」からの脱出 ~誰も教えてくれないリファレンスの読み方~,https://qiita.com/kt19934645/items/100fdd20f74ce2eb2d68,84,2022-02-01T03:02:49Z,@kt19934645
-エンジニアのための十徳ナイフ「DevToys」が便利すぎる,https://qiita.com/danishi/items/2de6a4ab028d27a8f4ab,1057,2022-01-24T10:05:41Z,@danishi
+エンジニアのための十徳ナイフ「DevToys」が便利すぎる,https://qiita.com/danishi/items/2de6a4ab028d27a8f4ab,1058,2022-01-24T10:05:41Z,@danishi
 どこでも動くシェルスクリプトを書くための ～ POSIXモードの基礎知識（前編）,https://qiita.com/ko1nksm/items/14151d2dc534f558b027,13,2022-01-24T13:03:39Z,@ko1nksm
 宣言的？ Declarative?どういうこと？,https://qiita.com/Hiroyuki_OSAKI/items/f3f88ae535550e95389d,308,2018-09-28T15:39:28Z,@Hiroyuki_OSAKI
 リファクタリングでお世話になったQiita記事まとめ,https://qiita.com/shimajiri/items/05be7e1cf16465f18924,74,2022-01-24T14:48:00Z,@shimajiri
@@ -78,7 +78,7 @@ JISキーボードなのにUS配列の環境で文字を打つ,https://qiita.com
 OCaml でゲームボーイエミュレータを書いた話,https://qiita.com/linoscope/items/244d931aaae07df2c27e,148,2021-12-12T12:03:33Z,@linoscope
 チェスを題材に一人DDDごっこしてUnityで動かしてみた話,https://qiita.com/chorome/items/1d9521210aac893b3dd2,13,2021-12-10T02:33:38Z,@chorome
 TODO: 以外のアノテーションコメントをまとめた,https://qiita.com/taka-kawa/items/673716d77795c937d422,985,2018-08-18T14:17:23Z,@taka-kawa
-なぜエンジニアが作る画面はダサいのか…?「理由」と「対策」を徹底解説【エンジニア向け画面デザイン講座】,https://qiita.com/mskmiki/items/544149987475719e417b,5680,2021-12-08T07:36:19Z,@mskmiki
+なぜエンジニアが作る画面はダサいのか…?「理由」と「対策」を徹底解説【エンジニア向け画面デザイン講座】,https://qiita.com/mskmiki/items/544149987475719e417b,5681,2021-12-08T07:36:19Z,@mskmiki
 ググり力、それはエンジニアには必須の能力である,https://qiita.com/dodonki1223/items/955819806297ee554b31,1314,2021-12-08T21:58:11Z,@dodonki1223
 関心の分離を意識した名前設計で巨大クラスを爆殺する,https://qiita.com/MinoDriven/items/37599172b2cd27c38a33,1990,2019-10-21T02:58:22Z,@MinoDriven
 GitHub を使って個人タスク管理,https://qiita.com/okazuki/items/5a50ef367ad9659fc574,190,2021-01-14T02:56:42Z,@okazuki
@@ -372,7 +372,7 @@ grepを忘れただけなのに,https://qiita.com/yabako_kobayashi/items/8113e68
 GitHubのリポジトリをorganizationアカウント（別Owner）に移譲した際の手順,https://qiita.com/turmericN/items/5c3bfd96a589e7954a67,11,2019-05-16T15:05:21Z,@turmericN
 日本語で学べるベイズ統計学の教科書10冊,https://qiita.com/ssugasawa/items/81424628c5eb63b22a9e,137,2021-03-04T23:54:45Z,@ssugasawa
 Visual Studio Code チートシート,https://qiita.com/aoinu/items/681f932ce0b162cd9520,669,2016-04-27T17:09:37Z,@aoinu
-シニアフロントエンド開発者みたいにChromeデベロッパーツールを使おう,https://qiita.com/baby-degu/items/6f367b61d245d5bc217b,1365,2021-04-04T22:54:47Z,@baby-degu
+シニアフロントエンド開発者みたいにChromeデベロッパーツールを使おう,https://qiita.com/baby-degu/items/6f367b61d245d5bc217b,1366,2021-04-04T22:54:47Z,@baby-degu
 アルゴリズム・AtCoder のための数学【中編：数学的知識編②】,https://qiita.com/e869120/items/bd7cfd2dbd2706cb8657,189,2021-04-11T09:21:15Z,@e869120
 jqコマンドでAtCoder Beginners Selectionを解いてみた,https://qiita.com/yuchiki1000yen/items/015459bc96f11626f99b,56,2019-11-27T13:03:40Z,@yuchiki1000yen
 アルゴリズム・AtCoder のための数学【前編：数学的知識編①】,https://qiita.com/e869120/items/b4a0493aac567c6a7240,1221,2021-04-07T11:00:56Z,@e869120
@@ -1268,7 +1268,7 @@ wgetでこういう時はこうする!!,https://qiita.com/hirohiro77/items/b7749
 JuliaでTightBinding模型を作ってみた,https://qiita.com/cometscome_phys/items/2bc0859cec8bb12e8d83,21,2018-10-04T12:56:25Z,@cometscome_phys
 ブックマークレットを作るときのTips,https://qiita.com/xtetsuji/items/e8b61bb39c41b7a9345e,127,2014-02-22T10:17:42Z,@xtetsuji
 UIデザインは人の好奇心に依存している,https://qiita.com/Mister_K/items/6b9bd54d6226e260c308,569,2018-09-26T01:35:19Z,@Mister_K
-VSCodeのオススメ拡張機能 24 選   (とTipsをいくつか),https://qiita.com/sensuikan1973/items/74cf5383c02dbcd82234,5462,2018-09-30T05:57:40Z,@sensuikan1973
+VSCodeのオススメ拡張機能 24 選   (とTipsをいくつか),https://qiita.com/sensuikan1973/items/74cf5383c02dbcd82234,5463,2018-09-30T05:57:40Z,@sensuikan1973
 エンジニアは全員技術記事を書くことを習慣化した方がいいぞ,https://qiita.com/HiromuMasuda0228/items/a71dea7ef4d77a30b118,2518,2018-10-04T08:36:06Z,@HiromuMasuda0228
 CSSアニメーション 入門,https://qiita.com/soarflat/items/4a302e0cafa21477707f,1589,2016-08-18T15:50:02Z,@soarflat
 世界で一番ピュアな論理型プログラミング言語Hilbert(ヒルベルト)をRubyで作った.,https://qiita.com/gogotanaka/items/97ae187156541c8eaa9d,405,2014-11-18T01:45:55Z,@gogotanaka
