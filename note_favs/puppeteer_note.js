@@ -171,7 +171,7 @@ class notebook {
         defaultViewport: { width: 500, height: 1000 },
         headless: true,
         // devtools: true,
-        slowMo: 50
+        slowMo: 200
     });
 
     const note = new notebook();
