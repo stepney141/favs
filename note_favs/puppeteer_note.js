@@ -72,7 +72,7 @@ class notebook {
             await Promise.all([
                 page.waitForNavigation({
                     timeout: 60000,
-                    waitUntil: "load",
+                    waitUntil: "networkidle2",
                 }),
                 (await loginButton_Handle)[0].click()
             ]);

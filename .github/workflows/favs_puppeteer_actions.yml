@@ -84,10 +84,10 @@ jobs:
       working-directory: ./boundhub
       run: node ./puppeteer_boundhub.js && bash ./get_url_list.sh
 
-    - name: note Faved Articles
-      shell: bash
-      working-directory: ./note_favs
-      run: node ./puppeteer_note.js
+    # - name: note Faved Articles
+    #   shell: bash
+    #   working-directory: ./note_favs
+    #   run: node ./puppeteer_note.js
 
     # - name: Zenn Faved Articles
     #   shell: bash
