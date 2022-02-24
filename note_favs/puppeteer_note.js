@@ -129,7 +129,7 @@ class notebook {
                 }
             });
 
-            await page.goto(`${baseURI}/notes/liked`, { //スキした記事の一覧へ飛んで処理雨を実行
+            await page.goto(`${baseURI}/notes/liked`, { //スキした記事の一覧へ飛んで処理を実行
                 waitUntil: "networkidle0",
             });
 

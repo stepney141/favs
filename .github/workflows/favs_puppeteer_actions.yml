@@ -89,10 +89,10 @@ jobs:
       working-directory: ./note_favs
       run: node ./puppeteer_note.js
 
-    - name: Zenn Faved Articles
-      shell: bash
-      working-directory: ./zenn_favs
-      run: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' node ./puppeteer_zenn.js
+    # - name: Zenn Faved Articles
+    #   shell: bash
+    #   working-directory: ./zenn_favs
+    #   run: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' node ./puppeteer_zenn.js
       # headless: falseで動かすための生活の知恵
       # https://github.com/peterdanis/electron-puppeteer-demo/issues/171
 
