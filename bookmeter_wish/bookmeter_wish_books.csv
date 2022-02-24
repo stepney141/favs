@@ -1,4 +1,8 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/5557084,4635047520,遊歩大全,"コリン・フレッチャー 著,芦沢一洋 訳,Fletcher, Colin, 1922-2007,芦沢, 一洋, 1938-1996,",山と溪谷社,"Thu, 10 Jan 2013 09:00:00 +0900",No,
+https://bookmeter.com/books/6880144,4320110390,計算で身につくトポロジー,阿原一志／著,共立出版,20130713,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB13023972
+https://bookmeter.com/books/7884045,4535787557,数学ビギナーズマニュアル　第2版,佐藤文広／著,日本評論社,20140224,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB15032497
+https://bookmeter.com/books/81830,4563011029,ヴィジュアル複素解析,"Needham,Tristan／著 今吉洋一／著 小森洋平／著 米谷文男／著 谷口雅彦／著 ほか",培風館,2002-01,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA55251262
 https://bookmeter.com/books/19302936,4490210639,迷宮と迷路の文化史,ウィリアム・ヘンリー・マシューズ／著 和泉雅人／翻訳 宇沢美子／翻訳,東京堂出版,20220215,No,
 https://bookmeter.com/books/12781034,4327452831,文芸翻訳教室,越前敏弥／著,研究社,20180420,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26048036
 https://bookmeter.com/books/13485105,4627054513,逆数学 定理から公理を「証明」する,ジョン・スティルウェル／原著 田中一之／翻訳 川辺治之／翻訳,森北出版,20190209,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27733604
@@ -35,9 +39,9 @@ https://bookmeter.com/books/13260195,4000298739,代数系入門,松坂和夫／�
 https://bookmeter.com/books/19323526,4627082819,数学書の読みかた,竹山美宏／著,森北出版,20220308,No,
 https://bookmeter.com/books/19310128,4785312092,数学のとびら　ルベーグ積分と測度,山上滋／著,裳華房,20220228,No,
 https://bookmeter.com/books/15539878,4627062710,文化進化の数理,田村光平／著,森北出版,20200409,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30523756
-https://bookmeter.com/books/18974489,4839977348,強い将棋ソフトの創りかた,山岡忠夫／著 加納邦彦／著,マイナビ出版,20211220,No,
+https://bookmeter.com/books/18974489,4839977348,強い将棋ソフトの創りかた,山岡忠夫／著 加納邦彦／著,マイナビ出版,20211220,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11641504
 https://bookmeter.com/books/18938316,4297125218,問題解決のための「アルゴリズム×数学」が基礎からしっかり身につく本,米田優峻／著,技術評論社,20211225,No,
-https://bookmeter.com/books/19123408,4627856415,コンピュータサイエンスにおける様相論理,鹿島亮／著,森北出版,20220120,No,
+https://bookmeter.com/books/19123408,4627856415,コンピュータサイエンスにおける様相論理,鹿島亮／著,森北出版,20220120,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12324744
 https://bookmeter.com/books/11269276,4535067554,佐藤隆三著作集５　技術変化と経済不変性の理論,佐藤隆三／著,日本評論社,20161118,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB22622774
 https://bookmeter.com/books/16488001,4798164739,ゲームメカニクス大全 ボードゲームに学ぶ「おもしろさ」の仕掛け,GeoffreyEngelstein／著 IsaacShalev／著 小野卓也／翻訳,翔泳社,20201012,No,
 https://bookmeter.com/books/19170879,4106038757,怪異猟奇ミステリー全史,風間賢二／著,新潮社,20220126,No,
@@ -223,7 +227,7 @@ https://bookmeter.com/books/11246248,4873117879,Cooking for Geeks 第2版,JeffPo
 https://bookmeter.com/books/16431999,4297116014,揚げて炙ってわかるコンピュータのしくみ,秋田純一／著,技術評論社,20200819,No,
 https://bookmeter.com/books/8311334,4875253141,四元数の発見,矢野忠／著,海鳴社,20140919,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB16774858
 https://bookmeter.com/books/495844,4822283119,ネットワークはなぜつながるのか : 知っておきたいTCP/IP、LAN、光ファイバの基礎知識,戸根勤／著 日経BP／著 日経NETWORK／監修,日経BP社 : 日経BP出版センター,2007-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA8161483X
-https://bookmeter.com/books/505960,4309463037,人間はどこまで耐えられるのか,"Ashcroft,FrancesM／著 Ashcroft,FrancesM.／著 矢羽野薫／翻訳 ほか",河出書房新社,2008-05,No,
+https://bookmeter.com/books/505960,4309463037,人間はどこまで耐えられるのか,フランセス・アッシュクロフト／著 矢羽野薫／翻訳,河出書房新社,20080512,No,
 https://bookmeter.com/books/9814159,4254102739,人間の許容限界事典,坂本和義／編集 山崎昌廣／著 関邦博／編集,朝倉書店,2015-07,No,
 https://bookmeter.com/books/15680483,483188779X,なぜ人はカルトに惹かれるのか,瓜生崇／著,法藏館,20200515,No,
 https://bookmeter.com/books/1800066,4385107564,世界音声記号辞典,"Ladusaw,WilliamA／著 Pullum,GeoffreyK／著 中川裕／翻訳 ほか",三省堂,2003-05,No,
