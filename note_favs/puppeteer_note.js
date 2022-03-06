@@ -130,6 +130,7 @@ class notebook {
             });
 
             await page.goto(`${baseURI}/notes/liked`, { //スキした記事の一覧へ飛んで処理を実行
+                timeout: 1000 * 60,
                 waitUntil: "networkidle0",
             });
 
