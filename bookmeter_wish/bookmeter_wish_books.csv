@@ -1,11 +1,13 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/11753215,4010377046,総合的研究 論理学で学ぶ数学――思考ツールとしてのロジック,長岡亮介／著,旺文社,20170530,No,
+https://bookmeter.com/books/13875296,4862464505,AlphaZero 深層学習・強化学習・探索 人工知能プログラミング実践入門,布留川英一／著,ボーンデジタル,20190628,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28462987
 https://bookmeter.com/books/19234673,4627856512,Pythonで学ぶ解析表現文法と構文解析,倉光君郎／著,森北出版,20220301,No,
 https://bookmeter.com/books/16426982,4623088499,コンテンツ産業論［第2版］,河島伸子／著,ミネルヴァ書房,20200908,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC02481870
 https://bookmeter.com/books/9602672,4535787719,線型代数[改訂版],長谷川浩司／著,日本評論社,20150311,No,
 https://bookmeter.com/books/11998846,4768704727,入門入門群論 : 代数的構造への第一歩,石谷茂／著,現代数学社,1973,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23969653
 https://bookmeter.com/books/5557084,4635047520,遊歩大全,"コリン・フレッチャー 著,芦沢一洋 訳,Fletcher, Colin, 1922-2007,芦沢, 一洋, 1938-1996,",山と溪谷社,"Thu, 10 Jan 2013 09:00:00 +0900",No,
 https://bookmeter.com/books/6880144,4320110390,計算で身につくトポロジー,阿原一志／著,共立出版,20130713,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB13023972
-https://bookmeter.com/books/7884045,4535787557,数学ビギナーズマニュアル　第2版,佐藤文広／著,日本評論社,20140224,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB15032497
+https://bookmeter.com/books/7884045,4535787557,数学ビギナーズマニュアル［第2版］,佐藤文広／著,日本評論社,20140224,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB15032497
 https://bookmeter.com/books/81830,4563011029,ヴィジュアル複素解析,"Needham,Tristan／著 今吉洋一／著 小森洋平／著 米谷文男／著 谷口雅彦／著 ほか",培風館,2002-01,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA55251262
 https://bookmeter.com/books/19302936,4490210639,迷宮と迷路の文化史,ウィリアム・ヘンリー・マシューズ／著 和泉雅人／翻訳 宇沢美子／翻訳,東京堂出版,20220215,No,
 https://bookmeter.com/books/12781034,4327452831,文芸翻訳教室,越前敏弥／著,研究社,20180420,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26048036
@@ -34,7 +36,7 @@ https://bookmeter.com/books/8073627,4004314844,エピジェネティクス,仲�
 https://bookmeter.com/books/18930911,4044005664,身体の大衆文化 描く・着る・歌う,安井眞奈美／編集 エルナンデスアルバロ／編集,ＫＡＤＯＫＡＷＡ,20211112,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10924900
 https://bookmeter.com/books/18683397,4065250455,なぜオナニーはうしろめたいのか,赤川学／著 小堀善友／著 シオリーヌ（大貫詩織）／著 Ｓｃｈｏｏ／著 ＴＥＮＧＡヘルスケア／監修,星海社,20211027,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10723432
 https://bookmeter.com/books/13639063,4863542755,組込みエンジニアの教科書,牧野進二／著 渡辺登／著,シーアンドアール研究所,2019-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2814003X
-https://bookmeter.com/books/19014404,4873119758,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,No,
+https://bookmeter.com/books/19014404,4873119758,ゼロから作る Deep Learning ❹,斎藤康毅／著,オライリー・ジャパン,20220406,No,
 https://bookmeter.com/books/15556819,4873119065,ゼロから作るDeep Learning 3,斎藤康毅／著,オライリー・ジャパン,20200420,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30226171
 https://bookmeter.com/books/11128002,4873117585,ゼロから作るDeep Learning,斎藤康毅／著,オライリー・ジャパン,20160924,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB22117068
 https://bookmeter.com/books/19734,4106035952,拷問と処刑の西洋史,浜本隆志／著,新潮社,2007-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA84246517
@@ -322,7 +324,7 @@ https://bookmeter.com/books/14328136,4150505489,行動経済学の逆襲 下,リ
 https://bookmeter.com/books/14328135,4150505470,行動経済学の逆襲 上,リチャード・セイラー／著 遠藤真美／翻訳,早川書房,20191017,No,
 https://bookmeter.com/books/14725603,4166612417,総会屋とバブル,尾島正洋／著,文藝春秋,20191120,No,
 https://bookmeter.com/books/14875747,4003600371,子規紀行文集,復本一郎／編集,岩波書店,20191215,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29378514
-https://bookmeter.com/books/201278,4003326210,随園食単,袁枚／著 青木正児／翻訳,岩波書店,1980-01,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00770670
+https://bookmeter.com/books/201278,4003326210,随園食単,袁枚／著 青木正児／翻訳,岩波書店,19800116,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00770670
 https://bookmeter.com/books/417210,4775300350,魔導具事典,山北篤／監修 稲葉義明／著,新紀元社,2001-12,No,
 https://bookmeter.com/books/13699555,4778316681,信長名鑑,姫川榴弾／著,太田出版,20191115,No,
 https://bookmeter.com/books/10166111,4041035511,"旧談  ",京極夏彦／著,ＫＡＤＯＫＡＷＡ,20160123,No,
