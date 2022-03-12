@@ -1,4 +1,6 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/9809669,415209558X,世界を破綻させた経済学者たち,ジェフ・マドリック／著 池村千秋／翻訳,早川書房,20150821,No,
+https://bookmeter.com/books/18606029,4866808136,あなたを陰謀論者にする言葉,雨宮純／著,フォレスト出版,20211008,No,
 https://bookmeter.com/books/11753215,4010377046,総合的研究 論理学で学ぶ数学――思考ツールとしてのロジック,長岡亮介／著,旺文社,20170530,No,
 https://bookmeter.com/books/13875296,4862464505,AlphaZero 深層学習・強化学習・探索 人工知能プログラミング実践入門,布留川英一／著,ボーンデジタル,20190628,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28462987
 https://bookmeter.com/books/19234673,4627856512,Pythonで学ぶ解析表現文法と構文解析,倉光君郎／著,森北出版,20220301,No,
@@ -80,7 +82,6 @@ https://bookmeter.com/books/12763255,4623082717,詳論 文化人類学,桑山敬
 https://bookmeter.com/books/1873488,4764925095,信号解析入門,越川常治／著,近代科学社,1992-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN08449528
 https://bookmeter.com/books/2262692,462707641X,工学系学生のための　複素関数攻略への一本道,板垣正文／著,森北出版,20090123,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA88933825
 https://bookmeter.com/books/18632238,4627870019,超巨大リスクの定量的評価,B.JohnGarrick／著 山口彰／翻訳,森北出版,20211009,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10307405
-https://bookmeter.com/books/18711452,4791704096,総特集タロットの世界,"鏡リュウジ責任編集,鏡, リュウジ,",青土社,,No,
 https://bookmeter.com/books/18723083,4791774191,データ視覚化の人類史,マイケル・フレンドリー／著 ハワード・ウェイナー／著 飯嶋貴子／翻訳,青土社,20211026,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10827992
 https://bookmeter.com/books/9767736,4627852916,はじめて学ぶオートマトンと言語理論,藤原暁宏／著,森北,2015-07,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19183767
 https://bookmeter.com/books/12739124,4627062419,Coq/SSReflect/MathCompによる定理証明,萩原学／著 アフェルト・レナルド／著,森北出版,20180418,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB25944631
@@ -229,7 +230,6 @@ https://bookmeter.com/books/16684161,4121026136,古代メソポタミア全史,�
 https://bookmeter.com/books/9040015,463415062X,タロットの歴史,井上教子／著,山川出版社,2014-11,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB17486644
 https://bookmeter.com/books/9867668,4887218222,魔術の人類史,"Greenwood,Susan／著 田内志文／著 グリーンウッドスーザン／著",東洋書林,2015-09,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19651446
 https://bookmeter.com/books/15744397,4309228038,まじないの文化史 日本の呪術を読み解く,新潟県立歴史博物館／監修,河出書房新社,20200519,No,
-https://bookmeter.com/books/11246248,4873117879,Cooking for Geeks 第2版,JeffPotter／著 水原文／翻訳,オライリー・ジャパン,20161223,No,
 https://bookmeter.com/books/16431999,4297116014,揚げて炙ってわかるコンピュータのしくみ,秋田純一／著,技術評論社,20200819,No,
 https://bookmeter.com/books/8311334,4875253141,四元数の発見,矢野忠／著,海鳴社,20140919,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB16774858
 https://bookmeter.com/books/495844,4822283119,ネットワークはなぜつながるのか : 知っておきたいTCP/IP、LAN、光ファイバの基礎知識,戸根勤／著 日経BP／著 日経NETWORK／監修,日経BP社 : 日経BP出版センター,2007-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA8161483X
