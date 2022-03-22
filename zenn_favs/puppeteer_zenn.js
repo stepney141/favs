@@ -226,7 +226,7 @@ class Zennist {
     const browser = await puppeteer.launch({
         defaultViewport: { width: 1000, height: 1000 },
         args: [
-            '--disable-gpu',
+            // '--disable-gpu',
             '--disable-dev-shm-usage',
             '--disable-setuid-sandbox',
             '--no-first-run',
