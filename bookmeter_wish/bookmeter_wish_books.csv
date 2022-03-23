@@ -1,4 +1,7 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/19473860,4065274850,現代思想入門,千葉雅也／著,講談社,20220316,No,
+https://bookmeter.com/books/19492547,4535789576,代数学のレッスン,雪田修一／著,日本評論社,20220405,No,
+https://bookmeter.com/books/18527625,4065250390,アート展「初音ミク・クロニクル」　公式ビジュアルブック,初音ミク・クロニクル製作委員会／著,講談社,20211022,No,
 https://bookmeter.com/books/391456,4582763294,日本奥地紀行,"Bird,IsabellaL.／著 Bird,IsabellaLucy／著 高梨健吉／翻訳 ほか",平凡社,2000-02,No,
 https://bookmeter.com/books/14954708,4044004951,秘境旅行,芳賀日出男／著,ＫＡＤＯＫＡＷＡ,20200123,No,
 https://bookmeter.com/books/19217807,479862750X,リアルな肉感キャラを描く！塗りフェチ事典　女の子編,,ホビージャパン,20220228,No,
@@ -28,7 +31,7 @@ https://bookmeter.com/books/19197183,4336072779,オカルトタロットの歴�
 https://bookmeter.com/books/388470,4796692282,死体の本 : 善悪の彼岸を超える世紀末死人学!,,宝島社,,No,
 https://bookmeter.com/books/18956557,4562059818,船の食事の歴史物語,サイモン・スポルディング／著 大間知知子／翻訳,原書房,20211217,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11788557
 https://bookmeter.com/books/18957407,456205980X,鉄道の食事の歴史物語,ジェリ・クィンジオ／著 大槻敦子／翻訳,原書房,20211217,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11788477
-https://bookmeter.com/books/19150191,4562059826,空と宇宙の食事の歴史物語,リチャード・フォス／著 浜本隆三／翻訳 藤原崇／翻訳,原書房,20220201,No,
+https://bookmeter.com/books/19150191,4562059826,空と宇宙の食事の歴史物語,リチャード・フォス／著 浜本隆三／翻訳 藤原崇／翻訳,原書房,20220201,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12402790
 https://bookmeter.com/books/15515140,4334044654,搾取される研究者たち,山田剛志／著,光文社,20200318,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29887686
 https://bookmeter.com/books/14095675,4802207174,赤羽駅周辺の失われし鉄路を求めて : 特集,,イカロス出版,,No,
 https://bookmeter.com/books/15020607,4802207921,消散軌道風景 : あなたの知らない鉄道考古学,"岡本憲之 総合プロデューサー,",イカロス出版,"Mon, 02 Mar 2020 09:00:00 +0900",No,
@@ -84,7 +87,6 @@ https://bookmeter.com/books/9849684,4130402722,テキストブック 応用一�
 https://bookmeter.com/books/17185165,453555997X,計算経済学,釜国男／著,日本評論社,20210301,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC05960541
 https://bookmeter.com/books/18687995,4000297074,学術出版の来た道,有田正規／著,岩波書店,20211011,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC1028015X
 https://bookmeter.com/books/13530657,4297104636,数学から創るジェネラティブアート : Processingで学ぶかたちのデザイン,"巴山竜来著,巴山, 竜来,",技術評論社,,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28076746
-https://bookmeter.com/books/12763255,4623082717,詳論 文化人類学,桑山敬己／編集 綾部真雄／編集,ミネルヴァ書房,20180430,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB25891557
 https://bookmeter.com/books/1873488,4764925095,信号解析入門,越川常治／著,近代科学社,1992-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN08449528
 https://bookmeter.com/books/2262692,462707641X,工学系学生のための　複素関数攻略への一本道,板垣正文／著,森北出版,20090123,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA88933825
 https://bookmeter.com/books/18632238,4627870019,超巨大リスクの定量的評価,B.JohnGarrick／著 山口彰／翻訳,森北出版,20211009,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10307405
@@ -212,7 +214,7 @@ https://bookmeter.com/books/14441414,4254131291,物理学者，機械学習を�
 https://bookmeter.com/books/5291746,4404042167,最新日本古代史の論争51,新人物往来社／著 歴史読本編集部／著 『歴史読本』編集部／著,新人物往来社,2012-06,No,
 https://bookmeter.com/books/17412469,4562059079,図説　世界地下名所百科,クリス・フィッチ／著 上京恵／翻訳,原書房,20210219,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC05584756
 https://bookmeter.com/books/951190,4876987971,データ同化,,京都大学学術出版会,20090820,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA91090804
-https://bookmeter.com/books/5326009,430941172X,中世幻想世界への招待,"池上俊一 著,池上, 俊一, 1956-,",河出書房新社,"Fri, 26 Oct 2012 09:00:00 +0900",No,
+https://bookmeter.com/books/5326009,430941172X,中世幻想世界への招待,池上俊一／著,河出書房新社,20120906,No,
 https://bookmeter.com/books/17033768,4873119332,計算できるもの、計算できないもの,JohnMacCormick／著 松崎公紀／翻訳 長尾高弘／翻訳,オライリー・ジャパン,20201224,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC04631770
 https://bookmeter.com/books/14927879,4802612168,Pythonでいかにして暗号を破るか 古典暗号解読プログラムを自作する本,AlSweigart／著 IPUSIRON／翻訳,ソシム,20201223,No,
 https://bookmeter.com/books/16966133,4873119294,初めてのマルウェア解析,MonnappaKA／著 石川朝久／翻訳 北原憲／監修 中津留勇／監修,オライリー・ジャパン,20201215,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC0451372X
@@ -239,7 +241,7 @@ https://bookmeter.com/books/15744397,4309228038,まじないの文化史 日本�
 https://bookmeter.com/books/16431999,4297116014,揚げて炙ってわかるコンピュータのしくみ,秋田純一／著,技術評論社,20200819,No,
 https://bookmeter.com/books/8311334,4875253141,四元数の発見,矢野忠／著,海鳴社,20140919,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB16774858
 https://bookmeter.com/books/495844,4822283119,ネットワークはなぜつながるのか : 知っておきたいTCP/IP、LAN、光ファイバの基礎知識,戸根勤／著 日経BP／著 日経NETWORK／監修,日経BP社 : 日経BP出版センター,2007-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA8161483X
-https://bookmeter.com/books/505960,4309463037,人間はどこまで耐えられるのか,フランセス・アッシュクロフト／著 矢羽野薫／翻訳,河出書房新社,20080512,No,
+https://bookmeter.com/books/505960,4309463037,人間はどこまで耐えられるのか,フランセス・アッシュクロフト／著 矢羽野薫／翻訳,河出書房新社,20100803,No,
 https://bookmeter.com/books/9814159,4254102739,人間の許容限界事典,坂本和義／編集 山崎昌廣／著 関邦博／編集,朝倉書店,2015-07,No,
 https://bookmeter.com/books/15680483,483188779X,なぜ人はカルトに惹かれるのか,瓜生崇／著,法藏館,20200515,No,
 https://bookmeter.com/books/1800066,4385107564,世界音声記号辞典,"Ladusaw,WilliamA／著 Pullum,GeoffreyK／著 中川裕／翻訳 ほか",三省堂,2003-05,No,
@@ -384,7 +386,7 @@ https://bookmeter.com/books/13064695,4327472360,グロリアーナの祝祭,竹�
 https://bookmeter.com/books/11819993,4480098003,美少女美術史 人々を惑わせる究極の美,池上英洋／著 荒井咲紀／著,筑摩書房,20170606,No,
 https://bookmeter.com/books/8705015,4480096523,残酷美術史 西洋世界の裏面をよみとく,池上英洋／著,筑摩書房,20141210,No,
 https://bookmeter.com/books/8330632,4480096515,官能美術史 ヌードが語る名画の謎,池上英洋／著,筑摩書房,20141110,No,
-https://bookmeter.com/books/13738736,4309416837,グレン・グールド,吉田秀和／著,河出書房新社,20190507,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28112078
+https://bookmeter.com/books/13738736,4309416837,グレン・グールド,吉田秀和／著,河出書房新社,20190508,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28112078
 https://bookmeter.com/books/9088448,4865650075,『宅間守　精神鑑定書』を読む,飢餓陣営・佐藤幹夫／編,言視舎,20141225,No,
 https://bookmeter.com/books/6794449,4750513105,宅間守 精神鑑定書,岡江晃／著,亜紀書房,20130527,No,
 https://bookmeter.com/books/574875,4167174057,うつくしい子ども,石田衣良／著,文藝春秋,20011207,No,

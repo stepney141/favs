@@ -12,6 +12,7 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_lin
 4627054513,逆数学 定理から公理を「証明」する,ジョン・スティルウェル／原著 田中一之／翻訳 川辺治之／翻訳,森北出版,20190209,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27733604
 4562059818,船の食事の歴史物語,サイモン・スポルディング／著 大間知知子／翻訳,原書房,20211217,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11788557
 456205980X,鉄道の食事の歴史物語,ジェリ・クィンジオ／著 大槻敦子／翻訳,原書房,20211217,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11788477
+4562059826,空と宇宙の食事の歴史物語,リチャード・フォス／著 浜本隆三／翻訳 藤原崇／翻訳,原書房,20220201,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12402790
 4334044654,搾取される研究者たち,山田剛志／著,光文社,20200318,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29887686
 4004314844,エピジェネティクス,仲野徹／著,岩波書店,20140520,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB15543496
 4044005664,身体の大衆文化 描く・着る・歌う,安井眞奈美／編集 エルナンデスアルバロ／編集,ＫＡＤＯＫＡＷＡ,20211112,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10924900
@@ -42,7 +43,6 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_lin
 453555997X,計算経済学,釜国男／著,日本評論社,20210301,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC05960541
 4000297074,学術出版の来た道,有田正規／著,岩波書店,20211011,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC1028015X
 4297104636,数学から創るジェネラティブアート : Processingで学ぶかたちのデザイン,"巴山竜来著,巴山, 竜来,",技術評論社,,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28076746
-4623082717,詳論 文化人類学,桑山敬己／編集 綾部真雄／編集,ミネルヴァ書房,20180430,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB25891557
 4764925095,信号解析入門,越川常治／著,近代科学社,1992-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN08449528
 462707641X,工学系学生のための　複素関数攻略への一本道,板垣正文／著,森北出版,20090123,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA88933825
 4627870019,超巨大リスクの定量的評価,B.JohnGarrick／著 山口彰／翻訳,森北出版,20211009,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10307405
@@ -182,7 +182,7 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_lin
 4320113837,１足す１から現代数論へ,AvnerAsh／著 RobertGross／著 新妻弘／翻訳,共立出版,20190727,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2866410X
 4788515350,セミオトポス 12　「美少女」の記号論,日本記号学会／編集,新曜社,20170831,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB24387642
 4327472360,グロリアーナの祝祭,竹村はるみ／著,研究社,20180822,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26654171
-4309416837,グレン・グールド,吉田秀和／著,河出書房新社,20190507,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28112078
+4309416837,グレン・グールド,吉田秀和／著,河出書房新社,20190508,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28112078
 4582415288,共同研究ポルノグラフィー,大浦康介／著 京都大学人文科学研究所共同研究班／著,平凡社,2011-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB05482872
 478727340X,戦後日本の聴覚文化 音楽・物語・身体,広瀬正浩／著,青弓社,20130920,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB13671564
 479176496X,指紋論 : 心霊主義から生体認証まで,橋本一径／著,青土社,2010-11,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB03761649
