@@ -13,10 +13,11 @@ const JOB_NAME = "Qiita LGTM Articles";
 const BASE_URI = 'https://qiita.com';
 const XPATH = {
     max_pagenation_value: '//div/div[2]/div[3]/div/div[2]/div/ul/li[2]/span',
-    article_url: '//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a[contains(@href, "qiita.com")]',
-    artivle_lgtm_count: '//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div[1]/div[2]/div[1]',
-    author: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div[1]/p/a[1]',
-    created_at: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div[1]/p/p/time' // 'dateTime'プロパティに時刻情報
+    article_url: '//div/div[2]/div[3]/div/div[2]/div/article[*]/a[contains(@href, "qiita.com")]',
+    article_title: '//div/div[2]/div[3]/div/div[2]/div/article[*]/section[2]/h2/a',
+    lgtm_count_of_article: '//div/div[2]/div[3]/div/div[2]/div/article[*]/section[3]/div[1]/div[2]/div[1]',
+    author: '//div/div[2]/div[3]/div/div[2]/div/article[*]/section[1]/div[1]/a[1]/p',
+    created_at: '//div/div[2]/div[3]/div/div[2]/div/article[*]/section[1]/div[1]/p/time' // 'dateTime'プロパティに時刻情報
 };
 
 /**
@@ -94,14 +95,15 @@ async function getLgtm(browser) {
             }
 
             const articleUrlHandles = await page.$x(XPATH.article_url); // get article urls
-            const articleLgtmHandles = await page.$x(XPATH.artivle_lgtm_count); // get article LGTM counts
+            const articleTitleHandles = await page.$x(XPATH.article_title); // get article titles
+            const articleLgtmHandles = await page.$x(XPATH.lgtm_count_of_article); // get article LGTM counts
             const authorHandles = await page.$x(XPATH.author); // get author names
             const createdAtHandles = await page.$x(XPATH.created_at); // get dates that the articles were created at
 
-            for (const [url, lgtm, created_at, author] of
-                zip(articleUrlHandles, articleLgtmHandles, createdAtHandles, authorHandles)) {
+            for (const [url, title, lgtm, created_at, author] of
+                zip(articleUrlHandles, articleTitleHandles, articleLgtmHandles, createdAtHandles, authorHandles)) {
                 lgtmArticlesData.set(url, {
-                    title: await (await url.getProperty("innerHTML")).jsonValue(), //タイトル取得
+                    title: await (await title.getProperty("innerHTML")).jsonValue(), //タイトル取得
                     url: await (await url.getProperty("href")).jsonValue(), //記事URL取得
                     lgtm: Number(await (await lgtm.getProperty("innerText")).jsonValue()), //記事LGTM数取得
                     created_at: await (await created_at.getProperty("dateTime")).jsonValue(), //記事投稿日時取得
