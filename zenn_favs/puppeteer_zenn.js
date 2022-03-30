@@ -151,7 +151,7 @@ class Zennist {
             });
 
             await page.goto(`${baseURI}/dashboard/library`, {
-                waitUntil: "networkidle0",
+                waitUntil: ["networkidle0", "domcontentloaded"]
             });
 
         } catch (e) {
