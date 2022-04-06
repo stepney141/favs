@@ -1,4 +1,5 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/561469,4101311013,河童が覗いたヨーロッパ,妹尾河童／著,新潮社,19830727,No,
 https://bookmeter.com/books/13574094,4622087936,測りすぎ,ジェリー・Ｚ.ミュラー／著 松本裕／翻訳,みすず書房,20190427,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28158909
 https://bookmeter.com/books/9763071,4535558167,計量経済学,末石直也／著,日本評論社,20150723,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19125614
 https://bookmeter.com/books/19473860,4065274850,現代思想入門,千葉雅也／著,講談社,20220316,No,
@@ -22,7 +23,7 @@ https://bookmeter.com/books/5557084,4635047520,遊歩大全,"コリン・フレ�
 https://bookmeter.com/books/6880144,4320110390,計算で身につくトポロジー,阿原一志／著,共立出版,20130713,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB13023972
 https://bookmeter.com/books/7884045,4535787557,数学ビギナーズマニュアル［第2版］,佐藤文広／著,日本評論社,20140224,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB15032497
 https://bookmeter.com/books/81830,4563011029,ヴィジュアル複素解析,"Needham,Tristan／著 今吉洋一／著 小森洋平／著 米谷文男／著 谷口雅彦／著 ほか",培風館,2002-01,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA55251262
-https://bookmeter.com/books/19302936,4490210639,迷宮と迷路の文化史,ウィリアム・ヘンリー・マシューズ／著 和泉雅人／翻訳 宇沢美子／翻訳,東京堂出版,20220215,No,
+https://bookmeter.com/books/19302936,4490210639,迷宮と迷路の文化史,ウィリアム・ヘンリー・マシューズ／著 和泉雅人／翻訳 宇沢美子／翻訳,東京堂出版,20220215,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12656212
 https://bookmeter.com/books/12781034,4327452831,文芸翻訳教室,越前敏弥／著,研究社,20180420,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26048036
 https://bookmeter.com/books/13485105,4627054513,逆数学 定理から公理を「証明」する,ジョン・スティルウェル／原著 田中一之／翻訳 川辺治之／翻訳,森北出版,20190209,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27733604
 https://bookmeter.com/books/19213277,4560098883,「その他の外国文学」の翻訳者,白水社編集部／編集,白水社,20220221,No,
