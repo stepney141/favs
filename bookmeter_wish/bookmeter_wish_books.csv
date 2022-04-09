@@ -1,4 +1,8 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/19535730,4873119693,実用 Go言語,渋川よしき／著 辻大志郎／著 真野隼記／著,オライリー・ジャパン,20220422,No,
+https://bookmeter.com/books/19534621,4779516269,なぜあなたは国際誌に論文を掲載できないのか,加藤司／著,ナカニシヤ出版,20220415,No,
+https://bookmeter.com/books/19331212,4873119820,ソフトウェアアーキテクチャの基礎,MarkRichards／著 NealFord／著 島田浩二／翻訳,オライリー・ジャパン,20220308,No,
+https://bookmeter.com/books/5670459,0472034758,Academic writing for graduate students : essential tasks and skills,"Feak,ChristineB／著 Swales,John／著 SwalesJohnM.／著",University of Michigan Press,c2012-01,No,
 https://bookmeter.com/books/561469,4101311013,河童が覗いたヨーロッパ,妹尾河童／著,新潮社,19830727,No,
 https://bookmeter.com/books/13574094,4622087936,測りすぎ,ジェリー・Ｚ.ミュラー／著 松本裕／翻訳,みすず書房,20190427,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28158909
 https://bookmeter.com/books/9763071,4535558167,計量経済学,末石直也／著,日本評論社,20150723,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19125614
@@ -84,7 +88,6 @@ https://bookmeter.com/books/15437898,4864718652,スーパーナチュラル・�
 https://bookmeter.com/books/441256,4404035861,危ない食卓 : 十九世紀イギリス文学にみる食と毒,横山茂雄／著,新人物往来社,2008-12,No,
 https://bookmeter.com/books/3162372,4254280041,新版 数理計画入門,福島雅夫／著,朝倉書店,20110215,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB04975808
 https://bookmeter.com/books/9806291,4766422538,数理経済学の源流と展開,武藤功／編著 花薗誠／著・編集,慶應義塾大学出版会,20150827,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19417132
-https://bookmeter.com/books/12648144,4258290475,マクロ計量モデルの基礎と実際,植村仁一／編集,アジア経済研究所,20180130,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB25327908
 https://bookmeter.com/books/9849684,4130402722,テキストブック 応用一般均衡モデリング　第2版,細江宣裕／著 我澤賢之／著 橋本日出男／著,東京大学出版会,2016-01-01,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB20626708
 https://bookmeter.com/books/17185165,453555997X,計算経済学,釜国男／著,日本評論社,20210301,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC05960541
 https://bookmeter.com/books/18687995,4000297074,学術出版の来た道,有田正規／著,岩波書店,20211011,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC1028015X
@@ -337,7 +340,7 @@ https://bookmeter.com/books/14875747,4003600371,子規紀行文集,復本一郎�
 https://bookmeter.com/books/201278,4003326210,随園食単,袁枚／著 青木正児／翻訳,岩波書店,19800116,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00770670
 https://bookmeter.com/books/417210,4775300350,魔導具事典,山北篤／監修 稲葉義明／著,新紀元社,2001-12,No,
 https://bookmeter.com/books/13699555,4778316681,信長名鑑,姫川榴弾／著,太田出版,20191115,No,
-https://bookmeter.com/books/10166111,4041035511,"旧談  ",京極夏彦／著,ＫＡＤＯＫＡＷＡ,20160123,No,
+https://bookmeter.com/books/10166111,4041035511,旧談,京極夏彦／著,ＫＡＤＯＫＡＷＡ,20160123,No,
 https://bookmeter.com/books/8162003,4787273566,ロバート・キャパの謎,吉岡栄二郎／著,青弓社,20140823,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB16567048
 https://bookmeter.com/books/383451,4795244731,妖怪現わる : 現代妖怪談義,"中山市朗 著,中山, 市朗, 1959-,",遊タイム出版,"Tue, 20 Sep 1994 09:00:00 +0900",No,
 https://bookmeter.com/books/11607851,4794810679,ハイン　地の果ての祭典,アン・チャップマン／著 大川豪司／翻訳,新評論,20170424,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23659984
