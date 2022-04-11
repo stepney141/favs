@@ -14,7 +14,7 @@ const XPATH = {
     accountNameInput : '//*[@id="session_email_address"]',
     passwordInput : '//*[@id="session_password"]',
     loginButton: '//*[@id="js_sessions_new_form"]/form/div[4]/button',
-    nextPaginationButton: '//*[@id="__next"]/article/div/section/div[2]/div/div/button',
+    nextPaginationButton:'//button[contains(text(), "もっと読み込む")]'
 };
 
 const zenn_email = (process.env.ZENN_GOOGLE_ACCOUNT).toString();
@@ -118,7 +118,7 @@ class Zennist {
             await page.setExtraHTTPHeaders({
                 'accept-language': 'ja-JP',
             });
-            await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
+            // await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
 
             //「いいねした投稿」のスクレイピング
             page.on('response', async (response) => { //イベントハンドラを登録
@@ -142,17 +142,24 @@ class Zennist {
                             "liked_count": liked_count
                         });
                     }
-
-                    const nextPaginationButton_Handle = await page.$x(XPATH.nextPaginationButton);
-                    if (nextPaginationButton_Handle.length !== 0) {
-                        nextPaginationButton_Handle[0].click();
-                    }
                 }
             });
 
             await page.goto(`${baseURI}/dashboard/library`, {
-                waitUntil: ["networkidle0", "domcontentloaded"]
+                waitUntil: ["networkidle0", "domcontentloaded", "load"]
             });
+
+            for (; ;) {
+                const [, nextPaginationButton_Handle] = await Promise.all([
+                    page.waitForXPath(XPATH.nextPaginationButton),
+                    page.$x(XPATH.nextPaginationButton)
+                ]);
+                if (nextPaginationButton_Handle.length !== 0) {
+                    await nextPaginationButton_Handle[0].click();
+                } else {
+                    break;
+                }
+            }
 
         } catch (e) {
             console.log(e);
@@ -225,15 +232,15 @@ class Zennist {
 
     const browser = await puppeteer.launch({
         defaultViewport: { width: 1000, height: 1000 },
-        args: [
-            // '--disable-gpu',
-            '--disable-dev-shm-usage',
-            '--disable-setuid-sandbox',
-            '--no-first-run',
-            '--no-sandbox',
-            '--no-zygote',
-            // '--single-process'
-        ],
+        // args: [
+        //     // '--disable-gpu',
+        //     '--disable-dev-shm-usage',
+        //     '--disable-setuid-sandbox',
+        //     '--no-first-run',
+        //     '--no-sandbox',
+        //     '--no-zygote',
+        //     // '--single-process'
+        // ],
         slowMo: 100,
         // headless: true,
         headless: false, //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
