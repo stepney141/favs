@@ -150,12 +150,12 @@ class Zennist {
             });
 
             for (; ;) {
-                const [, nextPaginationButton_Handle] = await Promise.all([
-                    page.waitForXPath(XPATH.nextPaginationButton),
-                    page.$x(XPATH.nextPaginationButton)
+                const [wait_eh, button_eh] = await Promise.all([
+                    page.waitForXPath(XPATH.nextPaginationButton, { timeout: 5 * 1000}),
+                    page.$x(XPATH.nextPaginationButton),
                 ]);
-                if (nextPaginationButton_Handle.length !== 0) {
-                    await nextPaginationButton_Handle[0].click();
+                if (wait_eh !== null) {
+                    await button_eh[0].click();
                 } else {
                     break;
                 }
