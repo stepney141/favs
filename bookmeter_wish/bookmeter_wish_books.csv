@@ -1,4 +1,7 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/4925712,458276763X,職人歌合,網野善彦／著,平凡社,2012-05,No,
+https://bookmeter.com/books/105036,4480091998,贈与論,"マルセル・モース 著,吉田禎吾, 江川純一 訳,Mauss, Marcel, 1872-1950,吉田, 禎吾, 1923-,江川, 純一, 1974-,",筑摩書房,"Fri, 27 Feb 2015 09:00:00 +0900",Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA89082450
+https://bookmeter.com/books/19151534,4532324483,Anthro Vision（アンソロ・ビジョン）　人類学的思考で視るビジネスと世界,ジリアン・テット／著 土方奈美／翻訳,日経BP 日本経済新聞出版本部,20220127,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12402473
 https://bookmeter.com/books/14428789,4560097305,大学教授のように小説を読む方法［増補新版］,トーマス・C・フォスター／著 矢倉尚子／翻訳,白水社,20191025,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29127536
 https://bookmeter.com/books/10101763,4641150281,計量経済学の第一歩,田中隆一／著,有斐閣,2015-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB20233363
 https://bookmeter.com/books/17844327,4779514614,「趣味に生きる」の文化論,宮入恭平／編集 杉山昂平／編集,ナカニシヤ出版,20210419,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC06739698
@@ -45,11 +48,11 @@ https://bookmeter.com/books/81830,4563011029,ヴィジュアル複素解析,"Nee
 https://bookmeter.com/books/19302936,4490210639,迷宮と迷路の文化史,ウィリアム・ヘンリー・マシューズ／著 和泉雅人／翻訳 宇沢美子／翻訳,東京堂出版,20220215,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12656212
 https://bookmeter.com/books/12781034,4327452831,文芸翻訳教室,越前敏弥／著,研究社,20180420,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26048036
 https://bookmeter.com/books/13485105,4627054513,逆数学 定理から公理を「証明」する,ジョン・スティルウェル／原著 田中一之／翻訳 川辺治之／翻訳,森北出版,20190209,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27733604
-https://bookmeter.com/books/19213277,4560098883,「その他の外国文学」の翻訳者,白水社編集部／編集,白水社,20220221,No,
+https://bookmeter.com/books/19213277,4560098883,「その他の外国文学」の翻訳者,白水社編集部／編集,白水社,20220221,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12988981
 https://bookmeter.com/books/19197014,4065267757,みんなのユニバーサル文章術　今すぐ役に立つ「最強」の日本語ライティングの世界,安田峰俊／著 大川ぶくぶ／著,星海社,20220126,No,
 https://bookmeter.com/books/19149532,4065259797,迷走しない！英語論文の書き方　秘密は「構造」作りにあり,ヴァランヤ・チョーベー／著 成田悠輔／翻訳・監修 布施雄士／翻訳,講談社,20220127,No,
 https://bookmeter.com/books/19397288,4336073198,法の書　〔増補新訳〕　【普及版】,アレイスター・クロウリー／著 植松靖夫／翻訳,国書刊行会,20220222,No,
-https://bookmeter.com/books/19197183,4336072779,オカルトタロットの歴史,ロナルド・デッカー／著 マイケル・ダメット／著 今野喜和人／翻訳,国書刊行会,20220221,No,
+https://bookmeter.com/books/19197183,4336072779,オカルトタロットの歴史,ロナルド・デッカー／著 マイケル・ダメット／著 今野喜和人／翻訳,国書刊行会,20220221,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13153771
 https://bookmeter.com/books/388470,4796692282,死体の本 : 善悪の彼岸を超える世紀末死人学!,,宝島社,,No,
 https://bookmeter.com/books/18956557,4562059818,船の食事の歴史物語,サイモン・スポルディング／著 大間知知子／翻訳,原書房,20211217,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11788557
 https://bookmeter.com/books/18957407,456205980X,鉄道の食事の歴史物語,ジェリ・クィンジオ／著 大槻敦子／翻訳,原書房,20211217,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11788477
@@ -75,10 +78,10 @@ https://bookmeter.com/books/11128002,4873117585,ゼロから作るDeep Learning,
 https://bookmeter.com/books/19734,4106035952,拷問と処刑の西洋史,浜本隆志／著,新潮社,2007-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA84246517
 https://bookmeter.com/books/12060876,4750515183,性表現規制の文化史,白田秀彰／著,亜紀書房,20170724,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB24128859
 https://bookmeter.com/books/13260195,4000298739,代数系入門,松坂和夫／著,岩波書店,1976,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27181144
-https://bookmeter.com/books/19310128,4785312092,数学のとびら　ルベーグ積分と測度,山上滋／著,裳華房,20220228,No,
+https://bookmeter.com/books/19310128,4785312092,数学のとびら　ルベーグ積分と測度,山上滋／著,裳華房,20220228,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13003269
 https://bookmeter.com/books/15539878,4627062710,文化進化の数理,田村光平／著,森北出版,20200409,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30523756
 https://bookmeter.com/books/18974489,4839977348,強い将棋ソフトの創りかた,山岡忠夫／著 加納邦彦／著,マイナビ出版,20211220,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11641504
-https://bookmeter.com/books/18938316,4297125218,問題解決のための「アルゴリズム×数学」が基礎からしっかり身につく本,米田優峻／著,技術評論社,20211225,No,
+https://bookmeter.com/books/18938316,4297125218,問題解決のための「アルゴリズム×数学」が基礎からしっかり身につく本,米田優峻／著,技術評論社,20211225,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11838746
 https://bookmeter.com/books/19123408,4627856415,コンピュータサイエンスにおける様相論理,鹿島亮／著,森北出版,20220120,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12324744
 https://bookmeter.com/books/11269276,4535067554,佐藤隆三著作集５　技術変化と経済不変性の理論,佐藤隆三／著,日本評論社,20161118,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB22622774
 https://bookmeter.com/books/16488001,4798164739,ゲームメカニクス大全 ボードゲームに学ぶ「おもしろさ」の仕掛け,GeoffreyEngelstein／著 IsaacShalev／著 小野卓也／翻訳,翔泳社,20201012,No,
