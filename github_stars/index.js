@@ -4,15 +4,9 @@ const papa = require("papaparse");
 const path = require('path');
 require("dotenv").config({path: path.join(__dirname, "../.env")});
 
-const token = process.env.GITHUB_OAUTH_TOKEN;
+const token = process.env.OAUTH_TOKEN_OF_GITHUB;
 
-const setup = async () => {
-    const app_auth = new Octokit({
-        auth: token
-    });
-
-    return app_auth;
-};
+const createClient = () => new Octokit({ auth: token });
 
 const getStarredGists = async (app) => {
     // https://docs.github.com/en/rest/gists/gists#list-starred-gists
@@ -68,10 +62,9 @@ const writeCSV = async (json, filename) => {
     }
 };
 
-
 const main = async () => {
     const startTime = Date.now();
-    const app = await setup();
+    const app = createClient();
 
     const gists_list_filename = 'starred_gists.csv';
     const gists_json = await getStarredGists(app);
