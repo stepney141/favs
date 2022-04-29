@@ -58,7 +58,7 @@ wget --no-check-certificate \
    - Client ID , Client Secretはそれぞれ環境変数 CLIENT_ID , CLIENT_SECRET として保存しておくことを推奨
    - Callback URLの設定は必須。ぶっちゃけ何のURLを入れようと問題ないっぽいが、一応自分が保有/管理しているURLを使う方がいいかも？ 自分は自身のgithub.ioを入力した
 
-2. ``https://github.com/login/oauth/authorize?client_id=$CLIENT_ID&scope=repo`` にブラウザでアクセスする。そうするとApp Authorizationの画面が出てくるので、ボタンを押して承認する。
+2. ``https://github.com/login/oauth/authorize?client_id=$CLIENT_ID&scope=repo%20gist`` にブラウザでアクセスする。そうするとApp Authorizationの画面が出てくるので、ボタンを押して承認する。
 
 3. 承認すると ``https://stepney141.github.io/?code=0123456789abcdefg`` みたいな感じで、自分が指定したCallback URLにリダイレクトされる。末尾にqueryとしてぶら下がっているCodeをコピペしておく
 

@@ -29,6 +29,7 @@ jobs:
       TWITTER_PASSWORD: ${{ secrets.TWITTER_PASSWORD }}
       WIKIPEDIA_USERNAME: ${{ secrets.WIKIPEDIA_USERNAME }}
       WIKIPEDIA_PASSWORD: ${{ secrets.WIKIPEDIA_PASSWORD }}
+      OAUTH_TOKEN_OF_GITHUB: ${{ secrets.OAUTH_TOKEN_OF_GITHUB }}
 
     steps:
     - uses: actions/checkout@v2
@@ -64,11 +65,12 @@ jobs:
         echo "TWITTER_PASSWORD=${{ secrets.TWITTER_PASSWORD }}" >> .env
         echo "WIKIPEDIA_USERNAME=${{ secrets.WIKIPEDIA_USERNAME }}" >> .env
         echo "WIKIPEDIA_PASSWORD=${{ secrets.WIKIPEDIA_PASSWORD }}" >> .env
+        echo "OAUTH_TOKEN_OF_GITHUB=${{ secrets.OAUTH_TOKEN_OF_GITHUB }}" >> .env
     
     - name: GitHub Stars
       shell: bash
       working-directory: ./github_stars
-      run: bash ./wget_github_stars.sh
+      run: node ./index.js
 
     - name: Qiita LGTM
       shell: bash
