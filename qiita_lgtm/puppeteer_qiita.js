@@ -14,10 +14,10 @@ const BASE_URI = 'https://qiita.com';
 const XPATH = {
     max_pagenation_value: '//div/div[2]/div[3]/div/div[2]/div/ul/li[2]/span',
     article_url: '//div/div[2]/div[3]/div/div[2]/div/article[*]/a[contains(@href, "qiita.com")]',
-    article_title: '//div/div[2]/div[3]/div/div[2]/div/article[*]/section[2]/h2/a',
-    lgtm_count_of_article: '//div/div[2]/div[3]/div/div[2]/div/article[*]/section[3]/div[1]/div[2]/div[1]',
-    author: '//div/div[2]/div[3]/div/div[2]/div/article[*]/section[1]/div[1]/a[1]/p',
-    created_at: '//div/div[2]/div[3]/div/div[2]/div/article[*]/section[1]/div[1]/p/time' // 'dateTime'プロパティに時刻情報
+    article_title: '//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a',
+    lgtm_count_of_article: '//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div/div[2]/span[2]',
+    author: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div/p',
+    created_at: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div/span/time' // 'dateTime'プロパティに時刻情報
 };
 
 /**
@@ -60,7 +60,7 @@ function* zip(...args) {
     // 引数チェック
     for (let arr of args) {
         if (arr.length !== length){
-            throw "Lengths of arrays are not eqaul.";
+            throw "Lengths of arrays are not the same.";
         }
     }
     
@@ -107,7 +107,7 @@ async function getLgtm(browser) {
                     url: await (await url.getProperty("href")).jsonValue(), //記事URL取得
                     lgtm: Number(await (await lgtm.getProperty("innerText")).jsonValue()), //記事LGTM数取得
                     created_at: await (await created_at.getProperty("dateTime")).jsonValue(), //記事投稿日時取得
-                    author: await (await author.getProperty("innerHTML")).jsonValue(), //記事投稿者取得
+                    author: await (await author.getProperty("innerText")).jsonValue(), //記事投稿者取得
                 });
             }
 
