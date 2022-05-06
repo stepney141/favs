@@ -1,6 +1,10 @@
 # github_stars
 Lists of GitHub repositories that I starred.  
 
+## 個人アクセストークン認証
+
+https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+
 ## 解説
 
 ### 1. GitHubの任意のユーザーの情報を取得するREST APIを使い、自分が押したstarの情報を取得する
