@@ -9,11 +9,24 @@ const password = process.env.WIKIPEDIA_PASSWORD;
 
 const sleep = async (seconds) => new Promise((resolve, reject) => { setTimeout(() => { resolve(); }, seconds * 1000); });
 
+const handleAxiosError = error => {
+    // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
+    if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+    } else if (error.request) {
+        console.log(error.request);
+    } else {
+        console.log('Error', error);
+    }
+};
+
 /**
  * ログイントークンを取得する
  * ref: https://www.mediawiki.org/wiki/API:Tokens
  */
-const get_login_token = async (baseURI) => {
+const getLoginToken = async (baseURI) => {
     try {
         const response = await axios({
             method: 'get',
@@ -33,16 +46,7 @@ const get_login_token = async (baseURI) => {
 
         return [ login_token, cookies ];
     } catch (e) {
-        // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
-        if (e.response) {
-            console.log(e.response.data);
-            console.log(e.response.status);
-            console.log(e.response.headers);
-        } else if (e.request) {
-            console.log(e.request);
-        } else {
-            console.log('Error', e);
-        }
+        handleAxiosError(e);
         return false;
     }
 };
@@ -51,7 +55,7 @@ const get_login_token = async (baseURI) => {
  * client loginを行う
  * ref: https://www.mediawiki.org/wiki/API:Login
  */
-const post_client_login = async (baseURI, login_token, cookies) => {
+const postClientLogin = async (baseURI, login_token, cookies) => {
     try {
         const clientlogin_response = await axios({
             method: 'post',
@@ -74,16 +78,7 @@ const post_client_login = async (baseURI, login_token, cookies) => {
 
         return [ login_response_json, client_cookies ];
     } catch (e) {
-        // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
-        if (e.response) {
-            console.log(e.response.data);
-            console.log(e.response.status);
-            console.log(e.response.headers);
-        } else if (e.request) {
-            console.log(e.request);
-        } else {
-            console.log('Error', e);
-        }
+        handleAxiosError(e);
         return false;
     }
 };
@@ -93,7 +88,7 @@ const post_client_login = async (baseURI, login_token, cookies) => {
  */
 const login = async (baseURI, login_token, cookies) => {
     try {
-        const [ login_response_json, client_cookies ] = await post_client_login(baseURI, login_token, cookies);
+        const [ login_response_json, client_cookies ] = await postClientLogin(baseURI, login_token, cookies);
         const login_status = login_response_json?.status;
         console.log('status:', login_status);
 
@@ -112,16 +107,7 @@ const login = async (baseURI, login_token, cookies) => {
             throw new Error("The login status is undefined");
         }
     } catch (e) {
-        // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
-        if (e.response) {
-            console.log(e.response.data);
-            console.log(e.response.status);
-            console.log(e.response.headers);
-        } else if (e.request) {
-            console.log(e.request);
-        } else {
-            console.log('Error', e);
-        }
+        handleAxiosError(e);
         return false;
     }
 };
@@ -131,7 +117,7 @@ const login = async (baseURI, login_token, cookies) => {
  * - https://www.mediawiki.org/wiki/Manual:Namespace
  * - https://www.mediawiki.org/wiki/API:Watchlistraw
  */
-const get_watchlist_raw = async (baseURI, cookies, pagination = null) => {
+const getWatchlistRaw = async (baseURI, cookies, pagination = null) => {
     try {
         let queries = {
             action: 'query', 
@@ -166,16 +152,7 @@ const get_watchlist_raw = async (baseURI, cookies, pagination = null) => {
 
         return [ watchlist_data, pagination_flag ];
     } catch (e) {
-        // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
-        if (e.response) {
-            console.log(e.response.data);
-            console.log(e.response.status);
-            console.log(e.response.headers);
-        } else if (e.request) {
-            console.log(e.request);
-        } else {
-            console.log('Error', e);
-        }
+        handleAxiosError(e);
         return false;
     }
 };
@@ -185,7 +162,7 @@ const get_watchlist_raw = async (baseURI, cookies, pagination = null) => {
  * - https://sleepygamersmemo.blogspot.com/2018/11/wikipedia-url-shortener-tool.html
  * - https://www.mediawiki.org/wiki/Extension:TextExtracts#API 
  */
-const get_pageid = async (baseURI, cookies, page_title) => {
+const getPageId = async (baseURI, cookies, page_title) => {
     try {
         const response = await axios({
             method: 'post',
@@ -208,32 +185,23 @@ const get_pageid = async (baseURI, cookies, page_title) => {
 
         return page_id;
     } catch (e) {
-        // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
-        if (e.response) {
-            console.log(e.response.data);
-            console.log(e.response.status);
-            console.log(e.response.headers);
-        } else if (e.request) {
-            console.log(e.request);
-        } else {
-            console.log('Error', e);
-        }
+        handleAxiosError(e);
         return false;
     }
 };
 
-const fetch_watchlist = async function* (baseURI, cookies) {
+const fetchWatchlist = async function* (baseURI, cookies) {
     /** @type {Array<{ns: number, title: string}> | undefined} */
     let wl_data;
     let pagination_flag = null;
 
     // ref: https://ja.javascript.info/async-iterators-generators
     while (pagination_flag !== undefined) {
-        [ wl_data, pagination_flag ] = await get_watchlist_raw(baseURI, cookies, pagination_flag);
+        [ wl_data, pagination_flag ] = await getWatchlistRaw(baseURI, cookies, pagination_flag);
 
         for (const single_obj of wl_data) {
             const page_title = single_obj.title;
-            const page_url = `https://${baseURI}/?curid=${await get_pageid(baseURI, cookies, page_title)}`;
+            const page_url = `https://${baseURI}/?curid=${await getPageId(baseURI, cookies, page_title)}`;
             
             yield [page_title, page_url];
         }
@@ -245,7 +213,7 @@ const fetch_watchlist = async function* (baseURI, cookies) {
 /**
  * watchlistraw APIから得られた配列を取得し、指定したファイルに追記する
  */
-const output_watchlist_data = async (data, filename) => {
+const writeWatchlistToCSV = async (data, filename) => {
     try {
         await fs.appendFile(
             `./${filename}`,
@@ -263,41 +231,25 @@ const output_watchlist_data = async (data, filename) => {
 /**
  * APiを叩いてウォッチリストの情報を取得し、それをファイルに出力する
  */
-const watchlist_extractor = async (baseURI, cookies) => {
+const extractWatchlist = async (baseURI, cookies) => {
     try {
         const filename = `${baseURI}.csv`;
         const filehandle = await fs.open(filename, 'w');
 
-        await output_watchlist_data('title,url\n', filename);
+        await writeWatchlistToCSV('title,url\n', filename); //CSVのヘッダ作成
 
         // ref: https://ja.javascript.info/async-iterators-generators
-        for await (const [ page_title, page_url ] of fetch_watchlist(baseURI, cookies)){
+        for await (const [ page_title, page_url ] of fetchWatchlist(baseURI, cookies)){
             const output_data = `${page_title},${page_url}\n`;
-            await output_watchlist_data(output_data, filename);
+            await writeWatchlistToCSV(output_data, filename);
             // await sleep(1);
         }
 
         await filehandle.close();
     } catch (e) {
-        // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
-        if (e.response) {
-            console.log(e.response.data);
-            console.log(e.response.status);
-            console.log(e.response.headers);
-        } else if (e.request) {
-            console.log(e.request);
-        } else {
-            console.log('Error', e);
-        }
+        handleAxiosError(e);
         return false;
     }
-};
-
-const main = async (url) => {
-    const [ login_token, login_cookies ] = await get_login_token(url);
-    const [, client_cookies ] = await login(url, login_token, login_cookies);
-
-    await watchlist_extractor(url, client_cookies);
 };
 
 (async () => {
@@ -312,7 +264,10 @@ const main = async (url) => {
 
     for (const url of Object.values(accounts)) {
         console.log(`${url}: started`);
-        await main(url);
+        const [ login_token, login_cookies ] = await getLoginToken(url);
+        const [, client_cookies ] = await login(url, login_token, login_cookies);
+
+        await extractWatchlist(url, client_cookies);
         console.log(`${url}: finished`);
     }
 
