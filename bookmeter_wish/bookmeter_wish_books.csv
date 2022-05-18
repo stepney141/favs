@@ -1,4 +1,5 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/19681533,4065280869,基礎からわかる　論文の書き方,小熊英二／著,講談社,20220518,No,
 https://bookmeter.com/books/11646442,4130802569,記号と再帰　新装版,田中久美子／著,東京大学出版会,2017-04-01,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23562780
 https://bookmeter.com/books/11564818,4295000965,Goプログラミング実践入門,"Chang,SauSheong／著 上西昌弘／翻訳 武舎広幸／翻訳 鄭兆雄／著 阿部和也／翻訳 ほか",インプレス,2017-03,No,
 https://bookmeter.com/books/19330275,4757143605,古典の中の地球儀 海外から見た日本文学,荒木浩／著,ＮＴＴ出版,20220331,No,
@@ -33,7 +34,7 @@ https://bookmeter.com/books/561469,4101311013,河童が覗いたヨーロッパ,
 https://bookmeter.com/books/13574094,4622087936,測りすぎ,ジェリー・Ｚ.ミュラー／著 松本裕／翻訳,みすず書房,20190427,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28158909
 https://bookmeter.com/books/9763071,4535558167,計量経済学,末石直也／著,日本評論社,20150723,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19125614
 https://bookmeter.com/books/19473860,4065274850,現代思想入門,千葉雅也／著,講談社,20220316,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13481227
-https://bookmeter.com/books/19492547,4535789576,代数学のレッスン,雪田修一／著,日本評論社,20220405,No,
+https://bookmeter.com/books/19492547,4535789576,代数学のレッスン,雪田修一／著,日本評論社,20220405,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14135877
 https://bookmeter.com/books/18527625,4065250390,アート展「初音ミク・クロニクル」　公式ビジュアルブック,初音ミク・クロニクル製作委員会／著,講談社,20211022,No,
 https://bookmeter.com/books/391456,4582763294,日本奥地紀行,"Bird,IsabellaL.／著 Bird,IsabellaLucy／著 高梨健吉／翻訳 ほか",平凡社,2000-02,No,
 https://bookmeter.com/books/14954708,4044004951,秘境旅行,芳賀日出男／著,ＫＡＤＯＫＡＷＡ,20200123,No,
