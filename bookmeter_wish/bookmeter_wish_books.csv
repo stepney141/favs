@@ -1,4 +1,7 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,opac_link
+https://bookmeter.com/books/19425535,4873119790,Pythonからはじめるアルゴリズムトレード,YvesHilpisch／著 村上振一郎／翻訳,オライリー・ジャパン,20220408,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13887538
+https://bookmeter.com/books/19366391,4792414962,伝承文学を学ぶ,小川直之／編集 大石泰夫／編集 服部比呂美／編集 飯倉義之／編集,清文堂出版,20220215,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12912593
+https://bookmeter.com/books/436419,4621045938,いかにして問題をとくか,ポリア，G．／著 柿内賢信／翻訳,丸善出版,19540101,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA68198479
 https://bookmeter.com/books/19813667,4907162219,魔術の文法学 = Grammatology of the magic : 記号論的エッセー : Japanese edition,"前野佳彦 著,前野, 佳彦,",テクネ,"Tue, 09 Dec 2014 09:00:00 +0900",No,
 https://bookmeter.com/books/6866103,4152093854,国家はなぜ衰退するのか（下）,ダロン・アセモグル／著 ジェイムズ・Ａ・ロビンソン／著 鬼澤忍／翻訳,早川書房,20130621,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB12774120
 https://bookmeter.com/books/6865470,4152093846,国家はなぜ衰退するのか（上）,ダロン・アセモグル／著 ジェイムズ・Ａ・ロビンソン／著 鬼澤忍／翻訳,早川書房,20130621,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB12774120
@@ -87,7 +90,7 @@ https://bookmeter.com/books/8073627,4004314844,エピジェネティクス,仲�
 https://bookmeter.com/books/18930911,4044005664,身体の大衆文化 描く・着る・歌う,安井眞奈美／編集 エルナンデスアルバロ／編集,ＫＡＤＯＫＡＷＡ,20211112,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10924900
 https://bookmeter.com/books/18683397,4065250455,なぜオナニーはうしろめたいのか,赤川学／著 小堀善友／著 シオリーヌ（大貫詩織）／著 Ｓｃｈｏｏ／著 ＴＥＮＧＡヘルスケア／監修,星海社,20211027,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10723432
 https://bookmeter.com/books/13639063,4863542755,組込みエンジニアの教科書,牧野進二／著 渡辺登／著,シーアンドアール研究所,2019-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2814003X
-https://bookmeter.com/books/19014404,4873119758,ゼロから作る Deep Learning ❹,斎藤康毅／著,オライリー・ジャパン,20220406,No,
+https://bookmeter.com/books/19014404,4873119758,ゼロから作る Deep Learning ❹,斎藤康毅／著,オライリー・ジャパン,20220406,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13737932
 https://bookmeter.com/books/15556819,4873119065,ゼロから作るDeep Learning 3,斎藤康毅／著,オライリー・ジャパン,20200420,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30226171
 https://bookmeter.com/books/11128002,4873117585,ゼロから作るDeep Learning,斎藤康毅／著,オライリー・ジャパン,20160924,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB22117068
 https://bookmeter.com/books/19734,4106035952,拷問と処刑の西洋史,浜本隆志／著,新潮社,2007-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA84246517
