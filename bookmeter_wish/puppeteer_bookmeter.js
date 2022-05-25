@@ -4,19 +4,40 @@ const papa = require("papaparse");
 const axios = require("axios");
 const { XMLParser } = require("fast-xml-parser");
 const path = require('path');
+const { PdfData } = require('pdfdataextract');
 require("dotenv").config({path: path.join(__dirname, "../.env")});
 
 const process_description = 'Bookmeter Wished Books';
 const bookmeter_baseURI = 'https://bookmeter.com';
 const bookmeter_userID = '1003258';
+const bookmeter_username = (process.env.BOOKMETER_ACCOUNT).toString();
+const bookmeter_password = (process.env.BOOKMETER_PASSWORD).toString();
+const cinii_appid = (process.env.CINII_API_APPID).toString();
+const main_library_id = 'FA005358'; //上智大学図書館の機関ID ref: https://ci.nii.ac.jp/library/FA005358
+const math_library_booklist = { //数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108
+    ja: 'https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_j.pdf',
+    en_with_isbn: 'https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_F1.pdf'
+};
+
 const xpath = {
     isBookExist : '/html/body/div[1]/div[1]/section/div/div[1]/ul[1]/li',
     booksUrl : '/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[2]/a',
     amazonLink : '/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[4]/a',
-
     accountNameInput : '//*[@id="session_email_address"]',
     passwordInput : '//*[@id="session_password"]',
     loginButton : '//*[@id="js_sessions_new_form"]/form/div[4]/button',
+};
+
+const book_data_template = {
+    "bookmeter_url": "",
+    "isbn_or_asin": "",
+    "book_title": "",
+    "author": "",
+    "publisher": "",
+    "published_date": "",
+    "exist_in_sophia": "",
+    "central_opac_link": "",
+    "mathlib_opac_link": ""
 };
 
 // ref: http://absg.hatenablog.com/entry/2016/03/17/190831
@@ -24,33 +45,25 @@ const xpath = {
 // ref: https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11143609671
 const amazon_asin_regex = /[A-Z0-9]{10}|[0-9-]{9,16}[0-9X]/;
 
-const bookmeter_username = (process.env.BOOKMETER_ACCOUNT).toString();
-const bookmeter_password = (process.env.BOOKMETER_PASSWORD).toString();
-const cinii_appid = (process.env.CINII_API_APPID).toString();
-const library_id = 'FA005358'; //上智大学図書館の機関ID ref: https://ci.nii.ac.jp/library/FA005358
+// ref: https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
+const isbn_regex = /(?=[0-9X]{10}|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}|97[89][0-9]{10}|(?=(?:[0-9]+[- ]){4})[- 0-9]{17})(?:97[89])?[0-9]{1,5}[0-9]+[0-9]+[0-9X]/g;
 
 // ref: https://qiita.com/albno273/items/c2d48fdcbf3a9a3434db
 // example: await sleep(randomWait(1000, 0.5, 1.1)); 1000ms x0.5 ~ x1.1 の間でランダムにアクセスの間隔を空ける
 const sleep = async (time) => new Promise((resolve, reject) => { setTimeout(() => { resolve(); }, time); });
 const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
 
-// ref: https://cpoint-lab.co.jp/article/202007/15928/
-const createAxiosInstance = () => {
-    // axios.create でいきなり axios を呼んだ時に使われる通信部(AxiosInstance)がインスタンス化される
-    const axiosInstance = axios.create({
-        // この第一引数オブジェクトで設定を定義
-    });
- 
-    // interceptors.response.use で返信時に引数に入れた関数が動作する
-    axiosInstance.interceptors.response.use(
-        (response) => response, // 第一引数は通信成功時処理。受けた内容をそのまま通過
-        async (error) => { // 第二引数は通信失敗時処理
-            throw new Error(`${error.response?.statusText} ${error.response?.config.url} ${await error.response?.data}`);
-        }
-    );
- 
-    // interceptor で共通処理を追加した通信機能を返す。
-    return axiosInstance;
+const handleAxiosError = error => {
+    // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
+    if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+    } else if (error.request) {
+        console.log(error.request);
+    } else {
+        console.log('Error', error);
+    }
 };
 
 class Bookmaker {
@@ -60,12 +73,12 @@ class Bookmaker {
         this.wishBooksData = new Map();
         this.wishBooksData_Array = [];
         this.previousWishBooksData = new Map();
-        this.axios = createAxiosInstance();
+        this.MathLibIsbnList = new Set();
         this.fxp = new XMLParser();
     }
 
     // Amazon詳細リンクはアカウントにログインしなければ表示されないため、ログインする
-    async bookmeterLogin(browser) {
+    async loginToBookmeter(browser) {
         try {
             const page = await browser.newPage();
 
@@ -88,7 +101,6 @@ class Bookmaker {
                 (await loginButtonHandle)[0].click()
             ]);
 
-
             console.log(`${process_description}: Login Completed!`);
 
         } catch (e) {
@@ -99,7 +111,7 @@ class Bookmaker {
         return true;    
     }
 
-    async bookmeterScraper(browser) {
+    async crowlBookmeter(browser) {
         try {
             const page = await browser.newPage();
 
@@ -121,6 +133,7 @@ class Bookmaker {
                     let amzn = String(amzn_raw.match(amazon_asin_regex)); //Amazonへのリンクに含まれるISBN/ASINを抽出
 
                     this.wishBooksData.set(bkmt, { //bookmeterの内部リンクをMapのキーにする
+                        ...(book_data_template),
                         "bookmeter_url": bkmt,
                         "isbn_or_asin": amzn
                     });
@@ -141,7 +154,45 @@ class Bookmaker {
             await browser.close();
             return false;
         }
-        console.log("Bookmeter Wished Books: Bookmeter Scraping Completed!");
+        console.log(`${process_description}: Bookmeter Scraping Completed!`);
+        return true;
+    }
+
+    async configureMathLibBookList(listtype) {
+        try {
+            const target_pdf_url = math_library_booklist[listtype];
+
+            const response = await axios.get(target_pdf_url, { 
+                "responseType": 'arraybuffer',
+                "headers": {
+                    "Content-Type": 'application/pdf'
+                }
+            });
+            
+            const pdf_data = response['data'];
+            const pdf_parsed = await PdfData.extract(pdf_data, { sort: false });
+
+            console.log(`${process_description}: Completed fetching the list of ${listtype} books in Sophia-Univ. Math Lib`);
+
+            const filename = `mathlib_${listtype}.text`;
+            const filehandle = await fs.open(filename, 'w');
+
+            for (const page of pdf_parsed.text) {
+                const matched_all = page.matchAll(isbn_regex);
+                for (const match of matched_all) {
+                    this.MathLibIsbnList.add(match[0]);
+                    await this.writeFile(`${match[0]}\n`, filename);
+                }
+            }
+
+            await filehandle.close();
+
+        } catch (e) {
+            console.log(e);
+            handleAxiosError(e);
+            return false;
+        }
+        console.log(`${process_description}: Completed creating a list of ISBNs of ${listtype} books in Sophia-Univ. Math Lib`);
         return true;
     }
 
@@ -151,11 +202,12 @@ class Bookmaker {
 
         try {
             if (isbn_data !== "null") { //正常系(与えるべきISBNがある)
-                const response = await this.axios.get(`https://api.openbd.jp/v1/get?isbn=${isbn_data}`);
+                const response = await axios.get(`https://api.openbd.jp/v1/get?isbn=${isbn_data}`);
 
                 if (response.data[0] !== null) { //正常系(該当書籍発見)
                     const fetched_data = response.data[0].summary;
                     this.wishBooksData.set(key, {
+                        ...(this.wishBooksData.get(key)),
                         "bookmeter_url": key ?? "",
                         "isbn_or_asin": isbn_data ?? "",
                         "book_title": fetched_data.title ?? "",
@@ -185,6 +237,7 @@ class Bookmaker {
             }
         } catch (e) {
             console.log(e);
+            handleAxiosError(e);
         }
     }
 
@@ -194,7 +247,7 @@ class Bookmaker {
 
         try {
             if (isbn_data !== "null") { //正常系(与えるべきISBNがある)
-                const response = await this.axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn_data}`); //xml形式でレスポンスが返ってくる
+                const response = await axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn_data}`); //xml形式でレスポンスが返ってくる
                 const json_resp = this.fxp.parse(response.data); //xmlをjsonに変換
                 const fetched_data = json_resp.rss.channel;
 
@@ -240,16 +293,18 @@ class Bookmaker {
             }
         } catch (e) {
             console.log(e);
+            handleAxiosError(e);
         }
     }
 
     //大学図書館所蔵検索
-    async searchSph(key, books_obj) {
+    async searchSophia(key, books_obj) {
         const isbn_data = books_obj["isbn_or_asin"]; //ISBNデータを取得
 
         try {
             if (isbn_data !== "null") { //正常系(与えるべきISBNがある)
-                const response = await this.axios.get(`https://ci.nii.ac.jp/books/opensearch/search?appid=${cinii_appid}&format=json&fano=${library_id}&isbn=${isbn_data}`);
+                //中央図書館のチェック
+                const response = await axios.get(`https://ci.nii.ac.jp/books/opensearch/search?appid=${cinii_appid}&format=json&fano=${main_library_id}&isbn=${isbn_data}`);
                 const total_results = response.data["@graph"][0]["opensearch:totalResults"];
 
                 if (total_results !== "0") { //検索結果が1件以上
@@ -259,13 +314,21 @@ class Bookmaker {
                     this.wishBooksData.set(key, {
                         ...(this.wishBooksData.get(key)),
                         "exist_in_sophia": "Yes", //検索結果が0件なら「No」、それ以外なら「Yes」
-                        "opac_link": `https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=${ncid}` //opacのリンク
+                        "central_opac_link": `https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=${ncid}` //opacのリンク
                     });
                 } else { //検索結果が0件
                     this.wishBooksData.set(key, {
                         ...(this.wishBooksData.get(key)),
                         "exist_in_sophia": "No", //検索結果が0件なら「No」、それ以外なら「Yes」
-                        "opac_link": ""
+                    });
+                }
+
+                if (this.MathLibIsbnList.has(isbn_data)) { //数学図書館のチェック
+                    const mathlib_opac_link = `https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=${isbn_data}&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1`;
+                    this.wishBooksData.set(key, {
+                        ...(this.wishBooksData.get(key)),
+                        "exist_in_sophia": "Yes",
+                        "mathlib_opac_link": mathlib_opac_link
                     });
                 }
 
@@ -273,11 +336,11 @@ class Bookmaker {
                 this.wishBooksData.set(key, {
                     ...(this.wishBooksData.get(key)),
                     "exist_in_sophia": (this.wishBooksData.get(key))["book_title"], //とりあえず"book_title"の中にエラーメッセージ入っとるやろ！の精神
-                    "opac_link": ""
                 });
             }
         } catch (e) {
             console.log(e);
+            handleAxiosError(e);
         }
     }
 
@@ -286,7 +349,7 @@ class Bookmaker {
             await this.searchOpenBD(key, value);
             // await sleep(1000);
         }
-        console.log("Bookmeter Wished Books: OpenBD Searching Completed");
+        console.log(`${process_description}: OpenBD Searching Completed`);
 
         for (const [key, value] of this.wishBooksData) {
             if (value["book_title"] === "Not_found_with_OpenBD") {
@@ -294,23 +357,20 @@ class Bookmaker {
                 await sleep(1000);
             }
         }
-        console.log("Bookmeter Wished Books: NDL Searching Completed");
+        console.log(`${process_description}: NDL Searching Completed`);
 
         for (const [key, value] of this.wishBooksData) {
-            await this.searchSph(key, value);
+            await this.searchSophia(key, value);
             await sleep(1000);
         }
-        console.log("Bookmeter Wished Books: Sophia-Univ. Library Searching Completed");
+        console.log(`${process_description}: Sophia-Univ. Library Searching Completed`);
     }
 
-    async outputCSV(arrayData, filename) {
-        const jsonData = JSON.stringify(arrayData, null, "  ");
-
+    async writeFile(data, filename) {
         try {
-            await fs.writeFile(
+            await fs.appendFile(
                 `./${filename}`,
-                papa.unparse(jsonData),
-                // jsonData,
+                data,
                 (e) => {
                     if (e) console.log("error: ", e);
                 }
@@ -319,11 +379,26 @@ class Bookmaker {
             console.log("error: ", e.message);
             return false;
         }
-        console.log("Bookmeter Wished Books: CSV Output Completed!");
         return true;
     }
 
-    async inputCSV(filename) {
+    async writeCSV(array_data, filename) {
+        try {
+            const json_data = JSON.stringify(array_data, null, "  ");
+            const csv_data = papa.unparse(json_data);
+
+            const filehandle = await fs.open(filename, 'w');
+            await this.writeFile(csv_data, filename);
+            await filehandle.close();
+        } catch (e) {
+            console.log("error: ", e.message);
+            return false;
+        }
+        console.log(`${process_description}: CSV Output Completed!`);
+        return true;
+    }
+
+    async readCSV(filename) {
         try {
             const data = await fs.readFile(filename, "utf-8");
             const parsed_obj = papa.parse(data, {
@@ -340,8 +415,8 @@ class Bookmaker {
         }
     }
 
-    async checkCSV(filename) {
-        const file = await this.inputCSV(filename);
+    async validateDiff(filename) {
+        const file = await this.readCSV(filename);
 
         for (const obj of file) {
             this.previousWishBooksData.set(obj['bookmeter_url'], { ...obj });
@@ -349,13 +424,14 @@ class Bookmaker {
 
         for (const key of this.wishBooksData.keys()) {
             if (this.previousWishBooksData.has(key) === false) { //ローカルのCSVとbookmeterのスクレイピング結果を比較
-                console.log("Bookmeter Wished Books: Detected a diff between the local and remote."); //差分を検出した場合
+                console.log(`${process_description}: Detected a diff between the local and remote.`); //差分を検出した場合
                 return true;
             }
         }
 
-        console.log("Bookmeter Wished Books: Cannot find a diff between the local and remote. The process will be aborted..."); //差分を検出しなかった場合
-        return false;
+        console.log(`${process_description}: Cannot find a diff between the local and remote. The process will be aborted...`); //差分を検出しなかった場合
+        return true;
+        // return false;
     }
 }
 
@@ -370,13 +446,15 @@ class Bookmaker {
     });
 
     const book = new Bookmaker();
-    const filename = 'bookmeter_wish_books.csv';
+    const csv_filename = 'bookmeter_wish_books.csv';
 
-    await book.bookmeterLogin(browser);
-    await book.bookmeterScraper(browser);
+    await book.configureMathLibBookList("ja");
 
-    if (await book.checkCSV(filename)) { //ローカルのCSVとbookmeterのスクレイピング結果を比較し、差分を検出したら書誌情報を取得してCSVを新規生成
-        console.log('Bookmeter Wished Books: Fetching bibliographic information');
+    await book.loginToBookmeter(browser);
+    await book.crowlBookmeter(browser);
+
+    if (await book.validateDiff(csv_filename)) { //ローカルのCSVとbookmeterのスクレイピング結果を比較し、差分を検出したら書誌情報を取得してCSVを新規生成
+        console.log(`${process_description}: Fetching bibliographic information`);
 
         await book.fetchBiblioInfo(book.wishBooksData); //書誌情報取得
 
@@ -384,7 +462,7 @@ class Bookmaker {
             book.wishBooksData_Array.push(obj);
         }
 
-        await book.outputCSV(book.wishBooksData_Array, filename); //ファイル出力
+        await book.writeCSV(book.wishBooksData_Array, csv_filename); //ファイル出力
     }
 
     console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
