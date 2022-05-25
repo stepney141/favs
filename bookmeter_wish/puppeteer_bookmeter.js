@@ -66,6 +66,23 @@ const handleAxiosError = error => {
     }
 };
 
+// ref: https://qiita.com/iz-j/items/27b9656ebed1a4516ee1
+const convertIsbn10To13 = (isbn10) => {
+    // 1. 先頭に`978`を足して、末尾の1桁を除く
+    const src = `978${isbn10.slice(0, 9)}`;
+  
+    // 2. 先頭の桁から順に1、3、1、3…を掛けて合計する
+    const sum = src.split('').map(s => parseInt(s))
+        .reduce((p, c, i) => p + ((i % 2 === 0) ? c : c * 3));
+  
+    // 3. 合計を10で割った余りを10から引く（※引き算の結果が10の時は0とする）
+    const rem = 10 - sum % 10;
+    const checkdigit = rem === 10 ? 0 : rem;
+  
+    // 1.の末尾に3.の値を添えて出来上がり
+    return `${src}${checkdigit}`;
+};
+
 class Bookmaker {
 
     constructor() {
@@ -322,8 +339,9 @@ class Bookmaker {
                         "exist_in_sophia": "No", //検索結果が0件なら「No」、それ以外なら「Yes」
                     });
                 }
-
-                if (this.MathLibIsbnList.has(isbn_data)) { //数学図書館のチェック
+                
+                //数学図書館のチェック
+                if (this.MathLibIsbnList.has(isbn_data) || this.MathLibIsbnList.has(convertIsbn10To13(isbn_data))) {
                     const mathlib_opac_link = `https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=${isbn_data}&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1`;
                     this.wishBooksData.set(key, {
                         ...(this.wishBooksData.get(key)),
