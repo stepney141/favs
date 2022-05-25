@@ -448,8 +448,8 @@ class Bookmaker {
         }
 
         console.log(`${process_description}: Cannot find a diff between the local and remote. The process will be aborted...`); //差分を検出しなかった場合
-        return true;
-        // return false;
+        // return true;
+        return false;
     }
 }
 
