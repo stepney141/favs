@@ -1,4 +1,6 @@
 isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+4254163584,地図の事典,森田	喬／編集,朝倉書店,20211102,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC1086554X,
+4623093891,政策にエビデンスは必要なのか,杉谷和哉／著,ミネルヴァ書房,20220419,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14121657,
 4814003013,学術書を読む,鈴木哲也／著,京都大学学術出版会,20201010,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC03010199,
 4472406012,サブカルチャーを消費する,貞包英之／著,玉川大学出版部,20211201,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11286515,
 4588011227,肥満男子の身体表象,サンダー・Ｌ・ギルマン／著 小川公代／訳 小澤央／訳,法政大学出版局,20200928,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC02849231,
@@ -15,6 +17,7 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_
 4393332385,知能低下の人類史,エドワード・ダットン／著 マイケル・Ａ・ウドリー・オブ・メニー／著 蔵研也／翻訳,春秋社,20211027,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC1058003X,
 4863134894,愛書狂の本棚,エドワード・ブルック・ヒッチング／著 ナショナルジオグラフィック／編集 高作自子／翻訳,日経ナショナルジオグラフィック社,20220311,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13427083,
 4326152176,合理的な愚か者 : 経済学=倫理学的探究,"Sen,AmartyaKumar／著 大庭健／翻訳 川本隆史／翻訳 センA.／著",勁草書房,1989-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN0331051X,
+4327453072,英語学習の科学,中田達也／著・編集 鈴木祐一／著・編集 濱田陽／著 門田修平／著 濱田彰／著 神谷信廣／著 ほか,研究社,20220425,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14183100,
 4480091998,贈与論,"マルセル・モース 著,吉田禎吾, 江川純一 訳,Mauss, Marcel, 1872-1950,吉田, 禎吾, 1923-,江川, 純一, 1974-,",筑摩書房,"Fri, 27 Feb 2015 09:00:00 +0900",Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA89082450,
 4532324483,Anthro Vision（アンソロ・ビジョン）　人類学的思考で視るビジネスと世界,ジリアン・テット／著 土方奈美／翻訳,日経BP 日本経済新聞出版本部,20220127,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12402473,
 4560097305,大学教授のように小説を読む方法［増補新版］,トーマス・C・フォスター／著 矢倉尚子／翻訳,白水社,20191025,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29127536,
@@ -29,6 +32,7 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_
 4326102160,文化系統学への招待 = An Introduction to Cultural Phylogenetics : 文化の進化パターンを探る,三中信宏／著 中尾央／著,勁草書房,2012-05,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB09272113,
 4562059095,図説　魔女の文化史,セリヌ・デュ・シェネ／著 蔵持不三也／翻訳,原書房,20210322,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC06202367,
 4526077259,続 メカ屋のための脳科学入門 : 記憶・学習/意識編,高橋宏知／著,日刊工業新聞社,2017-7-19,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2096429X,
+4873119693,実用 Go言語,渋川よしき／著 辻大志郎／著 真野隼記／著,オライリー・ジャパン,20220422,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14200050,
 4873119820,ソフトウェアアーキテクチャの基礎,MarkRichards／著 NealFord／著 島田浩二／翻訳,オライリー・ジャパン,20220308,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13216190,
 4622087936,測りすぎ,ジェリー・Ｚ.ミュラー／著 松本裕／翻訳,みすず書房,20190427,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28158909,
 4535558167,計量経済学,末石直也／著,日本評論社,20150723,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19125614,
