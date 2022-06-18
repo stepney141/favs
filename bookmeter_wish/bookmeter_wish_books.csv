@@ -1,4 +1,5 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/17056603,4758017115,改訂版 高橋 晃 東映アニメーションプリキュアワークス,東映アニメーション：監修／監修,一迅社,20210129,No,,
 https://bookmeter.com/books/19653542,4562071818,緯度を測った男たち,ニコラス・クレーン／著 上京恵／翻訳,原書房,20220526,No,,
 https://bookmeter.com/books/19651555,4562071826,古代ワインの謎を追う,ケヴィン・ベゴス／著 矢沢聖子／翻訳,原書房,20220526,No,,
 https://bookmeter.com/books/19711187,4335358857,情報刑法Ⅰ　サイバーセキュリティ関連犯罪,鎮目征樹／編集 西貝吉晃／編集 北條孝佳／編集 荒木泰貴／著 遠藤聡太／著 蔦大輔／著 ほか,弘文堂,20220603,No,,
@@ -6,7 +7,7 @@ https://bookmeter.com/books/5604593,4806714453,〈図説〉日本の結び,藤�
 https://bookmeter.com/books/19614290,4760154426,攻撃される知識の歴史,リチャードオヴェンデン／著 五十嵐加奈子／翻訳,柏書房,20220426,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14388409,
 https://bookmeter.com/books/18271193,4254163584,地図の事典,森田	喬／編集,朝倉書店,20211102,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC1086554X,
 https://bookmeter.com/books/19504551,4623093891,政策にエビデンスは必要なのか,杉谷和哉／著,ミネルヴァ書房,20220419,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14121657,
-https://bookmeter.com/books/19674274,4326504927,経済学の哲学入門,ダニエル・ハウスマン／著 橋本努／監修 ニキリンコ／翻訳,勁草書房,20220516,No,,
+https://bookmeter.com/books/19674274,4326504927,経済学の哲学入門,ダニエル・ハウスマン／著 橋本努／監修 ニキリンコ／翻訳,勁草書房,20220516,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14555103,
 https://bookmeter.com/books/19659432,4254122675,標準　ベイズ統計学,入江薫／翻訳 橋本真太郎／翻訳 菅澤翔之助／翻訳,朝倉書店,20220608,No,,
 https://bookmeter.com/books/16644387,4814003013,学術書を読む,鈴木哲也／著,京都大学学術出版会,20201010,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC03010199,
 https://bookmeter.com/books/18907287,4472406012,サブカルチャーを消費する,貞包英之／著,玉川大学出版部,20211201,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11286515,
@@ -23,10 +24,10 @@ https://bookmeter.com/books/6865470,4152093846,国家はなぜ衰退するのか
 https://bookmeter.com/books/14644710,4065178029,統計モデルと推測,松井秀俊／著 小泉和之／著 竹村彰通／編集,講談社,20191128,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2925786X,
 https://bookmeter.com/books/5403426,462106231X,確率論的リスク解析,"T. ベッドフォード,Bedford, T.,Cooke, Roger,金野, 秀敏,",丸善出版,,Yes,,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=462106231X&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 https://bookmeter.com/books/13744919,4787234528,趣味とジェンダー,神野由紀／編著 辻泉／編著 飯田豊／編著,青弓社,20190618,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2833261X,
-https://bookmeter.com/books/19681533,4065280869,基礎からわかる　論文の書き方,小熊英二／著,講談社,20220518,No,,
+https://bookmeter.com/books/19681533,4065280869,基礎からわかる　論文の書き方,小熊英二／著,講談社,20220518,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14601765,
 https://bookmeter.com/books/11646442,4130802569,記号と再帰　新装版,田中久美子／著,東京大学出版会,2017-04-01,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23562780,
 https://bookmeter.com/books/11564818,4295000965,Goプログラミング実践入門,"Chang,SauSheong／著 上西昌弘／翻訳 武舎広幸／翻訳 鄭兆雄／著 阿部和也／翻訳 ほか",インプレス,2017-03,No,,
-https://bookmeter.com/books/19330275,4757143605,古典の中の地球儀 海外から見た日本文学,荒木浩／著,ＮＴＴ出版,20220331,No,,
+https://bookmeter.com/books/19330275,4757143605,古典の中の地球儀 海外から見た日本文学,荒木浩／著,ＮＴＴ出版,20220331,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13499266,
 https://bookmeter.com/books/17971659,4765318699,診察室の陰性感情 = Negative emotions in the examination room,"加藤温 著,加藤, 温,",金芳堂,"Wed, 23 Jun 2021 09:00:00 +0900",No,,
 https://bookmeter.com/books/18811375,4393332385,知能低下の人類史,エドワード・ダットン／著 マイケル・Ａ・ウドリー・オブ・メニー／著 蔵研也／翻訳,春秋社,20211027,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC1058003X,
 https://bookmeter.com/books/18961830,4863134894,愛書狂の本棚,エドワード・ブルック・ヒッチング／著 ナショナルジオグラフィック／編集 高作自子／翻訳,日経ナショナルジオグラフィック社,20220311,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13427083,
