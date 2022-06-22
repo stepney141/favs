@@ -129,7 +129,7 @@ class Zennist {
 
                         let key = data["id"]; //記事IDみたいなもの？(整数値)
                         let title = data["title"]; //記事名
-                        let url = baseURI + data["shortlink_path"]; //記事URL(ブラウザでアクセスする時のURLそのものではなく、記事固有のURL)
+                        let url = baseURI + data["path"]; //記事URL(ブラウザでアクセスする時のURLそのものではなく、記事固有のURL)
                         let user_nickname = data["user"]["name"]; //記事作成者名(アカウント名ではなくスクリーンネーム)
                         let published_at = data["published_at"]; //公開時刻
                         let liked_count = data["liked_count"]; //スキされた数
@@ -189,41 +189,6 @@ class Zennist {
         }
         console.log(`${JOB_NAME}: CSV Output Completed!`);
         return true;
-    }
-
-    async inputCSV(filename) {
-        try {
-            const data = await fs.readFile(filename, "utf-8");
-            const parsed_obj = papa.parse(data, {
-                header: true,
-                complete: (results, file) => {
-                    return results;
-                },
-            });
-
-            return parsed_obj.data;
-        } catch (error) {
-            console.error(error.message);
-            process.exit(1); // 終了ステータス 1（一般的なエラー）としてプロセスを終了する
-        }
-    }
-
-    async checkCSV(filename) {
-        const file = await this.inputCSV(filename);
-
-        for (const obj of file) {
-            this.previousWishBooksData.set(obj['bookmeter_url'], { ...obj });
-        }
-
-        for (const key of this.wishBooksData.keys()) {
-            if (this.previousWishBooksData.has(key) === false) { //ローカルのCSVとbookmeterのスクレイピング結果を比較
-                console.log(`${JOB_NAME}: A diff between the local and remote is detected.`); //差分を検出した場合
-                return true;
-            }
-        }
-
-        console.log(`${JOB_NAME}: Cannot find a diff between the local and remote. The process will be aborted...`); //差分を検出しなかった場合
-        return false;
     }
 }
 
