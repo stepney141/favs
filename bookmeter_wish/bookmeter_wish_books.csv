@@ -1,7 +1,9 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/17548495,4535789231,詰将棋の世界,齋藤夏雄／著,日本評論社,20210323,No,,
+https://bookmeter.com/books/18967053,4750352861,現代日本のエリートの平等観,竹中佳彦／編 山本英弘／編 濱本真輔／編,明石書店,20211227,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11964922,
 https://bookmeter.com/books/17056603,4758017115,改訂版 高橋 晃 東映アニメーションプリキュアワークス,東映アニメーション：監修／監修,一迅社,20210129,No,,
-https://bookmeter.com/books/19653542,4562071818,緯度を測った男たち,ニコラス・クレーン／著 上京恵／翻訳,原書房,20220526,No,,
-https://bookmeter.com/books/19651555,4562071826,古代ワインの謎を追う,ケヴィン・ベゴス／著 矢沢聖子／翻訳,原書房,20220526,No,,
+https://bookmeter.com/books/19653542,4562071818,緯度を測った男たち,ニコラス・クレーン／著 上京恵／翻訳,原書房,20220526,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14825977,
+https://bookmeter.com/books/19651555,4562071826,古代ワインの謎を追う,ケヴィン・ベゴス／著 矢沢聖子／翻訳,原書房,20220526,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14825988,
 https://bookmeter.com/books/19711187,4335358857,情報刑法Ⅰ　サイバーセキュリティ関連犯罪,鎮目征樹／編集 西貝吉晃／編集 北條孝佳／編集 荒木泰貴／著 遠藤聡太／著 蔦大輔／著 ほか,弘文堂,20220603,No,,
 https://bookmeter.com/books/5604593,4806714453,〈図説〉日本の結び,藤原覚一／著,築地書館,2012-10,No,,
 https://bookmeter.com/books/19614290,4760154426,攻撃される知識の歴史,リチャードオヴェンデン／著 五十嵐加奈子／翻訳,柏書房,20220426,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14388409,
