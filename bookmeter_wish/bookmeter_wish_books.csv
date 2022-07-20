@@ -1,4 +1,7 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/11084321,4320111397,確率的グラフィカルモデル,鈴木譲／著・編集 植野真臣／著・編集 黒木学／著 清水昌平／著 湊真一／著 石畠正和／著 ほか,共立出版,20160723,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB21721985,
+https://bookmeter.com/books/10893442,4254122144,はじめての 統計データ分析,豊田秀樹／著,朝倉書店,20160606,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB21318144,
+https://bookmeter.com/books/216845,4254295405,入門 ベイズ統計学,中妻照雄／著,朝倉書店,20070614,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA82118516,
 https://bookmeter.com/books/3343100,4990415159,An A-Z of common English errors for Japanese learners,"David Barker [著] ; 神崎宏則編集,Barker, David,神崎, 宏則,",BTB press,,No,,
 https://bookmeter.com/books/11443360,4254122209,実践ベイズモデリング,豊田秀樹／著・編集,朝倉書店,20170131,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB22963061,
 https://bookmeter.com/books/9781687,4254122128,基礎からのベイズ統計学,豊田秀樹／著,朝倉書店,20150625,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18938264,
@@ -157,7 +160,7 @@ https://bookmeter.com/books/13530657,4297104636,数学から創るジェネラ�
 https://bookmeter.com/books/1873488,4764925095,信号解析入門,越川常治／著,近代科学社,1992-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN08449528,
 https://bookmeter.com/books/2262692,462707641X,工学系学生のための　複素関数攻略への一本道,板垣正文／著,森北出版,20090123,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA88933825,
 https://bookmeter.com/books/18632238,4627870019,超巨大リスクの定量的評価,B.JohnGarrick／著 山口彰／翻訳,森北出版,20211009,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10307405,
-https://bookmeter.com/books/18723083,4791774191,データ視覚化の人類史,マイケル・フレンドリー／著 ハワード・ウェイナー／著 飯嶋貴子／翻訳,青土社,20211026,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10827992,
+https://bookmeter.com/books/18723083,4791774191,データ視覚化の人類史,マイケル・フレンドリー／著 ハワード・ウェイナー／著 飯嶋貴子／翻訳,青土社,20211026,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10584110,
 https://bookmeter.com/books/9767736,4627852916,はじめて学ぶオートマトンと言語理論,藤原暁宏／著,森北,2015-07,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19183767,
 https://bookmeter.com/books/12739124,4627062419,Coq/SSReflect/MathCompによる定理証明,萩原学／著 アフェルト・レナルド／著,森北出版,20180418,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB25944631,
 https://bookmeter.com/books/18866253,4297125161,暗号から学ぶ代数学,川添充／著 上野健爾／監修,技術評論社,20211122,No,,

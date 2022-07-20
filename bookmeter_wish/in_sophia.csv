@@ -1,4 +1,7 @@
 isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+4320111397,確率的グラフィカルモデル,鈴木譲／著・編集 植野真臣／著・編集 黒木学／著 清水昌平／著 湊真一／著 石畠正和／著 ほか,共立出版,20160723,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB21721985,
+4254122144,はじめての 統計データ分析,豊田秀樹／著,朝倉書店,20160606,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB21318144,
+4254295405,入門 ベイズ統計学,中妻照雄／著,朝倉書店,20070614,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA82118516,
 4254122209,実践ベイズモデリング,豊田秀樹／著・編集,朝倉書店,20170131,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB22963061,
 4254122128,基礎からのベイズ統計学,豊田秀樹／著,朝倉書店,20150625,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18938264,
 4320113446,ゲームで大学数学入門,安田健彦／著,共立出版,20181222,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27463918,
@@ -106,7 +109,7 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_
 4764925095,信号解析入門,越川常治／著,近代科学社,1992-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN08449528,
 462707641X,工学系学生のための　複素関数攻略への一本道,板垣正文／著,森北出版,20090123,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA88933825,
 4627870019,超巨大リスクの定量的評価,B.JohnGarrick／著 山口彰／翻訳,森北出版,20211009,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10307405,
-4791774191,データ視覚化の人類史,マイケル・フレンドリー／著 ハワード・ウェイナー／著 飯嶋貴子／翻訳,青土社,20211026,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10827992,
+4791774191,データ視覚化の人類史,マイケル・フレンドリー／著 ハワード・ウェイナー／著 飯嶋貴子／翻訳,青土社,20211026,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10584110,
 4627852916,はじめて学ぶオートマトンと言語理論,藤原暁宏／著,森北,2015-07,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19183767,
 4627062419,Coq/SSReflect/MathCompによる定理証明,萩原学／著 アフェルト・レナルド／著,森北出版,20180418,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB25944631,
 4896942647,中世紋章史,津山拓也／翻訳,八坂書房,2019-08,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28770810,
