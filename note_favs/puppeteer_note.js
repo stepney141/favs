@@ -170,9 +170,9 @@ class notebook {
 
     const browser = await puppeteer.launch({
         defaultViewport: { width: 500, height: 1000 },
-        headless: true,
+        headless: false,
         // devtools: true,
-        slowMo: 200
+        slowMo: 20
     });
 
     const note = new notebook();
