@@ -1,4 +1,9 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/8653541,448009654X,増補　八月十五日の神話,佐藤卓己／著,筑摩書房,20141210,No,,
+https://bookmeter.com/books/19737334,4297129140,作って学ぶコンピュータアーキテクチャ —— LLVMとRISC-Vによる低レイヤプログラミングの基礎,木村優之／著,技術評論社,20220701,No,,
+https://bookmeter.com/books/4534843,4484121034,性欲の科学 : なぜ男は「素人」に興奮し、女は「男同士」に萌えるのか,"Gaddam,Sai／著 Ogas,Ogi／著 坂東智子／翻訳 ガダムサイ／著 オーガスオギ／著",阪急コミュニケーションズ,2012-02,No,,
+https://bookmeter.com/books/1106735,4585060634,天皇皇族歴史伝説大事典,志村有弘／著,勉誠,2008-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA88442936,
+https://bookmeter.com/books/509731,4061596845,諸子百家,浅野裕一／著,講談社,20041111,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA69442203,
 https://bookmeter.com/books/19751934,4787220942,妖怪の誕生,廣田龍平／著,青弓社,20220527,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14828330,
 https://bookmeter.com/books/12360525,4000292080,学童集団疎開 : 受入れ地域から考える,一條三子／著,岩波書店,2017-10-18,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB24683248,
 https://bookmeter.com/books/9721253,4320111796,初等整数論 数論幾何への誘い,山崎隆雄／著 新井仁之／編集 小林俊行／編集 斎藤毅／編集 吉田朋広／編集,共立出版,20150527,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18660918,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4320111796&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
@@ -100,7 +105,6 @@ https://bookmeter.com/books/4060646,4787233289,ひとはなぜ乳房を求める
 https://bookmeter.com/books/14104064,4909658149,ネット文化資源の読み方・作り方,岡田一祐／著,文学通信,20190810,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28729533,
 https://bookmeter.com/books/9809669,415209558X,世界を破綻させた経済学者たち,ジェフ・マドリック／著 池村千秋／翻訳,早川書房,20150821,No,,
 https://bookmeter.com/books/18606029,4866808136,あなたを陰謀論者にする言葉,雨宮純／著,フォレスト出版,20211008,No,,
-https://bookmeter.com/books/11753215,4010377046,総合的研究 論理学で学ぶ数学――思考ツールとしてのロジック,長岡亮介／著,旺文社,20170530,No,,
 https://bookmeter.com/books/13875296,4862464505,AlphaZero 深層学習・強化学習・探索 人工知能プログラミング実践入門,布留川英一／著,ボーンデジタル,20190628,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28462987,
 https://bookmeter.com/books/19234673,4627856512,Pythonで学ぶ解析表現文法と構文解析,倉光君郎／著,森北出版,20220301,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13001682,
 https://bookmeter.com/books/16426982,4623088499,コンテンツ産業論［第2版］,河島伸子／著,ミネルヴァ書房,20200908,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC02481870,
@@ -183,7 +187,6 @@ https://bookmeter.com/books/18329860,4010377275,総合的研究　問題文の�
 https://bookmeter.com/books/18605012,4150315000,異常論文,樋口恭介／編集,早川書房,20211019,No,,
 https://bookmeter.com/books/17928959,4320114469,ヘンテコ関数雑記帳,佐々木浩宣／著,共立出版,20210610,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC07854658,
 https://bookmeter.com/books/18150080,4271210684,実践的な英語の学び方・教え方 : 通訳修業、GDM教授法、イントネーションの視点から,"伊達民和 監修者・著者,新崎隆子, 佐藤正人 著,伊達, 民和, 1941-,新崎, 隆子, 1951-,佐藤, 正人,",大阪教育図書,"Mon, 06 Sep 2021 09:00:00 +0900",No,,
-https://bookmeter.com/books/17561831,4582447139,中世ヨーロッパ　,ウィンストン・ブラック／著 大貫俊夫／監修 内川勇太／翻訳 成川岳大／翻訳 仲田公輔／翻訳 ほか,平凡社,20210423,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC06880368,
 https://bookmeter.com/books/4246,4790704297,交換の民族誌 : あるいは犬好きのための人類学入門,中川敏／著,世界思想社,1992-06,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN07675587,
 https://bookmeter.com/books/7944762,4787713205,無形民俗文化財が被災するということ,滝澤克彦／著 高倉浩樹／著,新泉社,2014-01,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB14572863,
 https://bookmeter.com/books/9587671,4326653930,日常に侵入する自己啓発,牧野智和／著,勁草書房,20150409,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18412869,
