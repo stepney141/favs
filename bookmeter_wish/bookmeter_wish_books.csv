@@ -1,4 +1,8 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/20014018,4274228991,Pythonではじめる 音のプログラミング,青木直史／著,オーム社,20220906,No,,
+https://bookmeter.com/books/19539761,429712811X,ディープラーニングを支える技術〈2〉 ——ニューラルネットワーク最大の謎,岡野原大輔／著,技術評論社,20220421,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14081687,
+https://bookmeter.com/books/19126386,4297125609,ディープラーニングを支える技術 ——「正解」を導くメカニズム［技術基礎］,岡野原大輔／著,技術評論社,20220108,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14376501,
+https://bookmeter.com/books/19720570,462209083X,ソーシャルメディア・プリズム,クリス・ベイル／著 松井信彦／翻訳,みすず書房,20220603,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC15059537,
 https://bookmeter.com/books/18841575,4274227855,世界を一枚の紙の上に,大田暁雄／著,オーム社,20211217,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11784738,
 https://bookmeter.com/books/17861969,4274227170,縫うコンピュータグラフィックス,五十嵐悠紀／著,オーム社,20210527,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC07621489,
 https://bookmeter.com/books/19894316,4896943309,魔法の門［ポルタ・マジカ］─ローマに遺された錬金術象徴の秘密,ミーノ・ガブリエレ／著 大橋喜之／翻訳,八坂書房,20220624,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC15400168,
