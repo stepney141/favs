@@ -81,7 +81,7 @@ async function getLgtm(browser) {
         console.log(`${JOB_NAME}: Qiita Scraping Started!`);
 
         do {
-            await page.goto(`${BASE_URI}/${userid}/lgtms?page=${page_num}`, {
+            await page.goto(`${BASE_URI}/${userid}/likes?page=${page_num}`, {
                 waitUntil: ["domcontentloaded", "networkidle0"],
             });
 
@@ -196,8 +196,8 @@ async function output(arrayData) {
             width: 600,
             height: 700,
         },
-        headless: true,
-        // headless: false,
+        // headless: true,
+        headless: false,
     });
 
     // await qiitaLogin(browser);
