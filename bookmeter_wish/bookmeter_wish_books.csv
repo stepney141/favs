@@ -1,4 +1,6 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/66721,4796702792,ファッションの文化社会学,"Finkelstein,Joanne／著 成実弘至／著 フィンケルシュタインジョアン／著",せりか書房,2007-09,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA83156554,
+https://bookmeter.com/books/4493723,4588276476,鉄道旅行の歴史　〈新装版〉,W.シヴェルブシュ／著 加藤二郎／訳,法政大学出版局,20111209,No,,
 https://bookmeter.com/books/86123,4254116330,統計学のための数学入門30講,永田靖／著,朝倉書店,2005-03,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA7172228X,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4254116330&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 https://bookmeter.com/books/19925507,4758017832,中谷友紀子　東映アニメーションプリキュアワークス２,東映アニメーション：監修／監修,一迅社,20220916,No,,
 https://bookmeter.com/books/20014018,4274228991,Pythonではじめる 音のプログラミング,青木直史／著,オーム社,20220906,No,,
@@ -51,7 +53,6 @@ https://bookmeter.com/books/9987358,4478013322,完全独習ベイズ統計学入
 https://bookmeter.com/books/13221301,4320113446,ゲームで大学数学入門,安田健彦／著,共立出版,20181222,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27463918,
 https://bookmeter.com/books/201614,4434042408,素因数分解と素数判定,玉井浩／翻訳 ブレッソードデヴィッド・M.／著,エスアイビー・アクセス : 星雲社,2004-03,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA66395683,
 https://bookmeter.com/books/14116802,4641053855,計量経済学,西山慶彦／著 新谷元嗣／著 川口大司／著 奥井亮／著,有斐閣,20190729,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28617132,
-https://bookmeter.com/books/19980291,4480511369,紋章学入門,森護／著,筑摩書房,20220810,No,,
 https://bookmeter.com/books/14789052,490965819X,デジタル学術空間の作り方,下田正弘／編著 永﨑研宣／編著,文学通信,20191218,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29506669,
 https://bookmeter.com/books/19573021,4759821678,理工系のAI英作文術,西山聖久／著,化学同人,20220531,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14827236,
 https://bookmeter.com/books/18088455,439329162X,魔法少女はなぜ変身するのか,石井研士／著,春秋社,20220617,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC15273694,
