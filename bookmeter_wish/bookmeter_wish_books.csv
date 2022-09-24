@@ -1,4 +1,5 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/20302243,4623094332,はじめて学ぶ西洋古代史,長谷川岳男／編集,ミネルヴァ書房,20221102,No,,
 https://bookmeter.com/books/13712808,4297102838,逆引きPIC電子工作やりたいこと事典,"後閑哲也著,後閑, 哲也,",技術評論社,,No,,
 https://bookmeter.com/books/9314505,4816357688,オールカラー普通免許〈ひっかけ対策〉問題集,長信一／著,ナツメ社,2015-02,No,,
 https://bookmeter.com/books/16332906,4839968519,作ろう！CPU,上原周／著,マイナビ出版,20200828,No,,
@@ -254,7 +255,7 @@ https://bookmeter.com/books/17924940,4791773829,悪魔学大全,ロッセル・�
 https://bookmeter.com/books/16309232,4991119006,数理物理研究,"田中俊行, 小西巌, 相原典明, 横山賢, 片桐奏羽, 近藤弘 著,田中, 俊行,小西, 巌,相原, 典明,横山, 賢,片桐, 奏羽,近藤, 弘, pub. 2020,",数理物理出版会,"Thu, 27 Aug 2020 09:00:00 +0900",No,,
 https://bookmeter.com/books/31995,4003367618,比較言語学入門,高津春繁／著,岩波書店,1992-05,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN07629138,
 https://bookmeter.com/books/17969565,4296000195,プログラムはなぜ動くのか 第３版　知っておきたいプログラミングの基礎知識,矢沢久雄／著,日経ＢＰ,20210514,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC07290960,
-https://bookmeter.com/books/638493,4000056530,多変量解析入門 : 線形から非線形へ,小西貞則／著,岩波書店,2010-01,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB00828710,
+https://bookmeter.com/books/638493,4000056530,多変量解析入門 線形から非線形へ,小西貞則／著,岩波書店,20100126,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB00828710,
 https://bookmeter.com/books/12689462,4839965412,将棋AIで学ぶディープラーニング,山岡忠夫／著,マイナビ出版,20180314,No,,
 https://bookmeter.com/books/11182326,4777519651,Java将棋のアルゴリズム,"池泰弘著 ; I/O編集部編,池, 泰弘,I/O編集部,",工学社,,No,,
 https://bookmeter.com/books/18143197,4336070903,「探偵小説」の考古学,レジス・メサック／著 石橋正孝／監修・翻訳 池田潤／翻訳 佐々木匠／翻訳 白鳥光／翻訳 ほか,国書刊行会,20210716,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC08627491,
