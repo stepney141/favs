@@ -1,4 +1,5 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/11605052,4000256696,歴史を学ぶ人々のために : 現在をどう生きるか,東京歴史科学研究会／著,岩波書店,2017-3-23,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23337911,
 https://bookmeter.com/books/137542,4787210130,ボンデージ進化論,北原童夢／著,青弓社,19920401,No,,
 https://bookmeter.com/books/20262095,4826902433,情報セキュリティの敗北史,アンドリュー・スチュワート／著 小林啓倫／翻訳,白揚社,20221012,No,,
 https://bookmeter.com/books/14241050,4873118654,Raspberry Piで学ぶコンピュータアーキテクチャ,EbenUpton／著 JeffDuntemann／著 RalphRoberts／著 ほか,オライリー・ジャパン,20190915,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28852846,
@@ -12,7 +13,7 @@ https://bookmeter.com/books/66721,4796702792,ファッションの文化社会�
 https://bookmeter.com/books/4493723,4588276476,鉄道旅行の歴史　〈新装版〉,W.シヴェルブシュ／著 加藤二郎／訳,法政大学出版局,20111209,No,,
 https://bookmeter.com/books/86123,4254116330,統計学のための数学入門30講,永田靖／著,朝倉書店,2005-03,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA7172228X,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4254116330&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 https://bookmeter.com/books/19925507,4758017832,中谷友紀子　東映アニメーションプリキュアワークス２,東映アニメーション：監修／監修,一迅社,20220916,No,,
-https://bookmeter.com/books/20014018,4274228991,Pythonではじめる 音のプログラミング,青木直史／著,オーム社,20220906,No,,
+https://bookmeter.com/books/20014018,4274228991,Pythonではじめる 音のプログラミング,青木直史／著,オーム社,20220906,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16633536,
 https://bookmeter.com/books/19539761,429712811X,ディープラーニングを支える技術〈2〉 ——ニューラルネットワーク最大の謎,岡野原大輔／著,技術評論社,20220421,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14081687,
 https://bookmeter.com/books/19126386,4297125609,ディープラーニングを支える技術 ——「正解」を導くメカニズム［技術基礎］,岡野原大輔／著,技術評論社,20220108,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14376501,
 https://bookmeter.com/books/19720570,462209083X,ソーシャルメディア・プリズム,クリス・ベイル／著 松井信彦／翻訳,みすず書房,20220603,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC15059537,
