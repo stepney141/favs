@@ -1,4 +1,5 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/2312066,4563010081,リスク・セオリーの基礎 : 不確実性に対処するための数理,岩沢宏和／著,培風館,2010-02,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB0106478X,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4563010081&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 https://bookmeter.com/books/20071389,4320115317,数学ソフトウェアの作り方,高山信毅／著 野呂正行／著 小原功任／著 藤本光史／著 高山信毅／編集 濱田龍義／編集,共立出版,20221006,No,,
 https://bookmeter.com/books/11605052,4000256696,歴史を学ぶ人々のために : 現在をどう生きるか,東京歴史科学研究会／著,岩波書店,2017-3-23,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23337911,
 https://bookmeter.com/books/137542,4787210130,ボンデージ進化論,北原童夢／著,青弓社,19920401,No,,
@@ -26,7 +27,7 @@ https://bookmeter.com/books/64487,4061489771,哲学の歴史,新田義弘／著,
 https://bookmeter.com/books/510915,4004310083,西洋哲学史 近代から現代へ,熊野純彦／著,岩波書店,20060920,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA78401229,
 https://bookmeter.com/books/467470,4004310075,西洋哲学史 古代から中世へ,熊野純彦／著,岩波書店,20060420,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA76504173,
 https://bookmeter.com/books/5472332,4121021878,物語哲学の歴史 : 自分と世界を考えるために,伊藤邦武／著,中央公論新社,2012-10,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB10516521,
-https://bookmeter.com/books/19890328,4575317365,セックスロボットと人造肉　テクノロジーは性、食、生、死を“征服”できるか,ジェニー・クリーマン／著 安藤貴子／翻訳,双葉社,20220825,No,,
+https://bookmeter.com/books/19890328,4575317365,セックスロボットと人造肉　テクノロジーは性、食、生、死を“征服”できるか,ジェニー・クリーマン／著 安藤貴子／翻訳,双葉社,20220825,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16518163,
 https://bookmeter.com/books/20202118,4909658874,古典教育をオーバーホールする,菊野雅之／著,文学通信,20220926,No,,
 https://bookmeter.com/books/19075387,4065133327,深層学習　改訂第2版,岡谷貴之／著,講談社,20220119,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12180349,
 https://bookmeter.com/books/19990981,4297130343,リアルタイムグラフィックスの数学 ― GLSLではじめるシェーダプログラミング,巴山竜来／著,技術評論社,20220831,No,,
