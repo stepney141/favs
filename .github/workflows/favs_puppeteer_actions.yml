@@ -1,11 +1,12 @@
 name: Favorites Updater
 
 on: 
-  # push:
+  push:
+    - operation-test
   schedule:
-      - cron: "0 15 * * SAT"
-      - cron: "0 3 * * WED"
-      # 毎週日の午前0時・水の午後0時に起動(JST, UTC+9)
+    - cron: "0 15 * * SAT"
+    - cron: "0 3 * * WED"
+    # 毎週日の午前0時・水の午後0時に起動(JST, UTC+9)
 
 env:
   LANG: "ja_JP.UTF-8"
