@@ -2,7 +2,8 @@ name: Favorites Updater
 
 on: 
   push:
-    - operation-test
+    branches:
+      - operation-test
   schedule:
     - cron: "0 15 * * SAT"
     - cron: "0 3 * * WED"
