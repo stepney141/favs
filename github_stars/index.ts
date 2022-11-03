@@ -1,14 +1,20 @@
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const { Octokit } = require("octokit");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const fs = require('fs/promises');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const papa = require("papaparse");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const path = require('path');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 require("dotenv").config({path: path.join(__dirname, "../.env")});
 
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 const token = process.env.OAUTH_TOKEN_OF_GITHUB;
 
 const createClient = () => new Octokit({ auth: token });
 
-const getStarredGists = async (app) => {
+const getStarredGists = async (app: any) => {
     // https://docs.github.com/en/rest/gists/gists#list-starred-gists
     const iterator = app.paginate.iterator('GET /gists/starred', { per_page: 100 });
 
@@ -26,7 +32,7 @@ const getStarredGists = async (app) => {
     return gists_json;
 };
 
-const getStarredRepos = async (app) => {
+const getStarredRepos = async (app: any) => {
     // https://docs.github.com/en/rest/activity/starring#list-repositories-starred-by-the-authenticated-user
     const iterator = app.paginate.iterator('GET /user/starred', { per_page: 100 });
 
@@ -45,14 +51,14 @@ const getStarredRepos = async (app) => {
     return stars_json;
 };
 
-const writeCSV = async (json, filename) => {
+const writeCSV = async (json: any, filename: any) => {
     try {
         const csv = papa.unparse(json);
         const filehandle = await fs.open(filename, 'w');
         await fs.appendFile(
             `./${filename}`,
             csv,
-            (e) => {
+            (e: any) => {
                 if (e) console.log("error: ", e);
             }
         );
