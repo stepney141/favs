@@ -1,7 +1,12 @@
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const puppeteer = require("puppeteer");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const fs = require("fs");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const papa = require("papaparse");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const path = require('path');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 require("dotenv").config({path: path.join(__dirname, "../.env")});
 
 const baseURI = 'https://www.boundhub.com';
@@ -20,15 +25,17 @@ const xpath = {
     linkToAllMovies: '//*[@id="list_videos_my_favourite_videos_items"]/form/div[*]/a',
 };
 
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 const user_name = (process.env.BOUNDHUB_ACCOUNT).toString();
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 const password = (process.env.BOUNDHUB_PASSWORD).toString();
         
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
-const transposeArray = a => a[0].map((_, c) => a.map((r) => r[c]));
+const transposeArray = (a: any) => a[0].map((_: any, c: any) => a.map((r: any) => r[c]));
 
-const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
+const randomWait = (baseWaitSeconds: any, min: any, max: any) => baseWaitSeconds * (Math.random() * (max - min) + min);
 
-const mouse_click = async (page, x, y, time) => {
+const mouse_click = async (page: any, x: any, y: any, time: any) => {
     try {
         await Promise.all([
             page.mouse.move(x, y),
@@ -42,7 +49,7 @@ const mouse_click = async (page, x, y, time) => {
     }
 };
 
-async function login(browser) {
+async function login(browser: any) {
     try {
         const page = await browser.newPage();
 
@@ -50,10 +57,10 @@ async function login(browser) {
             waitUntil: "load",
         });
 
-        await page.evaluateOnNewDocument(() => { //webdriver.navigatorを消して自動操縦であることを隠す
-            Object.defineProperty(navigator, 'webdriver', ()=>{});
-            delete navigator.__proto__.webdriver;
-        });
+        await page.evaluateOnNewDocument(() => {
+    Object.defineProperty(navigator, 'webdriver', () => { });
+    delete (navigator as any).__proto__.webdriver;
+});
 
         const useridInput_Handle = page.$x(xpath.useridInput);
         const passwordInput_Handle = page.$x(xpath.passwordInput);
@@ -77,7 +84,7 @@ async function login(browser) {
     return true;    
 }
 
-async function scraper(browser) {
+async function scraper(browser: any) {
     let movieData = [];
     let movieUrlData = ["movie_url"];
     let movieTitleData = ["movie_title"];
@@ -90,10 +97,10 @@ async function scraper(browser) {
             waitUntil: "load",
         });
 
-        await page.evaluateOnNewDocument(() => { //webdriver.navigatorを消して自動操縦であることを隠す
-            Object.defineProperty(navigator, 'webdriver', ()=>{});
-            delete navigator.__proto__.webdriver;
-        });
+        await page.evaluateOnNewDocument(() => {
+    Object.defineProperty(navigator, 'webdriver', () => { });
+    delete (navigator as any).__proto__.webdriver;
+});
 
         const linkToPlaylist_Handle = page.$x(xpath.linkToPlaylist);
 
@@ -118,10 +125,10 @@ async function scraper(browser) {
             }
 
             const linkToNextPage_Handle = await page.$x(xpath.linkToNextPage); // XPathでページネーションのリンク情報を取得し、そのelementHandleに要素が存在するか否かでループの終了を判定
-            if (await linkToNextPage_Handle.length !== 0) {
+            if ((await linkToNextPage_Handle.length) !== 0) {
                 await Promise.all([
                     page.waitForResponse(
-                        (response) => {
+                        (response: any) => {
                             // console.log(response.url());
                             return response.url().includes('https://www.boundhub.com/my/favourites/videos/?mode=async') === true && response.status() === 200;
                         }
@@ -146,7 +153,7 @@ async function scraper(browser) {
     return movieData;
 }
 
-async function output(arrayData) {
+async function output(arrayData: any) {
     const jsonData = JSON.stringify(arrayData, null, "  ");
 
     try {
@@ -154,12 +161,12 @@ async function output(arrayData) {
             `./${csv_filename}.csv`,
             papa.unparse(jsonData),
             // jsonData,
-            (e) => {
+            (e: any) => {
                 if (e) console.log("error: ", e);
             }
         );
     } catch (e) {
-        console.log("error: ", e.message);
+        console.log("error: ", (e as any).message);
         return false;
     }
     console.log(process_description + ": CSV Output Completed!");
