@@ -1,9 +1,16 @@
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const puppeteer = require("puppeteer-extra");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const fs = require("fs").promises;
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const papa = require("papaparse");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const axios = require("axios");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const path = require('path');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 require("dotenv").config({path: path.join(__dirname, "../.env")});
 puppeteer.use(StealthPlugin()); // use the stealth plugin
 
@@ -17,13 +24,16 @@ const XPATH = {
     nextPaginationButton:'//button[contains(text(), "もっと読み込む")]'
 };
 
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 const zenn_email = (process.env.ZENN_GOOGLE_ACCOUNT).toString();
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 const zenn_password = (process.env.ZENN_GOOGLE_PASSWORD).toString();
 
 // ref: https://qiita.com/albno273/items/c2d48fdcbf3a9a3434db
 // example: await sleep(randomWait(1000, 0.5, 1.1)); 1000ms x0.5 ~ x1.1 の間でランダムにアクセスの間隔を空ける
-const sleep = async (time) => new Promise((resolve, reject) => { setTimeout(() => { resolve(); }, time); });
-const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
+// @ts-expect-error TS(2794): Expected 1 arguments, but got 0. Did you forget to... Remove this comment to see the full error message
+const sleep = async (time: any) => new Promise((resolve, reject) => { setTimeout(() => { resolve(); }, time); });
+const randomWait = (baseWaitSeconds: any, min: any, max: any) => baseWaitSeconds * (Math.random() * (max - min) + min);
 
 // ref: https://cpoint-lab.co.jp/article/202007/15928/
 const createAxiosInstance = () => {
@@ -34,8 +44,8 @@ const createAxiosInstance = () => {
  
     // interceptors.response.use で返信時に引数に入れた関数が動作する
     axiosInstance.interceptors.response.use(
-        (response) => response, // 第一引数は通信成功時処理。受けた内容をそのまま通過
-        async (error) => { // 第二引数は通信失敗時処理
+        (response: any) => response, // 第一引数は通信成功時処理。受けた内容をそのまま通過
+        async (error: any) => { // 第二引数は通信失敗時処理
             throw new Error(`${error.response?.statusText} ${error.response?.config.url} ${await error.response?.data}`);
         }
     );
@@ -45,6 +55,10 @@ const createAxiosInstance = () => {
 };
 
 class Zennist {
+    axios: any;
+    favedArticlesData: any;
+    favedArticlesData_Array: any;
+    page_num: any;
 
     constructor() {
         this.page_num = 1;
@@ -53,7 +67,7 @@ class Zennist {
         this.favedArticlesData_Array = [];
     }
 
-    async login(browser) {
+    async login(browser: any) {
         try {
             const page = await browser.newPage();
 
@@ -97,7 +111,7 @@ class Zennist {
             await page.screenshot({path: 'test.png'});
             await (passwordInputHandle[0]).type(zenn_password);
             await Promise.all([
-                page.waitForResponse((response) => {
+                page.waitForResponse((response: any) => {
                     return response.url().includes(`${baseURI}/auth/init`) === true && response.status() === 200;
                 }),
                 page.keyboard.press('Enter')
@@ -111,7 +125,7 @@ class Zennist {
         return true;    
     }
 
-    async scraper(browser) {
+    async scraper(browser: any) {
         try {
             const page = await browser.newPage();
 
@@ -121,7 +135,7 @@ class Zennist {
             // await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
 
             //「いいねした投稿」のスクレイピング
-            page.on('response', async (response) => { //イベントハンドラを登録
+            page.on('response', async (response: any) => { //イベントハンドラを登録
                 if (response.url().includes(`${baseURI}/api/me/library/likes`) === true && response.status() === 200) {
 
                     const articles_array = (await response.json())["items"];
@@ -171,7 +185,7 @@ class Zennist {
     }
 
 
-    async outputCSV(arrayData, filename) {
+    async outputCSV(arrayData: any, filename: any) {
         const jsonData = JSON.stringify(arrayData, null, "  ");
 
         try {
@@ -179,12 +193,12 @@ class Zennist {
                 `./${filename}`,
                 papa.unparse(jsonData),
                 // jsonData,
-                (e) => {
+                (e: any) => {
                     if (e) console.log("error: ", e);
                 }
             );
         } catch (e) {
-            console.log("error: ", e.message);
+            console.log("error: ", (e as any).message);
             return false;
         }
         console.log(`${JOB_NAME}: CSV Output Completed!`);
