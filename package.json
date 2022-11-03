@@ -12,11 +12,12 @@
     "papaparse": "^5.3.2",
     "path": "^0.12.7",
     "pdfdataextract": "^3.2.0",
-    "puppeteer": "^19.2.0",
+    "puppeteer": "^19.2.2",
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-stealth": "^2.11.1"
   },
   "devDependencies": {
-    "eslint": "^8.26.0"
+    "eslint": "^8.26.0",
+    "ts-migrate": "^0.1.34"
   }
 }
