@@ -17,6 +17,7 @@
     "puppeteer-extra-plugin-stealth": "^2.11.1"
   },
   "devDependencies": {
+    "@types/node": "^18.11.9",
     "eslint": "^8.26.0",
     "ts-migrate": "^0.1.34"
   }
