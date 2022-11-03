@@ -1,12 +1,17 @@
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const puppeteer = require("puppeteer");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const fs = require("fs");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const papa = require("papaparse");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const path = require('path');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 require("dotenv").config({path: path.join(__dirname, "../.env")});
 
 // vars for qiita
 const userid = "stepney141";
-let page_max;
+let page_max: any;
 let page_num = 1;
 
 const JOB_NAME = "Qiita LGTM Articles";
@@ -33,7 +38,7 @@ const user_name = "";
 const password = "";
 
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
-const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
+const transposeArray = (a: any) => a[0].map((_: any, c: any) => a.map((r: any) => r[c]));
 
 /**
  * Iterates like Python-zip
@@ -53,7 +58,7 @@ const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
        console.log(elm1, elm2, elm3);
    }
  */
-function* zip(...args) {
+function* zip(...args: any[]) {
     
     const length = args[0].length;
     
@@ -74,7 +79,7 @@ function* zip(...args) {
     }
 }
 
-async function getLgtm(browser) {
+async function getLgtm(browser: any) {
     try {
         const page = await browser.newPage();
 
@@ -125,7 +130,7 @@ async function getLgtm(browser) {
 }
 
 // Log in to qiita before scraping in order to avoid annoying prompts that recommend creating a new account
-async function qiitaLogin(browser) {
+async function qiitaLogin(browser: any) {
     try {
         const page = await browser.newPage();
 
@@ -159,7 +164,7 @@ async function qiitaLogin(browser) {
     return true;
 }
 
-async function output(arrayData) {
+async function output(arrayData: any) {
     try {
         const jsonData = JSON.stringify(arrayData, null, "  ");
 
@@ -175,13 +180,13 @@ async function output(arrayData) {
         await fs.writeFile(
             "./lgtm_article_url.csv",
             papa.unparse(jsonData),
-            (e) => {
+            (e: any) => {
                 if (e) console.log("error: ", e);
             }
         );
 
     } catch (e) {
-        console.log("error: ", e.message);
+        console.log("error: ", (e as any).message);
         return false;
     }
     console.log(`${JOB_NAME}: CSV Output Completed!`);
