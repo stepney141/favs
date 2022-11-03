@@ -1,17 +1,28 @@
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const puppeteer = require("puppeteer");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const fs = require("fs").promises;
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const papa = require("papaparse");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const axios = require("axios");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const { XMLParser } = require("fast-xml-parser");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const path = require('path');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const { PdfData } = require('pdfdataextract');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 require("dotenv").config({path: path.join(__dirname, "../.env")});
 
 const process_description = 'Bookmeter Wished Books';
 const bookmeter_baseURI = 'https://bookmeter.com';
 const bookmeter_userID = '1003258';
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 const bookmeter_username = (process.env.BOOKMETER_ACCOUNT).toString();
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 const bookmeter_password = (process.env.BOOKMETER_PASSWORD).toString();
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 const cinii_appid = (process.env.CINII_API_APPID).toString();
 const main_library_id = 'FA005358'; //上智大学図書館の機関ID ref: https://ci.nii.ac.jp/library/FA005358
 const math_library_booklist = { //数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108
@@ -50,10 +61,11 @@ const isbn_regex = /(?=[0-9X]{10}|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}|97[89][0-9]{
 
 // ref: https://qiita.com/albno273/items/c2d48fdcbf3a9a3434db
 // example: await sleep(randomWait(1000, 0.5, 1.1)); 1000ms x0.5 ~ x1.1 の間でランダムにアクセスの間隔を空ける
-const sleep = async (time) => new Promise((resolve, reject) => { setTimeout(() => { resolve(); }, time); });
-const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
+// @ts-expect-error TS(2794): Expected 1 arguments, but got 0. Did you forget to... Remove this comment to see the full error message
+const sleep = async (time: any) => new Promise((resolve, reject) => { setTimeout(() => { resolve(); }, time); });
+const randomWait = (baseWaitSeconds: any, min: any, max: any) => baseWaitSeconds * (Math.random() * (max - min) + min);
 
-const handleAxiosError = error => {
+const handleAxiosError = (error: any) => {
     // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
     if (error.response) {
         console.log(error.response.data);
@@ -67,7 +79,7 @@ const handleAxiosError = error => {
 };
 
 // ref: https://qiita.com/iz-j/items/27b9656ebed1a4516ee1
-const convertIsbn10To13 = (isbn10) => {
+const convertIsbn10To13 = (isbn10: any) => {
     // 1. 先頭に`978`を足して、末尾の1桁を除く
     const src = `978${isbn10.slice(0, 9)}`;
   
@@ -84,6 +96,12 @@ const convertIsbn10To13 = (isbn10) => {
 };
 
 class Bookmaker {
+    MathLibIsbnList: any;
+    fxp: any;
+    page_num: any;
+    previousWishBooksData: any;
+    wishBooksData: any;
+    wishBooksData_Array: any;
 
     constructor() {
         this.page_num = 1;
@@ -95,7 +113,7 @@ class Bookmaker {
     }
 
     // Amazon詳細リンクはアカウントにログインしなければ表示されないため、ログインする
-    async loginToBookmeter(browser) {
+    async loginToBookmeter(browser: any) {
         try {
             const page = await browser.newPage();
 
@@ -128,7 +146,7 @@ class Bookmaker {
         return true;    
     }
 
-    async crowlBookmeter(browser) {
+    async crowlBookmeter(browser: any) {
         try {
             const page = await browser.newPage();
 
@@ -160,7 +178,7 @@ class Bookmaker {
                 // await page.waitForTimeout(randomWait(3000, 0.5, 1.1));
 
                 // XPathで本の情報を取得し、そのelementHandleに要素が存在しなければループから抜ける
-                if (await (await page.$x(xpath.isBookExist)).length == 0) {
+                if ((await (await page.$x(xpath.isBookExist)).length) == 0) {
                     break;
                 } else {
                     this.page_num++;
@@ -175,8 +193,9 @@ class Bookmaker {
         return true;
     }
 
-    async configureMathLibBookList(listtype) {
+    async configureMathLibBookList(listtype: any) {
         try {
+            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
             const target_pdf_url = math_library_booklist[listtype];
 
             const response = await axios.get(target_pdf_url, { 
@@ -214,7 +233,7 @@ class Bookmaker {
     }
 
     //OpenBD検索
-    async searchOpenBD(key, books_obj) {
+    async searchOpenBD(key: any, books_obj: any) {
         const isbn_data = books_obj["isbn_or_asin"]; //ISBNデータを取得
 
         try {
@@ -259,7 +278,7 @@ class Bookmaker {
     }
 
     // 国立国会図書館検索
-    async searchNDL(key, books_obj) {
+    async searchNDL(key: any, books_obj: any) {
         const isbn_data = books_obj["isbn_or_asin"]; //ISBNデータを取得
 
         try {
@@ -315,7 +334,7 @@ class Bookmaker {
     }
 
     //大学図書館所蔵検索
-    async searchSophia(key, books_obj) {
+    async searchSophia(key: any, books_obj: any) {
         const isbn_data = books_obj["isbn_or_asin"]; //ISBNデータを取得
 
         try {
@@ -384,23 +403,23 @@ class Bookmaker {
         console.log(`${process_description}: Sophia-Univ. Library Searching Completed`);
     }
 
-    async writeFile(data, filename) {
+    async writeFile(data: any, filename: any) {
         try {
             await fs.appendFile(
                 `./${filename}`,
                 data,
-                (e) => {
+                (e: any) => {
                     if (e) console.log("error: ", e);
                 }
             );
         } catch (e) {
-            console.log("error: ", e.message);
+            console.log("error: ", (e as any).message);
             return false;
         }
         return true;
     }
 
-    async writeCSV(array_data, filename) {
+    async writeCSV(array_data: any, filename: any) {
         try {
             const json_data = JSON.stringify(array_data, null, "  ");
             const csv_data = papa.unparse(json_data);
@@ -409,31 +428,32 @@ class Bookmaker {
             await this.writeFile(csv_data, filename);
             await filehandle.close();
         } catch (e) {
-            console.log("error: ", e.message);
+            console.log("error: ", (e as any).message);
             return false;
         }
         console.log(`${process_description}: CSV Output Completed!`);
         return true;
     }
 
-    async readCSV(filename) {
+    async readCSV(filename: any) {
         try {
             const data = await fs.readFile(filename, "utf-8");
             const parsed_obj = papa.parse(data, {
                 header: true,
-                complete: (results, file) => {
+                complete: (results: any, file: any) => {
                     return results;
                 },
             });
 
             return parsed_obj.data;
         } catch (error) {
-            console.error(error.message);
+            console.error((error as any).message);
+            // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
             process.exit(1); // 終了ステータス 1（一般的なエラー）としてプロセスを終了する
         }
     }
 
-    async validateDiff(filename) {
+    async validateDiff(filename: any) {
         const file = await this.readCSV(filename);
 
         for (const obj of file) {
@@ -474,6 +494,7 @@ class Bookmaker {
     if (await book.validateDiff(csv_filename)) { //ローカルのCSVとbookmeterのスクレイピング結果を比較し、差分を検出したら書誌情報を取得してCSVを新規生成
         console.log(`${process_description}: Fetching bibliographic information`);
 
+        // @ts-expect-error TS(2554): Expected 0 arguments, but got 1.
         await book.fetchBiblioInfo(book.wishBooksData); //書誌情報取得
 
         for (const obj of book.wishBooksData.values()) { //Mapの値だけ抜き出してArrayにする
