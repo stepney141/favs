@@ -1,15 +1,23 @@
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const axios = require('axios');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const path = require('path');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const fs = require('fs/promises');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const papa = require("papaparse");
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 require("dotenv").config({path: path.join(__dirname, "../.env")});
 
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 const username = process.env.WIKIPEDIA_USERNAME;
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 const password = process.env.WIKIPEDIA_PASSWORD;
 
-const sleep = async (seconds) => new Promise((resolve, reject) => { setTimeout(() => { resolve(); }, seconds * 1000); });
+// @ts-expect-error TS(2794): Expected 1 arguments, but got 0. Did you forget to... Remove this comment to see the full error message
+const sleep = async (seconds: any) => new Promise((resolve, reject) => { setTimeout(() => { resolve(); }, seconds * 1000); });
 
-const handleAxiosError = error => {
+const handleAxiosError = (error: any) => {
     // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
     if (error.response) {
         console.log(error.response.data);
@@ -26,7 +34,7 @@ const handleAxiosError = error => {
  * ログイントークンを取得する
  * ref: https://www.mediawiki.org/wiki/API:Tokens
  */
-const getLoginToken = async (baseURI) => {
+const getLoginToken = async (baseURI: any) => {
     try {
         const response = await axios({
             method: 'get',
@@ -55,7 +63,7 @@ const getLoginToken = async (baseURI) => {
  * client loginを行う
  * ref: https://www.mediawiki.org/wiki/API:Login
  */
-const postClientLogin = async (baseURI, login_token, cookies) => {
+const postClientLogin = async (baseURI: any, login_token: any, cookies: any) => {
     try {
         const clientlogin_response = await axios({
             method: 'post',
@@ -86,8 +94,9 @@ const postClientLogin = async (baseURI, login_token, cookies) => {
 /**
  * ログイン処理を行う
  */
-const login = async (baseURI, login_token, cookies) => {
+const login = async (baseURI: any, login_token: any, cookies: any) => {
     try {
+        // @ts-expect-error TS(2488): Type 'false | any[]' must have a '[Symbol.iterator... Remove this comment to see the full error message
         const [ login_response_json, client_cookies ] = await postClientLogin(baseURI, login_token, cookies);
         const login_status = login_response_json?.status;
         console.log('status:', login_status);
@@ -117,7 +126,7 @@ const login = async (baseURI, login_token, cookies) => {
  * - https://www.mediawiki.org/wiki/Manual:Namespace
  * - https://www.mediawiki.org/wiki/API:Watchlistraw
  */
-const getWatchlistRaw = async (baseURI, cookies, pagination = null) => {
+const getWatchlistRaw = async (baseURI: any, cookies: any, pagination = null) => {
     try {
         let queries = {
             action: 'query', 
@@ -130,6 +139,7 @@ const getWatchlistRaw = async (baseURI, cookies, pagination = null) => {
         if (pagination !== null) {
             queries = {
                 ...queries,
+                // @ts-expect-error TS(2322): Type '{ wrcontinue: never; action: string; format:... Remove this comment to see the full error message
                 wrcontinue: pagination
             };
         }
@@ -162,11 +172,12 @@ const getWatchlistRaw = async (baseURI, cookies, pagination = null) => {
  * - https://sleepygamersmemo.blogspot.com/2018/11/wikipedia-url-shortener-tool.html
  * - https://www.mediawiki.org/wiki/Extension:TextExtracts#API 
  */
-const getPageId = async (baseURI, cookies, page_title) => {
+const getPageId = async (baseURI: any, cookies: any, page_title: any) => {
     try {
         const response = await axios({
             method: 'post',
             url: `https://${baseURI}/w/api.php`,
+            // @ts-expect-error TS(2345): Argument of type '{ action: string; prop: string; ... Remove this comment to see the full error message
             data: new URLSearchParams({
                 action: 'query',
                 prop: 'extracts',
@@ -190,7 +201,7 @@ const getPageId = async (baseURI, cookies, page_title) => {
     }
 };
 
-const fetchWatchlist = async function* (baseURI, cookies) {
+const fetchWatchlist = async function* (baseURI: any, cookies: any) {
     /** @type {Array<{ns: number, title: string}> | undefined} */
     let wl_data;
     let pagination_flag = null;
@@ -213,13 +224,13 @@ const fetchWatchlist = async function* (baseURI, cookies) {
 /**
  * watchlistraw APIから得られた配列を取得し、指定したファイルに追記する
  */
-const writeWatchlistToCSV = async (data, filename) => {
+const writeWatchlistToCSV = async (data: any, filename: any) => {
     try {
         await fs.appendFile(
             `./${filename}`,
             // papa.unparse(output_data),
             data,
-            (e) => {
+            (e: any) => {
                 if (e) console.log("error: ", e);
             }
         );
@@ -231,7 +242,7 @@ const writeWatchlistToCSV = async (data, filename) => {
 /**
  * APiを叩いてウォッチリストの情報を取得し、それをファイルに出力する
  */
-const extractWatchlist = async (baseURI, cookies) => {
+const extractWatchlist = async (baseURI: any, cookies: any) => {
     try {
         const filename = `${baseURI}.csv`;
         const filehandle = await fs.open(filename, 'w');
@@ -239,6 +250,7 @@ const extractWatchlist = async (baseURI, cookies) => {
         await writeWatchlistToCSV('title,url\n', filename); //CSVのヘッダ作成
 
         // ref: https://ja.javascript.info/async-iterators-generators
+        // @ts-expect-error TS(2504): Type '{}' must have a '[Symbol.asyncIterator]()' m... Remove this comment to see the full error message
         for await (const [ page_title, page_url ] of fetchWatchlist(baseURI, cookies)){
             const output_data = `${page_title},${page_url}\n`;
             await writeWatchlistToCSV(output_data, filename);
@@ -262,6 +274,7 @@ const extractWatchlist = async (baseURI, cookies) => {
         wikicommons: 'commons.wikimedia.org'
     };
 
+    // @ts-expect-error TS(2550): Property 'values' does not exist on type 'ObjectCo... Remove this comment to see the full error message
     for (const url of Object.values(accounts)) {
         console.log(`${url}: started`);
         const [ login_token, login_cookies ] = await getLoginToken(url);
