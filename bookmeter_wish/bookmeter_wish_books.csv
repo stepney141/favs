@@ -1,11 +1,14 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/20236152,4798171549,「技術書」の読書術 達人が教える選び方・読み方・情報発信&共有のコツとテクニック,IPUSIRON／著 増井敏克／著,翔泳社,20221104,No,,
+https://bookmeter.com/books/13132314,425412841X,経済・ファイナンスのためのカルマンフィルター入門,森平爽一郎／著,朝倉書店,20190206,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27703782,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=425412841X&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
+https://bookmeter.com/books/18523604,4002710521,「私物化」される国公立大学,駒込武／著,岩波書店,20210909,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC09664223,
 https://bookmeter.com/books/20394264,4774407763,調べる技術,小林昌樹／著,皓星社,20221209,No,,
 https://bookmeter.com/books/20218341,4480438319,神田神保町書肆街考,鹿島茂／著,筑摩書房,20221013,No,,
 https://bookmeter.com/books/20195960,4274229181,Pythonで始める　機器分析データの解析とケモメトリックス,森田成昭／著,オーム社,20220922,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16891021,
 https://bookmeter.com/books/20057133,4910612041,大学院・大学編入のための応用数学―基本事項の整理と問題演習および入試問題研究―,桜井基晴／著,プレアデス出版,20220820,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16505365,
 https://bookmeter.com/books/20087337,453554042X,経済論文の書き方,経済セミナー編集部／編集,日本評論社,20220916,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16683024,
 https://bookmeter.com/books/20106114,4627083114,数理人口学入門,稲葉寿／著,森北出版,20220914,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16799969,
-https://bookmeter.com/books/20255782,4121027221,陰謀論 民主主義を揺るがすメカニズム,秦正樹／著,中央公論新社,20221020,No,,
+https://bookmeter.com/books/20255782,4121027221,陰謀論 民主主義を揺るがすメカニズム,秦正樹／著,中央公論新社,20221020,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC17273571,
 https://bookmeter.com/books/2312066,4563010081,リスク・セオリーの基礎 : 不確実性に対処するための数理,岩沢宏和／著,培風館,2010-02,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB0106478X,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4563010081&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 https://bookmeter.com/books/20071389,4320115317,数学ソフトウェアの作り方,高山信毅／著 野呂正行／著 小原功任／著 藤本光史／著 高山信毅／編集 濱田龍義／編集,共立出版,20221006,No,,
 https://bookmeter.com/books/11605052,4000256696,歴史を学ぶ人々のために : 現在をどう生きるか,東京歴史科学研究会／著,岩波書店,2017-3-23,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23337911,
@@ -498,7 +501,7 @@ https://bookmeter.com/books/13998400,4320113837,１足す１から現代数論�
 https://bookmeter.com/books/10126416,4791769015,キャラの思考法,さやわか／著,青土社,20151218,No,,
 https://bookmeter.com/books/12208967,4788515350,セミオトポス 12　「美少女」の記号論,日本記号学会／編集,新曜社,20170831,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB24387642,
 https://bookmeter.com/books/502893,4480092781,魔術的リアリズム : メランコリーの芸術,"種村季弘 著,種村, 季弘, 1933-2004,",筑摩書房,"Fri, 09 Apr 2010 09:00:00 +0900",No,,
-https://bookmeter.com/books/14025516,4106108208,ケーキの切れない非行少年たち,宮口幸治／著,新潮社,20190713,No,,
+https://bookmeter.com/books/14025516,4106108208,ケーキの切れない非行少年たち,宮口幸治／著,新潮社,20190713,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28553379,
 https://bookmeter.com/books/632747,4022505273,サザエさんパンダを見に行く : サザエさんをさがして その4,朝日新聞be編集グループ／著 朝日新聞社／著,朝日新聞,2009-01,No,,
 https://bookmeter.com/books/295423,4022503556,またまたサザエさんをさがして,朝日新聞be編集グループ／著 朝日新聞出版／著 朝日新聞社／著,朝日新聞社,2007-11,No,,
 https://bookmeter.com/books/473929,4022502479,サザエさんをさがして,朝日新聞社／著 朝日新聞be編集グループ／著,朝日新聞社,2006-12,No,,
