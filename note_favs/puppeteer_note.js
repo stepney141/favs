@@ -172,7 +172,7 @@ class notebook {
         defaultViewport: { width: 500, height: 1000 },
         headless: false,
         // devtools: true,
-        slowMo: 20
+        slowMo: 100
     });
 
     const note = new notebook();

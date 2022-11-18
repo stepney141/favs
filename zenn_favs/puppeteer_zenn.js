@@ -1,11 +1,17 @@
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const { executablePath } = require('puppeteer');
 const fs = require("fs").promises;
 const papa = require("papaparse");
 const axios = require("axios");
 const path = require('path');
 require("dotenv").config({path: path.join(__dirname, "../.env")});
-puppeteer.use(StealthPlugin()); // use the stealth plugin
+
+const stealthPlugin = StealthPlugin();
+/* https://github.com/berstend/puppeteer-extra/issues/668 */
+stealthPlugin.enabledEvasions.delete('iframe.contentWindow');
+stealthPlugin.enabledEvasions.delete('navigator.plugins');
+puppeteer.use(stealthPlugin); // use the stealth plugin
 
 const JOB_NAME = 'Zenn.dev Favorite Articles';
 const baseURI = 'https://zenn.dev';
@@ -61,6 +67,9 @@ class Zennist {
                 'accept-language': 'ja-JP',
             });
             await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
+            
+            /* https://github.com/berstend/puppeteer-extra/issues/668 */
+            await page.setBypassCSP(true);
 
             const pages = await browser.pages();
             // Close the new tab that chromium always opens first.
@@ -196,6 +205,7 @@ class Zennist {
     const startTime = Date.now();
 
     const browser = await puppeteer.launch({
+        executablePath: executablePath(),
         defaultViewport: { width: 1000, height: 1000 },
         // args: [
         //     // '--disable-gpu',
