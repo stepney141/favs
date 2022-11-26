@@ -1,4 +1,7 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/5106674,4798125393,実践プログラミングDSL : ドメイン特化言語の設計と実装のノウハウ,"Ghosh,Debasish／著 佐藤竜一／翻訳 ゴーシュデバシィシュ／著",翔泳社,2012-06,No,,
+https://bookmeter.com/books/13637914,4839967091,囲碁ディープラーニングプログラミング,MaxPumperla／著 KevinFerguson／著 山岡忠夫／翻訳,マイナビ出版,20190422,No,,
+https://bookmeter.com/books/63272,4788508427,神、人を喰う 人身御供の民俗学,六車由実／著,新曜社,2003-03,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA61847518,
 https://bookmeter.com/books/1733136,4641163642,比較制度分析・入門,中林真幸／著 石黒真吾／著,有斐閣,2010-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB0432979X,
 https://bookmeter.com/books/297734,4896944712,図説数の文化史 : 世界の数字と計算法,"Menninger,Karl／著 内林政夫／翻訳 メニンガーK.／著",八坂書房,2001-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA51768812,
 https://bookmeter.com/books/367722,4309460631,ホームズ贋作展覧会,"各務三郎 編,各務, 三郎, 1936-,",河出書房新社,"Thu, 05 Oct 1989 09:00:00 +0900",No,,
