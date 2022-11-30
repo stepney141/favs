@@ -1,4 +1,5 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/20498993,3031004418,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,No,,
 https://bookmeter.com/books/5106674,4798125393,実践プログラミングDSL : ドメイン特化言語の設計と実装のノウハウ,"Ghosh,Debasish／著 佐藤竜一／翻訳 ゴーシュデバシィシュ／著",翔泳社,2012-06,No,,
 https://bookmeter.com/books/13637914,4839967091,囲碁ディープラーニングプログラミング,MaxPumperla／著 KevinFerguson／著 山岡忠夫／翻訳,マイナビ出版,20190422,No,,
 https://bookmeter.com/books/63272,4788508427,神、人を喰う 人身御供の民俗学,六車由実／著,新曜社,2003-03,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA61847518,
@@ -50,7 +51,7 @@ https://bookmeter.com/books/510915,4004310083,西洋哲学史 近代から現代
 https://bookmeter.com/books/467470,4004310075,西洋哲学史 古代から中世へ,熊野純彦／著,岩波書店,20060420,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA76504173,
 https://bookmeter.com/books/5472332,4121021878,物語哲学の歴史 : 自分と世界を考えるために,伊藤邦武／著,中央公論新社,2012-10,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB10516521,
 https://bookmeter.com/books/19890328,4575317365,セックスロボットと人造肉　テクノロジーは性、食、生、死を“征服”できるか,ジェニー・クリーマン／著 安藤貴子／翻訳,双葉社,20220825,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16518163,
-https://bookmeter.com/books/20202118,4909658874,古典教育をオーバーホールする,菊野雅之／著,文学通信,20220926,No,,
+https://bookmeter.com/books/20202118,4909658874,古典教育をオーバーホールする,菊野雅之／著,文学通信,20220926,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16984100,
 https://bookmeter.com/books/19075387,4065133327,深層学習　改訂第2版,岡谷貴之／著,講談社,20220119,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12180349,
 https://bookmeter.com/books/19990981,4297130343,リアルタイムグラフィックスの数学 ― GLSLではじめるシェーダプログラミング,巴山竜来／著,技術評論社,20220831,No,,
 https://bookmeter.com/books/5116803,4320122992,量子情報科学入門 = Introduction to Quantum Information Science,小川朋宏／著 木村元／著 河内亮周／著 石坂智／著 林正人／著,共立,2012-06,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB09394904,
@@ -82,7 +83,6 @@ https://bookmeter.com/books/11084321,4320111397,確率的グラフィカルモ�
 https://bookmeter.com/books/10893442,4254122144,はじめての 統計データ分析,豊田秀樹／著,朝倉書店,20160606,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB21318144,
 https://bookmeter.com/books/216845,4254295405,入門 ベイズ統計学,中妻照雄／著,朝倉書店,20070614,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA82118516,
 https://bookmeter.com/books/11443360,4254122209,実践ベイズモデリング,豊田秀樹／著・編集,朝倉書店,20170131,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB22963061,
-https://bookmeter.com/books/9781687,4254122128,基礎からのベイズ統計学,豊田秀樹／著,朝倉書店,20150625,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18938264,
 https://bookmeter.com/books/9987358,4478013322,完全独習ベイズ統計学入門,小島寛之／著,ダイヤモンド社,2015-11,No,,
 https://bookmeter.com/books/13221301,4320113446,ゲームで大学数学入門,安田健彦／著,共立出版,20181222,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27463918,
 https://bookmeter.com/books/201614,4434042408,素因数分解と素数判定,玉井浩／翻訳 ブレッソードデヴィッド・M.／著,エスアイビー・アクセス : 星雲社,2004-03,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA66395683,
