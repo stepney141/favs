@@ -17,6 +17,10 @@
     "puppeteer-extra-plugin-stealth": "^2.11.1"
   },
   "devDependencies": {
-    "eslint": "^8.26.0"
+    "eslint": "^8.26.0",
+    "prettier": "^2.8.1"
+  },
+  "scripts": {
+    "lint-fix": "prettier --write . && eslint . --fix"
   }
 }

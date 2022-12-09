@@ -1,8 +1,8 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const papa = require("papaparse");
-const path = require('path');
-require("dotenv").config({path: path.join(__dirname, "../.env")});
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 // vars for qiita
 const userid = "stepney141";
@@ -10,14 +10,14 @@ let page_max;
 let page_num = 1;
 
 const JOB_NAME = "Qiita LGTM Articles";
-const BASE_URI = 'https://qiita.com';
+const BASE_URI = "https://qiita.com";
 const XPATH = {
-  max_pagenation_value: '//div/div[2]/div[3]/div/div[2]/div/ul/li[2]/span',
+  max_pagenation_value: "//div/div[2]/div[3]/div/div[2]/div/ul/li[2]/span",
   article_url: '//div/div[2]/div[3]/div/div[2]/div/article[*]/a[contains(@href, "qiita.com")]',
-  article_title: '//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a',
-  lgtm_count_of_article: '//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div/div[2]/span[2]',
-  author: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div/p',
-  created_at: '//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div/span/time' // 'dateTime'プロパティに時刻情報
+  article_title: "//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a",
+  lgtm_count_of_article: "//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div/div[2]/span[2]",
+  author: "//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div/p",
+  created_at: "//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div/span/time" // 'dateTime'プロパティに時刻情報
 };
 
 /**
@@ -54,16 +54,15 @@ const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
    }
  */
 function* zip(...args) {
-    
   const length = args[0].length;
-    
+
   // 引数チェック
   for (let arr of args) {
-    if (arr.length !== length){
+    if (arr.length !== length) {
       throw "Lengths of arrays are not the same.";
     }
   }
-    
+
   // イテレート
   for (let index = 0; index < length; index++) {
     let elms = [];
@@ -82,16 +81,14 @@ async function getLgtm(browser) {
 
     do {
       await page.goto(`${BASE_URI}/${userid}/likes?page=${page_num}`, {
-        waitUntil: ["domcontentloaded", "networkidle0"],
+        waitUntil: ["domcontentloaded", "networkidle0"]
       });
 
       // get max cursor number
       if (page_num == 1) {
         // ref: https://swfz.hatenablog.com/entry/2020/07/23/010044
         const paginationHandles = await page.$x(XPATH.max_pagenation_value);
-        page_max = Number(
-          (await (await paginationHandles[0].getProperty("innerHTML")).jsonValue()).substr(-2, 2)
-        );
+        page_max = Number((await (await paginationHandles[0].getProperty("innerHTML")).jsonValue()).substr(-2, 2));
       }
 
       const articleUrlHandles = await page.$x(XPATH.article_url); // get article urls
@@ -100,21 +97,24 @@ async function getLgtm(browser) {
       const authorHandles = await page.$x(XPATH.author); // get author names
       const createdAtHandles = await page.$x(XPATH.created_at); // get dates that the articles were created at
 
-      for (const [url, title, lgtm, created_at, author] of
-        zip(articleUrlHandles, articleTitleHandles, articleLgtmHandles, createdAtHandles, authorHandles)) {
+      for (const [url, title, lgtm, created_at, author] of zip(
+        articleUrlHandles,
+        articleTitleHandles,
+        articleLgtmHandles,
+        createdAtHandles,
+        authorHandles
+      )) {
         lgtmArticlesData.set(url, {
           title: await (await title.getProperty("innerHTML")).jsonValue(), //タイトル取得
           url: await (await url.getProperty("href")).jsonValue(), //記事URL取得
           lgtm: Number(await (await lgtm.getProperty("innerText")).jsonValue()), //記事LGTM数取得
           created_at: await (await created_at.getProperty("dateTime")).jsonValue(), //記事投稿日時取得
-          author: await (await author.getProperty("innerText")).jsonValue(), //記事投稿者取得
+          author: await (await author.getProperty("innerText")).jsonValue() //記事投稿者取得
         });
       }
 
       page_num++;
-
     } while (page_max >= page_num);
-
   } catch (e) {
     console.log(e);
     await browser.close();
@@ -131,15 +131,13 @@ async function qiitaLogin(browser) {
 
     // Log in to qiita with twitter authorization
     await page.goto("https://qiita.com/login", {
-      waitUntil: "networkidle2",
+      waitUntil: "networkidle2"
     });
-    const qiitaLoginButtonHandle = await page.$x(
-      "/html/body/div[1]/div/div[1]/div/div[2]/div[1]/form[2]/button"
-    );
+    const qiitaLoginButtonHandle = await page.$x("/html/body/div[1]/div/div[1]/div/div[2]/div[1]/form[2]/button");
     await qiitaLoginButtonHandle[0].click();
     await page.waitForNavigation({
       timeout: 60000,
-      waitUntil: "networkidle2",
+      waitUntil: "networkidle2"
     });
 
     // Authorize my twitter account connected to qiita
@@ -148,9 +146,8 @@ async function qiitaLogin(browser) {
     await page.click('input[type="submit"]');
     await page.waitForNavigation({
       timeout: 60000,
-      waitUntil: "networkidle2",
+      waitUntil: "networkidle2"
     });
-        
   } catch (e) {
     console.log(e);
     await browser.close();
@@ -172,14 +169,9 @@ async function output(arrayData) {
     // );
     // console.log("json output: completed!");
 
-    await fs.writeFile(
-      "./lgtm_article_url.csv",
-      papa.unparse(jsonData),
-      (e) => {
-        if (e) console.log("error: ", e);
-      }
-    );
-
+    await fs.writeFile("./lgtm_article_url.csv", papa.unparse(jsonData), (e) => {
+      if (e) console.log("error: ", e);
+    });
   } catch (e) {
     console.log("error: ", e.message);
     return false;
@@ -194,16 +186,17 @@ async function output(arrayData) {
   const browser = await puppeteer.launch({
     defaultViewport: {
       width: 600,
-      height: 700,
+      height: 700
     },
-    headless: true,
+    headless: true
     // headless: false,
   });
 
   // await qiitaLogin(browser);
   await getLgtm(browser);
 
-  for (const obj of lgtmArticlesData.values()) { //Mapの値だけ抜き出してArrayにする
+  for (const obj of lgtmArticlesData.values()) {
+    //Mapの値だけ抜き出してArrayにする
     lgtmArticlesData_Array.push(obj);
   }
   await output(lgtmArticlesData_Array);

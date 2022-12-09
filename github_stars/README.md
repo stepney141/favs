@@ -1,5 +1,6 @@
 # github_stars
-Lists of GitHub repositories that I starred.  
+
+Lists of GitHub repositories that I starred.
 
 ## 個人アクセストークン認証
 
@@ -7,9 +8,9 @@ https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/c
 
 ## 解説
 
-### 1. GitHubの任意のユーザーの情報を取得するREST APIを使い、自分が押したstarの情報を取得する
+### 1. GitHub の任意のユーザーの情報を取得する REST API を使い、自分が押した star の情報を取得する
 
-#### 1-1. star取得APIの叩き方
+#### 1-1. star 取得 API の叩き方
 
 ```bash
 # curl
@@ -18,9 +19,9 @@ $ curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/users/
 $ wget --no-check-certificate --header="Accept: application/vnd.github.v3+json" -q -O - https://api.github.com/users/stepney141/starred
 ```
 
-このように、``GET api.github.com/users/ユーザー名/starred`` が該当するエンドポイントとなる
+このように、`GET api.github.com/users/ユーザー名/starred` が該当するエンドポイントとなる
 
-#### 1-2. とりあえずこうやればOK
+#### 1-2. とりあえずこうやれば OK
 
 ```bash
 # wget
@@ -34,12 +35,12 @@ $ wget --no-check-certificate \
 ```
 
 - ?と&のエスケープは必須
-- GitHub側でのstar数表示は225個(2020-08-17時点)なので、とりあえず100件ずつ3回叩けばOK
-- ブレース展開を使用してwgetでjsonを一気に3つ入手 -> jqに渡してjsonを一個に結合 -> さらにjqに渡して「リポジトリ名」「URL」「リポジトリ説明文」のみを抽出、CSV化 -> txtに出力
+- GitHub 側での star 数表示は 225 個(2020-08-17 時点)なので、とりあえず 100 件ずつ 3 回叩けば OK
+- ブレース展開を使用して wget で json を一気に 3 つ入手 -> jq に渡して json を一個に結合 -> さらに jq に渡して「リポジトリ名」「URL」「リポジトリ説明文」のみを抽出、CSV 化 -> txt に出力
 
 #### 1-3. 改訂版
 
-- ちゃんとしたCSV形式にするとこうなる
+- ちゃんとした CSV 形式にするとこうなる
 
 ```bash
 $ echo "full_name,html_url,description" \
@@ -50,27 +51,27 @@ wget --no-check-certificate \
     https://api.github.com/users/stepney141/starred\?per_page=100\&page={1..3} \
     | jq add -s \
     | jq '.[] | [ .full_name, .html_url, .description ] | @csv' -r \
->> starred_repos.csv 
+>> starred_repos.csv
 ```
 
-### 2. 現在認証しているユーザー自身の情報を取得するREST APIを使い、同じことをする
+### 2. 現在認証しているユーザー自身の情報を取得する REST API を使い、同じことをする
 
-#### 2-1. OAuth Appのの二段階認証のやり方
+#### 2-1. OAuth App のの二段階認証のやり方
 
-1. ``https://github.com/settings/applications/new`` からGitHubアカウントに紐付けられたOAuth Appを作成し、Client IDとClient Secretを入手する。
+1. `https://github.com/settings/applications/new` から GitHub アカウントに紐付けられた OAuth App を作成し、Client ID と Client Secret を入手する。
 
-   - Client ID , Client Secretはそれぞれ環境変数 CLIENT_ID , CLIENT_SECRET として保存しておくことを推奨
-   - Callback URLの設定は必須。ぶっちゃけ何のURLを入れようと問題ないっぽいが、一応自分が保有/管理しているURLを使う方がいいかも？ 自分は自身のgithub.ioを入力した
+   - Client ID , Client Secret はそれぞれ環境変数 CLIENT_ID , CLIENT_SECRET として保存しておくことを推奨
+   - Callback URL の設定は必須。ぶっちゃけ何の URL を入れようと問題ないっぽいが、一応自分が保有/管理している URL を使う方がいいかも？ 自分は自身の github.io を入力した
 
-2. ``https://github.com/login/oauth/authorize?client_id=$CLIENT_ID&scope=repo%20gist`` にブラウザでアクセスする。そうするとApp Authorizationの画面が出てくるので、ボタンを押して承認する。
+2. `https://github.com/login/oauth/authorize?client_id=$CLIENT_ID&scope=repo%20gist` にブラウザでアクセスする。そうすると App Authorization の画面が出てくるので、ボタンを押して承認する。
 
-3. 承認すると ``https://stepney141.github.io/?code=0123456789abcdefg`` みたいな感じで、自分が指定したCallback URLにリダイレクトされる。末尾にqueryとしてぶら下がっているCodeをコピペしておく
+3. 承認すると `https://stepney141.github.io/?code=0123456789abcdefg` みたいな感じで、自分が指定した Callback URL にリダイレクトされる。末尾に query としてぶら下がっている Code をコピペしておく
 
-   - Codeは環境変数 CODE として保存しておくことを推奨
+   - Code は環境変数 CODE として保存しておくことを推奨
 
-4. Code、Client ID、Client Secretを ``https://github.com/login/oauth/access_token`` にPOSTする(以下はcurlでの例)。
+4. Code、Client ID、Client Secret を `https://github.com/login/oauth/access_token` に POST する(以下は curl での例)。
 
-   - この例ではCode、Client ID、Client Secretの情報が環境変数として保存されていることを想定している。適当に読み替えられたし。
+   - この例では Code、Client ID、Client Secret の情報が環境変数として保存されていることを想定している。適当に読み替えられたし。
 
 ```bash
 $ curl -X POST \
@@ -80,11 +81,11 @@ $ curl -X POST \
     https://github.com/login/oauth/access_token
 ```
 
-5. POSTすると ``access_token=0123456789abcdef0123456789abcdef01234567&token_type=bearer`` という形式でアクセストークンが返ってくる。これをヘッダに入れてAPIを叩く。
+5. POST すると `access_token=0123456789abcdef0123456789abcdef01234567&token_type=bearer` という形式でアクセストークンが返ってくる。これをヘッダに入れて API を叩く。
 
    - アクセストークンは例によって環境変数 ACCESS_TOKEN として保存しておくことを推奨
 
-#### 2-2. とりあえずこうやればOK 
+#### 2-2. とりあえずこうやれば OK
 
 ```bash
 # 例によって環境変数を使っているので、適当に読み替えられたし
@@ -110,7 +111,7 @@ wget --no-check-certificate \
     https://api.github.com/user/starred\?per_page=100\&page={1..3} \
     | jq add -s \
     | jq '.[] | [ .full_name, .html_url, .description ] | @csv' -r \
->> starred_repos_auth.csv 
+>> starred_repos_auth.csv
 ```
 
 ### 参考文献

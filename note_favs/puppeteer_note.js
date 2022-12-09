@@ -1,34 +1,30 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const papa = require("papaparse");
-const path = require('path');
-require("dotenv").config({path: path.join(__dirname, "../.env")});
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
-const baseURI = 'https://note.com';
-const process_description = 'note.com Favorites';
-const csv_filename = 'note_favorites';
+const baseURI = "https://note.com";
+const process_description = "note.com Favorites";
+const csv_filename = "note_favorites";
 
 const xpath = {
   useridInput: '//*[@id="email"]',
   passwordInput: '//*[@id="password"]',
-  loginButton: '//*[@id="__layout"]/div/div[1]/main/div/div[2]/div[5]/button',
+  loginButton: '//*[@id="__layout"]/div/div[1]/main/div/div[2]/div[5]/button'
 };
 
-const user_name = (process.env.NOTE_ACCOUNT).toString();
-const password = (process.env.NOTE_PASSWORD).toString();
-        
+const user_name = process.env.NOTE_ACCOUNT.toString();
+const password = process.env.NOTE_PASSWORD.toString();
+
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
-const transposeArray = a => a[0].map((_, c) => a.map((r) => r[c]));
+const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
 
 const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
 
 const mouse_click = async (page, x, y, time) => {
   try {
-    await Promise.all([
-      page.mouse.move(x, y),
-      page.waitForTimeout(time),
-      page.mouse.click(x, y)
-    ]);
+    await Promise.all([page.mouse.move(x, y), page.waitForTimeout(time), page.mouse.click(x, y)]);
     return true;
   } catch (e) {
     console.log(e);
@@ -37,7 +33,6 @@ const mouse_click = async (page, x, y, time) => {
 };
 
 class notebook {
-
   constructor() {
     this.page_num = 1;
     this.favedArticlesData = new Map();
@@ -49,16 +44,19 @@ class notebook {
       const page = await browser.newPage();
 
       await page.setExtraHTTPHeaders({
-        'accept-language': 'ja-JP',
+        "accept-language": "ja-JP"
       });
-      await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
+      await page.setUserAgent(
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36"
+      );
 
       await page.goto(`${baseURI}/login`, {
-        waitUntil: "load",
+        waitUntil: "load"
       });
 
-      await page.evaluateOnNewDocument(() => { //webdriver.navigatorを消して自動操縦であることを隠す
-        Object.defineProperty(navigator, 'webdriver', ()=>{});
+      await page.evaluateOnNewDocument(() => {
+        //webdriver.navigatorを消して自動操縦であることを隠す
+        Object.defineProperty(navigator, "webdriver", () => {});
         delete navigator.__proto__.webdriver;
       });
 
@@ -72,19 +70,18 @@ class notebook {
       await Promise.all([
         page.waitForNavigation({
           timeout: 60000,
-          waitUntil: "networkidle2",
+          waitUntil: "networkidle2"
         }),
         (await loginButton_Handle)[0].click()
       ]);
 
       console.log(`${process_description}: Login Completed!`);
-
     } catch (e) {
       console.log(e);
       await browser.close();
       return false;
     }
-    return true;    
+    return true;
   }
 
   async scraper(browser) {
@@ -92,23 +89,25 @@ class notebook {
       const page = await browser.newPage();
 
       await page.setExtraHTTPHeaders({
-        'accept-language': 'ja-JP',
+        "accept-language": "ja-JP"
       });
-      await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
-        
-      await page.evaluateOnNewDocument(() => { //webdriver.navigatorを消して自動操縦であることを隠す
-        Object.defineProperty(navigator, 'webdriver', ()=>{});
+      await page.setUserAgent(
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36"
+      );
+
+      await page.evaluateOnNewDocument(() => {
+        //webdriver.navigatorを消して自動操縦であることを隠す
+        Object.defineProperty(navigator, "webdriver", () => {});
         delete navigator.__proto__.webdriver;
       });
 
       console.log(`${process_description}: Scraping Started!`);
 
-      page.on('response', async (response) => { //イベントハンドラを登録
-        if (response.url().includes('https://note.com/api/v1/notes/liked') === true && response.status() === 200) {
-
+      page.on("response", async (response) => {
+        //イベントハンドラを登録
+        if (response.url().includes("https://note.com/api/v1/notes/liked") === true && response.status() === 200) {
           const notes_array = (await response.json())["data"]["notes"];
           for (let data of notes_array) {
-
             let key = data["key"]; //記事IDみたいなもの？(URLの固有記事名部分)
             let note_title = data["name"]; //記事名
             let note_url = data["note_url"]; //記事URL
@@ -116,26 +115,28 @@ class notebook {
             let publish_at = data["publish_at"]; //公開時刻
             let like_count = data["like_count"]; //スキされた数
 
-            this.favedArticlesData.set(key, { //記事ID的な何かをキーにする
-              "note_title": note_title,
-              "note_url": note_url,
-              "user_nickname": user_nickname,
-              "publish_at": publish_at,
-              "like_count": like_count
+            this.favedArticlesData.set(key, {
+              //記事ID的な何かをキーにする
+              note_title: note_title,
+              note_url: note_url,
+              user_nickname: user_nickname,
+              publish_at: publish_at,
+              like_count: like_count
             });
           }
-          await page.evaluate(() => { window.scrollBy(0, 5000); });
-
+          await page.evaluate(() => {
+            window.scrollBy(0, 5000);
+          });
         }
       });
 
-      await page.goto(`${baseURI}/notes/liked`, { //スキした記事の一覧へ飛んで処理を実行
+      await page.goto(`${baseURI}/notes/liked`, {
+        //スキした記事の一覧へ飛んで処理を実行
         timeout: 1000 * 60,
-        waitUntil: "networkidle0",
+        waitUntil: "networkidle0"
       });
 
       console.log(`${process_description}: Scraping Completed!`);
-
     } catch (e) {
       console.log(e);
       await browser.close();
@@ -180,7 +181,8 @@ class notebook {
   await note.login(browser);
   await note.scraper(browser);
 
-  for (const obj of note.favedArticlesData.values()) {//Mapの値だけ抜き出してArrayにする
+  for (const obj of note.favedArticlesData.values()) {
+    //Mapの値だけ抜き出してArrayにする
     note.favedArticlesData_Array.push(obj);
   }
 

@@ -1,40 +1,37 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const papa = require("papaparse");
-const path = require('path');
-require("dotenv").config({path: path.join(__dirname, "../.env")});
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
-const baseURI = 'https://www.boundhub.com';
-const process_description = 'Boundhub Favorite Movies';
-const playlist_name = 'playlist01';
-const csv_filename = 'boundhub_faved_movies';
+const baseURI = "https://www.boundhub.com";
+const process_description = "Boundhub Favorite Movies";
+const playlist_name = "playlist01";
+const csv_filename = "boundhub_faved_movies";
 
 const xpath = {
   useridInput: '//*[@id="login_username"]',
   passwordInput: '//*[@id="login_pass"]',
-  loginButton: '/html/body/div[4]/div/div/div/div/div/form/div[2]/div[4]/input[3]',
+  loginButton: "/html/body/div[4]/div/div/div/div/div/form/div[2]/div[4]/input[3]",
 
   linkToPlaylist: `//a[contains(text(), "${playlist_name}")]`,
 
-  linkToNextPage: '//a[contains(text(), "Next") and @data-container-id="list_videos_my_favourite_videos_pagination"]',
-  linkToAllMovies: '//*[@id="list_videos_my_favourite_videos_items"]/form/div[*]/a',
+  linkToNextPage:
+    '//a[contains(text(), "Next") and @data-container-id="list_videos_my_favourite_videos_pagination"]',
+  linkToAllMovies: '//*[@id="list_videos_my_favourite_videos_items"]/form/div[*]/a'
 };
 
-const user_name = (process.env.BOUNDHUB_ACCOUNT).toString();
-const password = (process.env.BOUNDHUB_PASSWORD).toString();
-        
+const user_name = process.env.BOUNDHUB_ACCOUNT.toString();
+const password = process.env.BOUNDHUB_PASSWORD.toString();
+
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
-const transposeArray = a => a[0].map((_, c) => a.map((r) => r[c]));
+const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
 
 const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
 
 const mouse_click = async (page, x, y, time) => {
   try {
-    await Promise.all([
-      page.mouse.move(x, y),
-      page.waitForTimeout(time),
-      page.mouse.click(x, y)
-    ]);
+    await Promise.all([page.mouse.move(x, y), page.waitForTimeout(time), page.mouse.click(x, y)]);
     return true;
   } catch (e) {
     console.log(e);
@@ -47,11 +44,12 @@ async function login(browser) {
     const page = await browser.newPage();
 
     await page.goto(`${baseURI}/?login`, {
-      waitUntil: "load",
+      waitUntil: "load"
     });
 
-    await page.evaluateOnNewDocument(() => { //webdriver.navigatorを消して自動操縦であることを隠す
-      Object.defineProperty(navigator, 'webdriver', ()=>{});
+    await page.evaluateOnNewDocument(() => {
+      //webdriver.navigatorを消して自動操縦であることを隠す
+      Object.defineProperty(navigator, "webdriver", () => {});
       delete navigator.__proto__.webdriver;
     });
 
@@ -64,17 +62,16 @@ async function login(browser) {
     await Promise.all([
       page.waitForNavigation({
         timeout: 60000,
-        waitUntil: "networkidle2",
+        waitUntil: "networkidle2"
       }),
-      (await loginButton_Handle)[0].click(),
+      (await loginButton_Handle)[0].click()
     ]);
-
   } catch (e) {
     console.log(e);
     await browser.close();
     return false;
   }
-  return true;    
+  return true;
 }
 
 async function scraper(browser) {
@@ -85,13 +82,14 @@ async function scraper(browser) {
 
   try {
     const page = await browser.newPage();
-        
+
     await page.goto(`${baseURI}/my/favourites/videos/`, {
-      waitUntil: "load",
+      waitUntil: "load"
     });
 
-    await page.evaluateOnNewDocument(() => { //webdriver.navigatorを消して自動操縦であることを隠す
-      Object.defineProperty(navigator, 'webdriver', ()=>{});
+    await page.evaluateOnNewDocument(() => {
+      //webdriver.navigatorを消して自動操縦であることを隠す
+      Object.defineProperty(navigator, "webdriver", () => {});
       delete navigator.__proto__.webdriver;
     });
 
@@ -103,7 +101,8 @@ async function scraper(browser) {
       page.waitForTimeout(2000)
     ]);
 
-    for (; ;) { //infinite loop
+    for (;;) {
+      //infinite loop
       // console.log('count', num);
       // num++;
 
@@ -118,16 +117,17 @@ async function scraper(browser) {
       }
 
       const linkToNextPage_Handle = await page.$x(xpath.linkToNextPage); // XPathでページネーションのリンク情報を取得し、そのelementHandleに要素が存在するか否かでループの終了を判定
-      if (await linkToNextPage_Handle.length !== 0) {
+      if ((await linkToNextPage_Handle.length) !== 0) {
         await Promise.all([
-          page.waitForResponse(
-            (response) => {
-              // console.log(response.url());
-              return response.url().includes('https://www.boundhub.com/my/favourites/videos/?mode=async') === true && response.status() === 200;
-            }
-          ),
+          page.waitForResponse((response) => {
+            // console.log(response.url());
+            return (
+              response.url().includes("https://www.boundhub.com/my/favourites/videos/?mode=async") === true &&
+              response.status() === 200
+            );
+          }),
           page.waitForTimeout(randomWait(3000, 0.5, 1.1)), //1500ms ~ 3300msの間でランダムにアクセスの間隔を空ける
-          (await linkToNextPage_Handle)[0].click(), //次のページに移る
+          (await linkToNextPage_Handle)[0].click() //次のページに移る
         ]);
       } else {
         break;
@@ -136,7 +136,6 @@ async function scraper(browser) {
 
     movieData.push(movieTitleData, movieUrlData);
     movieData = transposeArray(movieData);
-
   } catch (e) {
     console.log(e);
     await browser.close();
@@ -171,7 +170,7 @@ async function output(arrayData) {
 
   const browser = await puppeteer.launch({
     defaultViewport: { width: 500, height: 1000 },
-    headless: true,
+    headless: true
     // headless: false
     // devtools: true,
     // slowMo: 20
