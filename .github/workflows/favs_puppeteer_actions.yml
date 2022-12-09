@@ -108,6 +108,11 @@ jobs:
         working-directory: ./wikipedia_watchlist
         run: node ./watchlist_extractor.js
 
+      - name: Niconico Seiga MyClips
+        shell: bash
+        working-directory: ./nicoseiga
+        run: node ./puppeteer_nicoseiga.js && bash ./get_url_list.sh
+
       - name: Set the current datetime
         env:
           TZ: "Asia/Tokyo"
