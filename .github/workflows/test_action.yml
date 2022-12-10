@@ -68,7 +68,8 @@ jobs:
           echo "NICONICO_ACCOUNT=${{ secrets.NICONICO_ACCOUNT }}" >> .env
           echo "NICONICO_PASSWORD=${{ secrets.NICONICO_PASSWORD }}" >> .env
 
-      - name: Niconico Seiga MyClips
+      - name: test target
+        continue-on-error: true
         shell: bash
         env:
           LANG: "ja_JP.UTF-8"
@@ -84,4 +85,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "auto-updated: ${{ env.CURRENT_DATETIME }}"
-          branch: master
+          branch: operation-test
