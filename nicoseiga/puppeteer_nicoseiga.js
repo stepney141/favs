@@ -120,7 +120,11 @@ class Seiga {
           });
         }
 
+        await page.screenshot({ path: "test.png" });
+
         const next_eh = await page.$x(xpath.toNextPageButtons);
+
+        console.log(await next_eh);
 
         if (
           // 「次へ」ボタンを押すことができなくなったら中断
