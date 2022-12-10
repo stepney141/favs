@@ -68,6 +68,8 @@ jobs:
           echo "WIKIPEDIA_USERNAME=${{ secrets.WIKIPEDIA_USERNAME }}" >> .env
           echo "WIKIPEDIA_PASSWORD=${{ secrets.WIKIPEDIA_PASSWORD }}" >> .env
           echo "OAUTH_TOKEN_OF_GITHUB=${{ secrets.OAUTH_TOKEN_OF_GITHUB }}" >> .env
+          echo "NICONICO_ACCOUNT=${{ secrets.NICONICO_ACCOUNT }}" >> .env
+          echo "NICONICO_PASSWORD=${{ secrets.NICONICO_PASSWORD }}" >> .env
 
       - name: GitHub Stars
         shell: bash
