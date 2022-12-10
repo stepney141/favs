@@ -34,6 +34,8 @@ jobs:
       WIKIPEDIA_USERNAME: ${{ secrets.WIKIPEDIA_USERNAME }}
       WIKIPEDIA_PASSWORD: ${{ secrets.WIKIPEDIA_PASSWORD }}
       OAUTH_TOKEN_OF_GITHUB: ${{ secrets.OAUTH_TOKEN_OF_GITHUB }}
+      NICONICO_ACCOUNT: ${{ secrets.NICONICO_ACCOUNT }}
+      NICONICO_PASSWORD: ${{ secrets.NICONICO_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v2
