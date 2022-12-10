@@ -131,7 +131,7 @@ class Seiga {
           await Promise.all([
             page.waitForNavigation({
               timeout: 60000,
-              waitUntil: "domcontentloaded"
+              waitUntil: "load"
             }),
             (await next_eh)[0].click() // 「次へ」ボタンを押す
           ]);
@@ -174,7 +174,7 @@ class Seiga {
     defaultViewport: { width: 1000, height: 1000 },
     headless: true,
     // devtools: true,
-    slowMo: 80
+    slowMo: 120
   });
 
   const seiga = new Seiga();
