@@ -79,7 +79,8 @@ class Seiga {
           timeout: 60000,
           waitUntil: "networkidle2"
         }),
-        (await loginButton_Handle)[0].click()
+        (await loginButton_Handle)[0].click(),
+        page.screenshot({ path: "./test-logining.png" })
       ]);
 
       console.log(`${process_description}: Login Completed!`);
@@ -96,6 +97,8 @@ class Seiga {
       const page = await (await browser.pages())[1];
 
       console.log(`${process_description}: Scraping Started!`);
+
+      await page.screenshot({ path: "./test-after-login.png" });
 
       for (;;) {
         const eachIllustLinks_eh = await page.$x(xpath.eachIllustLinks);
@@ -120,7 +123,7 @@ class Seiga {
           });
         }
 
-        await page.screenshot({ path: "test.png" });
+        await page.screenshot({ path: "./test-myclip.png" });
 
         const next_eh = await page.$x(xpath.toNextPageButtons);
 
