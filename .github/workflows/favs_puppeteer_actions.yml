@@ -3,9 +3,6 @@ name: Favorites Updater
 on:
   workflow_dispatch:
   # デバッグ用に手動実行を許可
-  push:
-    branches:
-      - operation-test
   schedule:
     - cron: "0 15 * * SAT"
     - cron: "0 3 * * WED"
