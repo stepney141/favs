@@ -4,9 +4,11 @@ const papa = require("papaparse");
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
-const process_description = "Niconico Seiga MyClips";
-const csv_filename = "nicoseiga_myclips";
-const loginURL = "https://account.nicovideo.jp/login?site=seiga&next_url=%2Fmy%2Fclip";
+const PROCESS_DESCRIPTION = "Niconico Seiga MyClips";
+const CSV_FILENAME = "nicoseiga_myclips";
+const LOGIN_URL = "https://account.nicovideo.jp/login?site=seiga&next_url=%2Fmy%2Fclip";
+const MYCLIP_URL = "https://seiga.nicovideo.jp/my/clip";
+const COOKIE_PATH = "./seiga_cookie.json";
 
 const xpath = {
   useridInput: '//*[@id="input__mailtel"]',
@@ -42,6 +44,11 @@ function* zip(...args) {
   }
 }
 
+async function isNotLoggedInSeiga(page) {
+  const eh = await page.$x(xpath.eachIllustLinks);
+  return eh.length == 0;
+}
+
 class Seiga {
   constructor() {
     this.fetchedData = new Map();
@@ -63,26 +70,43 @@ class Seiga {
         delete navigator.__proto__.webdriver;
       });
 
-      await page.goto(loginURL, {
+      if (fs.existsSync(COOKIE_PATH)) {
+        const savedCookies = JSON.parse(fs.readFileSync(COOKIE_PATH, "utf-8"));
+        for (let cookie of savedCookies) {
+          await page.setCookie(cookie);
+        }
+      }
+
+      await page.goto(MYCLIP_URL, {
         waitUntil: "load"
       });
 
-      const useridInput_Handle = page.$x(xpath.useridInput);
-      const passwordInput_Handle = page.$x(xpath.passwordInput);
-      const loginButton_Handle = page.$x(xpath.loginButton);
+      if (await isNotLoggedInSeiga(page)) {
+        await page.goto(LOGIN_URL, {
+          waitUntil: "load"
+        });
 
-      await (await useridInput_Handle)[0].type(user_name);
-      await (await passwordInput_Handle)[0].type(password);
+        const useridInput_Handle = page.$x(xpath.useridInput);
+        const passwordInput_Handle = page.$x(xpath.passwordInput);
+        const loginButton_Handle = page.$x(xpath.loginButton);
 
-      await Promise.all([
-        page.waitForNavigation({
-          timeout: 60000,
-          waitUntil: "networkidle2"
-        }),
-        (await loginButton_Handle)[0].click()
-      ]);
+        await (await useridInput_Handle)[0].type(user_name);
+        await (await passwordInput_Handle)[0].type(password);
 
-      console.log(`${process_description}: Login Completed!`);
+        await Promise.all([
+          page.waitForNavigation({
+            timeout: 60000,
+            waitUntil: "networkidle2"
+          }),
+          (await loginButton_Handle)[0].click(),
+          page.screenshot({ path: "test-logining-password.png" })
+        ]);
+      }
+
+      const afterCookies = await page.cookies();
+      fs.writeFileSync(COOKIE_PATH, JSON.stringify(afterCookies));
+
+      console.log(`${PROCESS_DESCRIPTION}: Login Completed!`);
     } catch (e) {
       console.log(e);
       await browser.close();
@@ -95,7 +119,7 @@ class Seiga {
     try {
       const page = await (await browser.pages())[1];
 
-      console.log(`${process_description}: Scraping Started!`);
+      console.log(`${PROCESS_DESCRIPTION}: Scraping Started!`);
 
       for (;;) {
         const eachIllustLinks_eh = await page.$x(xpath.eachIllustLinks);
@@ -138,7 +162,7 @@ class Seiga {
         }
       }
 
-      console.log(`${process_description}: Scraping Completed!`);
+      console.log(`${PROCESS_DESCRIPTION}: Scraping Completed!`);
     } catch (e) {
       console.log(e);
       await browser.close();
@@ -155,14 +179,14 @@ class Seiga {
     const jsonData = JSON.stringify(arrayData, null, "  ");
 
     try {
-      await fs.writeFile(`./${csv_filename}.csv`, papa.unparse(jsonData), (e) => {
+      await fs.writeFile(`./${CSV_FILENAME}.csv`, papa.unparse(jsonData), (e) => {
         if (e) console.log("error: ", e);
       });
     } catch (e) {
       console.log("error: ", e.message);
       return false;
     }
-    console.log(`${process_description}: CSV Output Completed!`);
+    console.log(`${PROCESS_DESCRIPTION}: CSV Output Completed!`);
     return true;
   }
 }
