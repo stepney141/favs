@@ -98,8 +98,7 @@ class Seiga {
             timeout: 60000,
             waitUntil: "networkidle2"
           }),
-          (await loginButton_Handle)[0].click(),
-          page.screenshot({ path: "test-logining-password.png" })
+          (await loginButton_Handle)[0].click()
         ]);
       }
 
