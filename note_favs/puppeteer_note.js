@@ -127,14 +127,17 @@ class notebook {
           await page.evaluate(() => {
             window.scrollBy(0, 5000);
           });
+          await page.waitForTimeout(1 * 1000); // 最後のページネーションの取得に失敗しやすいため、waitを入れる
         }
       });
 
       await page.goto(`${baseURI}/notes/liked`, {
         //スキした記事の一覧へ飛んで処理を実行
         timeout: 1000 * 60,
-        waitUntil: "networkidle0"
+        waitUntil: ["load", "networkidle0"]
       });
+
+      await page.waitForTimeout(3 * 1000); // 最後のページネーションの取得に失敗しやすいため、waitを入れる
 
       console.log(`${process_description}: Scraping Completed!`);
     } catch (e) {
