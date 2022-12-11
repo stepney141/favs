@@ -127,7 +127,6 @@ class notebook {
           await page.evaluate(() => {
             window.scrollBy(0, 5000);
           });
-          await page.waitForTimeout(1 * 1000); // 最後のページネーションの取得に失敗しやすいため、waitを入れる
         }
       });
 
@@ -173,7 +172,7 @@ class notebook {
   const startTime = Date.now();
 
   const browser = await puppeteer.launch({
-    defaultViewport: { width: 500, height: 1000 },
+    defaultViewport: { width: 1000, height: 1000 },
     headless: false,
     // devtools: true,
     slowMo: 120
