@@ -77,12 +77,9 @@ class Seiga {
         }
       }
 
-      await Promise.all([
-        page.goto(MYCLIP_URL, {
-          waitUntil: "load"
-        }),
-        page.screenshot({ path: "test-logining-cookie.png" })
-      ]);
+      await page.goto(MYCLIP_URL, {
+        waitUntil: "load"
+      });
 
       if (await isNotLoggedInSeiga(page)) {
         await page.goto(LOGIN_URL, {
@@ -101,8 +98,7 @@ class Seiga {
             timeout: 60000,
             waitUntil: "networkidle2"
           }),
-          (await loginButton_Handle)[0].click(),
-          page.screenshot({ path: "test-logining-password.png" })
+          (await loginButton_Handle)[0].click()
         ]);
       }
 
@@ -123,8 +119,6 @@ class Seiga {
       const page = await (await browser.pages())[1];
 
       console.log(`${PROCESS_DESCRIPTION}: Scraping Started!`);
-
-      await page.screenshot({ path: "test-after-login.png" });
 
       for (;;) {
         const eachIllustLinks_eh = await page.$x(xpath.eachIllustLinks);
