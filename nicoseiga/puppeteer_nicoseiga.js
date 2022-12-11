@@ -205,8 +205,8 @@ class Seiga {
 
   const browser = await puppeteer.launch({
     defaultViewport: { width: 1000, height: 1000 },
-    // headless: true,
-    devtools: true,
+    headless: true,
+    // devtools: true,
     slowMo: 120
   });
 
