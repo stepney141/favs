@@ -5,12 +5,10 @@ node_modules
 */.env
 env.json
 
-test.png
-*/test.png
-*test*.png
-*/*test*.png
-
-qiita_lgtm/*.png
+# test.png
+# */test.png
+# *test*.png
+# */*test*.png
 
 deviantart_api/img
 deviantart_api/json
