@@ -1,4 +1,7 @@
 isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+4781915264,ガイダンス 確率統計,石谷謙介／著,サイエンス社,20211202,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11593230,
+4562071990,ポワロと私 デビッド・スーシェ自伝,デビッド・スーシェ／著 ジェフリー・ワンセル／著 小山正／解説 高尾菜つこ／翻訳,原書房,20221024,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC17297933,
+4814000480,科学論文の英語用法百科　第２編,グレン・パケット／著,京都大学学術出版会,20161017,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2221665X,
 4535787603,学んでみよう！　記号論理,高崎金久／著,日本評論社,20140822,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB1644619X,
 4788508427,神、人を喰う 人身御供の民俗学,六車由実／著,新曜社,2003-03,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA61847518,
 4641163642,比較制度分析・入門,中林真幸／著 石黒真吾／著,有斐閣,2010-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB0432979X,
@@ -12,9 +15,12 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_
 4627083114,数理人口学入門,稲葉寿／著,森北出版,20220914,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16799969,
 4121027221,陰謀論 民主主義を揺るがすメカニズム,秦正樹／著,中央公論新社,20221020,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC17273571,
 4563010081,リスク・セオリーの基礎 : 不確実性に対処するための数理,岩沢宏和／著,培風館,2010-02,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB0106478X,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4563010081&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
+4320115317,数学ソフトウェアの作り方,高山信毅／著 野呂正行／著 小原功任／著 藤本光史／著 高山信毅／編集 濱田龍義／編集,共立出版,20221006,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC17146326,
 4000256696,歴史を学ぶ人々のために : 現在をどう生きるか,東京歴史科学研究会／著,岩波書店,2017-3-23,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23337911,
+4826902433,情報セキュリティの敗北史,アンドリュー・スチュワート／著 小林啓倫／翻訳,白揚社,20221012,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC17169999,
 4873118654,Raspberry Piで学ぶコンピュータアーキテクチャ,EbenUpton／著 JeffDuntemann／著 RalphRoberts／著 ほか,オライリー・ジャパン,20190915,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28852846,
 4623094332,はじめて学ぶ西洋古代史,長谷川岳男／編集,ミネルヴァ書房,20221102,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC17102058,
+429713148X,［試して理解］Linuxのしくみ　―実験と図解で学ぶOS、仮想マシン、コンテナの基礎知識【増補改訂版】,武内覚／著,技術評論社,20221017,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC1716361X,
 4796702792,ファッションの文化社会学,"Finkelstein,Joanne／著 成実弘至／著 フィンケルシュタインジョアン／著",せりか書房,2007-09,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA83156554,
 4254116330,統計学のための数学入門30講,永田靖／著,朝倉書店,2005-03,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA7172228X,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4254116330&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4274228991,Pythonではじめる 音のプログラミング,青木直史／著,オーム社,20220906,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16633536,
@@ -270,7 +276,6 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_
 4000111442,時空の力学 : 一般相対論の物理,細谷暁夫／著,岩波書店,2002-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA56416936,
 4766425677,ビデオゲームの美学,松永伸司／著,慶應義塾大学出版会,20181020,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27046466,
 4788516063,デジタル記号論,松本健太郎／著,新曜社,20190208,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27701696,
-477419607X,試して理解Linuxのしくみ : 実験と図解で学ぶOSとハードウェアの基礎知識,武内覚／著,技術評論社,2018-3-8,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB25526074,
 433902905X,1から始める Juliaプログラミング,進藤裕之／著 佐藤建太／著,コロナ社,20200327,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30062573,
 4297105594,実践Rust入門[言語仕様から開発手法まで],κeen、河野達也、小松礼人／著,技術評論社,20190508,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28124281,
 4873118476,作って動かすALife,岡瑞起／著 池上高志／著 ドミニクチェン／著 青木竜太／著 丸山典宏／著,オライリー・ジャパン,20180728,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26563542,
