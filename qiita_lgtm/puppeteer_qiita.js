@@ -12,7 +12,7 @@ let page_num = 1;
 const JOB_NAME = "Qiita LGTM Articles";
 const BASE_URI = "https://qiita.com";
 const XPATH = {
-  max_pagenation_value: "//div/div[2]/div[3]/div/div[2]/div/ul/li[2]/span",
+  max_pagenation_value: "//div/div[2]/div[3]/div/div[2]/div/div/div/span",
   article_url: '//div/div[2]/div[3]/div/div[2]/div/article[*]/a[contains(@href, "qiita.com")]',
   article_title: "//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a",
   lgtm_count_of_article: "//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div/div[2]/span[2]",
