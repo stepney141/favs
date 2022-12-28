@@ -12,12 +12,11 @@ let page_num = 1;
 const JOB_NAME = "Qiita LGTM Articles";
 const BASE_URI = "https://qiita.com";
 const XPATH = {
-  max_pagenation_value: "//div/div[2]/div[3]/div/div[2]/div/div/div/span",
-  article_url: '//div/div[2]/div[3]/div/div[2]/div/article[*]/a[contains(@href, "qiita.com")]',
-  article_title: "//div/div[2]/div[3]/div/div[2]/div/article[*]/h2/a",
-  lgtm_count_of_article: "//div/div[2]/div[3]/div/div[2]/div/article[*]/footer/div/div[2]/span[2]",
-  author: "//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div/p",
-  created_at: "//div/div[2]/div[3]/div/div[2]/div/article[*]/header/div/span/time" // 'dateTime'プロパティに時刻情報
+  max_pagenation_value: "//div/div[2]/div[2]/div[2]/div[2]/div/div/div/span",
+  article_url: '//div/div[2]/div[2]/div[2]/div[2]/div/article[*]/h2/a[contains(@href, "qiita.com")]',
+  lgtm_count_of_article: "//div/div[2]/div[2]/div[2]/div[2]/div/article[*]/footer/div/div[2]/span[2]",
+  author: "//div/div[2]/div[2]/div[2]/div[2]/div/article[*]/header/div/p",
+  created_at: "//div/div[2]/div[2]/div[2]/div[2]/div/article[*]/header/div/span/time" // 'dateTime'プロパティに時刻情報
 };
 
 /**
@@ -92,26 +91,26 @@ async function getLgtm(browser) {
       }
 
       const articleUrlHandles = await page.$x(XPATH.article_url); // get article urls
-      const articleTitleHandles = await page.$x(XPATH.article_title); // get article titles
       const articleLgtmHandles = await page.$x(XPATH.lgtm_count_of_article); // get article LGTM counts
       const authorHandles = await page.$x(XPATH.author); // get author names
       const createdAtHandles = await page.$x(XPATH.created_at); // get dates that the articles were created at
 
-      for (const [url, title, lgtm, created_at, author] of zip(
+      for (const [url, lgtm, created_at, author] of zip(
         articleUrlHandles,
-        articleTitleHandles,
         articleLgtmHandles,
         createdAtHandles,
         authorHandles
       )) {
         lgtmArticlesData.set(url, {
-          title: await (await title.getProperty("innerHTML")).jsonValue(), //タイトル取得
+          title: await (await url.getProperty("innerHTML")).jsonValue(), //タイトル取得
           url: await (await url.getProperty("href")).jsonValue(), //記事URL取得
           lgtm: Number(await (await lgtm.getProperty("innerText")).jsonValue()), //記事LGTM数取得
           created_at: await (await created_at.getProperty("dateTime")).jsonValue(), //記事投稿日時取得
           author: await (await author.getProperty("innerText")).jsonValue() //記事投稿者取得
         });
       }
+
+      // console.log([...lgtmArticlesData.entries()]);
 
       page_num++;
     } while (page_max >= page_num);
@@ -195,11 +194,7 @@ async function output(arrayData) {
   // await qiitaLogin(browser);
   await getLgtm(browser);
 
-  for (const obj of lgtmArticlesData.values()) {
-    //Mapの値だけ抜き出してArrayにする
-    lgtmArticlesData_Array.push(obj);
-  }
-  await output(lgtmArticlesData_Array);
+  await output([...lgtmArticlesData.values()]);
 
   console.log("The processsing took " + Math.round((Date.now() - startTime) / 1000) + " seconds");
 
