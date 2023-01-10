@@ -103,9 +103,12 @@ class notebook {
 
       console.log(`${process_description}: Scraping Started!`);
 
+      //イベントハンドラを登録
+      let isLastPage;
       page.on("response", async (response) => {
-        //イベントハンドラを登録
         if (response.url().includes("https://note.com/api/v1/notes/liked") === true && response.status() === 200) {
+          isLastPage = (await response.json())["data"]["last_page"];
+
           const notes_array = (await response.json())["data"]["notes"];
           for (let data of notes_array) {
             let key = data["key"]; //記事IDみたいなもの？(URLの固有記事名部分)
@@ -124,19 +127,26 @@ class notebook {
               like_count: like_count
             });
           }
-          await page.evaluate(() => {
-            window.scrollBy(0, 5000);
-          });
         }
       });
 
       await page.goto(`${baseURI}/notes/liked`, {
         //スキした記事の一覧へ飛んで処理を実行
         timeout: 1000 * 60,
-        waitUntil: ["load", "networkidle0"]
+        waitUntil: ["networkidle0", "domcontentloaded", "load"]
       });
 
-      await page.waitForTimeout(3 * 1000); // 最後のページネーションの取得に失敗しやすいため、waitを入れる
+      for (;;) {
+        if (isLastPage) {
+          break;
+        } else {
+          await page.evaluate(() => {
+            window.scrollBy(0, 5000);
+          });
+        }
+
+        await page.waitForTimeout(3000);
+      }
 
       console.log(`${process_description}: Scraping Completed!`);
     } catch (e) {
