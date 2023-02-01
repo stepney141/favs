@@ -1,4 +1,7 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/20509954,4798068160,"Good Code, Bad Code ～持続可能な開発のためのソフトウェアエンジニア的思考",TomLong／著 秋勇紀／翻訳 高田新山／翻訳 山本大祐／監修,秀和システム,20230128,No,,
+https://bookmeter.com/books/18869844,4873119650,Googleのソフトウェアエンジニアリング,TitusWinters／編集 TomManshreck／編集 HyrumWright／編集 ほか,オライリー・ジャパン,20211129,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11277660,
+https://bookmeter.com/books/19822722,448068431X,私たちはどう学んでいるのか,鈴木宏昭／著,筑摩書房,20220609,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC15107287,
 https://bookmeter.com/books/476072,4334035086,難解な本を読む技術,高田明典／著,光文社,2009-05,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA90034954,
 https://bookmeter.com/books/528295,415050251X,火星の人類学者,"Sacks,Oliver／著 吉田利子／翻訳 サックスオリヴァー／著",早川書房,2001-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA52241761,
 https://bookmeter.com/books/20637092,400006343X,拡散モデル データ生成技術の数理,岡野原大輔／著,岩波書店,20230221,No,,
@@ -389,7 +392,7 @@ https://bookmeter.com/books/499146,4004202884,読書と社会科学,内田義彦
 https://bookmeter.com/books/13226416,4260036742,研究の育て方,近藤克則／著,医学書院,20181022,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27055911,
 https://bookmeter.com/books/485114,448042587X,反社会学講座,"パオロ・マッツァリーノ 著,パオロ・マッツァリーノ,",筑摩書房,"Fri, 19 Jun 2009 09:00:00 +0900",Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA82471895,
 https://bookmeter.com/books/572755,4480423567,反社会学講座,"パオロ・マッツァリーノ 著,パオロ・マッツァリーノ,",筑摩書房,"Thu, 30 Aug 2007 09:00:00 +0900",Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA82471895,
-https://bookmeter.com/books/16718663,4844379038,入門GUI : Webブラウザで作る本格インタラクション,"hashrock, daiiz, miyaoka, f_subal 著,hashrock,daiiz,miyaoka,f_subal,","インプレスR&D,インプレス (発売)","Mon, 25 Jan 2021 09:00:00 +0900",No,,
+https://bookmeter.com/books/16718663,4844379038,入門GUI : Webブラウザで作る本格インタラクション,"hashrock, daiiz, miyaoka, f_subal 著,hashrock,daiiz,miyaoka,f_subal,","インプレスR&D,インプレス (発売)","Tue, 24 Jan 2023 09:00:00 +0900",No,,
 https://bookmeter.com/books/15950344,4299004507,塀の中の元極道YouTuberが明かす ヤクザの裏知識,懲役太郎／著,宝島社,20200604,No,,
 https://bookmeter.com/books/16684161,4121026136,古代メソポタミア全史,小林登志子／著,中央公論新社,20201021,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC03233976,
 https://bookmeter.com/books/9040015,463415062X,タロットの歴史,井上教子／著,山川出版社,2014-11,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB17486644,
