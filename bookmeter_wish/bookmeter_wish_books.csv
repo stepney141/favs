@@ -1,4 +1,5 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/20720422,4320114892,証明作法 論理の初歩から証明の実践へ,石原哉／著,共立出版,20230325,No,,
 https://bookmeter.com/books/9622879,4766422031,現代の事例から学ぶサイエンスコミュニケーション,ジョン・K・ギルバート／監訳 スーザン（またはスー）・ストックルマイヤー／著・編集 ほか,慶應義塾大学出版会,20150408,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18419609,
 https://bookmeter.com/books/20622976,4335359349,Liberty 2.0,駒村圭吾／編集,弘文堂,20230224,No,,
 https://bookmeter.com/books/19925125,4908468605,エセ著作権事件簿,友利昴／著,パブリブ,20220711,No,,
@@ -400,7 +401,7 @@ https://bookmeter.com/books/16385212,4873119200,生成 Deep Learning,DavidFoster
 https://bookmeter.com/books/16377939,4422203436,フィッシュ・アンド・チップスの歴史,パニコス・パナイー／著 栢木清吾／翻訳,創元社,20200917,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC02613814,
 https://bookmeter.com/books/499146,4004202884,読書と社会科学,内田義彦／著,岩波書店,19850121,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00338432,
 https://bookmeter.com/books/13226416,4260036742,研究の育て方,近藤克則／著,医学書院,20181022,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27055911,
-https://bookmeter.com/books/485114,448042587X,反社会学講座,"パオロ・マッツァリーノ 著,パオロ・マッツァリーノ,",筑摩書房,"Fri, 19 Jun 2009 09:00:00 +0900",Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA82471895,
+https://bookmeter.com/books/485114,448042587X,続・反社会学講座,"パオロ・マッツァリーノ 著・文・その他,パオロ・マッツァリーノ,",筑摩書房,,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA82471895,
 https://bookmeter.com/books/572755,4480423567,反社会学講座,"パオロ・マッツァリーノ 著,パオロ・マッツァリーノ,",筑摩書房,"Thu, 30 Aug 2007 09:00:00 +0900",Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA82471895,
 https://bookmeter.com/books/16718663,4844379038,入門GUI : Webブラウザで作る本格インタラクション,"hashrock, daiiz, miyaoka, f_subal 著,hashrock,daiiz,miyaoka,f_subal,","インプレスR&D,インプレス (発売)","Tue, 24 Jan 2023 09:00:00 +0900",No,,
 https://bookmeter.com/books/15950344,4299004507,塀の中の元極道YouTuberが明かす ヤクザの裏知識,懲役太郎／著,宝島社,20200604,No,,
