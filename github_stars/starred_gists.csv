@@ -1,4 +1,5 @@
 description,html_url,created_at
+エロゲ批評空間におけるWHITE ALBUM2の長文レビューを文字列の長さで降順でソートして表示するSQL。https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/sql_for_erogamer_form.php にコピペすると動かせます。無保証、ライセンスはCC0-1.0です。,https://gist.github.com/72f56bdf55b3cb3d12b6a55b055057f1,2023-03-10T02:01:49Z
 noteの独自ドメインセッションの脆弱性について報告した件,https://gist.github.com/ce6a9918e2c9ae83856aee803232dab9,2022-12-07T16:42:46Z
 日本の宅配会社　追跡をWebでやる　メモ,https://gist.github.com/164472b4cbe4710c1c213480bc9281cd,2022-05-29T05:17:20Z
 リモートワークスタイルチェック,https://gist.github.com/a794bc199ce7d663f01a434a6e72504c,2022-03-21T12:59:10Z
@@ -68,7 +69,6 @@ Quantum Shogi Program in Haskell,https://gist.github.com/7295637,2013-11-03T22:3
 Have a WARC that you would like to upload to the Internet Archive so that it can eventually be included in their Wayback Machine?  Here's how to upload it from the command line.,https://gist.github.com/6206247,2013-08-11T18:33:49Z
 A script to download all of a user's tweets into a csv,https://gist.github.com/5436496,2013-04-22T16:28:13Z
 OAuth 対応 Twitter クライアント作成メモ,https://gist.github.com/5276918,2013-03-30T14:32:24Z
-Twitter (un)official Consumer Key,https://gist.github.com/5160017,2013-03-14T09:22:58Z
 攻撃者が生パスワードまず復元できないだろという状況でも全ユーザーのパスワードリセットしたほうが良い10の理由,https://gist.github.com/5108900,2013-03-07T15:38:08Z
 wgetで一括ダウンロード,https://gist.github.com/4680720,2013-01-31T06:14:27Z
 "VBAマクロ向け関数。GenderEstimate。漢字の名前とふりがなから、性別を推定する関数
