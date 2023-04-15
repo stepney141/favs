@@ -1,4 +1,6 @@
 isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+4320036190,社会物理学,小田垣孝／著 佐野幸恵／著 山崎義弘／著 山本健／著,共立出版,20221025,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC17289811,
+4065277086,世界鉄道文化史,小島英俊／著,講談社,20220512,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14549199,
 4498229282,統合失調症当事者の症状論,"村松太郎 編著,林公一 著,村松, 太郎,林, 公一,",中外医学社,"Mon, 01 Mar 2021 09:00:00 +0900",Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC05495714,
 4295012270,Pythonで学ぶ音声合成 機械学習実践シリーズ,山本龍一／著 高道慎之介／著,インプレス,20210812,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC0920631X,
 4864810273,詳解と演習大学院入試問題〈数学〉,海老原円／著 太田雅人／著,数理工学社,20150325,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18509585,
@@ -7,10 +9,14 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_
 481580916X,胃袋の近代 食と人びとの日常史,湯澤規子／著,名古屋大学出版会,20180627,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26359036,
 4766422031,現代の事例から学ぶサイエンスコミュニケーション,ジョン・K・ギルバート／監訳 スーザン（またはスー）・ストックルマイヤー／著・編集 ほか,慶應義塾大学出版会,20150408,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18419609,
 446921258X,ことばはどこで育つか,藤永保／著,大修館書店,2001-02,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA50711263,
+4771036934,就活の社会学 大学生と「やりたいこと」,妹尾麻美／著,晃洋書房,20230202,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD00522952,
+4422215450,奇妙な国境や境界の世界地図,ゾラン・ニコリッチ／著 松田和也／翻訳,創元社,20230126,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD00395050,
 4873119650,Googleのソフトウェアエンジニアリング,TitusWinters／編集 TomManshreck／編集 HyrumWright／編集 ほか,オライリー・ジャパン,20211129,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11277660,
 448068431X,私たちはどう学んでいるのか,鈴木宏昭／著,筑摩書房,20220609,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC15107287,
 4334035086,難解な本を読む技術,高田明典／著,光文社,2009-05,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA90034954,
 415050251X,火星の人類学者,"Sacks,Oliver／著 吉田利子／翻訳 サックスオリヴァー／著",早川書房,2001-04,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA52241761,
+400006343X,拡散モデル データ生成技術の数理,岡野原大輔／著,岩波書店,20230221,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD00778548,
+4320035763,実践計算物理学,須藤彰三／監修 岡真／監修 野本拓也／著 是常隆／著 有田亮太郎／著,共立出版,20230114,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD00251119,
 4627077319,科学者・技術者のための基礎線形代数と固有値問題,柴田正和／著,森北,2013-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB14336736,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4627077319&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4883842266,はじめての人のための経済学史,江頭進／著,新世社 : サイエンス社,2015-06,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18904830,
 4065201748,ゼロからできるMCMC　マルコフ連鎖モンテカルロ法の実践的入門,花田政範／著 松浦壮／著,講談社,20200625,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB31281517,
@@ -24,6 +30,7 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_
 4641165483,実証のための計量時系列分析,ウォルター・エンダース（WalterEnders）／著 新谷元嗣／翻訳 藪友良／翻訳,有斐閣,20191212,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29344647,
 425412841X,経済・ファイナンスのためのカルマンフィルター入門,森平爽一郎／著,朝倉書店,20190206,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27703782,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=425412841X&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4002710521,「私物化」される国公立大学,駒込武／著,岩波書店,20210909,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC09664223,
+4774407763,調べる技術,小林昌樹／著,皓星社,20221209,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC18847472,
 4274229181,Pythonで始める　機器分析データの解析とケモメトリックス,森田成昭／著,オーム社,20220922,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16891021,
 4910612041,大学院・大学編入のための応用数学―基本事項の整理と問題演習および入試問題研究―,桜井基晴／著,プレアデス出版,20220820,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16505365,
 453554042X,経済論文の書き方,経済セミナー編集部／編集,日本評論社,20220916,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16683024,
