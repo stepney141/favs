@@ -72,7 +72,7 @@ class Zennist {
         "accept-language": "ja-JP"
       });
       await page.setUserAgent(
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36"
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
       );
 
       /* https://github.com/berstend/puppeteer-extra/issues/668 */
@@ -148,14 +148,16 @@ class Zennist {
             let published_at = data["published_at"]; //公開時刻
             let liked_count = data["liked_count"]; //スキされた数
 
-            this.favedArticlesData.set(key, {
+            if(data["post_type"] !== "Comment"){ // コメントへの「スキ」も同じページに表示されるが、これは不要なので弾く
+              this.favedArticlesData.set(key, {
               //記事ID的な何かをキーにする
-              note_title: title,
-              note_url: url,
-              user_nickname: user_nickname,
-              published_at: published_at,
-              liked_count: liked_count
-            });
+                note_title: title,
+                note_url: url,
+                user_nickname: user_nickname,
+                published_at: published_at,
+                liked_count: liked_count
+              });
+            }
           }
         }
       });
