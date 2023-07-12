@@ -1,4 +1,5 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/21307547,4634591340,将棋の日本史,永井晋／著,山川出版社,20230703,No,,
 https://bookmeter.com/books/63213,453560844X,xのx乗のはなし,土基善文／著 浪川幸彦／著 高橋陽一郎／著 上野健爾／著,日本評論社,2002-07,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA57451998,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=453560844X&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 https://bookmeter.com/books/21374762,4274230775,ゲームAI研究の新展開,伊藤毅志／著,オーム社,20230704,No,,
 https://bookmeter.com/books/21215188,4787292749,怪談の仕掛け,伊藤龍平／著,青弓社,20230620,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD02729441,
@@ -14,7 +15,7 @@ https://bookmeter.com/books/1216647,433115050X,プログラム学習による基
 https://bookmeter.com/books/7851784,4641150044,金融のエッセンス = THE ESSENCE OF BANKING & FINANCE,山崎福寿／著 川西諭／著,有斐閣,2013-12,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB14311338,
 https://bookmeter.com/books/17831173,4872596447,アーカイブズとアーキビスト,大阪大学アーカイブズ／編 高橋明男／著 菅真城／著 三阪佳弘／著 矢切努／著 三輪宗弘／著 ほか,大阪大学出版会,20210410,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC06512105,
 https://bookmeter.com/books/9904614,4800307961,元報道記者が見た昭和事件史,石川清／著,洋泉社,2015-11,No,,
-https://bookmeter.com/books/21285784,4814400225,プログラミング文体練習,CristinaVideiraLopes／著 菊池彰／翻訳,オライリー・ジャパン,20230614,No,,
+https://bookmeter.com/books/21285784,4814400225,プログラミング文体練習,CristinaVideiraLopes／著 菊池彰／翻訳,オライリー・ジャパン,20230614,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD02610154,
 https://bookmeter.com/books/21247615,4863135629,絶対に停まらない 世界の廃墟駅,デビッド・ロス／著 大島聡子／翻訳 ナショナルジオグラフィック／編集,日経ナショナルジオグラフィック社,20230504,No,,
 https://bookmeter.com/books/20395949,4622095556,デジタル時代のアーカイブ系譜学,柳与志夫／監修 加藤諭／編集 宮本隆史／編集,みすず書房,20221205,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC18724483,
 https://bookmeter.com/books/15119980,4326000481,デジタルアーカイブの理論と政策,柳与志夫／著,勁草書房,20200130,No,,
@@ -26,7 +27,7 @@ https://bookmeter.com/books/20625070,4422701274,コンスピリチュアリテ�
 https://bookmeter.com/books/20847483,4797681217,亜宗教 オカルト、スピリチュアル、疑似科学から陰謀論まで,中村圭志／著,集英社インターナショナル,20230407,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01630156,
 https://bookmeter.com/books/20948764,4339027979,CGによるシミュレーションと可視化,菊池司／著 竹島由里子／著,コロナ社,20230407,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01566512,
 https://bookmeter.com/books/16105408,4339029092,キャラクタアニメーションの数理とシステム,向井智彦／著 川地克明／著 三宅陽一郎／著,コロナ社,20200717,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB31575890,
-https://bookmeter.com/books/21310733,4339013714,3DCGの数理と応用,三谷純／編集 高山健志／著 土橋宜典／著 向井智彦／著 藤澤誠／著,コロナ社,20230621,No,,
+https://bookmeter.com/books/21310733,4339013714,3DCGの数理と応用,三谷純／編集 高山健志／著 土橋宜典／著 向井智彦／著 藤澤誠／著,コロナ社,20230621,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD02679842,
 https://bookmeter.com/books/20972763,4087212610,「イクメン」を疑え!,関口洋平／著,集英社,20230417,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD0165720X,
 https://bookmeter.com/books/20701894,4812222133,経済学史入門,久保真／編集 中澤信彦／編集,昭和堂,20230407,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01480235,
 https://bookmeter.com/books/20828164,406530993X,物理のためのデータサイエンス入門,植村誠／著,講談社,20230331,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01470399,
