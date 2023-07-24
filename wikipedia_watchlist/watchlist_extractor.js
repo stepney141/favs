@@ -261,13 +261,16 @@ const extractWatchlist = async (baseURI, cookies) => {
   const startTime = Date.now();
   console.log("Wikipedia Watchlists: Fetching started!");
 
-  const accounts = {
+  const ACCOUNTS = {
     jawiki: "ja.wikipedia.org",
     enwiki: "en.wikipedia.org",
-    wikicommons: "commons.wikimedia.org"
+    wikicommons: "commons.wikimedia.org",
+    jawikibooks: "ja.wikibooks.org",
+    jawikisource: "ja.wikisource.org",
+    enwikisource: "en.wikisource.org"
   };
 
-  for (const url of Object.values(accounts)) {
+  for (const url of Object.values(ACCOUNTS)) {
     console.log(`${url}: started`);
     const [login_token, login_cookies] = await getLoginToken(url);
     const [, client_cookies] = await login(url, login_token, login_cookies);
