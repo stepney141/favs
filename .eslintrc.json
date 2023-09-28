@@ -40,8 +40,6 @@
         "newlines-between": "always"
       }
     ],
-    "jsdoc/check-alignment": "warn",
-    "jsdoc/check-indentation": "warn",
     "no-param-reassign": "warn", // because of https://github.com/airbnb/javascript#functions--reassign-params
     "no-var": "warn",
     "no-eq-null": "error",
