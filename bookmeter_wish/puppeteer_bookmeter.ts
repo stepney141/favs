@@ -1,10 +1,11 @@
-import puppeteer from "puppeteer";
 import { promises as fs } from "fs";
-import papa from "papaparse";
+import path from "path";
+
 import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
-import path from "path";
+import papa from "papaparse";
 import { PdfData } from "pdfdataextract";
+import puppeteer from "puppeteer";
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const process_description = "Bookmeter Wished Books";
@@ -150,11 +151,11 @@ class Bookmaker {
         const amazonLinkHandle = await page.$x(xpath.amazonLink);
 
         for (let i = 0; i < booksUrlHandle.length; i++) {
-          let bkmt_raw = await (await booksUrlHandle[i].getProperty("href")).jsonValue();
-          let bkmt = String(bkmt_raw); //本の情報のbookmeter内部リンクを取得
+          const bkmt_raw = await (await booksUrlHandle[i].getProperty("href")).jsonValue();
+          const bkmt = String(bkmt_raw); //本の情報のbookmeter内部リンクを取得
 
-          let amzn_raw = await (await amazonLinkHandle[i].getProperty("href")).jsonValue();
-          let amzn = String(amzn_raw.match(amazon_asin_regex)); //Amazonへのリンクに含まれるISBN/ASINを抽出
+          const amzn_raw = await (await amazonLinkHandle[i].getProperty("href")).jsonValue();
+          const amzn = String(amzn_raw.match(amazon_asin_regex)); //Amazonへのリンクに含まれるISBN/ASINを抽出
 
           this.wishBooksData.set(bkmt, {
             //bookmeterの内部リンクをMapのキーにする

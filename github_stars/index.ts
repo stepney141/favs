@@ -1,7 +1,9 @@
-import { Octokit } from "octokit";
 import fs from "fs/promises";
-import papa from "papaparse";
 import path from "path";
+
+import { Octokit } from "octokit";
+import papa from "papaparse";
+
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const token = process.env.OAUTH_TOKEN_OF_GITHUB;
@@ -12,7 +14,7 @@ const getStarredGists = async (app) => {
   // https://docs.github.com/en/rest/gists/gists#list-starred-gists
   const iterator = app.paginate.iterator("GET /gists/starred", { per_page: 100 });
 
-  let gists_json = [];
+  const gists_json = [];
   for await (const { data: gists } of iterator) {
     for (const gist of gists) {
       gists_json.push({
@@ -30,7 +32,7 @@ const getStarredRepos = async (app) => {
   // https://docs.github.com/en/rest/activity/starring#list-repositories-starred-by-the-authenticated-user
   const iterator = app.paginate.iterator("GET /user/starred", { per_page: 100 });
 
-  let stars_json = [];
+  const stars_json = [];
   for await (const { data: stars } of iterator) {
     for (const star of stars) {
       stars_json.push({

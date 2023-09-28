@@ -1,4 +1,5 @@
 import fs from "fs";
+
 import fetch from "node-fetch";
 
 const { CLIENT_ID, CLIENT_SECRET, USERNAME } = JSON.parse(fs.readFileSync("./env.json"));

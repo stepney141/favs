@@ -1,7 +1,8 @@
-import puppeteer from "puppeteer";
 import fs from "fs";
-import papa from "papaparse";
 import path from "path";
+
+import papa from "papaparse";
+import puppeteer from "puppeteer";
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const PROCESS_DESCRIPTION = "Niconico Seiga MyClips";
@@ -28,7 +29,7 @@ function* zip(...args) {
   const length = args[0].length;
 
   // 引数チェック
-  for (let arr of args) {
+  for (const arr of args) {
     if (arr.length !== length) {
       throw "Lengths of arrays are not the same.";
     }
@@ -36,8 +37,8 @@ function* zip(...args) {
 
   // イテレート
   for (let index = 0; index < length; index++) {
-    let elms = [];
-    for (let arr of args) {
+    const elms = [];
+    for (const arr of args) {
       elms.push(arr[index]);
     }
     yield elms;
@@ -72,7 +73,7 @@ class Seiga {
 
       if (fs.existsSync(COOKIE_PATH)) {
         const savedCookies = JSON.parse(fs.readFileSync(COOKIE_PATH, "utf-8"));
-        for (let cookie of savedCookies) {
+        for (const cookie of savedCookies) {
           await page.setCookie(cookie);
         }
       }
@@ -171,7 +172,7 @@ class Seiga {
   }
 
   async output() {
-    let arrayData = [];
+    const arrayData = [];
     for (const obj of this.fetchedData.values()) {
       arrayData.push(obj);
     }

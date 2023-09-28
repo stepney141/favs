@@ -1,7 +1,8 @@
-import puppeteer from "puppeteer";
 import fs from "fs";
-import papa from "papaparse";
 import path from "path";
+
+import papa from "papaparse";
+import puppeteer from "puppeteer";
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 // vars for qiita
@@ -23,7 +24,7 @@ const XPATH = {
  * @type {Map<url, {title, lgtm, created_at, author}>}
  */
 const lgtmArticlesData = new Map();
-let lgtmArticlesData_Array = [];
+const lgtmArticlesData_Array = [];
 
 // vars for twitter
 // const user_name = (process.env.TWITTER_ACCOUNT).toString();
@@ -56,7 +57,7 @@ function* zip(...args) {
   const length = args[0].length;
 
   // 引数チェック
-  for (let arr of args) {
+  for (const arr of args) {
     if (arr.length !== length) {
       throw "Lengths of arrays are not the same.";
     }
@@ -64,8 +65,8 @@ function* zip(...args) {
 
   // イテレート
   for (let index = 0; index < length; index++) {
-    let elms = [];
-    for (let arr of args) {
+    const elms = [];
+    for (const arr of args) {
       elms.push(arr[index]);
     }
     yield elms;

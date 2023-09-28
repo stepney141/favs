@@ -1,7 +1,8 @@
-import axios from "axios";
-import path from "path";
 import fs from "fs/promises";
-import papa from "papaparse";
+import path from "path";
+
+import axios from "axios";
+
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const username = process.env.WIKIPEDIA_USERNAME;

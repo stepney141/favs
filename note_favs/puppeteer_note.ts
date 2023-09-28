@@ -1,7 +1,8 @@
-import puppeteer from "puppeteer";
 import fs from "fs";
-import papa from "papaparse";
 import path from "path";
+
+import papa from "papaparse";
+import puppeteer from "puppeteer";
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const baseURI = "https://note.com";
@@ -110,13 +111,13 @@ class notebook {
           isLastPage = (await response.json())["data"]["last_page"];
 
           const notes_array = (await response.json())["data"]["notes"];
-          for (let data of notes_array) {
-            let key = data["key"]; //記事IDみたいなもの？(URLの固有記事名部分)
-            let note_title = data["name"]; //記事名
-            let note_url = data["note_url"]; //記事URL
-            let user_nickname = data["user"]["nickname"]; //記事作成者名
-            let publish_at = data["publish_at"]; //公開時刻
-            let like_count = data["like_count"]; //スキされた数
+          for (const data of notes_array) {
+            const key = data["key"]; //記事IDみたいなもの？(URLの固有記事名部分)
+            const note_title = data["name"]; //記事名
+            const note_url = data["note_url"]; //記事URL
+            const user_nickname = data["user"]["nickname"]; //記事作成者名
+            const publish_at = data["publish_at"]; //公開時刻
+            const like_count = data["like_count"]; //スキされた数
 
             this.favedArticlesData.set(key, {
               //記事ID的な何かをキーにする

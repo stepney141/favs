@@ -1,4 +1,5 @@
 import fs from "fs";
+
 import { Deviantart } from "./deviantartClass.js";
 import { Utility } from "./utilityClass.js";
 
@@ -14,7 +15,7 @@ const downloadDeviantsJson_generator = async function* (token, [folder_uuid, fol
 
   while (true) {
     // jsonを取得
-    let collection_contents_json = await da.getContentsInCollection(token, folder_uuid, offset_next);
+    const collection_contents_json = await da.getContentsInCollection(token, folder_uuid, offset_next);
 
     // jsonをファイルに書き出し
     await util.fileOutputJson(
@@ -31,7 +32,7 @@ const downloadDeviantsJson_generator = async function* (token, [folder_uuid, fol
       offset_next = collection_contents_json.next_offset;
     }
 
-    for (let single_request of collection_contents_json) {
+    for (const single_request of collection_contents_json) {
       yield single_request;
       loop_index++;
     }

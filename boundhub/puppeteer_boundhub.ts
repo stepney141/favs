@@ -1,7 +1,8 @@
-import puppeteer from "puppeteer";
 import fs from "fs";
-import papa from "papaparse";
 import path from "path";
+
+import papa from "papaparse";
+import puppeteer from "puppeteer";
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const baseURI = "https://www.boundhub.com";
@@ -76,9 +77,9 @@ async function login(browser) {
 
 async function scraper(browser) {
   let movieData = [];
-  let movieUrlData = ["movie_url"];
-  let movieTitleData = ["movie_title"];
-  let num = 1;
+  const movieUrlData = ["movie_url"];
+  const movieTitleData = ["movie_title"];
+  const num = 1;
 
   try {
     const page = await browser.newPage();

@@ -1,10 +1,13 @@
+import { promises as fs } from "fs";
+import path from "path";
+
+import axios from "axios";
+import papa from "papaparse";
+import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
-import { executablePath } from "puppeteer";
-import { promises as fs } from "fs";
-import papa from "papaparse";
-import axios from "axios";
-import path from "path";
+
+
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const stealthPlugin = StealthPlugin();
@@ -140,13 +143,13 @@ class Zennist {
         //イベントハンドラを登録
         if (response.url().includes(`${baseURI}/api/me/library/likes`) === true && response.status() === 200) {
           const articles_array = (await response.json())["items"];
-          for (let data of articles_array) {
-            let key = data["id"]; //記事IDみたいなもの？(整数値)
-            let title = data["title"]; //記事名
-            let url = baseURI + data["path"]; //記事URL(ブラウザでアクセスする時のURLそのものではなく、記事固有のURL)
-            let user_nickname = data["user"]["name"]; //記事作成者名(アカウント名ではなくスクリーンネーム)
-            let published_at = data["published_at"]; //公開時刻
-            let liked_count = data["liked_count"]; //スキされた数
+          for (const data of articles_array) {
+            const key = data["id"]; //記事IDみたいなもの？(整数値)
+            const title = data["title"]; //記事名
+            const url = baseURI + data["path"]; //記事URL(ブラウザでアクセスする時のURLそのものではなく、記事固有のURL)
+            const user_nickname = data["user"]["name"]; //記事作成者名(アカウント名ではなくスクリーンネーム)
+            const published_at = data["published_at"]; //公開時刻
+            const liked_count = data["liked_count"]; //スキされた数
 
             if (data["post_type"] !== "Comment") {
               // コメントへの「スキ」も同じページに表示されるが、これは不要なので弾く

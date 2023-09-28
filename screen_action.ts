@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from "fs";
 
 export default class ScreenAction {
   constructor(page, logger) {
@@ -20,7 +20,7 @@ export default class ScreenAction {
       await Promise.all([this.page.click(object)]);
       return true;
     } catch (e) {
-      var message = "click_error:";
+      const message = "click_error:";
       this.logger.fatal(message + e);
       return false;
     }
@@ -34,7 +34,7 @@ export default class ScreenAction {
       ]);
       return true;
     } catch (e) {
-      var message = "click_wait_error:";
+      const message = "click_wait_error:";
       this.logger.fatal(message + e);
       return false;
     }
@@ -45,7 +45,7 @@ export default class ScreenAction {
       await Promise.all([this.page.mouse.move(x, y), this.page.waitForTimeout(time), this.page.mouse.click(x, y)]);
       return true;
     } catch (e) {
-      var message = "mouse_click_error:";
+      const message = "mouse_click_error:";
       this.logger.fatal(message + e);
       return false;
     }
@@ -61,7 +61,7 @@ export default class ScreenAction {
       ]);
       var flg = true;
     } catch (e) {
-      var message = "mouse_click_wait_error:";
+      const message = "mouse_click_wait_error:";
       this.logger.fatal(message + e);
       var flg = false;
     }
@@ -76,7 +76,7 @@ export default class ScreenAction {
         y
       );
     } catch (e) {
-      var message = "スクロールエラー:";
+      const message = "スクロールエラー:";
       this.logger.fatal(message + e);
       return false;
     }
@@ -100,11 +100,11 @@ export default class ScreenAction {
   // ソート一覧取得
   async list_check(elem, child_elem, date_flg = false) {
     await this.page.waitForTimeout(1000);
-    var list_element = await this.page.$x(elem);
-    var before_count = 0;
-    var date_now = new Date();
+    const list_element = await this.page.$x(elem);
+    let before_count = 0;
+    const date_now = new Date();
     for (const elem of list_element.reverse()) {
-      var count = await this.sort_data_convert(elem, child_elem, date_flg, date_now);
+      const count = await this.sort_data_convert(elem, child_elem, date_flg, date_now);
       if (before_count <= count) {
         var flg = true;
       } else {
@@ -119,7 +119,7 @@ export default class ScreenAction {
   //変換判定
   async sort_data_convert(elem, child_elem, date_flg, date_now) {
     if (date_flg) {
-      let date_text = await (await (await elem.$x(child_elem))[0].getProperty("textContent")).jsonValue();
+      const date_text = await (await (await elem.$x(child_elem))[0].getProperty("textContent")).jsonValue();
       if (date_text == "-") {
         return date_now.getTime();
       } else {
@@ -133,21 +133,21 @@ export default class ScreenAction {
   //selectorでinputへ入力
   async selector_type(elem, value) {
     await this.page.waitForSelector(elem);
-    var selector = await this.page.$(elem);
+    const selector = await this.page.$(elem);
     await selector.type(value);
   }
 
   //Xpathでinputへ入力
   async xpath_type(elem, value) {
     await this.page.waitForXPath(elem);
-    var xpath = await this.page.$x(elem);
+    const xpath = await this.page.$x(elem);
     await xpath[0].type(value);
   }
 
   //Xpathでクリック
   async xpath_click(elem, options = {}) {
     await this.page.waitForXPath(elem);
-    var xpath = await this.page.$x(elem);
+    const xpath = await this.page.$x(elem);
     await xpath[0].click(options);
     await this.page.waitForTimeout(1000);
   }
@@ -155,13 +155,13 @@ export default class ScreenAction {
   //xpathでsubmitクリック
   async xpath_submit(num) {
     await this.page.waitForXPath('//*[@id="submit"]');
-    var xpath = await this.page.$x('//*[@id="submit"]');
+    const xpath = await this.page.$x('//*[@id="submit"]');
     await xpath[num].click();
   }
 
   //xpathで存在チェック
   async xpath_existence_check(elem) {
-    var xpath = await this.page.$x(elem);
+    const xpath = await this.page.$x(elem);
     if (xpath[0] == undefined) {
       return false;
     } else {
@@ -179,7 +179,7 @@ export default class ScreenAction {
 
   //ソートのtypeの調整
   async svg_sort_xpath_check(elem, sort) {
-    var click = await this.svg_sort_check_convert(elem);
+    const click = await this.svg_sort_check_convert(elem);
     await this.page.waitForXPath(elem);
     while (sort != (await (await (await this.page.$x(elem))[0].getProperty("textContent")).jsonValue())) {
       await this.xpath_click(click);
@@ -189,8 +189,8 @@ export default class ScreenAction {
   //Xpathでinputへ入力
   async xpath_text(elem) {
     await this.page.waitForXPath(elem);
-    var xpath = await this.page.$x(elem);
-    var xpath_text = await this.page.evaluate((path) => {
+    const xpath = await this.page.$x(elem);
+    const xpath_text = await this.page.evaluate((path) => {
       return path.textContent;
     }, xpath[0]);
     return xpath_text;
@@ -198,7 +198,7 @@ export default class ScreenAction {
 
   //Xpathでinputの入力を初期化
   async xpath_text_clear(elem, leng) {
-    let id_length = await String(leng).length;
+    const id_length = await String(leng).length;
     await this.xpath_click(elem); //serviceID入力欄をクリック
     for (let i = 0; i < id_length; i++) {
       await this.page.keyboard.press("Backspace"); //入力欄をバックスペースにより初期化
@@ -207,8 +207,8 @@ export default class ScreenAction {
 
   //xpathからテキスト取得
   async xpath_fetch_text(elem) {
-    let elementHandle = await this.page.$x(elem);
-    let text = await this.page.evaluate((path) => {
+    const elementHandle = await this.page.$x(elem);
+    const text = await this.page.evaluate((path) => {
       //一括承認画面の先頭にある端末の端末管理番号を取得
       return path.textContent;
     }, elementHandle[0]);
@@ -217,14 +217,14 @@ export default class ScreenAction {
 
   //inputの文字の取得
   async get_input_value(elem) {
-    var [ele] = await this.page.$x(elem);
+    const [ele] = await this.page.$x(elem);
     return await this.page.evaluate((ele) => ele.value, ele);
   }
 
   //Xpathでinputの入力を初期化
   async xpath_value_clear(elem) {
-    var id_length = await this.get_input_value(elem);
-    var ele = await this.page.$x(elem);
+    const id_length = await this.get_input_value(elem);
+    const ele = await this.page.$x(elem);
     for (let i = 0; i < id_length.length; i++) {
       ele[0].press("Backspace"); // await this.page.keyboard.press('Backspace');//入力欄をバックスペースにより初期化
     }
@@ -251,11 +251,11 @@ export default class ScreenAction {
         throw new Error("[StatusCode:500]ダウンロードできません");
       }
     } catch (e) {
-      var error_m = "CSVダウンロード_エラー:";
+      const error_m = "CSVダウンロード_エラー:";
       this.logger.fatal(error_m + e);
       return false;
     }
-    let filename = await (async () => {
+    const filename = await (async () => {
       let filename;
       while (!filename || filename.endsWith(".crdownload")) {
         filename = fs.readdirSync(setting_json.DOWNLOAD_PATH)[0];
@@ -286,4 +286,4 @@ export default class ScreenAction {
       return false;
     }
   }
-};
+}
