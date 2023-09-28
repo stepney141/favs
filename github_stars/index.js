@@ -1,7 +1,7 @@
-const { Octokit } = require("octokit");
-const fs = require("fs/promises");
-const papa = require("papaparse");
-const path = require("path");
+import { Octokit } from "octokit";
+import fs from "fs/promises";
+import papa from "papaparse";
+import path from "path";
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const token = process.env.OAUTH_TOKEN_OF_GITHUB;

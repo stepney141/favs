@@ -1,10 +1,10 @@
-const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-const { executablePath } = require("puppeteer");
-const fs = require("fs").promises;
-const papa = require("papaparse");
-const axios = require("axios");
-const path = require("path");
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import { executablePath } from "puppeteer";
+import { promises as fs } from "fs";
+import papa from "papaparse";
+import axios from "axios";
+import path from "path";
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const stealthPlugin = StealthPlugin();

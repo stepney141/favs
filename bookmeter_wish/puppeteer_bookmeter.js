@@ -1,10 +1,10 @@
-const puppeteer = require("puppeteer");
-const fs = require("fs").promises;
-const papa = require("papaparse");
-const axios = require("axios");
-const { XMLParser } = require("fast-xml-parser");
-const path = require("path");
-const { PdfData } = require("pdfdataextract");
+import puppeteer from "puppeteer";
+import { promises as fs } from "fs";
+import papa from "papaparse";
+import axios from "axios";
+import { XMLParser } from "fast-xml-parser";
+import path from "path";
+import { PdfData } from "pdfdataextract";
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const process_description = "Bookmeter Wished Books";

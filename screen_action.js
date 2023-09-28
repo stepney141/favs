@@ -1,6 +1,6 @@
-const fs = require("fs");
+import fs from 'fs';
 
-module.exports = class ScreenAction {
+export default class ScreenAction {
   constructor(page, logger) {
     this.page = page;
     this.logger = logger;

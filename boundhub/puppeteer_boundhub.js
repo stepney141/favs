@@ -1,7 +1,7 @@
-const puppeteer = require("puppeteer");
-const fs = require("fs");
-const papa = require("papaparse");
-const path = require("path");
+import puppeteer from "puppeteer";
+import fs from "fs";
+import papa from "papaparse";
+import path from "path";
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const baseURI = "https://www.boundhub.com";
