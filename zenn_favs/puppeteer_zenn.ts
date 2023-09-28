@@ -7,7 +7,6 @@ import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const stealthPlugin = StealthPlugin();
