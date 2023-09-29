@@ -1,9 +1,8 @@
 import fs from "fs";
-import path from "path";
 
 import papa from "papaparse";
 import puppeteer from "puppeteer";
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+import "dotenv/config";
 
 // vars for qiita
 const userid = "stepney141";

@@ -1,10 +1,9 @@
 import fs from "fs/promises";
-import path from "path";
 
 import { Octokit } from "octokit";
 import papa from "papaparse";
 
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+import "dotenv/config";
 
 const token = process.env.OAUTH_TOKEN_OF_GITHUB;
 

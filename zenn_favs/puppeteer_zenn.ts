@@ -1,5 +1,4 @@
 import { promises as fs } from "fs";
-import path from "path";
 
 import axios from "axios";
 import papa from "papaparse";
@@ -7,7 +6,7 @@ import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+import "dotenv/config";
 
 const stealthPlugin = StealthPlugin();
 /* https://github.com/berstend/puppeteer-extra/issues/668 */
@@ -169,7 +168,7 @@ class Zennist {
         waitUntil: ["networkidle0", "domcontentloaded", "load"]
       });
 
-      for (; ;) {
+      for (;;) {
         const [wait_eh, button_eh] = await Promise.all([
           page.waitForXPath(XPATH.nextPaginationButton, { timeout: 5 * 1000 }),
           page.$x(XPATH.nextPaginationButton)

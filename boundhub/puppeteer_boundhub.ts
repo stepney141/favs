@@ -1,9 +1,8 @@
 import fs from "fs";
-import path from "path";
 
 import papa from "papaparse";
 import puppeteer from "puppeteer";
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+import "dotenv/config";
 
 const baseURI = "https://www.boundhub.com";
 const process_description = "Boundhub Favorite Movies";
@@ -17,8 +16,7 @@ const xpath = {
 
   linkToPlaylist: `//a[contains(text(), "${playlist_name}")]`,
 
-  linkToNextPage:
-    '//a[contains(text(), "Next") and @data-container-id="list_videos_my_favourite_videos_pagination"]',
+  linkToNextPage: '//a[contains(text(), "Next") and @data-container-id="list_videos_my_favourite_videos_pagination"]',
   linkToAllMovies: '//*[@id="list_videos_my_favourite_videos_items"]/form/div[*]/a'
 };
 

@@ -1,9 +1,8 @@
 import fs from "fs/promises";
-import path from "path";
 
 import axios from "axios";
 
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+import "dotenv/config";
 
 const username = process.env.WIKIPEDIA_USERNAME;
 const password = process.env.WIKIPEDIA_PASSWORD;

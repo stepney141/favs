@@ -92,16 +92,13 @@ export class Deviantart {
         access_token: token
       };
       const query = new URLSearchParams(params);
-      const response = await fetch(
-        `https://www.deviantart.com/api/v1/oauth2/collections/${folder_uuid}?${query}`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-          }
+      const response = await fetch(`https://www.deviantart.com/api/v1/oauth2/collections/${folder_uuid}?${query}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
         }
-      );
+      });
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText} ${await response.text()}`);
       }
@@ -162,16 +159,13 @@ export class Deviantart {
         access_token: token
       };
       const query = new URLSearchParams(params).toString();
-      const response = await fetch(
-        `https://www.deviantart.com/api/v1/oauth2/deviation/${deviation_uuid}?${query}`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-          }
+      const response = await fetch(`https://www.deviantart.com/api/v1/oauth2/deviation/${deviation_uuid}?${query}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
         }
-      );
+      });
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText} ${await response.text()}`);
       }

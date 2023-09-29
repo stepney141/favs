@@ -71,10 +71,7 @@ export default class ScreenAction {
   async menu_scroll(path, y) {
     try {
       await this.page.waitForSelector(path);
-      await this.page.evaluate(
-        (ey) => window.document.getElementById("app").querySelector("nav").scrollBy(0, ey),
-        y
-      );
+      await this.page.evaluate((ey) => window.document.getElementById("app").querySelector("nav").scrollBy(0, ey), y);
     } catch (e) {
       const message = "スクロールエラー:";
       this.logger.fatal(message + e);

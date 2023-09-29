@@ -1,9 +1,8 @@
 import fs from "fs";
-import path from "path";
 
 import papa from "papaparse";
 import puppeteer from "puppeteer";
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+import "dotenv/config";
 
 const PROCESS_DESCRIPTION = "Niconico Seiga MyClips";
 const CSV_FILENAME = "nicoseiga_myclips";

@@ -1,12 +1,12 @@
 import { promises as fs } from "fs";
-import path from "path";
 
 import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
 import papa from "papaparse";
 import { PdfData } from "pdfdataextract";
 import puppeteer from "puppeteer";
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+
+import "dotenv/config";
 
 const process_description = "Bookmeter Wished Books";
 const bookmeter_baseURI = "https://bookmeter.com";
@@ -198,9 +198,7 @@ class Bookmaker {
       const pdf_data = response["data"];
       const pdf_parsed = await PdfData.extract(pdf_data, { sort: false });
 
-      console.log(
-        `${process_description}: Completed fetching the list of ${listtype} books in Sophia-Univ. Math Lib`
-      );
+      console.log(`${process_description}: Completed fetching the list of ${listtype} books in Sophia-Univ. Math Lib`);
 
       const filename = `mathlib_${listtype}.text`;
       const filehandle = await fs.open(filename, "w");
