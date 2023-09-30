@@ -21,6 +21,8 @@
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
     "5to6-codemod": "^1.8.0",
+    "esbuild": "^0.19.4",
+    "esbuild-register": "^3.5.0",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -32,6 +34,8 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "lint-fix": "prettier --write . && eslint . --fix"
+    "type-check": "tsc --pretty --noEmit",
+    "lint-fix": "prettier --write . && eslint . --fix",
+    "exec": "node -r esbuild-register"
   }
 }

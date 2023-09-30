@@ -48,7 +48,13 @@
     "@typescript-eslint/consistent-type-imports": ["warn", { "prefer": "type-imports" }],
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/no-unused-vars": ["warn"],
-    "@typescript-eslint/semi": ["warn", "always"]
+    "@typescript-eslint/semi": ["warn", "always"],
+    "@typescript-eslint/no-floating-promises": [
+      "warn",
+      {
+        "ignoreIIFE": true
+      }
+    ]
   },
   "settings": {
     "import/parsers": {
