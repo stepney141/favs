@@ -11,7 +11,7 @@ const csv_filename = "note_favorites";
 const xpath = {
   useridInput: '//*[@id="email"]',
   passwordInput: '//*[@id="password"]',
-  loginButton: '//*[@id="__layout"]/div/div[1]/main/div/div[2]/div[5]/button'
+  loginButton: '//button[@data-type="primary"]'
 };
 
 const user_name = process.env.NOTE_ACCOUNT.toString();
