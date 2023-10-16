@@ -1,5 +1,7 @@
 import { isAxiosError } from "axios";
 
+import type { ElementHandle } from "puppeteer";
+
 /**
  * Result-Type to handle errors
  * @link https://zenn.dev/uhyo/articles/ts-4-6-destructing-unions
@@ -62,3 +64,42 @@ export const sleep = async (time: number): Promise<void> =>
 
 export const randomWait = (baseWaitSeconds: number, min: number, max: number): number =>
   baseWaitSeconds * (Math.random() * (max - min) + min);
+
+/**
+ * Iterates like Python-zip
+ * @param  {...any} args
+ * @link https://python.ms/javascript--zip/
+ * @example
+ * const array1 = ['apple', 'orange', 'grape'];
+   const array2 = ['rabbit', 'dog', 'cat'];
+   const array3 = ['car', 'bicycle', 'airplane'];
+   for (let [elm1, elm2, elm3] of zip(array1, array2, array3)) {
+       console.log(elm1, elm2, elm3);
+   }
+ */
+export function* zip<T extends any>(...args: T[][]): Generator<T[]> {
+  const length = args[0].length;
+
+  // 引数チェック
+  for (const arr of args) {
+    if (arr.length !== length) {
+      throw "Lengths of arrays are not the same.";
+    }
+  }
+
+  // イテレート
+  for (let index = 0; index < length; index++) {
+    const elms: T[] = [];
+    for (const arr of args) {
+      elms.push(arr[index]);
+    }
+    yield elms;
+  }
+}
+
+export const getNodeProperty = async (eh: ElementHandle, prop: string): Promise<unknown> => {
+  const handle = await eh.getProperty(prop);
+  const value = await handle.jsonValue();
+
+  return value;
+};

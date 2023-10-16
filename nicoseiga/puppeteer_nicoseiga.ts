@@ -1,8 +1,10 @@
-import fs from "fs";
+import path from "path";
 
+import { config } from "dotenv";
 import papa from "papaparse";
 import puppeteer from "puppeteer";
-import "dotenv/config";
+
+import { zip } from "../lib";
 
 const PROCESS_DESCRIPTION = "Niconico Seiga MyClips";
 const CSV_FILENAME = "nicoseiga_myclips";
@@ -21,28 +23,9 @@ const xpath = {
   toNextPageButtons: '//li/*[contains(text(), "次へ")]'
 };
 
-const user_name = process.env.NICONICO_ACCOUNT.toString();
-const password = process.env.NICONICO_PASSWORD.toString();
-
-function* zip(...args) {
-  const length = args[0].length;
-
-  // 引数チェック
-  for (const arr of args) {
-    if (arr.length !== length) {
-      throw "Lengths of arrays are not the same.";
-    }
-  }
-
-  // イテレート
-  for (let index = 0; index < length; index++) {
-    const elms = [];
-    for (const arr of args) {
-      elms.push(arr[index]);
-    }
-    yield elms;
-  }
-}
+config({ path: path.join(__dirname, "../.env") });
+const user_name = process.env.NICONICO_ACCOUNT!.toString();
+const password = process.env.NICONICO_PASSWORD!.toString();
 
 async function isNotLoggedInSeiga(page) {
   const eh = await page.$x(xpath.eachIllustLinks);

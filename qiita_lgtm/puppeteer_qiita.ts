@@ -3,6 +3,7 @@ import fs from "fs";
 import papa from "papaparse";
 import puppeteer from "puppeteer";
 import "dotenv/config";
+import { zip } from "../lib";
 
 // vars for qiita
 const userid = "stepney141";
@@ -33,44 +34,6 @@ const password = "";
 
 // ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
 const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
-
-/**
- * Iterates like Python-zip
- * @param  {...any} args
- * @link https://python.ms/javascript--zip/
- * @example
- * const array1 = [
-       'apple', 'orange', 'grape',
-   ];
-   const array2 = [
-       'rabbit', 'dog', 'cat',
-   ];
-   const array3 = [
-       'car', 'bicycle', 'airplane',
-   ];
-   for (let [elm1, elm2, elm3] of zip(array1, array2, array3)) {
-       console.log(elm1, elm2, elm3);
-   }
- */
-function* zip(...args) {
-  const length = args[0].length;
-
-  // 引数チェック
-  for (const arr of args) {
-    if (arr.length !== length) {
-      throw "Lengths of arrays are not the same.";
-    }
-  }
-
-  // イテレート
-  for (let index = 0; index < length; index++) {
-    const elms = [];
-    for (const arr of args) {
-      elms.push(arr[index]);
-    }
-    yield elms;
-  }
-}
 
 async function getLgtm(browser) {
   try {
