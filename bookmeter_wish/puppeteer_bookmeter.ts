@@ -509,8 +509,7 @@ class Bookmaker {
 
     const browser = await puppeteer.launch({
       defaultViewport: { width: 1000, height: 1000 },
-      // headless: "new",
-      headless: false,
+      headless: "new",
       slowMo: 30
     });
 
