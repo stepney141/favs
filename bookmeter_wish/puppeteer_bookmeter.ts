@@ -89,10 +89,6 @@ class Bookmaker {
       const passwordInputHandle = await page.$x(XPATH.passwordInput);
       const loginButtonHandle = await page.$x(XPATH.loginButton);
 
-      console.log(accountNameInputHandle);
-      console.log(passwordInputHandle);
-      console.log(loginButtonHandle);
-
       await accountNameInputHandle[0].type(bookmeter_username);
       await passwordInputHandle[0].type(bookmeter_password);
 
@@ -132,17 +128,11 @@ class Bookmaker {
         const amazonLinkHandle = await page.$x(XPATH.amazonLink);
         const isBookExistHandle = await page.$x(XPATH.isBookExist);
 
-        console.log(booksUrlHandle);
-        console.log(amazonLinkHandle);
-        console.log(isBookExistHandle);
-
         for (let i = 0; i < booksUrlHandle.length; i++) {
           const bkmt_raw = await (await booksUrlHandle[i].getProperty("href")).jsonValue();
-          console.log(bkmt_raw);
           const bkmt = String(bkmt_raw); //本の情報のbookmeter内部リンクを取得
 
           const amzn_raw = await (await amazonLinkHandle[i].getProperty("href")).jsonValue();
-          console.log(amzn_raw);
           const amzn = String((amzn_raw as string).match(REGEX.amazon_asin)); //Amazonへのリンクに含まれるISBN/ASINを抽出
 
           this.wishBooksData.set(bkmt, {

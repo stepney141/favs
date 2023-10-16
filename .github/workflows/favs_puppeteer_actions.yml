@@ -109,7 +109,7 @@ jobs:
       - name: Wikipedia Watchlist
         shell: bash
         working-directory: ./wikipedia_watchlist
-        run: node ./watchlist_extractor.js
+        run: node ./index.js
 
       - name: Niconico Seiga MyClips
         shell: bash
