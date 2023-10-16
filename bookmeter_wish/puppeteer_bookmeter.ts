@@ -1,16 +1,18 @@
 import { promises as fs } from "fs";
 import path from "path";
 
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import { config } from "dotenv";
 import { XMLParser } from "fast-xml-parser";
 import { parse, unparse } from "papaparse";
 import { PdfData } from "pdfdataextract";
 import puppeteer from "puppeteer";
 
+import { handleAxiosError, randomWait, sleep } from "../lib";
+
 import {
   CSV_FILENAME,
-  PROCESS_DESCRIPTION,
+  JOB_NAME,
   REGEX,
   XPATH,
   bookmeter_baseURI,
@@ -35,32 +37,6 @@ config({ path: path.join(__dirname, "../.env") });
 const bookmeter_username = process.env.BOOKMETER_ACCOUNT!.toString();
 const bookmeter_password = process.env.BOOKMETER_PASSWORD!.toString();
 const cinii_appid = process.env.CINII_API_APPID!.toString();
-
-// ref: https://qiita.com/albno273/items/c2d48fdcbf3a9a3434db
-// example: await sleep(randomWait(1000, 0.5, 1.1)); 1000ms x0.5 ~ x1.1 の間でランダムにアクセスの間隔を空ける
-const sleep = async (time: number): Promise<void> =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, time);
-  });
-const randomWait = (baseWaitSeconds: number, min: number, max: number): number =>
-  baseWaitSeconds * (Math.random() * (max - min) + min);
-
-const handleAxiosError = (error: unknown) => {
-  if (isAxiosError(error)) {
-    // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error);
-    }
-  }
-};
 
 // ref: https://qiita.com/iz-j/items/27b9656ebed1a4516ee1
 const convertISBN10To13 = (isbn10: string): string => {
@@ -129,7 +105,7 @@ class Bookmaker {
         //ref: https://github.com/puppeteer/puppeteer/issues/8852
       ]);
 
-      console.log(`${PROCESS_DESCRIPTION}: Login Completed!`);
+      console.log(`${JOB_NAME}: Login Completed!`);
     } catch (e) {
       console.log(e);
       await browser.close();
@@ -142,7 +118,7 @@ class Bookmaker {
     try {
       const page = await browser.newPage();
 
-      console.log(`${PROCESS_DESCRIPTION}: Scraping Started!`);
+      console.log(`${JOB_NAME}: Scraping Started!`);
 
       for (;;) {
         // 1500ms ~ 3300msの間でランダムにアクセスの間隔を空ける
@@ -201,7 +177,7 @@ class Bookmaker {
       await browser.close();
       return false;
     }
-    console.log(`${PROCESS_DESCRIPTION}: Bookmeter Scraping Completed!`);
+    console.log(`${JOB_NAME}: Bookmeter Scraping Completed!`);
     return true;
   }
 
@@ -219,7 +195,7 @@ class Bookmaker {
       const pdf_data: Uint8Array = response["data"];
       const pdf_parsed = await PdfData.extract(pdf_data, { sort: false });
 
-      console.log(`${PROCESS_DESCRIPTION}: Completed fetching the list of ${listtype} books in Sophia-Univ. Math Lib`);
+      console.log(`${JOB_NAME}: Completed fetching the list of ${listtype} books in Sophia-Univ. Math Lib`);
 
       const filename = `mathlib_${listtype}.text`;
       const filehandle = await fs.open(filename, "w");
@@ -238,9 +214,7 @@ class Bookmaker {
       handleAxiosError(e);
       return false;
     }
-    console.log(
-      `${PROCESS_DESCRIPTION}: Completed creating a list of ISBNs of ${listtype} books in Sophia-Univ. Math Lib`
-    );
+    console.log(`${JOB_NAME}: Completed creating a list of ISBNs of ${listtype} books in Sophia-Univ. Math Lib`);
     return true;
   }
 
@@ -452,7 +426,7 @@ class Bookmaker {
       await this.searchOpenBD(key, value);
       // await sleep(1000);
     }
-    console.log(`${PROCESS_DESCRIPTION}: OpenBD Searching Completed`);
+    console.log(`${JOB_NAME}: OpenBD Searching Completed`);
 
     for (const [key, value] of this.wishBooksData) {
       if (value["book_title"] === "Not_found_with_OpenBD") {
@@ -460,13 +434,13 @@ class Bookmaker {
         await sleep(1000);
       }
     }
-    console.log(`${PROCESS_DESCRIPTION}: NDL Searching Completed`);
+    console.log(`${JOB_NAME}: NDL Searching Completed`);
 
     for (const [key, value] of this.wishBooksData) {
       await this.searchSophia(key, value);
       await sleep(1000);
     }
-    console.log(`${PROCESS_DESCRIPTION}: Sophia-Univ. Library Searching Completed`);
+    console.log(`${JOB_NAME}: Sophia-Univ. Library Searching Completed`);
   }
 
   async writeFile(data: string, filename: string) {
@@ -495,7 +469,7 @@ class Bookmaker {
         return false;
       }
     }
-    console.log(`${PROCESS_DESCRIPTION}: CSV Output Completed!`);
+    console.log(`${JOB_NAME}: CSV Output Completed!`);
     return true;
   }
 
@@ -526,14 +500,14 @@ class Bookmaker {
     for (const key of this.wishBooksData.keys()) {
       if (this.previousWishBooksData.has(key) === false) {
         //ローカルのCSVとbookmeterのスクレイピング結果を比較
-        console.log(`${PROCESS_DESCRIPTION}: Detected some diffs between the local and remote.`); //差分を検出した場合
+        console.log(`${JOB_NAME}: Detected some diffs between the local and remote.`); //差分を検出した場合
         return true;
       }
     }
 
     //差分を検出しなかった場合
     console.log(
-      `${PROCESS_DESCRIPTION}: Cannot find any differences between the local and remote. The process will be aborted...`
+      `${JOB_NAME}: Cannot find any differences between the local and remote. The process will be aborted...`
     );
     return false;
   }
@@ -559,7 +533,7 @@ class Bookmaker {
 
     if (await book.validateDiff(CSV_FILENAME)) {
       //ローカルのCSVとbookmeterのスクレイピング結果を比較し、差分を検出したら書誌情報を取得してCSVを新規生成
-      console.log(`${PROCESS_DESCRIPTION}: Fetching bibliographic information`);
+      console.log(`${JOB_NAME}: Fetching bibliographic information`);
 
       await book.fetchBiblioInfo(); //書誌情報取得
 

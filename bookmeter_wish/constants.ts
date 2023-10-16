@@ -1,4 +1,4 @@
-export const PROCESS_DESCRIPTION = "Bookmeter Wished Books";
+export const JOB_NAME = "Bookmeter Wished Books";
 export const CSV_FILENAME = "bookmeter_wish_books.csv";
 
 export const bookmeter_baseURI = "https://bookmeter.com";

@@ -1,4 +1,7 @@
-// environment variables
+/**
+ * environment variables
+ * @link https://maku.blog/p/r8iry9g/
+ */
 declare namespace NodeJS {
   interface ProcessEnv {
     readonly NODE_ENV?: string;
