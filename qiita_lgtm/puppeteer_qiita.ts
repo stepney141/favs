@@ -2,8 +2,9 @@ import fs from "fs";
 
 import papa from "papaparse";
 import puppeteer from "puppeteer";
+
 import "dotenv/config";
-import { zip } from "../lib";
+import { zip } from "../.libs/utils";
 
 // vars for qiita
 const userid = "stepney141";

@@ -4,7 +4,7 @@ import { config } from "dotenv";
 import papa from "papaparse";
 import puppeteer from "puppeteer";
 
-import { zip } from "../lib";
+import { zip } from "../.libs/utils";
 
 const PROCESS_DESCRIPTION = "Niconico Seiga MyClips";
 const CSV_FILENAME = "nicoseiga_myclips";

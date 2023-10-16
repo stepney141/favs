@@ -8,7 +8,7 @@ import { parse, unparse } from "papaparse";
 import { PdfData } from "pdfdataextract";
 import puppeteer from "puppeteer";
 
-import { handleAxiosError, randomWait, sleep } from "../lib";
+import { handleAxiosError, randomWait, sleep } from "../.libs/utils";
 
 import {
   CSV_FILENAME,

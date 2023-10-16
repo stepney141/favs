@@ -4,7 +4,7 @@ import path from "path";
 import axios from "axios";
 import { config } from "dotenv";
 
-import { Err, Ok, unwrapResult } from "../lib";
+import { Err, Ok, unwrapResult } from "../.libs/lib";
 
 import { ACCOUNTS, JOB_NAME } from "./constants";
 
@@ -17,7 +17,7 @@ import type {
   WatchlistrawResponse,
   Watchlists
 } from "./types";
-import type { Result } from "../lib";
+import type { Result } from "../.libs/lib";
 import type { AxiosResponse } from "axios";
 
 config({ path: path.join(__dirname, "../.env") });
