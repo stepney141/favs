@@ -1,19 +1,34 @@
 import fs from "fs/promises";
+import path from "path";
 
+import { config } from "dotenv";
 import { Octokit } from "octokit";
 import papa from "papaparse";
 
-import "dotenv/config";
+const JOB_NAME = "GitHub Starred Repositories";
 
-const token = process.env.OAUTH_TOKEN_OF_GITHUB;
+config({ path: path.join(__dirname, "../.env") });
+const token = process.env.OAUTH_TOKEN_OF_GITHUB!;
+
+type Gist = {
+  description: string | null;
+  html_url: string;
+  created_at: string;
+};
+type Starred = {
+  full_name: string;
+  html_url: string;
+  description: string | null;
+  stargazers_count: number;
+};
 
 const createClient = () => new Octokit({ auth: token });
 
-const getStarredGists = async (app) => {
+const getStarredGists = async (app: Octokit): Promise<Gist[]> => {
   // https://docs.github.com/en/rest/gists/gists#list-starred-gists
   const iterator = app.paginate.iterator("GET /gists/starred", { per_page: 100 });
 
-  const gists_json = [];
+  const gists_json: Gist[] = [];
   for await (const { data: gists } of iterator) {
     for (const gist of gists) {
       gists_json.push({
@@ -27,11 +42,11 @@ const getStarredGists = async (app) => {
   return gists_json;
 };
 
-const getStarredRepos = async (app) => {
+const getStarredRepos = async (app: Octokit): Promise<Starred[]> => {
   // https://docs.github.com/en/rest/activity/starring#list-repositories-starred-by-the-authenticated-user
   const iterator = app.paginate.iterator("GET /user/starred", { per_page: 100 });
 
-  const stars_json = [];
+  const stars_json: Starred[] = [];
   for await (const { data: stars } of iterator) {
     for (const star of stars) {
       stars_json.push({
@@ -46,35 +61,33 @@ const getStarredRepos = async (app) => {
   return stars_json;
 };
 
-const writeCSV = async (json, filename) => {
-  try {
-    const csv = papa.unparse(json);
-    const filehandle = await fs.open(filename, "w");
-    await fs.appendFile(`./${filename}`, csv, (e) => {
-      if (e) console.log("error: ", e);
-    });
-    await filehandle.close();
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const main = async () => {
-  const startTime = Date.now();
-  const app = createClient();
-
-  const gists_list_filename = "starred_gists.csv";
-  const gists_json = await getStarredGists(app);
-  await writeCSV(gists_json, gists_list_filename);
-
-  const stars_list_filename = "starred_repos.csv";
-  const stars_json = await getStarredRepos(app);
-  await writeCSV(stars_json, stars_list_filename);
-
-  console.log("GitHub Starred Repositories: CSV Output Completed!");
-  console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+const writeCSV = async (json: (Starred | Gist)[], filename: string): Promise<void> => {
+  const csv = papa.unparse(json);
+  const filehandle = await fs.open(filename, "w");
+  await fs.appendFile(`./${filename}`, csv, (e) => {
+    if (e) console.log("error: ", e);
+  });
+  await filehandle.close();
 };
 
 (async () => {
-  await main();
+  try {
+    const startTime = Date.now();
+    const app = createClient();
+
+    const gists_list_filename = "starred_gists.csv";
+    console.log(`${JOB_NAME}: ${gists_list_filename}`);
+    const gists_json = await getStarredGists(app);
+    await writeCSV(gists_json, gists_list_filename);
+
+    const stars_list_filename = "starred_repos.csv";
+    console.log(`${JOB_NAME}: ${stars_list_filename}`);
+    const stars_json = await getStarredRepos(app);
+    await writeCSV(stars_json, stars_list_filename);
+
+    console.log(`${JOB_NAME}: CSV Output Completed!`);
+    console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+  } catch (e) {
+    console.log(e);
+  }
 })();
