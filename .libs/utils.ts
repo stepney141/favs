@@ -59,7 +59,7 @@ export const clickMouse = async (page: Page, x: number, y: number, time: number)
        console.log(elm1, elm2, elm3);
    }
  */
-export function* zip<T extends any>(...args: T[][]): Generator<T[]> {
+export function* zip<T extends any[]>(...args: T[]): Generator<T> {
   const length = args[0].length;
 
   // 引数チェック
@@ -71,7 +71,7 @@ export function* zip<T extends any>(...args: T[][]): Generator<T[]> {
 
   // イテレート
   for (let index = 0; index < length; index++) {
-    const elms: T[] = [];
+    const elms = [] as unknown as T;
     for (const arr of args) {
       elms.push(arr[index]);
     }
@@ -79,7 +79,7 @@ export function* zip<T extends any>(...args: T[][]): Generator<T[]> {
   }
 }
 
-export const getNodeProperty = async <T>(eh: ElementHandle, prop: string): Promise<T> => {
+export const getNodeProperty = async <T>(eh: ElementHandle<Node>, prop: string): Promise<T> => {
   const handle = (await eh.getProperty(prop)) as JSHandle<T>;
   const value = await handle.jsonValue();
 
