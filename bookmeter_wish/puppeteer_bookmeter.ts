@@ -1,4 +1,4 @@
-import { promises as fs } from "fs";
+import fs from "node:fs/promises";
 import path from "path";
 
 import axios from "axios";

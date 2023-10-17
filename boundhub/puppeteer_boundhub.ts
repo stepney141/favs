@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs/promises";
 import path from "path";
 
 import { config } from "dotenv";
@@ -134,7 +134,7 @@ async function output(arrayData) {
   const jsonData = JSON.stringify(arrayData, null, "  ");
 
   try {
-    fs.writeFile(
+    await fs.writeFile(
       `./${CSV_FILENAME}.csv`,
       papa.unparse(jsonData),
       // jsonData,
