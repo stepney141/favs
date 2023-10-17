@@ -8,11 +8,10 @@ import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import { USER_AGENT } from './../.libs/constants';
+import { USER_AGENT } from "./../.libs/constants";
 
 import type { AxiosInstance } from "axios";
-import type { Browser, ElementHandle} from "puppeteer";
-
+import type { Browser, ElementHandle } from "puppeteer";
 
 const stealthPlugin = StealthPlugin();
 /* https://github.com/berstend/puppeteer-extra/issues/668 */
