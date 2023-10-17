@@ -1,10 +1,11 @@
 import fs from "fs/promises";
 import path from "path";
 
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { config } from "dotenv";
 
 import { Err, Ok, unwrapResult } from "../.libs/lib";
+import { handleAxiosError } from "../.libs/utils";
 
 import { ACCOUNTS, JOB_NAME } from "./constants";
 
@@ -243,6 +244,10 @@ const extractWatchlist = async (baseURI: TargetUrls, cookies: string[]): Promise
 
     console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
   } catch (e) {
-    console.log(e);
+    if (isAxiosError(e)) {
+      handleAxiosError(e);
+    } else {
+      console.log(e);
+    }
   }
 })();

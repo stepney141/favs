@@ -1,23 +1,23 @@
-import { isAxiosError } from "axios";
-import type { ElementHandle } from "puppeteer";
+import { AxiosError, isAxiosError } from "axios";
+import type { ElementHandle, JSHandle } from "puppeteer";
 
-export const handleAxiosError = (error: unknown) => {
-  if (isAxiosError(error)) {
-    // ref: https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error);
-    }
+/**
+ * @link https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
+ */
+export const handleAxiosError = (error: AxiosError) => {
+  if (error.response) {
+    console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers);
+  } else if (error.request) {
+    console.log(error.request);
+  } else {
+    console.log("Error", error);
   }
 };
 
 /**
- * ref: https://qiita.com/albno273/items/c2d48fdcbf3a9a3434db
+ * @link https://qiita.com/albno273/items/c2d48fdcbf3a9a3434db
  * @example
  * await sleep(randomWait(1000, 0.5, 1.1));
  * // 1000ms x0.5 ~ x1.1 の間でランダムにアクセスの間隔を空ける
@@ -64,9 +64,13 @@ export function* zip<T extends any>(...args: T[][]): Generator<T[]> {
   }
 }
 
-export const getNodeProperty = async (eh: ElementHandle, prop: string): Promise<unknown> => {
-  const handle = await eh.getProperty(prop);
+export const getNodeProperty = async <T>(eh: ElementHandle, prop: string): Promise<T> => {
+  const handle = (await eh.getProperty(prop)) as JSHandle<T>;
   const value = await handle.jsonValue();
 
   return value;
 };
+
+export const writeFile = (filename: string) => {};
+
+export const readFile = (filename: string) => {};
