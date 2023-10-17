@@ -1,3 +1,4 @@
+import fs from "fs";
 import path from "path";
 
 import { config } from "dotenv";
@@ -6,13 +7,15 @@ import puppeteer from "puppeteer";
 
 import { zip } from "../.libs/utils";
 
-const PROCESS_DESCRIPTION = "Niconico Seiga MyClips";
+import type { Browser, ElementHandle, Page, Protocol } from "puppeteer";
+
+const JOB_NAME = "Niconico Seiga MyClips";
 const CSV_FILENAME = "nicoseiga_myclips";
 const LOGIN_URL = "https://account.nicovideo.jp/login?site=seiga&next_url=%2Fmy%2Fclip";
 const MYCLIP_URL = "https://seiga.nicovideo.jp/my/clip";
 const COOKIE_PATH = "./seiga_cookie.json";
 
-const xpath = {
+const XPATH = {
   useridInput: '//*[@id="input__mailtel"]',
   passwordInput: '//*[@id="input__password"]',
   loginButton: '//*[@id="login__submit"]',
@@ -27,17 +30,21 @@ config({ path: path.join(__dirname, "../.env") });
 const user_name = process.env.NICONICO_ACCOUNT!.toString();
 const password = process.env.NICONICO_PASSWORD!.toString();
 
-async function isNotLoggedInSeiga(page) {
-  const eh = await page.$x(xpath.eachIllustLinks);
+async function isNotLoggedInSeiga(page: Page) {
+  const eh = await page.$x(XPATH.eachIllustLinks);
   return eh.length == 0;
 }
 
+type Clip = { url: string; title: string; created_date: string; clipped_date: string };
+
 class Seiga {
+  fetchedData: Map<string, Clip>;
+
   constructor() {
     this.fetchedData = new Map();
   }
 
-  async login(browser) {
+  async login(browser: Browser) {
     try {
       const page = await browser.newPage();
 
@@ -54,7 +61,7 @@ class Seiga {
       });
 
       if (fs.existsSync(COOKIE_PATH)) {
-        const savedCookies = JSON.parse(fs.readFileSync(COOKIE_PATH, "utf-8"));
+        const savedCookies = JSON.parse(fs.readFileSync(COOKIE_PATH, "utf-8")) as Protocol.Network.CookieParam[];
         for (const cookie of savedCookies) {
           await page.setCookie(cookie);
         }
@@ -69,9 +76,9 @@ class Seiga {
           waitUntil: "load"
         });
 
-        const useridInput_Handle = page.$x(xpath.useridInput);
-        const passwordInput_Handle = page.$x(xpath.passwordInput);
-        const loginButton_Handle = page.$x(xpath.loginButton);
+        const useridInput_Handle = page.$x(XPATH.useridInput);
+        const passwordInput_Handle = page.$x(XPATH.passwordInput);
+        const loginButton_Handle = page.$x(XPATH.loginButton);
 
         await (await useridInput_Handle)[0].type(user_name);
         await (await passwordInput_Handle)[0].type(password);
@@ -81,14 +88,14 @@ class Seiga {
             timeout: 60000,
             waitUntil: "networkidle2"
           }),
-          (await loginButton_Handle)[0].click()
+          await (loginButton_Handle[0] as ElementHandle<Element>).click()
         ]);
       }
 
       const afterCookies = await page.cookies();
       fs.writeFileSync(COOKIE_PATH, JSON.stringify(afterCookies));
 
-      console.log(`${PROCESS_DESCRIPTION}: Login Completed!`);
+      console.log(`${JOB_NAME}: Login Completed!`);
     } catch (e) {
       console.log(e);
       await browser.close();
@@ -97,21 +104,21 @@ class Seiga {
     return true;
   }
 
-  async scraper(browser) {
+  async scraper(browser: Browser) {
     try {
-      const page = await (await browser.pages())[1];
+      const page = (await browser.pages())[1];
 
-      console.log(`${PROCESS_DESCRIPTION}: Scraping Started!`);
+      console.log(`${JOB_NAME}: Scraping Started!`);
 
       for (;;) {
-        const eachIllustLinks_eh = await page.$x(xpath.eachIllustLinks);
-        const createdDate_eh = await page.$x(xpath.eachIllustCreatedDates);
-        const clippedDate_eh = await page.$x(xpath.eachIllustClippedDates);
+        const eachIllustLinks_eh = await page.$x(XPATH.eachIllustLinks);
+        const createdDate_eh = await page.$x(XPATH.eachIllustCreatedDates);
+        const clippedDate_eh = await page.$x(XPATH.eachIllustClippedDates);
 
         for (const [illustLink_dom, created_date_dom, clipped_date_dom] of zip(
-          await eachIllustLinks_eh,
-          await createdDate_eh,
-          await clippedDate_eh
+          eachIllustLinks_eh,
+          createdDate_eh,
+          clippedDate_eh
         )) {
           const url = await (await illustLink_dom.getProperty("href")).jsonValue();
           const title = await (await illustLink_dom.getProperty("innerText")).jsonValue();
@@ -126,7 +133,7 @@ class Seiga {
           });
         }
 
-        const next_eh = await page.$x(xpath.toNextPageButtons);
+        const next_eh = await page.$x(XPATH.toNextPageButtons);
 
         if (
           // 「次へ」ボタンを押すことができなくなったら中断
@@ -139,12 +146,12 @@ class Seiga {
               timeout: 60000,
               waitUntil: "load"
             }),
-            (await next_eh)[0].click() // 「次へ」ボタンを押す
+            await (next_eh[0] as ElementHandle<Element>).click() // 「次へ」ボタンを押す
           ]);
         }
       }
 
-      console.log(`${PROCESS_DESCRIPTION}: Scraping Completed!`);
+      console.log(`${JOB_NAME}: Scraping Completed!`);
     } catch (e) {
       console.log(e);
       await browser.close();
@@ -154,7 +161,7 @@ class Seiga {
   }
 
   async output() {
-    const arrayData = [];
+    const arrayData: Clip[] = [];
     for (const obj of this.fetchedData.values()) {
       arrayData.push(obj);
     }
@@ -168,7 +175,7 @@ class Seiga {
       console.log("error: ", e.message);
       return false;
     }
-    console.log(`${PROCESS_DESCRIPTION}: CSV Output Completed!`);
+    console.log(`${JOB_NAME}: CSV Output Completed!`);
     return true;
   }
 }
