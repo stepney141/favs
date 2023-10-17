@@ -1,44 +1,35 @@
 import fs from "fs";
+import path from "path";
 
+import { config } from "dotenv";
 import papa from "papaparse";
 import puppeteer from "puppeteer";
-import "dotenv/config";
+
+import { clickMouse, randomWait, transposeArray } from "../.libs/utils";
+
+import type { Browser, ElementHandle } from "puppeteer";
 
 const baseURI = "https://www.boundhub.com";
-const process_description = "Boundhub Favorite Movies";
-const playlist_name = "playlist01";
-const csv_filename = "boundhub_faved_movies";
+const JOB_NAME = "Boundhub Favorite Movies";
+const PLAYLIST_NAME = "playlist01";
+const CSV_FILENAME = "boundhub_faved_movies";
 
-const xpath = {
+const XPATH = {
   useridInput: '//*[@id="login_username"]',
   passwordInput: '//*[@id="login_pass"]',
   loginButton: "/html/body/div[4]/div/div/div/div/div/form/div[2]/div[4]/input[3]",
 
-  linkToPlaylist: `//a[contains(text(), "${playlist_name}")]`,
+  linkToPlaylist: `//a[contains(text(), "${PLAYLIST_NAME}")]`,
 
   linkToNextPage: '//a[contains(text(), "Next") and @data-container-id="list_videos_my_favourite_videos_pagination"]',
   linkToAllMovies: '//*[@id="list_videos_my_favourite_videos_items"]/form/div[*]/a'
 };
 
-const user_name = process.env.BOUNDHUB_ACCOUNT.toString();
-const password = process.env.BOUNDHUB_PASSWORD.toString();
+config({ path: path.join(__dirname, "../.env") });
+const user_name = process.env.BOUNDHUB_ACCOUNT!.toString();
+const password = process.env.BOUNDHUB_PASSWORD!.toString();
 
-// ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
-const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
-
-const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
-
-const mouse_click = async (page, x, y, time) => {
-  try {
-    await Promise.all([page.mouse.move(x, y), page.waitForTimeout(time), page.mouse.click(x, y)]);
-    return true;
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
-};
-
-async function login(browser) {
+async function login(browser: Browser) {
   try {
     const page = await browser.newPage();
 
@@ -52,9 +43,9 @@ async function login(browser) {
       delete navigator.__proto__.webdriver;
     });
 
-    const useridInput_Handle = page.$x(xpath.useridInput);
-    const passwordInput_Handle = page.$x(xpath.passwordInput);
-    const loginButton_Handle = page.$x(xpath.loginButton);
+    const useridInput_Handle = page.$x(XPATH.useridInput);
+    const passwordInput_Handle = page.$x(XPATH.passwordInput);
+    const loginButton_Handle = page.$x(XPATH.loginButton);
 
     await (await useridInput_Handle)[0].type(user_name);
     await (await passwordInput_Handle)[0].type(password);
@@ -63,7 +54,7 @@ async function login(browser) {
         timeout: 60000,
         waitUntil: "networkidle2"
       }),
-      (await loginButton_Handle)[0].click()
+      ((await loginButton_Handle)[0] as ElementHandle<Element>).click()
     ]);
   } catch (e) {
     console.log(e);
@@ -73,11 +64,10 @@ async function login(browser) {
   return true;
 }
 
-async function scraper(browser) {
-  let movieData = [];
+async function scraper(browser: Browser) {
+  let movieData: string[][] = [];
   const movieUrlData = ["movie_url"];
   const movieTitleData = ["movie_title"];
-  const num = 1;
 
   try {
     const page = await browser.newPage();
@@ -92,31 +82,27 @@ async function scraper(browser) {
       delete navigator.__proto__.webdriver;
     });
 
-    const linkToPlaylist_Handle = page.$x(xpath.linkToPlaylist);
+    const linkToPlaylist_Handle = page.$x(XPATH.linkToPlaylist);
 
     await Promise.all([
-      mouse_click(page, 420, 465, 1000), //ドロップダウンメニューを開く
-      (await linkToPlaylist_Handle)[0].click(), //プレイリストを開く
+      clickMouse(page, 420, 465, 1000), //ドロップダウンメニューを開く
+      ((await linkToPlaylist_Handle)[0] as ElementHandle<Element>).click(), //プレイリストを開く
       page.waitForTimeout(2000)
     ]);
 
     for (;;) {
-      //infinite loop
-      // console.log('count', num);
-      // num++;
-
-      const linkToAllMovies_Handle = await page.$x(xpath.linkToAllMovies);
+      const linkToAllMovies_Handle = await page.$x(XPATH.linkToAllMovies);
       for (const data of linkToAllMovies_Handle) {
         movieUrlData.push(
-          await (await data.getProperty("href")).jsonValue() //動画の内部リンクを取得
+          (await (await data.getProperty("href")).jsonValue()) as string //動画の内部リンクを取得
         );
         movieTitleData.push(
-          await (await data.getProperty("title")).jsonValue() //動画のタイトルを取得
+          (await (await data.getProperty("title")).jsonValue()) as string //動画のタイトルを取得
         );
       }
 
-      const linkToNextPage_Handle = await page.$x(xpath.linkToNextPage); // XPathでページネーションのリンク情報を取得し、そのelementHandleに要素が存在するか否かでループの終了を判定
-      if ((await linkToNextPage_Handle.length) !== 0) {
+      const linkToNextPage_Handle = await page.$x(XPATH.linkToNextPage); // XPathでページネーションのリンク情報を取得し、そのelementHandleに要素が存在するか否かでループの終了を判定
+      if (linkToNextPage_Handle.length !== 0) {
         await Promise.all([
           page.waitForResponse((response) => {
             // console.log(response.url());
@@ -126,7 +112,7 @@ async function scraper(browser) {
             );
           }),
           page.waitForTimeout(randomWait(3000, 0.5, 1.1)), //1500ms ~ 3300msの間でランダムにアクセスの間隔を空ける
-          (await linkToNextPage_Handle)[0].click() //次のページに移る
+          (linkToNextPage_Handle[0] as ElementHandle<Element>).click() //次のページに移る
         ]);
       } else {
         break;
@@ -148,8 +134,8 @@ async function output(arrayData) {
   const jsonData = JSON.stringify(arrayData, null, "  ");
 
   try {
-    await fs.writeFile(
-      `./${csv_filename}.csv`,
+    fs.writeFile(
+      `./${CSV_FILENAME}.csv`,
       papa.unparse(jsonData),
       // jsonData,
       (e) => {
@@ -160,7 +146,7 @@ async function output(arrayData) {
     console.log("error: ", e.message);
     return false;
   }
-  console.log(process_description + ": CSV Output Completed!");
+  console.log(JOB_NAME + ": CSV Output Completed!");
   return true;
 }
 
