@@ -1,5 +1,5 @@
-import { AxiosError, isAxiosError } from "axios";
-import type { ElementHandle, JSHandle } from "puppeteer";
+import { AxiosError } from "axios";
+import type { ElementHandle, JSHandle, Page } from "puppeteer";
 
 /**
  * @link https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
@@ -31,6 +31,21 @@ export const sleep = async (time: number): Promise<void> =>
 
 export const randomWait = (baseWaitSeconds: number, min: number, max: number): number =>
   baseWaitSeconds * (Math.random() * (max - min) + min);
+
+/**
+ * @link https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
+ */
+export const transposeArray = <T>(a: T[][]): T[][] => a[0].map((_, c) => a.map((r) => r[c]));
+
+export const clickMouse = async (page: Page, x: number, y: number, time: number): Promise<boolean> => {
+  try {
+    await Promise.all([page.mouse.move(x, y), page.waitForTimeout(time), page.mouse.click(x, y)]);
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};
 
 /**
  * Iterates like Python-zip
