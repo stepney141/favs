@@ -1,166 +1,120 @@
 import fs from "fs";
+import path from "path";
 
+import { config } from "dotenv";
 import papa from "papaparse";
 import puppeteer from "puppeteer";
 
-import "dotenv/config";
-import { zip } from "../.libs/utils";
+import { getNodeProperty, zip } from "../.libs/utils";
 
-// vars for qiita
-const userid = "stepney141";
-let page_max;
-let page_num = 1;
+import type { Browser, ElementHandle } from "puppeteer";
 
 const JOB_NAME = "Qiita LGTM Articles";
+const CSV_FILENAME = "lgtm_article_url.csv";
 const BASE_URI = "https://qiita.com";
+const USER = "stepney141";
 const XPATH = {
-  max_pagenation_value: "//div/div[2]/div[2]/div[2]/div[2]/div/div/div/span",
-  article_url: '//div/div[2]/div[2]/div[2]/div[2]/div/article[*]/h2/a[contains(@href, "qiita.com")]',
-  lgtm_count_of_article: "//div/div[2]/div[2]/div[2]/div[2]/div/article[*]/footer/div/div[2]/span[2]",
-  author: "//div/div[2]/div[2]/div[2]/div[2]/div/article[*]/header/div/p",
-  created_at: "//div/div[2]/div[2]/div[2]/div[2]/div/article[*]/header/div/span/time" // 'dateTime'プロパティに時刻情報
+  max_pagenation_value: '//*[@id="items"]/div[2]/div[2]/div/div/div/span',
+  article_url: '//h2/a[contains(@href, "qiita.com")]',
+  lgtm_count_of_article: "//article/footer/div/div/span[2]",
+  author: "//article/header/div/p",
+  created_at: "//article/header/div/span/time" // 'dateTime'プロパティに時刻情報
 };
 
-/**
- * @type {Map<url, {title, lgtm, created_at, author}>}
- */
-const lgtmArticlesData = new Map();
-const lgtmArticlesData_Array = [];
+type LGTM = {
+  title: string;
+  lgtm: string;
+  created_at: string;
+  author: string;
+};
+type ListLGTM = Map<ElementHandle<Node>, LGTM>;
 
 // vars for twitter
-// const user_name = (process.env.TWITTER_ACCOUNT).toString();
-// const password = (process.env.TWITTER_PASSWORD).toString();
-const user_name = "";
-const password = "";
+config({ path: path.join(__dirname, "../.env") });
+const user_name = process.env.TWITTER_ACCOUNT!.toString();
+const password = process.env.TWITTER_PASSWORD!.toString();
 
-// ref: https://qiita.com/kznrluk/items/790f1b154d1b6d4de398
-const transposeArray = (a) => a[0].map((_, c) => a.map((r) => r[c]));
+const lgtmArticlesData: ListLGTM = new Map();
 
-async function getLgtm(browser) {
-  try {
-    const page = await browser.newPage();
+let page_max: number,
+  page_num = 1;
 
-    console.log(`${JOB_NAME}: Qiita Scraping Started!`);
+async function getLgtm(browser: Browser) {
+  const page = await browser.newPage();
 
-    do {
-      await page.goto(`${BASE_URI}/${userid}/likes?page=${page_num}`, {
-        waitUntil: ["domcontentloaded", "networkidle0"]
+  console.log(`${JOB_NAME}: Qiita Scraping Started!`);
+
+  do {
+    await page.goto(`${BASE_URI}/${USER}/likes?page=${page_num}`, {
+      waitUntil: ["domcontentloaded", "networkidle0"]
+    });
+
+    // get max cursor number
+    if (page_num == 1) {
+      // ref: https://swfz.hatenablog.com/entry/2020/07/23/010044
+      const paginationHandles = await page.$x(XPATH.max_pagenation_value);
+      const page_num_string: string = await getNodeProperty(paginationHandles[0], "innerHTML");
+      page_max = Number(page_num_string.substr(-2, 2));
+    }
+
+    const articleUrlHandles = await page.$x(XPATH.article_url); // get article urls
+    const articleLgtmHandles = await page.$x(XPATH.lgtm_count_of_article); // get article LGTM counts
+    const authorHandles = await page.$x(XPATH.author); // get author names
+    const createdAtHandles = await page.$x(XPATH.created_at); // get dates that the articles were created at
+
+    for (const [url, lgtm, created_at, author] of zip(
+      articleUrlHandles,
+      articleLgtmHandles,
+      createdAtHandles,
+      authorHandles
+    )) {
+      lgtmArticlesData.set(url, {
+        title: await getNodeProperty(url, "innerHTML"), //タイトル取得
+        url: await getNodeProperty(url, "href"), //記事URL取得
+        lgtm: Number(await getNodeProperty(lgtm, "innerText")), //記事LGTM数取得
+        created_at: await getNodeProperty(created_at, "dateTime"), //記事投稿日時取得
+        author: await getNodeProperty(author, "innerText") //記事投稿者取得
       });
+    }
 
-      // get max cursor number
-      if (page_num == 1) {
-        // ref: https://swfz.hatenablog.com/entry/2020/07/23/010044
-        const paginationHandles = await page.$x(XPATH.max_pagenation_value);
-        page_max = Number((await (await paginationHandles[0].getProperty("innerHTML")).jsonValue()).substr(-2, 2));
-      }
+    // console.log([...lgtmArticlesData.entries()]);
 
-      const articleUrlHandles = await page.$x(XPATH.article_url); // get article urls
-      const articleLgtmHandles = await page.$x(XPATH.lgtm_count_of_article); // get article LGTM counts
-      const authorHandles = await page.$x(XPATH.author); // get author names
-      const createdAtHandles = await page.$x(XPATH.created_at); // get dates that the articles were created at
+    page_num++;
+  } while (page_max >= page_num);
 
-      for (const [url, lgtm, created_at, author] of zip(
-        articleUrlHandles,
-        articleLgtmHandles,
-        createdAtHandles,
-        authorHandles
-      )) {
-        lgtmArticlesData.set(url, {
-          title: await (await url.getProperty("innerHTML")).jsonValue(), //タイトル取得
-          url: await (await url.getProperty("href")).jsonValue(), //記事URL取得
-          lgtm: Number(await (await lgtm.getProperty("innerText")).jsonValue()), //記事LGTM数取得
-          created_at: await (await created_at.getProperty("dateTime")).jsonValue(), //記事投稿日時取得
-          author: await (await author.getProperty("innerText")).jsonValue() //記事投稿者取得
-        });
-      }
-
-      // console.log([...lgtmArticlesData.entries()]);
-
-      page_num++;
-    } while (page_max >= page_num);
-  } catch (e) {
-    console.log(e);
-    await browser.close();
-    return false;
-  }
   console.log(`${JOB_NAME}: Qiita Scraping Completed!`);
-  return true;
-}
-
-// Log in to qiita before scraping in order to avoid annoying prompts that recommend creating a new account
-async function qiitaLogin(browser) {
-  try {
-    const page = await browser.newPage();
-
-    // Log in to qiita with twitter authorization
-    await page.goto("https://qiita.com/login", {
-      waitUntil: "networkidle2"
-    });
-    const qiitaLoginButtonHandle = await page.$x("/html/body/div[1]/div/div[1]/div/div[2]/div[1]/form[2]/button");
-    await qiitaLoginButtonHandle[0].click();
-    await page.waitForNavigation({
-      timeout: 60000,
-      waitUntil: "networkidle2"
-    });
-
-    // Authorize my twitter account connected to qiita
-    await page.type('input[name="session[username_or_email]"]', user_name);
-    await page.type('input[name="session[password]"]', password);
-    await page.click('input[type="submit"]');
-    await page.waitForNavigation({
-      timeout: 60000,
-      waitUntil: "networkidle2"
-    });
-  } catch (e) {
-    console.log(e);
-    await browser.close();
-    return false;
-  }
-  return true;
 }
 
 async function output(arrayData) {
-  try {
-    const jsonData = JSON.stringify(arrayData, null, "  ");
-
-    // await fs.writeFile(
-    //     "./lgtm_article_url.json",
-    //     jsonData,
-    //     (e) => {
-    //         if (e) console.log("error: ", e);
-    //     }
-    // );
-    // console.log("json output: completed!");
-
-    await fs.writeFile("./lgtm_article_url.csv", papa.unparse(jsonData), (e) => {
-      if (e) console.log("error: ", e);
-    });
-  } catch (e) {
-    console.log("error: ", e.message);
-    return false;
-  }
+  const jsonData = JSON.stringify(arrayData, null, "  ");
+  await fs.writeFile(`./${CSV_FILENAME}`, papa.unparse(jsonData), (e) => {
+    if (e) console.log("error: ", e);
+  });
   console.log(`${JOB_NAME}: CSV Output Completed!`);
-  return true;
 }
 
 (async () => {
-  const startTime = Date.now();
+  try {
+    const startTime = Date.now();
 
-  const browser = await puppeteer.launch({
-    defaultViewport: {
-      width: 600,
-      height: 700
-    },
-    headless: true
-    // headless: false,
-  });
+    const browser = await puppeteer.launch({
+      defaultViewport: {
+        width: 600,
+        height: 700
+      },
+      headless: true
+      // headless: false,
+    });
 
-  // await qiitaLogin(browser);
-  await getLgtm(browser);
+    // await qiitaLogin(browser);
+    await getLgtm(browser);
 
-  await output([...lgtmArticlesData.values()]);
+    await output([...lgtmArticlesData.values()]);
 
-  console.log("The processsing took " + Math.round((Date.now() - startTime) / 1000) + " seconds");
+    console.log("The processsing took " + Math.round((Date.now() - startTime) / 1000) + " seconds");
 
-  await browser.close();
+    await browser.close();
+  } catch (e) {
+    console.log(e);
+  }
 })();
