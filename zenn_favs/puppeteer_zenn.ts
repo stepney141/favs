@@ -1,12 +1,18 @@
 import { promises as fs } from "fs";
+import path from "path";
 
 import axios from "axios";
+import { config } from "dotenv";
 import papa from "papaparse";
 import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import "dotenv/config";
+import { USER_AGENT } from './../.libs/constants';
+
+import type { AxiosInstance } from "axios";
+import type { Browser, ElementHandle} from "puppeteer";
+
 
 const stealthPlugin = StealthPlugin();
 /* https://github.com/berstend/puppeteer-extra/issues/668 */
@@ -17,25 +23,16 @@ puppeteer.use(stealthPlugin); // use the stealth plugin
 const JOB_NAME = "Zenn.dev Favorite Articles";
 const baseURI = "https://zenn.dev";
 const XPATH = {
-  signInButton: '//*[@id="__next"]/div[1]/div[2]/div/div[2]/button',
+  signInButton: '//button[contains(text(), "Login with Google")]',
   accountNameInput: '//*[@id="session_email_address"]',
   passwordInput: '//*[@id="session_password"]',
   loginButton: '//*[@id="js_sessions_new_form"]/form/div[4]/button',
   nextPaginationButton: '//button[contains(text(), "もっと読み込む")]'
 };
 
-const zenn_email = process.env.ZENN_GOOGLE_ACCOUNT.toString();
-const zenn_password = process.env.ZENN_GOOGLE_PASSWORD.toString();
-
-// ref: https://qiita.com/albno273/items/c2d48fdcbf3a9a3434db
-// example: await sleep(randomWait(1000, 0.5, 1.1)); 1000ms x0.5 ~ x1.1 の間でランダムにアクセスの間隔を空ける
-const sleep = async (time) =>
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, time);
-  });
-const randomWait = (baseWaitSeconds, min, max) => baseWaitSeconds * (Math.random() * (max - min) + min);
+config({ path: path.join(__dirname, "../.env") });
+const zenn_email = process.env.ZENN_GOOGLE_ACCOUNT!.toString();
+const zenn_password = process.env.ZENN_GOOGLE_PASSWORD!.toString();
 
 // ref: https://cpoint-lab.co.jp/article/202007/15928/
 const createAxiosInstance = () => {
@@ -58,6 +55,11 @@ const createAxiosInstance = () => {
 };
 
 class Zennist {
+  page_num: number;
+  axios: AxiosInstance;
+  favedArticlesData: Map<number, object>;
+  favedArticlesData_Array: Array<object>;
+
   constructor() {
     this.page_num = 1;
     this.axios = createAxiosInstance();
@@ -65,23 +67,21 @@ class Zennist {
     this.favedArticlesData_Array = [];
   }
 
-  async login(browser) {
+  async login(browser: Browser) {
     try {
       const page = await browser.newPage();
 
       await page.setExtraHTTPHeaders({
         "accept-language": "ja-JP"
       });
-      await page.setUserAgent(
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
-      );
+      await page.setUserAgent(USER_AGENT);
 
       /* https://github.com/berstend/puppeteer-extra/issues/668 */
       await page.setBypassCSP(true);
 
       const pages = await browser.pages();
       // Close the new tab that chromium always opens first.
-      pages[0].close();
+      await pages[0].close();
 
       await page.goto(`${baseURI}/enter`, {
         waitUntil: "networkidle2"
@@ -94,7 +94,7 @@ class Zennist {
           timeout: 60000,
           waitUntil: "load"
         }),
-        (await signInButton_Handle)[0].click()
+        ((await signInButton_Handle)[0] as ElementHandle<Element>).click()
       ]);
 
       // input email
@@ -127,7 +127,7 @@ class Zennist {
     return true;
   }
 
-  async scraper(browser) {
+  async scraper(browser: Browser) {
     try {
       const page = await browser.newPage();
 
@@ -174,7 +174,7 @@ class Zennist {
           page.$x(XPATH.nextPaginationButton)
         ]);
         if (wait_eh !== null) {
-          await button_eh[0].click();
+          await (button_eh[0] as ElementHandle<Element>).click();
         } else {
           break;
         }
