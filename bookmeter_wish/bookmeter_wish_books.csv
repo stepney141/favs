@@ -1,9 +1,17 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/17654881,4320114450,入門情報幾何 = Introduction to Information Geometry : 統計的モデルをひもとく微分幾何学,"藤岡,敦",共立出版,202104,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC07070283,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4320114450&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
+https://bookmeter.com/books/21378385,4297136333,大規模言語モデル入門 = Introduction to Large Language Models,"山田,育矢 鈴木,正敏ソフトウェアエンジニア 山田,康輔 李,凌寒",技術評論社,202308,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03194521,
+https://bookmeter.com/books/1857338,4781911463,応用のための関数解析 : その考え方と技法,"吉田,善章,1958-",サイエンス社,200610,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA78762034,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4781911463&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
+https://bookmeter.com/books/18145693,4274227332,人工知能が俳句を詠む : AI一茶くんの挑戦,"川村,秀憲,1973- 山下,倫央 横山,想一郎",オーム社,202107,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC08482989,
+https://bookmeter.com/books/20331354,4274229629,仕事ですぐに使える!DaVinci Resolveによる動画編集,"小寺,信良,1963-",オーム社,202211,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC18312544,
+https://bookmeter.com/books/21408778,4764906635,ベイズ最適化 = Bayesian Optimization : 適応的実験計画の基礎と実践,"今村,秀明 松井,孝太",近代科学社,202308,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03544113,
+https://bookmeter.com/books/20583369,4274230104,Optunaによるブラックボックス最適化,"佐野,正太郎,ソフトウェアエンジニア 秋葉,拓哉 今村,秀明 太田,健 水野,尚人 ほか",オーム社,202302,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD00752431,
+https://bookmeter.com/books/19302392,4274227782,スモールデータ解析と機械学習,"藤原,幸一",オーム社,202202,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12822785,
 https://bookmeter.com/books/2983921,4480093583,情報理論,甘利俊一／著,筑摩書房,20110401,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB05323551,
 https://bookmeter.com/books/13841782,B00IEY7QJM,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,Not_found_with_NDL,No,,
 https://bookmeter.com/books/20625361,4478117764,大学図鑑! 2024,,ダイヤモンド社,202303,No,,
-https://bookmeter.com/books/21602843,4320114981,証明の読み方・考え方 : 数学的思考過程への手引き [原著第6版],DanielSolow／著 西村康一／翻訳 服部久美子／翻訳,共立出版,20231125,No,,
-https://bookmeter.com/books/21640129,4759823522,殺人は容易ではない（仮題）　 : アガサ・クリスティーの法科学,CarlaValentine／著,化学同人,20231204,No,,
+https://bookmeter.com/books/21602843,4320114981,証明の読み方・考え方〔原著第6版〕 : 数学的思考過程への手引き,DanielSolow／著 西村康一／翻訳 服部久美子／翻訳,共立出版,20231125,No,,
+https://bookmeter.com/books/21640129,4759823522,殺人は容易ではない : アガサ・クリスティーの法科学,CarlaValentine／著 久保美代子／翻訳,化学同人,20231204,No,,
 https://bookmeter.com/books/4959520,400006973X,データ解析のための統計モデリング入門 : 一般化線形モデル・階層ベイズモデル・MCMC,"久保,拓弥,1969- 甘利,俊一,1936- 麻生,英樹,1958- 伊庭,幸人,1959-",岩波書店,201205,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB09194745,
 https://bookmeter.com/books/21539867,4320115511,データ解析のための数理統計入門,久保川達也／著,共立出版,20231012,No,,
 https://bookmeter.com/books/18462191,4065245532,新しい電気回路 = A New Approach to Electrical Circuits 下,"松澤,昭",講談社,202109,No,,
