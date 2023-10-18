@@ -489,7 +489,7 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<void> => {
     });
 
     const book = new Bookmaker(browser);
-    const latestBookList = await (await book.login()).explore();
+    const latestBookList = await book.login().then((book) => book.explore());
     const prevBookList = await getPrevBookList(CSV_FILENAME);
 
     if (isBookListDifferent(latestBookList, prevBookList)) {

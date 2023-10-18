@@ -48,7 +48,7 @@ const getLoginToken = async (baseURI: TargetUrls): Promise<[string, string[]]> =
     .catch((e) => Err(e));
 
   const login_token = unwrapResult(response).data?.query.tokens.logintoken;
-  const cookies = unwrapResult(response).headers?.["set-cookie"]!;
+  const cookies = unwrapResult(response).headers["set-cookie"]!;
 
   return [login_token, cookies];
 };
@@ -82,7 +82,7 @@ const postClientLogin = async (
     .catch((e) => Err(e));
 
   const login_response_json = unwrapResult(response).data?.clientlogin;
-  const client_cookies: string[] = unwrapResult(response).headers?.["set-cookie"]!;
+  const client_cookies: string[] = unwrapResult(response).headers["set-cookie"]!;
 
   return [login_response_json, client_cookies];
 };

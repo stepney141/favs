@@ -1,7 +1,7 @@
 import type { BIBLIOINFO_SOURCES } from "./constants";
 
 export type Book = {
-  bookmeter_url?: string;
+  bookmeter_url: string;
   isbn_or_asin?: string;
   book_title?: string;
   author?: string;
