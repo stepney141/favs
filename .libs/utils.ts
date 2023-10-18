@@ -86,6 +86,14 @@ export const getNodeProperty = async <T>(eh: ElementHandle<Node>, prop: string):
   return value;
 };
 
+export const mapToArray = <K extends any, V extends any, M extends Map<K, V>>(map: M): V[] => {
+  const array: V[] = [];
+  for (const elem of map.values()) {
+    array.push(elem);
+  }
+  return array;
+};
+
 export const writeFile = (filename: string) => {};
 
 export const readFile = (filename: string) => {};
