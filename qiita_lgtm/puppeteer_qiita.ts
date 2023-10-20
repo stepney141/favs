@@ -22,6 +22,7 @@ const XPATH = {
 };
 
 type LGTM = {
+  url: string;
   title: string;
   lgtm: string;
   created_at: string;
@@ -34,13 +35,11 @@ config({ path: path.join(__dirname, "../.env") });
 const user_name = process.env.TWITTER_ACCOUNT!.toString();
 const password = process.env.TWITTER_PASSWORD!.toString();
 
-const lgtmArticlesData: ListLGTM = new Map();
-
-let page_max: number,
-  page_num = 1;
-
-async function getLgtm(browser: Browser) {
+async function getLgtm(browser: Browser): Promise<ListLGTM> {
   const page = await browser.newPage();
+  const lgtmList: ListLGTM = new Map();
+  let page_max = 0,
+    page_num = 1;
 
   console.log(`${JOB_NAME}: Qiita Scraping Started!`);
 
@@ -68,26 +67,25 @@ async function getLgtm(browser: Browser) {
       createdAtHandles,
       authorHandles
     )) {
-      lgtmArticlesData.set(url, {
+      lgtmList.set(url, {
         title: await getNodeProperty(url, "innerHTML"), //タイトル取得
         url: await getNodeProperty(url, "href"), //記事URL取得
-        lgtm: Number(await getNodeProperty(lgtm, "innerText")), //記事LGTM数取得
+        lgtm: await getNodeProperty(lgtm, "innerText"), //記事LGTM数取得
         created_at: await getNodeProperty(created_at, "dateTime"), //記事投稿日時取得
         author: await getNodeProperty(author, "innerText") //記事投稿者取得
       });
     }
 
-    // console.log([...lgtmArticlesData.entries()]);
-
     page_num++;
   } while (page_max >= page_num);
 
   console.log(`${JOB_NAME}: Qiita Scraping Completed!`);
+  return lgtmList;
 }
 
-async function output(arrayData) {
+function writeCSV(arrayData) {
   const jsonData = JSON.stringify(arrayData, null, "  ");
-  await fs.writeFile(`./${CSV_FILENAME}`, papa.unparse(jsonData), (e) => {
+  fs.writeFile(`./${CSV_FILENAME}`, papa.unparse(jsonData), (e) => {
     if (e) console.log("error: ", e);
   });
   console.log(`${JOB_NAME}: CSV Output Completed!`);
@@ -102,14 +100,11 @@ async function output(arrayData) {
         width: 600,
         height: 700
       },
-      headless: true
-      // headless: false,
+      headless: "new"
     });
 
-    // await qiitaLogin(browser);
-    await getLgtm(browser);
-
-    await output([...lgtmArticlesData.values()]);
+    const lgtm = await getLgtm(browser);
+    writeCSV([...lgtm.values()]);
 
     console.log("The processsing took " + Math.round((Date.now() - startTime) / 1000) + " seconds");
 
