@@ -5,7 +5,7 @@ import { config } from "dotenv";
 import papa from "papaparse";
 import puppeteer from "puppeteer";
 
-import { clickMouse, randomWait, transposeArray } from "../.libs/utils";
+import { getNodeProperty, randomWait, sleep } from "../.libs/utils";
 
 import type { Browser, ElementHandle } from "puppeteer";
 
@@ -20,27 +20,44 @@ const XPATH = {
   loginButton: "/html/body/div[4]/div/div/div/div/div/form/div[2]/div[4]/input[3]",
 
   linkToPlaylist: `//a[contains(text(), "${PLAYLIST_NAME}")]`,
-
-  linkToNextPage: '//a[contains(text(), "Next") and @data-container-id="list_videos_my_favourite_videos_pagination"]',
+  playListHeader: '//h2[contains(text(), "My Playlist")]',
+  linkToNextPage: '//li[@class="next"]/a',
   linkToAllMovies: '//*[@id="list_videos_my_favourite_videos_items"]/form/div[*]/a'
+};
+const SELECTOR = {
+  dropdownToPlaylist: "#list_videos_my_favourite_videos > div.headline > div > span",
+  linkToNextPage: "#list_videos_my_favourite_videos_pagination > div > ul > li.next > a"
 };
 
 config({ path: path.join(__dirname, "../.env") });
 const user_name = process.env.BOUNDHUB_ACCOUNT!.toString();
 const password = process.env.BOUNDHUB_PASSWORD!.toString();
 
-async function login(browser: Browser) {
-  try {
-    const page = await browser.newPage();
+type Movie = {
+  title: string;
+  url: string;
+};
+type MovieList = Movie[];
 
-    await page.goto(`${baseURI}/?login`, {
-      waitUntil: "load"
-    });
+class BoundHub {
+  #browser: Browser;
+  #movielist: MovieList;
 
+  constructor(browser: Browser) {
+    this.#browser = browser;
+    this.#movielist = [];
+  }
+
+  async login() {
+    const page = await this.#browser.newPage();
     await page.evaluateOnNewDocument(() => {
       //webdriver.navigatorを消して自動操縦であることを隠す
       Object.defineProperty(navigator, "webdriver", () => {});
       delete navigator.__proto__.webdriver;
+    });
+
+    await page.goto(`${baseURI}/?login`, {
+      waitUntil: "load"
     });
 
     const useridInput_Handle = page.$x(XPATH.useridInput);
@@ -56,53 +73,45 @@ async function login(browser: Browser) {
       }),
       ((await loginButton_Handle)[0] as ElementHandle<Element>).click()
     ]);
-  } catch (e) {
-    console.log(e);
-    await browser.close();
-    return false;
+
+    console.log(`${JOB_NAME}: Logged in!`);
+    return this;
   }
-  return true;
-}
 
-async function scraper(browser: Browser) {
-  let movieData: string[][] = [];
-  const movieUrlData = ["movie_url"];
-  const movieTitleData = ["movie_title"];
-
-  try {
-    const page = await browser.newPage();
-
-    await page.goto(`${baseURI}/my/favourites/videos/`, {
-      waitUntil: "load"
-    });
-
+  async explore() {
+    const page = await this.#browser.newPage();
     await page.evaluateOnNewDocument(() => {
       //webdriver.navigatorを消して自動操縦であることを隠す
       Object.defineProperty(navigator, "webdriver", () => {});
       delete navigator.__proto__.webdriver;
     });
 
-    const linkToPlaylist_Handle = page.$x(XPATH.linkToPlaylist);
+    await page.goto(`${baseURI}/my/favourites/videos/`, {
+      waitUntil: "networkidle2"
+    });
 
+    await page.hover(SELECTOR.dropdownToPlaylist); //マウスホバーしないとプレイリストが表示されない
+    const linkToPlaylist_Handle = (await page.$x(XPATH.linkToPlaylist)) as ElementHandle<Element>[];
     await Promise.all([
-      clickMouse(page, 420, 465, 1000), //ドロップダウンメニューを開く
-      ((await linkToPlaylist_Handle)[0] as ElementHandle<Element>).click(), //プレイリストを開く
-      page.waitForTimeout(2000)
+      page.waitForXPath(XPATH.playListHeader), // 画面の再描画を待ち受けつつ...
+      linkToPlaylist_Handle[0].click() // ...プレイリストを開く
     ]);
+    console.log(`${JOB_NAME}: Started to read Playlist "${PLAYLIST_NAME}"`);
 
     for (;;) {
       const linkToAllMovies_Handle = await page.$x(XPATH.linkToAllMovies);
       for (const data of linkToAllMovies_Handle) {
-        movieUrlData.push(
-          (await (await data.getProperty("href")).jsonValue()) as string //動画の内部リンクを取得
-        );
-        movieTitleData.push(
-          (await (await data.getProperty("title")).jsonValue()) as string //動画のタイトルを取得
-        );
+        this.#movielist.push({
+          title: await getNodeProperty(data, "title"),
+          url: await getNodeProperty(data, "href")
+        });
       }
 
-      const linkToNextPage_Handle = await page.$x(XPATH.linkToNextPage); // XPathでページネーションのリンク情報を取得し、そのelementHandleに要素が存在するか否かでループの終了を判定
-      if (linkToNextPage_Handle.length !== 0) {
+      // 次ページをダイレクトで取得するリンクは、DOM上は存在するが画面には表示されない。
+      // XPathでは表示されていない要素を操作できないが、CSSセレクタでは可能なので、教義を破ってXPathを使っていない。
+      // ref: https://stackoverflow.com/questions/55906985/how-can-i-click-displaynone-element-with-puppeteer
+      const linkToNextPage_Handle = await page.$(SELECTOR.linkToNextPage);
+      if (linkToNextPage_Handle !== null) {
         await Promise.all([
           page.waitForResponse((response) => {
             // console.log(response.url());
@@ -111,61 +120,47 @@ async function scraper(browser: Browser) {
               response.status() === 200
             );
           }),
-          page.waitForTimeout(randomWait(3000, 0.5, 1.1)), //1500ms ~ 3300msの間でランダムにアクセスの間隔を空ける
-          (linkToNextPage_Handle[0] as ElementHandle<Element>).click() //次のページに移る
+          sleep(randomWait(3000, 0.5, 1.1)), //1500ms ~ 3300msの間でランダムにアクセスの間隔を空ける
+          page.$eval(SELECTOR.linkToNextPage, (el) => el.click()) //次のページに移る
         ]);
       } else {
         break;
       }
     }
 
-    movieData.push(movieTitleData, movieUrlData);
-    movieData = transposeArray(movieData);
-  } catch (e) {
-    console.log(e);
-    await browser.close();
-    return false;
+    console.log(`${JOB_NAME}: Finished to read!`);
+    return this.#movielist;
   }
-
-  return movieData;
 }
 
-async function output(arrayData) {
-  const jsonData = JSON.stringify(arrayData, null, "  ");
-
-  try {
-    await fs.writeFile(
-      `./${CSV_FILENAME}.csv`,
-      papa.unparse(jsonData),
-      // jsonData,
-      (e) => {
-        if (e) console.log("error: ", e);
-      }
-    );
-  } catch (e) {
-    console.log("error: ", e.message);
-    return false;
-  }
+async function writeCSV(array: MovieList) {
+  const jsonData = JSON.stringify(array, null, "  ");
+  await fs.writeFile(`./${CSV_FILENAME}.csv`, papa.unparse(jsonData), (e) => {
+    if (e) console.log("error: ", e);
+  });
   console.log(JOB_NAME + ": CSV Output Completed!");
-  return true;
 }
 
 (async () => {
-  const startTime = Date.now();
+  try {
+    const startTime = Date.now();
 
-  const browser = await puppeteer.launch({
-    defaultViewport: { width: 500, height: 1000 },
-    headless: true
-    // headless: false
-    // devtools: true,
-    // slowMo: 20
-  });
+    const browser = await puppeteer.launch({
+      defaultViewport: { width: 1000, height: 1000 },
+      headless: "new",
+      // devtools: true,
+      slowMo: 20
+    });
 
-  await login(browser);
-  const movie_data = await scraper(browser);
-  await output(movie_data);
+    const bd = new BoundHub(browser);
+    const movielist = await bd.login().then((bd) => bd.explore());
 
-  console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+    await writeCSV(movielist);
 
-  await browser.close();
+    console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+
+    await browser.close();
+  } catch (e) {
+    console.log(e);
+  }
 })();
