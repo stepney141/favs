@@ -6,6 +6,7 @@ import papa from "papaparse";
 import puppeteer from "puppeteer";
 
 import { USER_AGENT } from "../.libs/constants";
+import { sleep, mapToArray } from "../.libs/utils";
 
 import type { Browser, ElementHandle } from "puppeteer";
 
@@ -30,6 +31,7 @@ type Note = {
   publish_at: string;
   like_count: number;
 };
+type NoteList = Map<string, Note>;
 type NoteApiEntry = {
   key: string;
   name: string;
@@ -45,25 +47,24 @@ type NoteApiResponse = {
   notes: NoteApiEntry[];
 };
 
-class notebook {
-  page_num: number;
-  favedArticlesData: Map<string, Note>;
-  favedArticlesData_Array: Note[];
+class Notebook {
+  #browser: Browser;
+  #page_num: number;
+  #notelist: Map<string, Note>;
 
-  constructor() {
-    this.page_num = 1;
-    this.favedArticlesData = new Map();
-    this.favedArticlesData_Array = [];
+  constructor(browser: Browser) {
+    this.#browser = browser;
+    this.#page_num = 1;
+    this.#notelist = new Map();
   }
 
-  async login(browser: Browser) {
-    const page = await browser.newPage();
+  async login() {
+    const page = await this.#browser.newPage();
 
     await page.setExtraHTTPHeaders({
       "accept-language": "ja-JP"
     });
     await page.setUserAgent(USER_AGENT);
-
     await page.goto(`${baseURI}/login`, {
       waitUntil: "load"
     });
@@ -90,16 +91,16 @@ class notebook {
     ]);
 
     console.log(`${JOB_NAME}: Login Completed!`);
+    return this;
   }
 
-  async scraper(browser: Browser) {
-    const page = await browser.newPage();
+  async explore() {
+    const page = await this.#browser.newPage();
 
     await page.setExtraHTTPHeaders({
       "accept-language": "ja-JP"
     });
     await page.setUserAgent(USER_AGENT);
-
     await page.evaluateOnNewDocument(() => {
       //webdriver.navigatorを消して自動操縦であることを隠す
       Object.defineProperty(navigator, "webdriver", () => {});
@@ -109,7 +110,6 @@ class notebook {
     console.log(`${JOB_NAME}: Scraping Started!`);
 
     //イベントハンドラを登録
-    // ref:
     let isLastPage: boolean = false;
     page.on("response", (response) => {
       (async () => {
@@ -126,7 +126,7 @@ class notebook {
             const publish_at = data["publish_at"]; //公開時刻
             const like_count = data["like_count"]; //スキされた数
 
-            this.favedArticlesData.set(key, {
+            this.#notelist.set(key, {
               //記事ID的な何かをキーにする
               note_title: note_title,
               note_url: note_url,
@@ -154,19 +154,21 @@ class notebook {
         });
       }
 
-      await page.waitForTimeout(3000);
+      await sleep(3000);
     }
 
     console.log(`${JOB_NAME}: Scraping Completed!`);
+    return this.#notelist;
   }
+}
 
-  async output(arrayData) {
-    const jsonData = JSON.stringify(arrayData, null, "  ");
-    await fs.writeFile(`./${CSV_FILENAME}.csv`, papa.unparse(jsonData), (e) => {
-      if (e) console.log("error: ", e);
-    });
-    console.log(`${JOB_NAME}: CSV Output Completed!`);
-  }
+function writeCSV(notelist: NoteList) {
+  const array = mapToArray(notelist);
+  const json = JSON.stringify(array, null, "  ");
+  fs.writeFile(`./${CSV_FILENAME}.csv`, papa.unparse(json), (e) => {
+    if (e) console.log("error: ", e);
+  });
+  console.log(`${JOB_NAME}: CSV Output Completed!`);
 }
 
 (async () => {
@@ -180,17 +182,10 @@ class notebook {
       slowMo: 80
     });
 
-    const note = new notebook();
+    const note = new Notebook(browser);
+    const notelist = await note.login().then((n) => n.explore());
 
-    await note.login(browser);
-    await note.scraper(browser);
-
-    for (const obj of note.favedArticlesData.values()) {
-      //Mapの値だけ抜き出してArrayにする
-      note.favedArticlesData_Array.push(obj);
-    }
-
-    await note.output(note.favedArticlesData_Array); //ファイル出力
+    writeCSV(notelist);
 
     console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 
