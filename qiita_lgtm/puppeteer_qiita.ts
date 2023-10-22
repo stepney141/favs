@@ -1,7 +1,5 @@
 import fs from "fs";
-import path from "path";
 
-import { config } from "dotenv";
 import papa from "papaparse";
 import puppeteer from "puppeteer";
 
@@ -29,11 +27,6 @@ type LGTM = {
   author: string;
 };
 type ListLGTM = Map<ElementHandle<Node>, LGTM>;
-
-// vars for twitter
-config({ path: path.join(__dirname, "../.env") });
-const user_name = process.env.TWITTER_ACCOUNT!.toString();
-const password = process.env.TWITTER_PASSWORD!.toString();
 
 async function getLgtm(browser: Browser): Promise<ListLGTM> {
   const page = await browser.newPage();
