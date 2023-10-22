@@ -75,29 +75,29 @@ jobs:
       - name: GitHub Stars
         shell: bash
         working-directory: ./github_stars
-        run: node ./index.js
+        run: npx tsx ./index.ts
 
       - name: Qiita LGTM
         shell: bash
         working-directory: ./qiita_lgtm
-        run: node ./puppeteer_qiita.js
+        run: npx tsx ./puppeteer_qiita.ts
 
       - name: Bookmeter Wished Books
         shell: bash
         working-directory: ./bookmeter_wish
-        run: node ./puppeteer_bookmeter.js && bash ./is_in_sophia.sh
+        run: npx tsx ./puppeteer_bookmeter.ts && bash ./is_in_sophia.sh
 
       - name: BoundHub Faved Movies
         shell: bash
         working-directory: ./boundhub
-        run: node ./puppeteer_boundhub.js && bash ./get_url_list.sh
+        run: npx tsx ./puppeteer_boundhub.ts && bash ./get_url_list.sh
 
       - name: note Faved Articles
         shell: bash
         env:
           LANG: "ja_JP.UTF-8"
         working-directory: ./note_favs
-        run: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' node ./puppeteer_note.js
+        run: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' npx tsx ./puppeteer_note.ts
 
       # - name: Zenn Faved Articles
       #   shell: bash
@@ -109,12 +109,12 @@ jobs:
       - name: Wikipedia Watchlist
         shell: bash
         working-directory: ./wikipedia_watchlist
-        run: node ./watchlist_extractor.js
+        run: npx tsx ./index.ts
 
       - name: Niconico Seiga MyClips
         shell: bash
         working-directory: ./nicoseiga
-        run: node ./puppeteer_nicoseiga.js && bash ./get_url_list.sh
+        run: npx tsx ./puppeteer_nicoseiga.ts && bash ./get_url_list.sh
 
       - name: Set the current datetime
         env:
@@ -125,4 +125,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "auto-updated: ${{ env.CURRENT_DATETIME }}"
-          branch: master
+          # branch: master

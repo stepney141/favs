@@ -14,4 +14,4 @@
 
 # ========== #
 
-cat ./boundhub_faved_movies.csv | q -d , -H 'SELECT movie_url FROM -' > boundhub_url_list.txt
+cat ./boundhub_faved_movies.csv | q -d , -H 'SELECT url FROM -' > boundhub_url_list.txt
