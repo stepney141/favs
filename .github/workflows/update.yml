@@ -12,8 +12,9 @@ env:
   LANG: "ja_JP.UTF-8"
 
 jobs:
-  Setup:
+  Updater:
     runs-on: ubuntu-latest
+
     env:
       BOOKMETER_ACCOUNT: ${{ secrets.BOOKMETER_ACCOUNT }}
       BOOKMETER_PASSWORD: ${{ secrets.BOOKMETER_PASSWORD }}
@@ -71,87 +72,50 @@ jobs:
           echo "NICONICO_ACCOUNT=${{ secrets.NICONICO_ACCOUNT }}" >> .env
           echo "NICONICO_PASSWORD=${{ secrets.NICONICO_PASSWORD }}" >> .env
 
-  GitHub_stars:
-    runs-on: ubuntu-latest
-    needs: Setup
-    steps:
       - name: GitHub Stars
         shell: bash
         working-directory: ./github_stars
         run: npx tsx ./index.ts
 
-  Qiita_LGTM:
-    runs-on: ubuntu-latest
-    needs: Setup
-    steps:
       - name: Qiita LGTM
         shell: bash
         working-directory: ./qiita_lgtm
         run: npx tsx ./puppeteer_qiita.ts
 
-  Bookmeter_wish:
-    runs-on: ubuntu-latest
-    needs: Setup
-    steps:
-      - name: Bookmeter Wished Books
+      - name: Bookmeter Wish
         shell: bash
         working-directory: ./bookmeter_wish
         run: npx tsx ./puppeteer_bookmeter.ts && bash ./is_in_sophia.sh
 
-  Boundhub:
-    runs-on: ubuntu-latest
-    needs: Setup
-    steps:
       - name: BoundHub Faved Movies
         shell: bash
         working-directory: ./boundhub
         run: npx tsx ./puppeteer_boundhub.ts && bash ./get_url_list.sh
 
-  Note_favs:
-    runs-on: ubuntu-latest
-    needs: Setup
-    steps:
       - name: note Faved Articles
         shell: bash
         env:
           LANG: "ja_JP.UTF-8"
         working-directory: ./note_favs
         run: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' npx tsx ./puppeteer_note.ts
-        #  headless: falseで動かすための生活の知恵
-        #  https://github.com/peterdanis/electron-puppeteer-demo/issues/171
 
-  # Zenn_favs:
-  #   runs-on: ubuntu-latest
-  #   needs: Setup
-  #   steps:
-  #     - name: Zenn Faved Articles
-  #       shell: bash
-  #       working-directory: ./zenn_favs
-  #       run: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' node ./puppeteer_zenn.js
+      # - name: Zenn Faved Articles
+      #   shell: bash
+      #   working-directory: ./zenn_favs
+      #   run: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' node ./puppeteer_zenn.js
+      #   headless: falseで動かすための生活の知恵
+      #   https://github.com/peterdanis/electron-puppeteer-demo/issues/171
 
-  Wikipedia_watchlist:
-    runs-on: ubuntu-latest
-    needs: Setup
-    steps:
       - name: Wikipedia Watchlist
         shell: bash
         working-directory: ./wikipedia_watchlist
         run: npx tsx ./index.ts
 
-  Nicoseiga:
-    runs-on: ubuntu-latest
-    needs: Setup
-    steps:
       - name: Niconico Seiga MyClips
         shell: bash
         working-directory: ./nicoseiga
         run: npx tsx ./puppeteer_nicoseiga.ts && bash ./get_url_list.sh
 
-  Commit:
-    runs-on: ubuntu-latest
-    needs: [GitHub_stars, Qiita_LGTM, Bookmeter_wish, Boundhub, Note_favs, Wikipedia_watchlist, Nicoseiga]
-    if: ${{ always() }}
-    steps:
       - name: Set the current datetime
         env:
           TZ: "Asia/Tokyo"
