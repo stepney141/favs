@@ -2,8 +2,8 @@ import fs from "node:fs/promises";
 import path from "path";
 
 import { config } from "dotenv";
-import papa from "papaparse";
-import puppeteer from "puppeteer";
+import { unparse } from "papaparse";
+import { launch } from "puppeteer";
 
 import { USER_AGENT } from "../.libs/constants";
 import { sleep, mapToArray } from "../.libs/utils";
@@ -69,12 +69,6 @@ class Notebook {
       waitUntil: "load"
     });
 
-    await page.evaluateOnNewDocument(() => {
-      //webdriver.navigatorを消して自動操縦であることを隠す
-      Object.defineProperty(navigator, "webdriver", () => {});
-      delete navigator.__proto__.webdriver;
-    });
-
     const useridInput_Handle = page.$x(XPATH.useridInput);
     const passwordInput_Handle = page.$x(XPATH.passwordInput);
     const loginButton_Handle = page.$x(XPATH.loginButton);
@@ -101,11 +95,6 @@ class Notebook {
       "accept-language": "ja-JP"
     });
     await page.setUserAgent(USER_AGENT);
-    await page.evaluateOnNewDocument(() => {
-      //webdriver.navigatorを消して自動操縦であることを隠す
-      Object.defineProperty(navigator, "webdriver", () => {});
-      delete navigator.__proto__.webdriver;
-    });
 
     console.log(`${JOB_NAME}: Scraping Started!`);
 
@@ -114,11 +103,12 @@ class Notebook {
     page.on("response", (response) => {
       (async () => {
         if (response.url().includes("https://note.com/api/v1/notes/liked") === true && response.status() === 200) {
-          const payload = (await response.json())["data"] as NoteApiResponse;
+          const internal_api_response = (await response.json()) as { data: NoteApiResponse };
+          const payload = internal_api_response["data"];
+          const articles = payload["notes"];
           isLastPage = payload["last_page"];
-          const notes_array = payload["notes"];
 
-          for (const data of notes_array) {
+          for (const data of articles) {
             const key = data["key"]; //記事IDみたいなもの？(URLの固有記事名部分)
             const note_title = data["name"]; //記事名
             const note_url = data["note_url"]; //記事URL
@@ -162,12 +152,10 @@ class Notebook {
   }
 }
 
-function writeCSV(notelist: NoteList) {
+async function writeCSV(notelist: NoteList) {
   const array = mapToArray(notelist);
   const json = JSON.stringify(array, null, "  ");
-  fs.writeFile(`./${CSV_FILENAME}.csv`, papa.unparse(json), (e) => {
-    if (e) console.log("error: ", e);
-  });
+  await fs.writeFile(`./${CSV_FILENAME}.csv`, unparse(json));
   console.log(`${JOB_NAME}: CSV Output Completed!`);
 }
 
@@ -175,7 +163,7 @@ function writeCSV(notelist: NoteList) {
   try {
     const startTime = Date.now();
 
-    const browser = await puppeteer.launch({
+    const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: false,
       // devtools: true,
@@ -185,7 +173,7 @@ function writeCSV(notelist: NoteList) {
     const note = new Notebook(browser);
     const notelist = await note.login().then((n) => n.explore());
 
-    writeCSV(notelist);
+    await writeCSV(notelist);
 
     console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 

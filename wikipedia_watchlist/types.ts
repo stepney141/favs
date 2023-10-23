@@ -23,8 +23,21 @@ export type ClientLoginResponse = {
   };
 };
 
-export type Pagination = `${number}|${string}` | undefined;
+export type TextExtractsResponse<ID extends number = number> = {
+  batchcomplete: string;
+  query: {
+    pages: {
+      [key in `${ID}`]: {
+        pageid: ID;
+        ns: number;
+        title: string;
+        extract: string;
+      };
+    };
+  };
+};
 
+export type Pagination = `${number}|${string}` | undefined;
 export type WatchlistrawResponse = {
   batchcomplete: string;
   limits: {

@@ -6,7 +6,7 @@ import { config } from "dotenv";
 import { XMLParser } from "fast-xml-parser";
 import { parse, unparse } from "papaparse";
 import { PdfData } from "pdfdataextract";
-import puppeteer from "puppeteer";
+import { launch } from "puppeteer";
 
 import { getNodeProperty, handleAxiosError, mapToArray, randomWait, sleep } from "../.libs/utils";
 
@@ -277,8 +277,8 @@ const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> 
 
   //正常系(与えるべきISBNがある)
   if (isbn !== "null") {
-    const response: AxiosResponse = await axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn}`); //xml形式でレスポンスが返ってくる
-    const json_resp: NdlResponseJson = fxp.parse(response.data); //xmlをjsonに変換
+    const response: AxiosResponse<string> = await axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn}`); //xml形式でレスポンスが返ってくる
+    const json_resp = fxp.parse(response.data) as NdlResponseJson; //xmlをjsonに変換
     const fetched_data = json_resp.rss.channel;
 
     //正常系(該当書籍発見)
@@ -472,7 +472,7 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<void> => {
 
     booklist.set(updatedBook.book.bookmeter_url, updatedBook.book);
 
-    await sleep(randomWait(2000, 0.8, 1.1));
+    await sleep(randomWait(1000, 0.8, 1.1));
   }
 
   console.log(`${JOB_NAME}: Searching Completed`);
@@ -482,7 +482,7 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<void> => {
   try {
     const startTime = Date.now();
 
-    const browser = await puppeteer.launch({
+    const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: "new",
       slowMo: 30

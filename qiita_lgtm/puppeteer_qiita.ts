@@ -1,7 +1,7 @@
 import fs from "fs";
 
-import papa from "papaparse";
-import puppeteer from "puppeteer";
+import { unparse } from "papaparse";
+import { launch } from "puppeteer";
 
 import { getNodeProperty, zip } from "../.libs/utils";
 
@@ -78,9 +78,7 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
 
 function writeCSV(arrayData) {
   const jsonData = JSON.stringify(arrayData, null, "  ");
-  fs.writeFile(`./${CSV_FILENAME}`, papa.unparse(jsonData), (e) => {
-    if (e) console.log("error: ", e);
-  });
+  fs.writeFileSync(`./${CSV_FILENAME}`, unparse(jsonData));
   console.log(`${JOB_NAME}: CSV Output Completed!`);
 }
 
@@ -88,7 +86,7 @@ function writeCSV(arrayData) {
   try {
     const startTime = Date.now();
 
-    const browser = await puppeteer.launch({
+    const browser = await launch({
       defaultViewport: {
         width: 600,
         height: 700

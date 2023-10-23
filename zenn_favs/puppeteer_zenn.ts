@@ -2,7 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 
 import { config } from "dotenv";
-import papa from "papaparse";
+import { unparse } from "papaparse";
 import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
@@ -184,11 +184,9 @@ class Zennist {
   }
 }
 
-async function writeCSV(arrayData) {
-  const jsonData = JSON.stringify(arrayData, null, "  ");
-  await fs.writeFile(`./${CSV_FILENAME}`, papa.unparse(jsonData), (e) => {
-    if (e) console.log("error: ", e);
-  });
+async function writeCSV<T>(array: T[]) {
+  const jsonData = JSON.stringify(array, null, "  ");
+  await fs.writeFile(`./${CSV_FILENAME}`, unparse(jsonData));
   console.log(`${JOB_NAME}: CSV Output Completed!`);
 }
 

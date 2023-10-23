@@ -2,8 +2,8 @@ import fs from "node:fs/promises";
 import path from "path";
 
 import { config } from "dotenv";
-import papa from "papaparse";
-import puppeteer from "puppeteer";
+import { unparse } from "papaparse";
+import { launch } from "puppeteer";
 
 import { getNodeProperty, randomWait, sleep } from "../.libs/utils";
 
@@ -50,12 +50,6 @@ class BoundHub {
 
   async login() {
     const page = await this.#browser.newPage();
-    await page.evaluateOnNewDocument(() => {
-      //webdriver.navigatorを消して自動操縦であることを隠す
-      Object.defineProperty(navigator, "webdriver", () => {});
-      delete navigator.__proto__.webdriver;
-    });
-
     await page.goto(`${baseURI}/?login`, {
       waitUntil: "load"
     });
@@ -80,12 +74,6 @@ class BoundHub {
 
   async explore() {
     const page = await this.#browser.newPage();
-    await page.evaluateOnNewDocument(() => {
-      //webdriver.navigatorを消して自動操縦であることを隠す
-      Object.defineProperty(navigator, "webdriver", () => {});
-      delete navigator.__proto__.webdriver;
-    });
-
     await page.goto(`${baseURI}/my/favourites/videos/`, {
       waitUntil: "networkidle2"
     });
@@ -121,7 +109,7 @@ class BoundHub {
             );
           }),
           sleep(randomWait(3000, 0.5, 1.1)), //1500ms ~ 3300msの間でランダムにアクセスの間隔を空ける
-          page.$eval(SELECTOR.linkToNextPage, (el) => el.click()) //次のページに移る
+          page.$eval(SELECTOR.linkToNextPage, (el) => (el as HTMLElement).click()) //次のページに移る
         ]);
       } else {
         break;
@@ -135,9 +123,7 @@ class BoundHub {
 
 async function writeCSV(array: MovieList) {
   const jsonData = JSON.stringify(array, null, "  ");
-  await fs.writeFile(`./${CSV_FILENAME}.csv`, papa.unparse(jsonData), (e) => {
-    if (e) console.log("error: ", e);
-  });
+  await fs.writeFile(`./${CSV_FILENAME}.csv`, unparse(jsonData));
   console.log(JOB_NAME + ": CSV Output Completed!");
 }
 
@@ -145,7 +131,7 @@ async function writeCSV(array: MovieList) {
   try {
     const startTime = Date.now();
 
-    const browser = await puppeteer.launch({
+    const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: "new",
       // devtools: true,

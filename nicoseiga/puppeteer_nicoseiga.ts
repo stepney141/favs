@@ -2,8 +2,8 @@ import fs from "node:fs";
 import path from "path";
 
 import { config } from "dotenv";
-import papa from "papaparse";
-import puppeteer from "puppeteer";
+import { unparse } from "papaparse";
+import { launch } from "puppeteer";
 
 import { USER_AGENT } from "../.libs/constants";
 import { getNodeProperty, mapToArray, zip } from "../.libs/utils";
@@ -55,11 +55,6 @@ class Seiga {
       "accept-language": "ja-JP"
     });
     await page.setUserAgent(USER_AGENT);
-    await page.evaluateOnNewDocument(() => {
-      //webdriver.navigatorを消して自動操縦であることを隠す
-      Object.defineProperty(navigator, "webdriver", () => {});
-      delete navigator.__proto__.webdriver;
-    });
 
     if (fs.existsSync(COOKIE_PATH)) {
       //cookieがあれば読み込む
@@ -116,10 +111,10 @@ class Seiga {
         createdDate_eh,
         clippedDate_eh
       )) {
-        const url = await getNodeProperty(illustLink_dom, "href");
-        const title = await getNodeProperty(illustLink_dom, "innerText");
-        const created_date = await getNodeProperty(created_date_dom, "innerText");
-        const clipped_date = await getNodeProperty(clipped_date_dom, "innerText");
+        const url: string = await getNodeProperty(illustLink_dom, "href");
+        const title: string = await getNodeProperty(illustLink_dom, "innerText");
+        const created_date: string = await getNodeProperty(created_date_dom, "innerText");
+        const clipped_date: string = await getNodeProperty(clipped_date_dom, "innerText");
 
         this.#cliplist.set(url, {
           url,
@@ -156,9 +151,7 @@ class Seiga {
 function writeCSV(cliplist: ClipList) {
   const arraylist = mapToArray(cliplist);
   const jsonData = JSON.stringify(arraylist, null, "  ");
-  fs.writeFile(`./${CSV_FILENAME}.csv`, papa.unparse(jsonData), (e) => {
-    if (e) console.log("error: ", e);
-  });
+  fs.writeFileSync(`./${CSV_FILENAME}.csv`, unparse(jsonData));
   console.log(`${JOB_NAME}: CSV Output Completed!`);
 }
 
@@ -166,7 +159,7 @@ function writeCSV(cliplist: ClipList) {
   try {
     const startTime = Date.now();
 
-    const browser = await puppeteer.launch({
+    const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: "new",
       // devtools: true,

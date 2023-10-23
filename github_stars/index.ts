@@ -3,7 +3,7 @@ import path from "path";
 
 import { config } from "dotenv";
 import { Octokit } from "octokit";
-import papa from "papaparse";
+import { unparse } from "papaparse";
 
 const JOB_NAME = "GitHub Starred Repositories";
 
@@ -62,11 +62,9 @@ const getStarredRepos = async (app: Octokit): Promise<Starred[]> => {
 };
 
 const writeCSV = async (json: (Starred | Gist)[], filename: string): Promise<void> => {
-  const csv = papa.unparse(json);
+  const csv = unparse(json);
   const filehandle = await fs.open(filename, "w");
-  await fs.appendFile(`./${filename}`, csv, (e) => {
-    if (e) console.log("error: ", e);
-  });
+  await fs.appendFile(`./${filename}`, csv);
   await filehandle.close();
 };
 

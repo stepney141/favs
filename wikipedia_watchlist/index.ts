@@ -15,6 +15,7 @@ import type {
   LoginStatus,
   Pagination,
   TargetUrls,
+  TextExtractsResponse,
   WatchlistrawResponse,
   Watchlists
 } from "./types";
@@ -90,7 +91,7 @@ const postClientLogin = async (
 /**
  * ログイン処理を行う
  */
-const login = async (baseURI: TargetUrls, login_token, cookies): Promise<[LoginStatus, string[]]> => {
+const login = async (baseURI: TargetUrls, login_token: string, cookies: string[]): Promise<[LoginStatus, string[]]> => {
   const [login_response_json, client_cookies] = await postClientLogin(baseURI, login_token, cookies);
   const login_status = login_response_json?.status;
   console.log("status:", login_status);
@@ -117,7 +118,7 @@ const login = async (baseURI: TargetUrls, login_token, cookies): Promise<[LoginS
  * - https://www.mediawiki.org/wiki/Extension:TextExtracts#API
  */
 const getPageId = async (baseURI: TargetUrls, cookies: string[], page_title: string): Promise<string | -1> => {
-  const response = await axios({
+  const response: Result<AxiosResponse<TextExtractsResponse>> = await axios({
     method: "post",
     url: `https://${baseURI}/w/api.php`,
     data: new URLSearchParams({
@@ -198,31 +199,18 @@ const fetchWatchlist = async function* (baseURI: TargetUrls, cookies: string[]):
 };
 
 /**
- * watchlistraw APIから得られた配列を取得し、指定したファイルに追記する
- */
-const writeWatchlistToCSV = async (data: string, filename: string) => {
-  try {
-    await fs.appendFile(`./${filename}`, data);
-  } catch (e) {
-    if (e instanceof Error) {
-      console.log(e);
-    }
-  }
-};
-
-/**
  * APiを叩いてウォッチリストの情報を取得し、それをファイルに出力する
  */
 const extractWatchlist = async (baseURI: TargetUrls, cookies: string[]): Promise<void> => {
   const filename = `${baseURI}.csv`;
   const filehandle = await fs.open(filename, "w");
 
-  await writeWatchlistToCSV("title,url\n", filename); //CSVのヘッダ作成
+  await fs.appendFile(`./${filename}`, "title,url\n"); //CSVのヘッダ作成
 
   // ref: https://ja.javascript.info/async-iterators-generators
   for await (const [page_title, page_url] of fetchWatchlist(baseURI, cookies)) {
     const output_data = `${page_title},${page_url}\n`;
-    await writeWatchlistToCSV(output_data, filename);
+    await fs.appendFile(`./${filename}`, output_data);
   }
 
   await filehandle.close();
