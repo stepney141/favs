@@ -94,6 +94,12 @@ export const mapToArray = <K extends any, V extends any, M extends Map<K, V>>(ma
   return array;
 };
 
-export const writeFile = (filename: string) => {};
+type FileIO<T extends any> = {
+  payload: T;
+  filename: string;
+  filetype: "json" | "csv";
+};
 
-export const readFile = (filename: string) => {};
+export const writeFile = (IO: FileIO<string>) => {};
+export const appendFile = (IO: FileIO<string>) => {};
+export const readFile = (IO: FileIO<string>) => {};

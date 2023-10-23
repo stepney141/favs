@@ -1,7 +1,30 @@
-export interface crawler {
-  login: () => void;
-  crawl: () => void;
-  print: () => void;
+import { Browser } from "puppeteer";
+
+type CrawlState<T> = Initial<T> | Prepared<T> | LoggedIn<T>;
+type Initial<T> = {
+  status: "Initial";
+  payload?: T;
+  isPrepared: false;
+  isLoggedIn: false;
+};
+type Prepared<T> = {
+  status: "Prepared";
+  payload?: T;
+  isPrepared: true;
+  isLoggedIn: false;
+};
+type LoggedIn<T> = {
+  status: "LoggedIn";
+  payload?: T;
+  isPrepared: true;
+  isLoggedIn: true;
+};
+export interface Crawler<T> {
+  browser: Browser;
+  fetchedData: T;
+
+  login(): this;
+  explore(): Promise<T>;
 }
 
 /**
@@ -25,6 +48,20 @@ export const Ok = <T>(payload: T): OkResult<T> => {
 export const Err = (payload): ErrorResult => {
   return { type: "error", payload };
 };
+export const isOk = <T>(result: Result<T>): result is OkResult<T> => {
+  if (result.type === "ok") {
+    return true;
+  } else {
+    return false;
+  }
+};
+export const isErr = <T>(result: Result<T>): result is ErrorResult => {
+  if (result.type === "error") {
+    return true;
+  } else {
+    return false;
+  }
+};
 export const unwrapResult = <T>(result: Result<T>): T => {
   // payload はここでは T | Error 型
   const { type, payload } = result;
@@ -35,4 +72,3 @@ export const unwrapResult = <T>(result: Result<T>): T => {
     throw payload;
   }
 };
-
