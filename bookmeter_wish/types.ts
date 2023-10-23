@@ -2,7 +2,7 @@ import type { BIBLIOINFO_SOURCES } from "./constants";
 
 export type Book = {
   bookmeter_url: string;
-  isbn_or_asin?: string;
+  isbn_or_asin?: string | null;
   book_title?: string;
   author?: string;
   publisher?: string;
@@ -18,7 +18,7 @@ export type BookOwningStatus = { book: Book; isOwning: boolean };
 export type FetchBiblioInfo = (book: Book) => BiblioInfoStatus | Promise<BiblioInfoStatus>;
 export type IsOwnBook = <T>(book: Book, additionalInfo?: T) => BookOwningStatus | Promise<BookOwningStatus>;
 
-export type BIBLIOINFO_ERROR_STATUS = `Not_found_with_${(typeof BIBLIOINFO_SOURCES)[number]}`;
+export type BIBLIOINFO_ERROR_STATUS = `Not_found_in_${(typeof BIBLIOINFO_SOURCES)[number]}` | "INVALID_ISBN";
 
 export type OpenBdResponse = {
   summary: {
@@ -81,4 +81,36 @@ export type CiniiResponse = {
     cinii: string;
     "@vocab": string;
   };
+};
+
+/**
+ * @link https://developers.google.com/books/docs/v1/reference/volumes?hl=en
+ */
+export type GoogleBookItem = {
+  id: string;
+  volumeInfo: {
+    title: string;
+    subtitle?: string;
+    authors?: string[];
+    publisher?: string;
+    publishedDate?: string;
+    description?: string;
+    industryIdentifiers?: {
+      type: "ISBN_10" | "ISBN_13";
+      identifier: string;
+    }[];
+    pageCount?: number;
+    printType?: string;
+    language?: string;
+    infoLink?: string;
+  };
+};
+
+/**
+ * @link https://developers.google.com/books/docs/v1/reference/volumes/list?hl=en
+ */
+export type GoogleBookApiResponse = {
+  kind: string;
+  items?: GoogleBookItem[];
+  totalItems: number;
 };
