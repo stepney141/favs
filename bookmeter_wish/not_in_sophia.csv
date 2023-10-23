@@ -1,4 +1,6 @@
 isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia
+4256983759,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,No
+B00IEY7QJM,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,No
 4478117764,大学図鑑! 2024,,ダイヤモンド社,202303,No
 4320114981,証明の読み方・考え方〔原著第6版〕 : 数学的思考過程への手引き,DanielSolow／著 西村康一／翻訳 服部久美子／翻訳,共立出版,20231125,No
 4759823522,殺人は容易ではない : アガサ・クリスティーの法科学,CarlaValentine／著 久保美代子／翻訳,化学同人,20231204,No
@@ -16,6 +18,7 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia
 4320115007,偏微分方程式の計算数理,齊藤宣一／著,共立出版,20231025,No
 4867660221,デジタルヒストリーを実践する,ジョナサン・ブレイニー／著 ジェーン・ウィンターズ／著 サラ・ミリガン／著 マーティ・スティア／著 ほか,文学通信,20231020,No
 4798027979,わかる!電子工作の基本100,"遠藤,敏夫,1949-",秀和システム,201012,No
+0071752064,Practice Makes Perfect English Articles and Determiners Up Close,Mark Lester,McGraw Hill Professional,2013-08-07,No
 4791109880,発達障害の精神病理 1,"鈴木,国文,1952- 内海,健,1955- 清水,光恵,1967-",星和書店,201809,No
 4791111168,発達障害の精神病理 4,"内海,健,1955- 兼本,浩祐,1957-",星和書店,202306,No
 4480056599,読み書きの技法,"小河原誠 著,小河原, 誠, 1947-,",筑摩書房,"Tue, 30 Jul 1996 09:00:00 +0900",No
@@ -23,9 +26,11 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia
 4480084878,日本文学史序説　（上）,加藤周一／著,筑摩書房,19990401,No
 4309416845,日本の偽書,"藤原,明,1958-",河出書房新社,201905,No
 4798179809,なっとく!関数型プログラミング : 関数型プログラミングの基本概念の全容を把握し活用したい開発者に,"Płachta,Michał クイープ",翔泳社,202308,No
+1837639965,Architecture and Design of the Linux Storage Stack: Gain a Deep Understanding of the Linux Storage Landscape and Its Well-coordinated Layers,Muhammad Umer,Packt Publishing,2023-07,No
 4102184716,ケプラー予想 : 四百年の難問が解けるまで,"Szpiro,George,1950- 青木,薫,1956-",新潮社,201401,No
 4905033314,プロジェクト・シン・エヴァンゲリオン : 実績・省察・評価・総括,"カラー 編,カラー,","カラー,グラウンドワークス","Wed, 09 Aug 2023 09:00:00 +0900",No
 4065324017,プリキュア20周年アニバーサリー　プリキュアコスチュームクロニクル　,講談社／編集 東映アニメーション／監修,講談社,20231031,No
+9811379661,"Kawaii Engineering Measurements, Evaluations, and Applications of Attractiveness",Michiko Ohkura,Springer,2020-08-15,No
 4309419690,日本怪談実話,"田中,貢太郎,1880-1941",河出書房新社,202306,No
 4309419712,戦前のこわい話 : 怪奇実話集,"志村,有弘,1941-",河出書房新社,202306,No
 4331150526,プログラム学習による基礎電気工学,"松下電器工学院/編著,","松下電器産業,広済堂出版(発売)",,No
@@ -36,6 +41,7 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia
 4326000481,デジタルアーカイブの理論と政策 : デジタル文化資源の活用に向けて,"柳,与志夫,1954-",勁草書房,202001,No
 4761101857,仙人ワンダーランド : 和漢仙人列伝,"影山,純夫,1947-",河原書店,202305,No
 4390114956,フランス怪奇民話集,"植田祐次, 山内淳 訳編,植田, 祐次, 1936-,山内, 淳, 1951-,",社会思想社,"Wed, 30 Mar 1994 09:00:00 +0900",No
+B086PTBFGB,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,No
 4040667956,東京大学の学術遺産捃拾帖,"モリナガ,ヨウ,1966-",KADOKAWA,201406,No
 4641166099,研究開発支援の経済学,岡室博之／著・文・その他 西村淳一／著・文・その他,有斐閣,20221219,No
 4837967701,あなたの知らない「ヘン」な法律,"なかむら,いちろう",三笠書房,201512,No
@@ -58,9 +64,11 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia
 4798061700,実践Rustプログラミング入門 = introduction to rust programming,"初田,直也 山口,聖弘 吉川,哲史 豊田,優貴 松本,健太郎,webエンジニア 原,将己 ほか",秀和システム,202009,No
 4562072547,世界を騙した女詐欺師たち,"Telfer,Tori 富原,まさ江,1965-",原書房,202302,No
 4344953304,幼なじみ萌え : ラブコメ恋愛文化史,"玉井,建也",幻冬舎,201711,No
+3031004418,General Game Playing,"Michael Genesereth,Michael Thielscher",Springer,2014-03-18,No
 4798125393,実践プログラミングDSL : ドメイン特化言語の設計と実装のノウハウ,"Ghosh,Debasish,1953- 佐藤,竜一,1972-",翔泳社,201206,No
 4839967091,囲碁ディープラーニングプログラミング,"Pumperla,Max Ferguson,Kevin 山岡,忠夫",マイナビ出版,201904,No
 4309460631,ホームズ贋作展覧会,"各務三郎 編,各務, 三郎, 1936-,",河出書房新社,"Thu, 05 Oct 1989 09:00:00 +0900",No
+0321842685,Hacker's Delight,Henry S. Warren,Pearson Education,2013,No
 4434046683,ハッカーのたのしみ : 本物のプログラマはいかにして問題を解くか,"Warren,HenryS 滝沢,徹",星雲社,200409,No
 4774153265,人間に勝つコンピュータ将棋の作り方,コンピュータ将棋協会,技術評論社,201211,No
 4814400160,自分だけのボードゲームを作ろう : ゲームをデザインして、作って、みんなでプレイする,"Daniels,JesseTerrance 金井,哲夫,1958-",オーム社 (発売),202212,No
@@ -161,6 +169,7 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia
 4480864369,テキヤと社会主義,猪野健治／著,筑摩書房,20150225,No
 4047308382,闇に這う者 = THE HAUNTER OF THE DARK : ラヴクラフト傑作集,"田邊,剛,1975-",KADOKAWA,201604,No
 4757735804,アウトサイダー,"田邊,剛,1975-",エンターブレイン,200707,No
+B07DSJ67FG,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,No
 4297112744,スペースキーで見た目を整えるのはやめなさい : 8割の社会人が見落とす資料作成のキホン,,技術評論社,202006,No
 4839971056,マンガで学ぶ恐竜の生態,"金,渡潤 渡辺,麻土香",マイナビ出版,202005,No
 4797386673,この一冊で全部わかるネットワークの基本,"福永,勇二,1966-",SBクリエイティブ,201604,No
@@ -259,7 +268,11 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia
 4062632861,眠れぬ夜の殺人,"岡嶋二人 [著],岡嶋, 二人,",講談社,"Tue, 28 Jan 1997 09:00:00 +0900",No
 4048529080,それをなすもの : 「新世紀エヴァンゲリオン」コンセプトデザインワークス,"山下,いくと,1965-",角川書店ニュータイプ,199803,No
 4791761030,天使の世界,"マルコム・ゴドウィン 著,大瀧啓裕 訳,Godwin, Malcolm,大滝, 啓裕, 1952-,",青土社,"Wed, 01 Dec 2004 09:00:00 +0900",No
+4903713016,新世紀エヴァンゲリオン原画集,,,2000-12-22,No
+4903713040,新世紀エヴァンゲリオン劇場版原画集,,,2001-10-26,No
 4903713008,新世紀エヴァンゲリオン原画集,Gainax／著 庵野秀明／監修,ガイナックス,2000-10-14,No
+4903713024,新世紀エヴァンゲリオン原画集,,,2001-03-30,No
+4903713059,新世紀エヴァンゲリオン劇場版原画集,,,2002-01-18,No
 4846008355,ヴァイブレーターの文化史,レイチェル・P・メインズ／著 佐藤雅彦／訳,論創社,20100120,No
 4905033071,新世紀エヴァンゲリオンTVアニメーション設定資料集2015 edition,,グラウンドワークス,201508,No
 4760150072,「舞姫」の主人公をバンカラとアフリカ人がボコボコにする最高の小説の世界が明治に存在したので20万字くらいかけて紹介する本,"山下泰平著,山下, 泰平,",柏書房,,No
@@ -298,10 +311,12 @@ isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia
 4758014221,高橋晃東映アニメーションプリキュアワークス = TAKAHASHI AKIRA TOEI ANIMATION PRECURE WORKS,"高橋,晃,1971-",一迅社,201503,No
 4758015155,香川久東映アニメーションプリキュアワークス = KAGAWA HISASHI TOEI ANIMATION PRECURE WORKS,"香川,久,1963-",一迅社,201608,No
 4758016364,宮本絵美子東映アニメーションプリキュアワークス = MIYAMOTO EMIKO TOEI ANIMATION PRECURE WORKS,"宮本絵美子 画,東映アニメーション株式会社 監修,宮本, 絵美子,","一迅社,講談社","Thu, 11 Jul 2019 09:00:00 +0900",No
+4815006555,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,Not_found_in_GoogleBooks,No
 433605777X,定本何かが空を飛んでいる,"稲生,平太郎,1954-",国書刊行会,201311,No
 4802611927,"Pythonによるスクレイピング&機械学習〈開発テクニック〉 : Scrapy,BeautifulSoup,scikit-learn,TensorFlowを使ってみよう",クジラ飛行机,ソシム,201901,No
 4774176435,あなたの知らない超絶技巧プログラミングの世界,"遠藤,侑介",技術評論社,201510,No
 4861823730,フェティシズム全書,ジャン・ストレフ／著 加藤雅郁／翻訳 橋本克己／翻訳,作品社,20160510,No
+,INVALID_ISBN,INVALID_ISBN,INVALID_ISBN,INVALID_ISBN,No
 4622015994,攻撃 : 悪の自然誌,"Lorenz,Konrad,1903-1989 日高,敏隆,1930-2009 久保,和彦,1928-1989",みすず書房,198504,No
 4022613440,長谷川町子思い出記念館,"長谷川,町子,1920-1992",朝日新聞社,200108,No
 4861008670,"GUMI GRAPHIXXX : The virtual vocalist ""GUMI"" is the character of VOCALOID Megpoid. : GUMI 5th Anniversary Official Art Book",,ビー・エヌ・エヌ新社,201402,No
