@@ -14,6 +14,7 @@ export const handleAxiosError = (error: AxiosError) => {
   } else {
     console.log("Error", error);
   }
+  console.log("Axios threw the above error!");
 };
 
 /**
