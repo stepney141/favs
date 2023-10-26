@@ -2,15 +2,15 @@ import type { BIBLIOINFO_SOURCES, CINII_TARGET_TAGS } from "./constants";
 
 export type Book = {
   bookmeter_url: string;
-  isbn_or_asin?: string | null;
-  book_title?: string;
-  author?: string;
-  publisher?: string;
-  published_date?: string;
-  central_opac_link?: string;
-  mathlib_opac_link?: string;
+  isbn_or_asin: string | null;
+  book_title: string;
+  author: string;
+  publisher: string;
+  published_date: string;
+  central_opac_link: string;
+  mathlib_opac_link: string;
 } & {
-  [key in ExistIn]?: "Yes" | "No";
+  [key in ExistIn]: "Yes" | "No";
 };
 export type BookList = Map<string, Book>;
 
