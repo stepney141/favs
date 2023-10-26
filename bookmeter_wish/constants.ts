@@ -1,18 +1,10 @@
+import type { CiniiTarget } from "./types";
+
 export const JOB_NAME = "Bookmeter Wished Books";
 export const CSV_FILENAME = "bookmeter_wish_books.csv";
 
 export const bookmeter_baseURI = "https://bookmeter.com";
 export const bookmeter_userID = "1003258";
-
-export const SOPHIA_LIB_CINII_ID = "FA005358"; //上智大学図書館の機関ID ref: https://ci.nii.ac.jp/library/FA005358
-export const OPAC_URL = {
-  sophia: "https://www.lib.sophia.ac.jp"
-};
-export const MATH_LIB_BOOKLIST = {
-  //数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108
-  ja: "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_j.pdf",
-  en_with_isbn: "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_F1.pdf"
-};
 
 export const XPATH = {
   isBookExist: "/html/body/div[1]/div[1]/section/div/div[1]/ul[1]/li",
@@ -36,3 +28,17 @@ export const REGEX = {
 };
 
 export const BIBLIOINFO_SOURCES = ["OpenBD", "Amazon", "NDL", "GoogleBooks"] as const;
+export const CINII_TARGET_TAGS = ["sophia"] as const;
+
+export const CINII_TARGETS: CiniiTarget[] = [
+  {
+    tag: "sophia",
+    cinii_id: "FA005358", //ref: https://ci.nii.ac.jp/library/FA005358
+    opac: "https://www.lib.sophia.ac.jp"
+  }
+];
+export const MATH_LIB_BOOKLIST = {
+  //数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108
+  ja: "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_j.pdf",
+  en_with_isbn: "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_F1.pdf"
+};

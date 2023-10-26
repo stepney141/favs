@@ -18,8 +18,7 @@ import {
   bookmeter_baseURI,
   bookmeter_userID,
   MATH_LIB_BOOKLIST,
-  SOPHIA_LIB_CINII_ID,
-  OPAC_URL
+  CINII_TARGETS
 } from "./constants";
 
 import type {
@@ -27,13 +26,14 @@ import type {
   OpenBdResponse,
   CiniiResponse,
   NdlResponseJson,
-  BIBLIOINFO_ERROR_STATUS,
+  BiblioinfoErrorStatus,
   BookList,
   FetchBiblioInfo,
   BiblioInfoStatus,
   IsOwnBook,
   BookOwningStatus,
-  GoogleBookApiResponse
+  GoogleBookApiResponse,
+  IsOwnBookConfig
 } from "./types";
 import type { AxiosResponse } from "axios";
 import type { ParseResult } from "papaparse";
@@ -225,7 +225,7 @@ const fetchOpenBD = async (book: Book): Promise<BiblioInfoStatus> => {
 
   if (isbn === null || isbn === undefined) {
     //有効なISBNではない
-    const status_text: BIBLIOINFO_ERROR_STATUS = "INVALID_ISBN";
+    const status_text: BiblioinfoErrorStatus = "INVALID_ISBN";
     const part = {
       book_title: status_text,
       author: status_text,
@@ -257,7 +257,7 @@ const fetchOpenBD = async (book: Book): Promise<BiblioInfoStatus> => {
 
     //本の情報がなかった
   } else {
-    const status_text: BIBLIOINFO_ERROR_STATUS = "Not_found_in_OpenBD";
+    const status_text: BiblioinfoErrorStatus = "Not_found_in_OpenBD";
     const part = {
       book_title: status_text,
       author: status_text,
@@ -281,7 +281,7 @@ const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> 
 
   if (isbn === null || isbn === undefined) {
     //有効なISBNではない
-    const status_text: BIBLIOINFO_ERROR_STATUS = "INVALID_ISBN";
+    const status_text: BiblioinfoErrorStatus = "INVALID_ISBN";
     const part = {
       book_title: status_text,
       author: status_text,
@@ -317,7 +317,7 @@ const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> 
 
     //本の情報がなかった
   } else {
-    const status_text: BIBLIOINFO_ERROR_STATUS = "Not_found_in_NDL";
+    const status_text: BiblioinfoErrorStatus = "Not_found_in_NDL";
     const part = {
       book_title: status_text,
       author: status_text,
@@ -340,7 +340,7 @@ const fetchGoogleBooks: FetchBiblioInfo = async (book: Book): Promise<BiblioInfo
 
   if (isbn === null || isbn === undefined) {
     //有効なISBNではない
-    const status_text: BIBLIOINFO_ERROR_STATUS = "INVALID_ISBN";
+    const status_text: BiblioinfoErrorStatus = "INVALID_ISBN";
     const part = {
       book_title: status_text,
       author: status_text,
@@ -374,7 +374,7 @@ const fetchGoogleBooks: FetchBiblioInfo = async (book: Book): Promise<BiblioInfo
     };
   } else {
     //本の情報がなかった
-    const status_text: BIBLIOINFO_ERROR_STATUS = "Not_found_in_GoogleBooks";
+    const status_text: BiblioinfoErrorStatus = "Not_found_in_GoogleBooks";
     const part = {
       book_title: status_text,
       author: status_text,
@@ -392,26 +392,31 @@ const fetchGoogleBooks: FetchBiblioInfo = async (book: Book): Promise<BiblioInfo
  * 大学図書館 所蔵検索(CiNii)
  * @link https://support.nii.ac.jp/ja/cib/api/b_opensearch
  */
-const searchCiNii: IsOwnBook = async (book: Book): Promise<BookOwningStatus> => {
-  const isbn = book["isbn_or_asin"]; //ISBNデータを取得
+const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Promise<BookOwningStatus> => {
+  const isbn = config.book["isbn_or_asin"]; //ISBNデータを取得
+  const library = config.options?.libraryInfo;
+
+  if (library === undefined) {
+    throw new Error("The library info is undefined");
+  }
 
   if (isbn === null || isbn === undefined) {
     //異常系(与えるべきISBN自体がない)
     return {
-      book: { ...book, exist_in_sophia: "No" },
+      book: { ...config.book, [`exist_in_${library.tag}`]: "No" },
       isOwning: false
     };
   }
 
   //中央図書館のチェック
   const response: AxiosResponse<CiniiResponse> = await axios.get(
-    `https://ci.nii.ac.jp/books/opensearch/search?isbn=${isbn}&fano=${SOPHIA_LIB_CINII_ID}&format=json&appid=${cinii_appid}`
+    `https://ci.nii.ac.jp/books/opensearch/search?isbn=${isbn}&fano=${library?.cinii_id}&format=json&appid=${cinii_appid}`
   );
   const json = response.data["@graph"][0];
   const bookinfo = json.items;
   if (bookinfo === undefined) {
     return {
-      book: { ...book, exist_in_sophia: "No" },
+      book: { ...config.book, [`exist_in_${library.tag}`]: "No" },
       isOwning: false
     };
   }
@@ -423,16 +428,16 @@ const searchCiNii: IsOwnBook = async (book: Book): Promise<BookOwningStatus> => 
     const ncid = ncid_url.match(REGEX.ncid_in_cinii_url)?.[0]; //ciniiのURLからncidだけを抽出
     return {
       book: {
-        ...book,
-        exist_in_sophia: "Yes",
-        central_opac_link: `${OPAC_URL.sophia}/opac/opac_openurl?ncid=${ncid}` //opacのリンク
+        ...config.book,
+        [`exist_in_${library.tag}`]: "Yes",
+        central_opac_link: `${library?.opac}/opac/opac_openurl?ncid=${ncid}` //opacのリンク
       },
       isOwning: true
     };
   } else {
     //検索結果が0件
     return {
-      book: { ...book, exist_in_sophia: "No" },
+      book: { ...config.book, [`exist_in_${library.tag}`]: "No" },
       isOwning: false
     };
   }
@@ -441,26 +446,30 @@ const searchCiNii: IsOwnBook = async (book: Book): Promise<BookOwningStatus> => 
 /**
  * 数学図書館の所蔵検索
  */
-const searchSophiaMathLib = (book: Book, additionalInfo?: Set<string>): BookOwningStatus => {
-  const isbn = book.isbn_or_asin;
-  const mathlib_isbn_list = additionalInfo!;
+const searchSophiaMathLib: IsOwnBook<Set<string>> = (config: IsOwnBookConfig<Set<string>>): BookOwningStatus => {
+  const isbn = config.book.isbn_or_asin;
+  const mathlib_isbn_list = config.options?.resources;
+
+  if (mathlib_isbn_list === undefined) {
+    throw new Error("the mathlib booklist is undefined");
+  }
 
   if (isbn === null || isbn === undefined) {
-    return { book, isOwning: false };
+    return { book: { ...config.book }, isOwning: false };
   }
 
   if (mathlib_isbn_list.has(isbn) || mathlib_isbn_list.has(convertISBN10To13(isbn))) {
     const mathlib_opac_link = `https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=${isbn}&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1`;
     return {
       book: {
-        ...book,
+        ...config.book,
         exist_in_sophia: "Yes",
         mathlib_opac_link: mathlib_opac_link
       },
       isOwning: true
     };
   } else {
-    return { book, isOwning: false };
+    return { book: { ...config.book }, isOwning: false };
   }
 };
 
@@ -509,8 +518,20 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
       updatedBook = await fetchGoogleBooks(updatedBook.book);
     }
 
-    updatedBook.book = (await searchCiNii(updatedBook.book)).book;
-    updatedBook.book = searchSophiaMathLib(updatedBook.book, mathLibIsbnList).book;
+    for (const library of CINII_TARGETS) {
+      const ciniiStatus = await searchCiNii({ book: updatedBook.book, options: { libraryInfo: library } });
+      if (ciniiStatus.isOwning) {
+        updatedBook.book = ciniiStatus.book;
+      }
+    }
+
+    const smlStatus = searchSophiaMathLib({
+      book: updatedBook.book,
+      options: { resources: mathLibIsbnList }
+    });
+    if (smlStatus.isOwning) {
+      updatedBook.book = smlStatus.book;
+    }
 
     booklist.set(updatedBook.book.bookmeter_url, updatedBook.book);
 

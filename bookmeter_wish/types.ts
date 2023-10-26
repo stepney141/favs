@@ -1,4 +1,4 @@
-import type { BIBLIOINFO_SOURCES } from "./constants";
+import type { BIBLIOINFO_SOURCES, CINII_TARGET_TAGS } from "./constants";
 
 export type Book = {
   bookmeter_url: string;
@@ -7,18 +7,31 @@ export type Book = {
   author?: string;
   publisher?: string;
   published_date?: string;
-  exist_in_sophia?: "Yes" | "No";
   central_opac_link?: string;
   mathlib_opac_link?: string;
+} & {
+  [key in ExistIn]?: "Yes" | "No";
 };
 export type BookList = Map<string, Book>;
 
 export type BiblioInfoStatus = { book: Book; isFound: boolean };
-export type BookOwningStatus = { book: Book; isOwning: boolean };
 export type FetchBiblioInfo = (book: Book) => BiblioInfoStatus | Promise<BiblioInfoStatus>;
-export type IsOwnBook = <T>(book: Book, additionalInfo?: T) => BookOwningStatus | Promise<BookOwningStatus>;
 
-export type BIBLIOINFO_ERROR_STATUS = `Not_found_in_${(typeof BIBLIOINFO_SOURCES)[number]}` | "INVALID_ISBN";
+export type BookOwningStatus = { book: Book; isOwning: boolean };
+export type IsOwnBookConfig<T> = { book: Book; options?: { resources?: T; libraryInfo?: CiniiTarget } };
+export type IsOwnBook<T> =
+  | ((config: IsOwnBookConfig<T>) => BookOwningStatus)
+  | ((config: IsOwnBookConfig<T>) => Promise<BookOwningStatus>);
+
+export type BiblioinfoErrorStatus = `Not_found_in_${(typeof BIBLIOINFO_SOURCES)[number]}` | "INVALID_ISBN";
+export type CiniiTargetOrgs = (typeof CINII_TARGET_TAGS)[number];
+export type ExistIn = `exist_in_${CiniiTargetOrgs}`;
+
+export type CiniiTarget = {
+  tag: CiniiTargetOrgs;
+  cinii_id: string;
+  opac: string;
+};
 
 export type OpenBdResponse = {
   summary: {
