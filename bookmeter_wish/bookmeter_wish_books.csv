@@ -1,4 +1,5 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/9746433,4254116063,講座数学の考え方 13,"飯高,茂,1942- 川又,雄二郎,1952- 森田,茂之,1946- 谷島,賢二,1948-",朝倉書店,201504,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18502939,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4254116063&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 https://bookmeter.com/books/15653853,4802612494,データ分析のための数理モデル入門 : 本質をとらえた分析のために,"江崎,貴裕",ソシム,202005,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30526175,
 https://bookmeter.com/books/19889934,4802613776,本質を捉えたデータ分析のための分析モデル入門 : 統計モデル、深層学習、強化学習等用途・特徴から原理まで一気通貫!,"杉山,聡,データサイエンティスト",ソシム,202208,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16057140,
 https://bookmeter.com/books/13081464,4582768717,江戸の読書会 : 会読の思想史,"前田,勉,1956-",平凡社,201809,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2679424X,
@@ -253,7 +254,6 @@ https://bookmeter.com/books/14116802,4641053855,計量経済学,西山慶彦／�
 https://bookmeter.com/books/14789052,490965819X,デジタル学術空間の作り方,下田正弘／編著 永﨑研宣／編著,文学通信,20191218,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29506669,
 https://bookmeter.com/books/19573021,4759821678,理工系のAI英作文術 : 誰でも簡単に正確な英文が書ける,"西山,聖久",化学同人,202205,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14827236,
 https://bookmeter.com/books/18088455,439329162X,魔法少女はなぜ変身するのか : ポップカルチャーのなかの宗教,"石井,研士,1954-",春秋社,202206,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC15273694,
-https://bookmeter.com/books/17548495,4535789231,詰将棋の世界,"齋藤,夏雄,1973-",日本評論社,202103,No,,
 https://bookmeter.com/books/18967053,4750352861,現代日本のエリートの平等観,竹中佳彦／編 山本英弘／編 濱本真輔／編,明石書店,20211227,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11964922,
 https://bookmeter.com/books/17056603,4758017115,高橋晃東映アニメーションプリキュアワークス = : TAKAHASHI AKIRA TOEI ANIMATION PRECURE WORKS,"高橋,晃,1971-",講談社 (発売),202102,No,,
 https://bookmeter.com/books/19653542,4562071818,緯度を測った男たち : 18世紀、世界初の国際科学遠征隊の記録,"Crane,Nicholas,1954- 上京,恵",原書房,202205,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14825977,
