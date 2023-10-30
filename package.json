@@ -4,7 +4,7 @@
   "author": "stepney141 <stepney141andi.c.i@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.5.1",
+    "axios": "^1.6.0",
     "dotenv": "^16.3.1",
     "fast-xml-parser": "^4.3.2",
     "fs": "^0.0.1-security",
