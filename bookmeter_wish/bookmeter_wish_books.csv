@@ -1,10 +1,11 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/21669855,4627097212,確率的シミュレーション,大久保潤／著,森北出版,20231215,No,,
+https://bookmeter.com/books/85595,4431712143,解析教程 下,"Hairer,Ernst Wanner,Gerhard 蟹江,幸博,1948-",シュプリンガー・ジャパン,200610,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA78859114,
+https://bookmeter.com/books/85594,4431712135,解析教程 上,"Hairer,Ernst Wanner,Gerhard 蟹江,幸博,1948-",シュプリンガー・ジャパン,200610,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA78859114,
 https://bookmeter.com/books/79775,4492312986,経済学・経営学のための数学,"岡田,章,1954-",東洋経済新報社,200110,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA53609740,
 https://bookmeter.com/books/102462,4789837513,ディジタル回路の設計入門 : ハードウェアの動きを理解しながら学ぶ,湯山俊夫,CQ出版,2005-4-1,No,,
 https://bookmeter.com/books/20382992,4130230808,歴史学の作法,池上俊一／著,東京大学出版会,20221226,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC18932378,
 https://bookmeter.com/books/348346,4791765370,魔術師たちのルネサンス : 錬金術からコスモロジーへ,"沢井,繁男,1954-",青土社,201003,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB01613050,
-https://bookmeter.com/books/4812639,4621061909,解析教程 下,"E.ハイラー G.ヴァンナー 蟹江,幸博",丸善出版,201201,No,,
-https://bookmeter.com/books/4809678,4621062034,解析教程 上,"E.ハイラー G.ヴァンナー 蟹江,幸博",丸善出版,201201,No,,
 https://bookmeter.com/books/9746433,4254116063,講座数学の考え方 13,"飯高,茂,1942- 川又,雄二郎,1952- 森田,茂之,1946- 谷島,賢二,1948-",朝倉書店,201504,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18502939,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=4254116063&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 https://bookmeter.com/books/15653853,4802612494,データ分析のための数理モデル入門 : 本質をとらえた分析のために,"江崎,貴裕",ソシム,202005,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30526175,
 https://bookmeter.com/books/19889934,4802613776,本質を捉えたデータ分析のための分析モデル入門 : 統計モデル、深層学習、強化学習等用途・特徴から原理まで一気通貫!,"杉山,聡,データサイエンティスト",ソシム,202208,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16057140,
