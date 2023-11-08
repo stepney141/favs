@@ -1,4 +1,6 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_sophia,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/283331,4588200615,結び,額田巌／著,法政大学出版局,19720301,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00927615,
+https://bookmeter.com/books/6399879,4254111371,美しい不等式の世界 : 数学オリンピックの問題を題材として,"BulajichManfrino,Radmila／著 GómezOrtega,JoséAntonio／著 ほか",朝倉書店,2013-01,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB11424983,
 https://bookmeter.com/books/21669855,4627097212,確率的シミュレーション,大久保潤／著,森北出版,20231215,No,,
 https://bookmeter.com/books/85595,4431712143,解析教程 下,"Hairer,Ernst Wanner,Gerhard 蟹江,幸博,1948-",シュプリンガー・ジャパン,200610,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA78859114,
 https://bookmeter.com/books/85594,4431712135,解析教程 上,"Hairer,Ernst Wanner,Gerhard 蟹江,幸博,1948-",シュプリンガー・ジャパン,200610,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA78859114,
@@ -79,7 +81,7 @@ https://bookmeter.com/books/21196468,4903966364,ホガースの時代 : 版画�
 https://bookmeter.com/books/21307547,4634591340,将棋の日本史 : 日本将棋はどのように生まれたのか,"永井,晋,1959-",山川出版社,202306,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD02763960,
 https://bookmeter.com/books/63213,453560844X,xのx乗のはなし,"土基,善文,1965- 上野,健爾,1945- 浪川,幸彦,1945- 高橋,陽一郎,1946-",日本評論社,200207,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA57451998,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=453560844X&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 https://bookmeter.com/books/21215188,4787292749,怪談の仕掛け,伊藤龍平／著,青弓社,20230620,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD02729441,
-https://bookmeter.com/books/21441510,4065324017,プリキュア20周年アニバーサリー　プリキュアコスチュームクロニクル　,講談社／編集 東映アニメーション／監修,講談社,20231031,No,,
+https://bookmeter.com/books/21441510,4065324017,プリキュアコスチュームクロニクル = Precure Costume Chronicle : プリキュア20周年アニバーサリー,東映アニメーション,講談社,202310,No,,
 https://bookmeter.com/books/21395173,9811379661,"Kawaii Engineering Measurements, Evaluations, and Applications of Attractiveness",Michiko Ohkura,Springer,2020-08-15,No,,
 https://bookmeter.com/books/11653353,425420163X,"「かわいい」工学 = ""KAWAII"" Engineering","大倉,典子,1953-",朝倉書店,201703,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2341504X,
 https://bookmeter.com/books/21214779,4309419690,日本怪談実話,"田中,貢太郎,1880-1941",河出書房新社,202306,No,,
@@ -184,7 +186,6 @@ https://bookmeter.com/books/5539698,0321842685,Hacker's Delight,Henry S. Warren,
 https://bookmeter.com/books/33335,4434046683,ハッカーのたのしみ : 本物のプログラマはいかにして問題を解くか,"Warren,HenryS 滝沢,徹",星雲社,200409,No,,
 https://bookmeter.com/books/5424343,4774153265,人間に勝つコンピュータ将棋の作り方,コンピュータ将棋協会,技術評論社,201211,No,,
 https://bookmeter.com/books/20434048,4814400160,自分だけのボードゲームを作ろう : ゲームをデザインして、作って、みんなでプレイする,"Daniels,JesseTerrance 金井,哲夫,1958-",オーム社 (発売),202212,No,,
-https://bookmeter.com/books/20236152,4798171549,「技術書」の読書術 : 達人が教える選び方・読み方・情報発信&共有のコツとテクニック,"IPUSIRON,1979- 増井,敏克,1979-",翔泳社,202211,No,,
 https://bookmeter.com/books/13132314,425412841X,経済・ファイナンスのためのカルマンフィルター入門,"森平,爽一郎,1947-",朝倉書店,201902,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27703782,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=425412841X&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 https://bookmeter.com/books/18523604,4002710521,「私物化」される国公立大学,"駒込,武,1962-",岩波書店,202109,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC09664223,
 https://bookmeter.com/books/20394264,4774407763,調べる技術,小林昌樹／著,皓星社,20221209,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC18847472,
