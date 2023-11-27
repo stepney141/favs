@@ -62,6 +62,7 @@ class Seiga {
       for (const cookie of savedCookies) {
         await page.setCookie(cookie);
       }
+      console.log(`${JOB_NAME}: loaded existing cookies`);
     }
 
     await page.goto(MYCLIP_URL, {
