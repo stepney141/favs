@@ -51,34 +51,27 @@ export const clickMouse = async (page: Page, x: number, y: number, time: number)
 /**
  * Iterates like Python-zip
  * @param  {...any} args
- * @link https://python.ms/javascript--zip/
+ * @link https://qiita.com/__sil/items/d7a83d4072ae47ad404c
+ * @link https://dev.to/chrismilson/zip-iterator-in-typescript-ldm
  * @example
- * const array1 = ['apple', 'orange', 'grape'];
+   const array1 = ['apple', 'orange', 'grape'];
    const array2 = ['rabbit', 'dog', 'cat'];
    const array3 = ['car', 'bicycle', 'airplane'];
    for (let [elm1, elm2, elm3] of zip(array1, array2, array3)) {
        console.log(elm1, elm2, elm3);
    }
  */
-export function* zip<T extends any[]>(...args: T[]): Generator<T> {
-  const length = args[0].length;
-
-  // 引数チェック
-  for (const arr of args) {
-    if (arr.length !== length) {
-      throw "Lengths of arrays are not the same.";
+export function* zip<T extends Array<any>>(...args: Iterableify<T>): Generator<T> {
+  const iterators = args.map((it) => it[Symbol.iterator]());
+  while (true) {
+    const results = iterators.map((i) => i.next());
+    if (results.some(({ done }) => done)) {
+      break;
     }
-  }
-
-  // イテレート
-  for (let index = 0; index < length; index++) {
-    const elms = [] as unknown as T;
-    for (const arr of args) {
-      elms.push(arr[index]);
-    }
-    yield elms;
+    yield results.map(({ value }) => value) as T;
   }
 }
+type Iterableify<T> = { [K in keyof T]: Iterable<T[K]> };
 
 export const getNodeProperty = async <T>(eh: ElementHandle<Node>, prop: string): Promise<T> => {
   const handle = (await eh.getProperty(prop)) as JSHandle<T>;
