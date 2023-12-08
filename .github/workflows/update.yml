@@ -85,7 +85,7 @@ jobs:
       - name: Bookmeter Wish
         shell: bash
         working-directory: ./bookmeter_wish
-        run: npx tsx ./puppeteer_bookmeter.ts && bash ./is_in_sophia.sh
+        run: npx tsx ./puppeteer_bookmeter.ts && bash ./is_in_my_lib.sh
 
       - name: BoundHub Faved Movies
         shell: bash
