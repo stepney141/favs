@@ -72,3 +72,5 @@ export const unwrapResult = <T>(result: Result<T>): T => {
     throw payload;
   }
 };
+
+export type Brand<K, T> = K & { __brand: T };

@@ -19,21 +19,31 @@ export const REGEX = {
   // ref: http://absg.hatenablog.com/entry/2016/03/17/190831
   // ref: https://regexr.com/3gk2s
   // ref: https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11143609671
+  // ref: https://stackoverflow.com/questions/2123131/determine-if-10-digit-string-is-valid-amazon-asin
   amazon_asin: /[A-Z0-9]{10}|[0-9-]{9,16}[0-9X]/,
 
   // ref: https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
   isbn: /(?=[0-9X]{10}|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}|97[89][0-9]{10}|(?=(?:[0-9]+[- ]){4})[- 0-9]{17})(?:97[89])?[0-9]{1,5}[0-9]+[0-9]+[0-9X]/g,
+  isbn10:
+    /^(?:ISBN(?:-10)?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$)[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/,
+  isbn13:
+    /^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$/,
 
   ncid_in_cinii_url: /(?<=https:\/\/ci.nii.ac.jp\/ncid\/).*/
 };
 
 export const BIBLIOINFO_SOURCES = ["OpenBD", "Amazon", "NDL", "GoogleBooks"] as const;
-export const CINII_TARGET_TAGS = ["sophia"] as const;
+export const CINII_TARGET_TAGS = ["Sophia", "UTokyo"] as const;
 
 export const CINII_TARGETS: CiniiTarget[] = [
   {
-    tag: "sophia",
-    cinii_id: "FA005358", //ref: https://ci.nii.ac.jp/library/FA005358
+    tag: "UTokyo",
+    cinii_kid: "KI000221",
+    opac: "https://opac.dl.itc.u-tokyo.ac.jp"
+  },
+  {
+    tag: "Sophia",
+    cinii_kid: "KI00209X", //ref: https://ci.nii.ac.jp/library/FA005358
     opac: "https://www.lib.sophia.ac.jp"
   }
 ];

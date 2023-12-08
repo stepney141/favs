@@ -20,21 +20,25 @@ import {
   MATH_LIB_BOOKLIST,
   CINII_TARGETS
 } from "./constants";
-
-import type {
-  Book,
-  OpenBdResponse,
-  CiniiResponse,
-  NdlResponseJson,
-  BiblioinfoErrorStatus,
-  BookList,
-  FetchBiblioInfo,
-  BiblioInfoStatus,
-  IsOwnBook,
-  BookOwningStatus,
-  GoogleBookApiResponse,
-  IsOwnBookConfig
+import {
+  isAsin,
+  type ASIN,
+  type Book,
+  type OpenBdResponse,
+  type CiniiResponse,
+  type NdlResponseJson,
+  type BiblioinfoErrorStatus,
+  type BookList,
+  type FetchBiblioInfo,
+  type BiblioInfoStatus,
+  type IsOwnBook,
+  type BookOwningStatus,
+  type GoogleBookApiResponse,
+  type IsOwnBookConfig,
+  type ISBN10,
+  type ISBN13,
 } from "./types";
+
 import type { AxiosResponse } from "axios";
 import type { ParseResult } from "papaparse";
 import type { Browser, ElementHandle } from "puppeteer";
@@ -47,7 +51,7 @@ const cinii_appid = process.env.CINII_API_APPID!.toString();
 /**
  * @link https://qiita.com/iz-j/items/27b9656ebed1a4516ee1
  */
-const convertISBN10To13 = (isbn10: string): string => {
+const convertISBN10To13 = (isbn10: ISBN10): ISBN13 => {
   // 1. 先頭に`978`を足して、末尾の1桁を除く
   const src = `978${isbn10.slice(0, 9)}`;
 
@@ -61,8 +65,10 @@ const convertISBN10To13 = (isbn10: string): string => {
   const rem = 10 - (sum % 10);
   const checkdigit = rem === 10 ? 0 : rem;
 
+  const result = `${src}${checkdigit}`;
+
   // 1.の末尾に3.の値を添えて出来上がり
-  return `${src}${checkdigit}`;
+  return result as ISBN13;
 };
 
 /**
@@ -126,7 +132,7 @@ class Bookmaker {
         waitUntil: ["networkidle0", "domcontentloaded"]
       }),
       (loginButtonHandle[0] as ElementHandle<Element>).click()
-      //ref: https://github.com/puppeteer/puppeteer/issues/8852
+      // ref: https://github.com/puppeteer/puppeteer/issues/8852
     ]);
 
     console.log(`${JOB_NAME}: Login Completed!`);
@@ -156,7 +162,7 @@ class Bookmaker {
         const bkmt = String(bkmt_raw); //本の情報のbookmeter内部リンクを取得
 
         const amzn_raw: string = await getNodeProperty(amazonLinkHandle[i], "href");
-        const amzn = matchASIN(amzn_raw);
+        const amzn = matchASIN(amzn_raw) as ISBN10 | ASIN | null;
 
         this.#bookList.set(bkmt, {
           //bookmeterの内部リンクをMapのキーにする
@@ -166,7 +172,8 @@ class Bookmaker {
           author: "",
           publisher: "",
           published_date: "",
-          exist_in_sophia: "No",
+          exist_in_Sophia: "No",
+          exist_in_UTokyo: "No",
           central_opac_link: "",
           mathlib_opac_link: ""
         });
@@ -410,7 +417,7 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
 
   //中央図書館のチェック
   const response: AxiosResponse<CiniiResponse> = await axios.get(
-    `https://ci.nii.ac.jp/books/opensearch/search?isbn=${isbn}&fano=${library?.cinii_id}&format=json&appid=${cinii_appid}`
+    `https://ci.nii.ac.jp/books/opensearch/search?isbn=${isbn}&kid=${library?.cinii_kid}&format=json&appid=${cinii_appid}`
   );
   const json = response.data["@graph"][0];
   const bookinfo = json.items;
@@ -447,23 +454,25 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
  * 数学図書館の所蔵検索
  */
 const searchSophiaMathLib: IsOwnBook<Set<string>> = (config: IsOwnBookConfig<Set<string>>): BookOwningStatus => {
-  const isbn = config.book.isbn_or_asin;
+  const book_id = config.book.isbn_or_asin;
   const mathlib_isbn_list = config.options?.resources;
 
   if (mathlib_isbn_list === undefined) {
     throw new Error("the mathlib booklist is undefined");
   }
 
-  if (isbn === null || isbn === undefined) {
+  if (book_id === null || book_id === undefined || isAsin(book_id)) {
     return { book: { ...config.book }, isOwning: false };
   }
 
-  if (mathlib_isbn_list.has(isbn) || mathlib_isbn_list.has(convertISBN10To13(isbn))) {
-    const mathlib_opac_link = `https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=${isbn}&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1`;
+  const isbn13 = convertISBN10To13(book_id);
+
+  if (mathlib_isbn_list.has(isbn13) || mathlib_isbn_list.has(isbn13)) {
+    const mathlib_opac_link = `https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=${isbn13}&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1`;
     return {
       book: {
         ...config.book,
-        exist_in_sophia: "Yes",
+        exist_in_Sophia: "Yes",
         mathlib_opac_link: mathlib_opac_link
       },
       isOwning: true

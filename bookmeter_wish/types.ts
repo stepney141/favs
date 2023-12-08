@@ -1,8 +1,10 @@
-import type { BIBLIOINFO_SOURCES, CINII_TARGET_TAGS } from "./constants";
+import { REGEX, type BIBLIOINFO_SOURCES, type CINII_TARGET_TAGS } from "./constants";
+
+import type { Brand } from "../.libs/lib";
 
 export type Book = {
   bookmeter_url: string;
-  isbn_or_asin: string | null;
+  isbn_or_asin: ISBN10 | ASIN | null;
   book_title: string;
   author: string;
   publisher: string;
@@ -29,7 +31,7 @@ export type ExistIn = `exist_in_${CiniiTargetOrgs}`;
 
 export type CiniiTarget = {
   tag: CiniiTargetOrgs;
-  cinii_id: string;
+  cinii_kid: string;
   opac: string;
 };
 
@@ -126,4 +128,21 @@ export type GoogleBookApiResponse = {
   kind: string;
   items?: GoogleBookItem[];
   totalItems: number;
+};
+
+export type ISBN10 = Brand<string, "ISBN10">;
+export type ISBN13 = Brand<string, "ISBN13">;
+export type ASIN = Brand<string, "ASIN">;
+
+export const isIsbn10 = (str: string): str is ISBN10 => {
+  return str.match(REGEX.isbn10) !== null;
+};
+export const isIsbn13 = (str: string): str is ISBN13 => {
+  return str.match(REGEX.isbn13) !== null;
+};
+export const isAsin = (str: string): str is ASIN => {
+  if (isIsbn10(str)) {
+    return false;
+  }
+  return str.match(REGEX.amazon_asin) !== null;
 };
