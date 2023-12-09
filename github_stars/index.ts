@@ -84,7 +84,7 @@ const writeCSV = async (json: (Starred | Gist)[], filename: string): Promise<voi
     await writeCSV(stars_json, stars_list_filename);
 
     console.log(`${JOB_NAME}: CSV Output Completed!`);
-    console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+    console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
   } catch (e) {
     console.log(e);
   }

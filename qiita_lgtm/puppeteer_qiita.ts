@@ -97,7 +97,7 @@ function writeCSV(arrayData) {
     const lgtm = await getLgtm(browser);
     writeCSV([...lgtm.values()]);
 
-    console.log("The processsing took " + Math.round((Date.now() - startTime) / 1000) + " seconds");
+    console.log("The processs took " + Math.round((Date.now() - startTime) / 1000) + " seconds");
 
     await browser.close();
   } catch (e) {

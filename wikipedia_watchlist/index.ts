@@ -230,7 +230,7 @@ const extractWatchlist = async (baseURI: TargetUrls, cookies: string[]): Promise
       console.log(`${url}: finished`);
     }
 
-    console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+    console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
   } catch (e) {
     if (isAxiosError(e)) {
       handleAxiosError(e);

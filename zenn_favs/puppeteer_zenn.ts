@@ -215,7 +215,7 @@ async function writeCSV<T>(array: T[]) {
     const articles = await zenn.login().then((z) => z.explore());
     await writeCSV(mapToArray(articles));
 
-    console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+    console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 
     await browser.close();
   } catch (e) {
