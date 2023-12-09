@@ -22,5 +22,11 @@ declare namespace NodeJS {
     readonly OAUTH_TOKEN_OF_GITHUB?: string;
     readonly NICONICO_ACCOUNT?: string;
     readonly NICONICO_PASSWORD?: string;
+    readonly FIREBASE_API_KEY?: string;
+    readonly FIREBASE_AUTH_DOMAIN?: string;
+    readonly FIREBASE_PROJECT_ID?: string;
+    readonly FIREBASE_STORAGE_BUCKET?: string;
+    readonly FIREBASE_MESSAGING_SENDER_ID?: string;
+    readonly FIREBASE_APP_ID?: string;
   }
 }

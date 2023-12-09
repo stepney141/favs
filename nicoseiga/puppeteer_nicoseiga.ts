@@ -1,7 +1,10 @@
 import fs from "node:fs";
 import path from "path";
 
+import axios from "axios";
 import { config } from "dotenv";
+import { initializeApp } from "firebase/app";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { unparse } from "papaparse";
 import { launch } from "puppeteer";
 
@@ -14,7 +17,7 @@ const JOB_NAME = "Niconico Seiga MyClips";
 const CSV_FILENAME = "nicoseiga_myclips";
 const LOGIN_URL = "https://account.nicovideo.jp/login?site=seiga&next_url=%2Fmy%2Fclip";
 const MYCLIP_URL = "https://seiga.nicovideo.jp/my/clip";
-const COOKIE_PATH = "./seiga_cookie.json";
+const COOKIE_PATH = "seiga_cookie.json";
 
 const XPATH = {
   useridInput: '//*[@id="input__mailtel"]',
@@ -30,6 +33,14 @@ const XPATH = {
 config({ path: path.join(__dirname, "../.env") });
 const user_name = process.env.NICONICO_ACCOUNT!.toString();
 const password = process.env.NICONICO_PASSWORD!.toString();
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY!,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN!,
+  projectId: process.env.FIREBASE_PROJECT_ID!,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET!,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID!,
+  appId: process.env.FIREBASE_APP_ID!
+};
 
 async function isNotLoggedInSeiga(page: Page) {
   const eh = await page.$x(XPATH.eachIllustLinks);
@@ -38,6 +49,10 @@ async function isNotLoggedInSeiga(page: Page) {
 
 type Clip = { url: string; title: string; created_date: string; clipped_date: string };
 type ClipList = Map<string, Clip>;
+
+const app = initializeApp(firebaseConfig) ;// Initialize Firebase
+const storage = getStorage(app); // Initialize Cloud Storage and get a reference to the service
+const pathReference = ref(storage, COOKIE_PATH);
 
 class Seiga {
   #browser: Browser;
@@ -55,6 +70,10 @@ class Seiga {
       "accept-language": "ja-JP"
     });
     await page.setUserAgent(USER_AGENT);
+
+    const cookieUrl = await getDownloadURL(pathReference);
+    const response = await axios.get(cookieUrl); // cookieをダウンロード
+    fs.writeFileSync(COOKIE_PATH, JSON.stringify(response.data));
 
     if (fs.existsSync(COOKIE_PATH)) {
       //cookieがあれば読み込む
@@ -90,8 +109,11 @@ class Seiga {
       ]);
     }
 
-    const afterCookies = await page.cookies();
-    fs.writeFileSync(COOKIE_PATH, JSON.stringify(afterCookies)); //cookie更新
+    const afterCookies = await page.cookies() as unknown as string; //cookie更新
+    const afterCookieBlob = new Blob([JSON.stringify(afterCookies)], {type: "application/json"});
+    // ref: https://medium.com/@dorathedev/uploading-json-objects-as-json-files-to-firebase-storage-without-having-or-creating-a-json-file-38ad323af3c4
+    await uploadBytes(pathReference, afterCookieBlob); //cookieをアップロード
+    fs.unlinkSync(COOKIE_PATH);
 
     console.log(`${JOB_NAME}: Login Completed!`);
     return this;
@@ -164,7 +186,7 @@ function writeCSV(cliplist: ClipList) {
       defaultViewport: { width: 1000, height: 1000 },
       headless: "new",
       // devtools: true,
-      slowMo: 120
+      slowMo: 100
     });
 
     const seiga = new Seiga(browser);
@@ -172,10 +194,11 @@ function writeCSV(cliplist: ClipList) {
 
     writeCSV(cliplist); //ファイル出力
 
-    console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+    console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 
     await browser.close();
   } catch (e) {
     console.log(e);
+    process.exit(1);
   }
 })();
