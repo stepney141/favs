@@ -1,20 +1,19 @@
 import { AxiosError } from "axios";
 import type { ElementHandle, JSHandle, Page } from "puppeteer";
 
-/**
- * @link https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
- */
 export const handleAxiosError = (error: AxiosError) => {
   if (error.response) {
-    console.log(error.response.data);
-    console.log(error.response.status);
-    console.log(error.response.headers);
-  } else if (error.request) {
-    console.log(error.request);
+    console.log({
+      status: error.response.status,
+      error: error.response.data,
+      errorMsg: error.message
+    });
   } else {
-    console.log("Error", error);
+    console.log({
+      errorMsg: error.message,
+      request: error.request
+    });
   }
-  console.log("Axios threw the above error!");
 };
 
 /**
@@ -47,6 +46,24 @@ export const clickMouse = async (page: Page, x: number, y: number, time: number)
     return false;
   }
 };
+
+/**
+ * @link https://zenn.dev/sora_kumo/articles/539d7f6e7f3c63
+ */
+export const PromiseQueue = (ps = new Set<Promise<unknown>>()) => ({
+  add: (p: Promise<unknown>) => {
+    p.then(() => ps.delete(p)).catch(() => ps.delete(p));
+    ps.add(p);
+  },
+  wait: (limit: number) => ps.size >= limit && Promise.race(ps),
+  all: () => Promise.all(ps)
+});
+
+/**
+ * @link https://jappy.hatenablog.com/entry/2020/01/29/082932
+ */
+export const sliceByNumber = <T = object>(array: T[], n: number): T[][] =>
+  array.reduce((acc: T[][], c, i: number) => (i % n ? acc : [...acc, ...[array.slice(i, i + n)]]), []);
 
 /**
  * Iterates like Python-zip
