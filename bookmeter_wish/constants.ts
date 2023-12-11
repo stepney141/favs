@@ -49,6 +49,10 @@ export const CINII_TARGETS: CiniiTarget[] = [
 ];
 export const MATH_LIB_BOOKLIST = {
   //数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108
-  ja: "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_j.pdf",
+  ja: [
+    "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_j.pdf",
+    "https://mathlib-sophia.opac.jp/opac/file/view/2022.4-2023.2.pdf",
+    "https://mathlib-sophia.opac.jp/opac/file/view/202304-202310.pdf"
+  ],
   en_with_isbn: "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_F1.pdf"
 };

@@ -50,7 +50,7 @@ async function isNotLoggedInSeiga(page: Page) {
 type Clip = { url: string; title: string; created_date: string; clipped_date: string };
 type ClipList = Map<string, Clip>;
 
-const app = initializeApp(firebaseConfig) ;// Initialize Firebase
+const app = initializeApp(firebaseConfig); // Initialize Firebase
 const storage = getStorage(app); // Initialize Cloud Storage and get a reference to the service
 const pathReference = ref(storage, COOKIE_PATH);
 
@@ -109,8 +109,8 @@ class Seiga {
       ]);
     }
 
-    const afterCookies = await page.cookies() as unknown as string; //cookie更新
-    const afterCookieBlob = new Blob([JSON.stringify(afterCookies)], {type: "application/json"});
+    const afterCookies = (await page.cookies()) as unknown as string; //cookie更新
+    const afterCookieBlob = new Blob([JSON.stringify(afterCookies)], { type: "application/json" });
     // ref: https://medium.com/@dorathedev/uploading-json-objects-as-json-files-to-firebase-storage-without-having-or-creating-a-json-file-38ad323af3c4
     await uploadBytes(pathReference, afterCookieBlob); //cookieをアップロード
     fs.unlinkSync(COOKIE_PATH);

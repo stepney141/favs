@@ -35,18 +35,17 @@ export type CiniiTarget = {
   opac: string;
 };
 
-export type OpenBdResponse = {
-  summary: {
-    isbn: string;
-    title: string;
-    volume: string;
-    series: string;
-    publisher: string;
-    pubdate: string;
-    cover: string;
-    author: string;
-  };
-}[];
+export type OpenBdSummary = {
+  isbn: string;
+  title: string;
+  volume: string;
+  series: string;
+  publisher: string;
+  pubdate: string;
+  cover: string;
+  author: string;
+};
+export type OpenBdResponse = ({ summary: OpenBdSummary } | null)[];
 
 export type NdlResponseJson = {
   rss: {

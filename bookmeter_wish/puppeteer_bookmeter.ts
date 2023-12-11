@@ -1,14 +1,14 @@
 import fs from "node:fs/promises";
 import path from "path";
 
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import { config } from "dotenv";
 import { XMLParser } from "fast-xml-parser";
 import { parse, unparse } from "papaparse";
 import { PdfData } from "pdfdataextract";
 import { launch } from "puppeteer";
 
-import { getNodeProperty, handleAxiosError, mapToArray, randomWait, sleep } from "../.libs/utils";
+import { PromiseQueue, getNodeProperty, mapToArray, randomWait, sleep, zip } from "../.libs/utils";
 
 import {
   CSV_FILENAME,
@@ -21,7 +21,6 @@ import {
   CINII_TARGETS
 } from "./constants";
 import {
-  isAsin,
   type ASIN,
   type Book,
   type OpenBdResponse,
@@ -37,6 +36,7 @@ import {
   type IsOwnBookConfig,
   type ISBN10,
   type ISBN13,
+  isIsbn10
 } from "./types";
 
 import type { AxiosResponse } from "axios";
@@ -47,6 +47,7 @@ config({ path: path.join(__dirname, "../.env") });
 const bookmeter_username = process.env.BOOKMETER_ACCOUNT!.toString();
 const bookmeter_password = process.env.BOOKMETER_PASSWORD!.toString();
 const cinii_appid = process.env.CINII_API_APPID!.toString();
+const google_books_api_key = process.env.GOOGLE_BOOKS_API_KEY!.toString();
 
 /**
  * @link https://qiita.com/iz-j/items/27b9656ebed1a4516ee1
@@ -79,23 +80,23 @@ const matchASIN = (url: string): string | null => {
   return matched?.[0] ?? null;
 };
 
-const writeCSV = async (array_data: Book[], filename: string) => {
-  const json_data = JSON.stringify(array_data, null, "  ");
-  const csv_data = unparse(json_data);
+const writeCSV = async (array: Book[], filename: string) => {
+  const json = JSON.stringify(array, null, "  ");
+  const csv = unparse(json);
 
   const filehandle = await fs.open(filename, "w");
-  await fs.appendFile(`./${filename}`, csv_data);
+  await fs.appendFile(`./${filename}`, csv);
   await filehandle.close();
   console.log(`${JOB_NAME}: CSV Output Completed!`);
 };
 
 const readCSV = async (filename: string) => {
   const data = await fs.readFile(filename, "utf-8");
-  const parsed_obj = parse(data, {
+  const parsedObj = parse(data, {
     header: true,
     complete: (results: ParseResult<Book>) => results
   });
-  return parsed_obj.data;
+  return parsedObj.data;
 };
 
 const fxp = new XMLParser();
@@ -115,8 +116,17 @@ class Bookmaker {
   async login() {
     const page = await this.#browser.newPage();
 
+    await page.setRequestInterception(true);
+    page.on("request", (interceptedRequest) => {
+      if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
+        interceptedRequest.abort();
+      } else {
+        interceptedRequest.continue();
+      }
+    });
+
     await page.goto(`${bookmeter_baseURI}/login`, {
-      waitUntil: "networkidle2"
+      waitUntil: "domcontentloaded"
     });
 
     const accountNameInputHandle = await page.$x(XPATH.accountNameInput);
@@ -129,7 +139,7 @@ class Bookmaker {
     await Promise.all([
       page.waitForNavigation({
         timeout: 2 * 60 * 1000,
-        waitUntil: ["networkidle0", "domcontentloaded"]
+        waitUntil: "domcontentloaded"
       }),
       (loginButtonHandle[0] as ElementHandle<Element>).click()
       // ref: https://github.com/puppeteer/puppeteer/issues/8852
@@ -141,16 +151,22 @@ class Bookmaker {
 
   async explore(): Promise<Map<string, Book>> {
     const page = await this.#browser.newPage();
-    let page_num = 1;
+    let pageNum = 1;
 
     console.log(`${JOB_NAME}: Scraping Started!`);
 
-    for (;;) {
-      // 1500ms ~ 3300msの間でランダムにアクセスの間隔を空ける
-      await sleep(randomWait(2000, 0.5, 1.1));
+    await page.setRequestInterception(true);
+    page.on("request", (interceptedRequest) => {
+      if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
+        interceptedRequest.abort();
+      } else {
+        interceptedRequest.continue();
+      }
+    });
 
-      await page.goto(`${bookmeter_baseURI}/users/${bookmeter_userID}/books/wish?page=${page_num}`, {
-        waitUntil: ["domcontentloaded", "networkidle0"]
+    for (;;) {
+      await page.goto(`${bookmeter_baseURI}/users/${bookmeter_userID}/books/wish?page=${pageNum}`, {
+        waitUntil: ["domcontentloaded"]
       });
 
       const booksUrlHandle = await page.$x(XPATH.booksUrl);
@@ -179,13 +195,13 @@ class Bookmaker {
         });
       }
 
-      console.log(`scanning page ${page_num}`);
+      console.log(`scanning page ${pageNum}`);
 
       // XPathで本の情報を取得し、そのelementHandleに要素が存在しなければループから抜ける
       if (isBookExistHandle.length == 0) {
         break;
       } else {
-        page_num++;
+        pageNum++;
       }
     }
     console.log(`${JOB_NAME}: Bookmeter Scraping Completed!`);
@@ -227,56 +243,47 @@ const isBookListDifferent = (latestList: BookList, prevList: BookList): boolean 
 /**
  * OpenBD検索
  */
-const fetchOpenBD = async (book: Book): Promise<BiblioInfoStatus> => {
-  const isbn = book["isbn_or_asin"]; //ISBNデータを取得
+const bulkFetchOpenBD = async (bookList: BookList): Promise<BiblioInfoStatus[]> => {
+  const bulkTargetIsbns = [...bookList.values()].map((bookmeter) => bookmeter["isbn_or_asin"]).toString();
+  const bookmeterKeys = Array.from(bookList.keys());
 
-  if (isbn === null || isbn === undefined) {
-    //有効なISBNではない
-    const status_text: BiblioinfoErrorStatus = "INVALID_ISBN";
-    const part = {
-      book_title: status_text,
-      author: status_text,
-      publisher: status_text,
-      published_date: status_text
-    };
-    return {
-      book: { ...book, ...part },
-      isFound: true
-    };
+  const response: AxiosResponse<OpenBdResponse> = await axios({
+    method: "get",
+    url: `https://api.openbd.jp/v1/get?isbn=${bulkTargetIsbns}`,
+    responseType: "json"
+  });
+  const results = [];
+
+  for (const [bookmeterURL, bookResp] of zip(bookmeterKeys, response.data)) {
+    if (bookResp === null) {
+      //本の情報がなかった
+      const statusText: BiblioinfoErrorStatus = "Not_found_in_OpenBD";
+      const part = {
+        book_title: statusText,
+        author: statusText,
+        publisher: statusText,
+        published_date: statusText
+      };
+      results.push({
+        book: { ...bookList.get(bookmeterURL)!, ...part },
+        isFound: false
+      });
+    } else {
+      //本の情報があった
+      const bookinfo = bookResp.summary;
+      const part = {
+        book_title: bookinfo.title ?? "",
+        author: bookinfo.author ?? "",
+        publisher: bookinfo.publisher ?? "",
+        published_date: bookinfo.pubdate ?? ""
+      };
+      results.push({
+        book: { ...bookList.get(bookmeterURL)!, ...part },
+        isFound: true
+      });
+    }
   }
-
-  const response: AxiosResponse<OpenBdResponse> = await axios.get(`https://api.openbd.jp/v1/get?isbn=${isbn}`);
-
-  //本の情報があった
-  if (response.data[0] !== null) {
-    const fetched_data = response.data[0].summary;
-    const part = {
-      book_title: fetched_data.title ?? "",
-      author: fetched_data.author ?? "",
-      publisher: fetched_data.publisher ?? "",
-      published_date: fetched_data.pubdate ?? ""
-    };
-
-    return {
-      book: { ...book, ...part },
-      isFound: true
-    };
-
-    //本の情報がなかった
-  } else {
-    const status_text: BiblioinfoErrorStatus = "Not_found_in_OpenBD";
-    const part = {
-      book_title: status_text,
-      author: status_text,
-      publisher: status_text,
-      published_date: status_text
-    };
-
-    return {
-      book: { ...book, ...part },
-      isFound: false
-    };
-  }
+  return results;
 };
 
 /**
@@ -288,12 +295,12 @@ const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> 
 
   if (isbn === null || isbn === undefined) {
     //有効なISBNではない
-    const status_text: BiblioinfoErrorStatus = "INVALID_ISBN";
+    const statusText: BiblioinfoErrorStatus = "INVALID_ISBN";
     const part = {
-      book_title: status_text,
-      author: status_text,
-      publisher: status_text,
-      published_date: status_text
+      book_title: statusText,
+      author: statusText,
+      publisher: statusText,
+      published_date: statusText
     };
     return {
       book: { ...book, ...part },
@@ -301,16 +308,20 @@ const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> 
     };
   }
 
-  const response: AxiosResponse<string> = await axios.get(`https://iss.ndl.go.jp/api/opensearch?isbn=${isbn}`); //xml形式でレスポンスが返ってくる
-  const json_resp = fxp.parse(response.data) as NdlResponseJson; //xmlをjsonに変換
-  const fetched_data = json_resp.rss.channel;
+  // xml形式でレスポンスが返ってくる
+  const response: AxiosResponse<string> = await axios({
+    url: `https://iss.ndl.go.jp/api/opensearch?isbn=${isbn}`,
+    responseType: "text"
+  });
+  const parsedResult = fxp.parse(response.data) as NdlResponseJson; //xmlをjsonに変換
+  const ndlResp = parsedResult.rss.channel;
 
   //本の情報があった
-  if ("item" in fetched_data) {
+  if ("item" in ndlResp) {
     // 該当結果が単数か複数かによって、返却される値がObjectなのかArray<Object>なのか変わる。
     // fast-xml-parserの設定をいじれば多分もっとスマートにできると思うが、とりあえず目的を達成するにはこれだけ判定すれば十分。
     // 面倒なので、該当件数に関わらず配列の先頭だけをチェックしておく
-    const bookinfo = Array.isArray(fetched_data.item) ? fetched_data.item[0] : fetched_data.item;
+    const bookinfo = Array.isArray(ndlResp.item) ? ndlResp.item[0] : ndlResp.item;
     const part = {
       book_title: bookinfo["title"] ?? "",
       author: bookinfo["author"] ?? "",
@@ -324,12 +335,12 @@ const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> 
 
     //本の情報がなかった
   } else {
-    const status_text: BiblioinfoErrorStatus = "Not_found_in_NDL";
+    const statusText: BiblioinfoErrorStatus = "Not_found_in_NDL";
     const part = {
-      book_title: status_text,
-      author: status_text,
-      publisher: status_text,
-      published_date: status_text
+      book_title: statusText,
+      author: statusText,
+      publisher: statusText,
+      published_date: statusText
     };
     return {
       book: { ...book, ...part },
@@ -347,12 +358,12 @@ const fetchGoogleBooks: FetchBiblioInfo = async (book: Book): Promise<BiblioInfo
 
   if (isbn === null || isbn === undefined) {
     //有効なISBNではない
-    const status_text: BiblioinfoErrorStatus = "INVALID_ISBN";
+    const statusText: BiblioinfoErrorStatus = "INVALID_ISBN";
     const part = {
-      book_title: status_text,
-      author: status_text,
-      publisher: status_text,
-      published_date: status_text
+      book_title: statusText,
+      author: statusText,
+      publisher: statusText,
+      published_date: statusText
     };
     return {
       book: { ...book, ...part },
@@ -361,9 +372,11 @@ const fetchGoogleBooks: FetchBiblioInfo = async (book: Book): Promise<BiblioInfo
   }
 
   //有効なISBNがある
-  const response: AxiosResponse<GoogleBookApiResponse> = await axios.get(
-    `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
-  );
+  const response: AxiosResponse<GoogleBookApiResponse> = await axios({
+    method: "get",
+    url: `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${google_books_api_key}`,
+    responseType: "json"
+  });
   const json = response.data;
 
   if (json.totalItems !== 0 && json.items !== undefined) {
@@ -381,12 +394,12 @@ const fetchGoogleBooks: FetchBiblioInfo = async (book: Book): Promise<BiblioInfo
     };
   } else {
     //本の情報がなかった
-    const status_text: BiblioinfoErrorStatus = "Not_found_in_GoogleBooks";
+    const statusText: BiblioinfoErrorStatus = "Not_found_in_GoogleBooks";
     const part = {
-      book_title: status_text,
-      author: status_text,
-      publisher: status_text,
-      published_date: status_text
+      book_title: statusText,
+      author: statusText,
+      publisher: statusText,
+      published_date: statusText
     };
     return {
       book: { ...book, ...part },
@@ -415,10 +428,11 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
     };
   }
 
-  //中央図書館のチェック
-  const response: AxiosResponse<CiniiResponse> = await axios.get(
-    `https://ci.nii.ac.jp/books/opensearch/search?isbn=${isbn}&kid=${library?.cinii_kid}&format=json&appid=${cinii_appid}`
-  );
+  const response: AxiosResponse<CiniiResponse> = await axios({
+    method: "get",
+    url: `https://ci.nii.ac.jp/books/opensearch/search?isbn=${isbn}&kid=${library?.cinii_kid}&format=json&appid=${cinii_appid}`,
+    responseType: "json"
+  });
   const json = response.data["@graph"][0];
   const bookinfo = json.items;
   if (bookinfo === undefined) {
@@ -428,11 +442,11 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
     };
   }
 
-  const total_results = json["opensearch:totalResults"];
-  if (total_results !== "0") {
+  const totalResults = json["opensearch:totalResults"];
+  if (totalResults !== "0") {
     //検索結果が1件以上
-    const ncid_url = bookinfo[0]["@id"];
-    const ncid = ncid_url.match(REGEX.ncid_in_cinii_url)?.[0]; //ciniiのURLからncidだけを抽出
+    const ncidUrl = bookinfo[0]["@id"];
+    const ncid = ncidUrl.match(REGEX.ncid_in_cinii_url)?.[0]; //ciniiのURLからncidだけを抽出
     return {
       book: {
         ...config.book,
@@ -454,26 +468,26 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
  * 数学図書館の所蔵検索
  */
 const searchSophiaMathLib: IsOwnBook<Set<string>> = (config: IsOwnBookConfig<Set<string>>): BookOwningStatus => {
-  const book_id = config.book.isbn_or_asin;
-  const mathlib_isbn_list = config.options?.resources;
+  const bookId = config.book.isbn_or_asin;
+  const mathlibIsbnList = config.options?.resources;
 
-  if (mathlib_isbn_list === undefined) {
+  if (mathlibIsbnList === undefined) {
     throw new Error("the mathlib booklist is undefined");
   }
 
-  if (book_id === null || book_id === undefined || isAsin(book_id)) {
+  if (bookId === null || bookId === undefined || !isIsbn10(bookId)) {
     return { book: { ...config.book }, isOwning: false };
   }
 
-  const isbn13 = convertISBN10To13(book_id);
+  const isbn13 = convertISBN10To13(bookId);
 
-  if (mathlib_isbn_list.has(isbn13) || mathlib_isbn_list.has(isbn13)) {
+  if (mathlibIsbnList.has(bookId) || mathlibIsbnList.has(isbn13)) {
     const mathlib_opac_link = `https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=${isbn13}&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1`;
     return {
       book: {
         ...config.book,
         exist_in_Sophia: "Yes",
-        mathlib_opac_link: mathlib_opac_link
+        mathlib_opac_link
       },
       isOwning: true
     };
@@ -483,50 +497,65 @@ const searchSophiaMathLib: IsOwnBook<Set<string>> = (config: IsOwnBookConfig<Set
 };
 
 const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): Promise<Set<string>> => {
-  const target_pdf_url = MATH_LIB_BOOKLIST[listtype];
-  const mathlib_isbn_list: Set<string> = new Set();
-
-  const response: AxiosResponse<Uint8Array> = await axios.get(target_pdf_url, {
-    responseType: "arraybuffer",
-    headers: {
-      "Content-Type": "application/pdf"
-    }
-  });
-
-  const pdf_data: Uint8Array = response["data"];
-  const pdf_parsed = await PdfData.extract(pdf_data, { sort: false });
-
-  console.log(`${JOB_NAME}: Completed fetching the list of ${listtype} books in Sophia Univ. Math Lib`);
+  const pdfUrl = MATH_LIB_BOOKLIST[listtype];
+  const mathlibIsbnList: Set<string> = new Set();
 
   const filename = `mathlib_${listtype}.text`;
   const filehandle = await fs.open(filename, "w");
 
-  for (const page of pdf_parsed.text!) {
-    const matched_all = page.matchAll(REGEX.isbn);
-    for (const match of matched_all) {
-      mathlib_isbn_list.add(match[0]);
-      await fs.appendFile(`./${filename}`, `${match[0]}\n`);
+  for (const url of pdfUrl) {
+    const response: AxiosResponse<Uint8Array> = await axios({
+      method: "get",
+      url,
+      responseType: "arraybuffer",
+      headers: {
+        "Content-Type": "application/pdf"
+      }
+    });
+
+    const rawPdf: Uint8Array = response["data"];
+    const parsedPdf = await PdfData.extract(rawPdf, { sort: false });
+
+    console.log(`${JOB_NAME}: Completed fetching the list of ${listtype} books in Sophia Univ. Math Lib`);
+
+    for (const page of parsedPdf.text!) {
+      const matched_all = page.matchAll(REGEX.isbn);
+      for (const match of matched_all) {
+        mathlibIsbnList.add(match[0]);
+        await fs.appendFile(`./${filename}`, `${match[0]}\n`);
+      }
     }
   }
 
   await filehandle.close();
 
   console.log(`${JOB_NAME}: Completed creating a list of ISBNs of ${listtype} books in Sophia Univ. Math Lib`);
-  return mathlib_isbn_list;
+  return mathlibIsbnList;
 };
 
 const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
   const mathLibIsbnList = await configMathlibBookList("ja");
 
-  for (const bookmeter of booklist.values()) {
-    let updatedBook = await fetchOpenBD(bookmeter);
+  const updatedBookList = await bulkFetchOpenBD(booklist);
+
+  const fetchOthers = async (bookInfo: BiblioInfoStatus) => {
+    let updatedBook = { ...bookInfo };
+
+    // NDL検索
     if (!updatedBook.isFound) {
       updatedBook = await fetchNDL(updatedBook.book);
     }
+
+    await sleep(randomWait(1500, 0.8, 1.2));
+
+    // GoogleBooks検索
     if (!updatedBook.isFound) {
       updatedBook = await fetchGoogleBooks(updatedBook.book);
     }
 
+    await sleep(randomWait(1500, 0.8, 1.2));
+
+    // CiNii所蔵検索
     for (const library of CINII_TARGETS) {
       const ciniiStatus = await searchCiNii({ book: updatedBook.book, options: { libraryInfo: library } });
       if (ciniiStatus.isOwning) {
@@ -534,6 +563,7 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
       }
     }
 
+    // 数学図書館所蔵検索
     const smlStatus = searchSophiaMathLib({
       book: updatedBook.book,
       options: { resources: mathLibIsbnList }
@@ -543,9 +573,14 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
     }
 
     booklist.set(updatedBook.book.bookmeter_url, updatedBook.book);
+  };
 
-    await sleep(randomWait(1100, 0.8, 1.1));
+  const ps = PromiseQueue();
+  for (const book of updatedBookList) {
+    ps.add(fetchOthers(book));
+    await ps.wait(6); // 引数の指定量だけ並列実行
   }
+  await ps.all(); // 端数分の処理の待ち合わせ
 
   console.log(`${JOB_NAME}: Searching Completed`);
   return new Map(booklist);
@@ -558,11 +593,13 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
     const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: "new",
-      slowMo: 30
+      slowMo: 15
     });
 
     const book = new Bookmaker(browser);
     const latestBookList = await book.login().then((book) => book.explore());
+    await browser.close();
+
     const prevBookList = await getPrevBookList(CSV_FILENAME);
 
     if (isBookListDifferent(latestBookList, prevBookList)) {
@@ -571,14 +608,11 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
       await writeCSV(mapToArray(updatedBooklist), CSV_FILENAME); //ファイル出力
     }
 
-    console.log(`The processsing took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+    console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 
     await browser.close();
   } catch (e) {
-    if (isAxiosError(e)) {
-      handleAxiosError(e);
-    } else {
-      console.log(e);
-    }
+    console.log(e);
+    process.exit(1);
   }
 })();
