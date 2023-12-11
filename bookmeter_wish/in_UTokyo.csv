@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
+4274227553,凸解析と最適化理論 = Convex Analysis and Optimization Theory,"田中,謙輔,1933-2000",オーム社,202109,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC09853430
 4814400411,ルールズ・オブ・プログラミング : より良いコードを書くための21のルール,"Zimmerman,Chris 久富木,隆一",オーム社 (発売),202308,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03546979
 4862761593,フェアトレードのおかしな真実 : 僕は本当に良いビジネスを探す旅に出た,"Woodman,Conor 松本,裕",英治出版,201308,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB13308032
 406527978X,Pythonではじめるベイズ機械学習入門 = Introduction to Bayesian Machine Learning with Python,"森賀,新 木田,悠歩 須山,敦志",講談社,202205,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14834901
@@ -21,7 +22,6 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 4791765370,魔術師たちのルネサンス : 錬金術からコスモロジーへ,"沢井,繁男,1954-",青土社,201003,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB01613050
 4254116063,講座数学の考え方 13,"飯高,茂,1942- 川又,雄二郎,1952- 森田,茂之,1946- 谷島,賢二,1948-",朝倉書店,201504,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18502939
 4802612494,データ分析のための数理モデル入門 : 本質をとらえた分析のために,"江崎,貴裕",ソシム,202005,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30526175
-4802613776,本質を捉えたデータ分析のための分析モデル入門 : 統計モデル、深層学習、強化学習等用途・特徴から原理まで一気通貫!,"杉山,聡,データサイエンティスト",ソシム,202208,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16057140
 4582768717,江戸の読書会 : 会読の思想史,"前田,勉,1956-",平凡社,201809,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2679424X
 4582474098,放浪学生プラッターの手記 : スイスのルネサンス人,"Platter,Thomas,1499- 阿部,謹也,1935-2006",平凡社,198507,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN0072579X
 4861007836,ビジュアル・コンプレキシティ : 情報パターンのマッピング,"Lima,Manuel,1978- 奥,いずみ,1973- 久保田,晃弘,1960-",ビー・エヌ・エヌ新社,201203,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB08684578
@@ -37,6 +37,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 4065245532,新しい電気回路 = A New Approach to Electrical Circuits 下,"松澤,昭",講談社,202109,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC09873176
 4065232708,新しい電気回路 = A New Approach to Electrical Circuits 上,"松澤,昭1952-",講談社,202105,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC07276573
 4535787654,CGは数学でできている = CG:Your view into math! : 映像数学の展望,"安生,健一",日本評論社,202308,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03304969
+4814400497,雑に作る : 電子工作で好きなものを作る近道集,石川大樹／著 ギャル電／著 藤原麻里菜／著,オライリー・ジャパン,20231024,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04391233
 4044007527,神秘学講義,"高橋,巌,1928-",KADOKAWA,202303,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD01231456
 4320114949,計算トポロジー入門,"Edelsbrunner,Herbert Harer,John 荒井,迅 竹内,博志",共立出版,202309,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03706306
 4790703428,神秘主義を学ぶ人のために,"久野,昭,1930-",世界思想社,198901,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN02881402
@@ -49,6 +50,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 4867660221,デジタルヒストリーを実践する,ジョナサン・ブレイニー／著 ジェーン・ウィンターズ／著 サラ・ミリガン／著 マーティ・スティア／著 ほか,文学通信,20231020,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04578176
 4764906007,ストラング:線形代数とデータサイエンス,"Strang,Gilbert 松崎,公紀",近代科学社,202110,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10710871
 4798027979,わかる!電子工作の基本100,"遠藤,敏夫,1949-",秀和システム,201012,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB04134575
+4274231089,"機械学習のための確率過程入門 = An Introduction to stochastic processes for machine learning : 確率微分方程式からベイズモデル,拡散モデルまで","内山,祐介",オーム社,202309,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04065295
 4642084355,古記録入門,"高橋,秀樹,1964-",吉川弘文館,202307,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD0276166X
 4791109880,発達障害の精神病理 1,"鈴木,国文,1952- 内海,健,1955- 清水,光恵,1967-",星和書店,201809,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB26903571
 4260024086,自閉症スペクトラムの精神病理 : 星をつぐ人たちのために,"内海,健,1955-",医学書院,201511,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB20254148

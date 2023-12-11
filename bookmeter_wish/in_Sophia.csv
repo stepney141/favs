@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathlib_opac_link
+4562053151,悪魔と悪魔学の事典,"Guiley,Rosemary 金井,美子 木村,浩美 白須,清美,1969-",原書房,201604,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB21257334,
 4814400411,ルールズ・オブ・プログラミング : より良いコードを書くための21のルール,"Zimmerman,Chris 久富木,隆一",オーム社 (発売),202308,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03546979,
 4862761593,フェアトレードのおかしな真実 : 僕は本当に良いビジネスを探す旅に出た,"Woodman,Conor 松本,裕",英治出版,201308,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB13308032,
 406527978X,Pythonではじめるベイズ機械学習入門 = Introduction to Bayesian Machine Learning with Python,"森賀,新 木田,悠歩 須山,敦志",講談社,202205,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14834901,
@@ -24,14 +25,13 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathli
 4791765370,魔術師たちのルネサンス : 錬金術からコスモロジーへ,"沢井,繁男,1954-",青土社,201003,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB01613050,
 4254116063,講座数学の考え方 13,"飯高,茂,1942- 川又,雄二郎,1952- 森田,茂之,1946- 谷島,賢二,1948-",朝倉書店,201504,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18502939,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784254116069&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4802612494,データ分析のための数理モデル入門 : 本質をとらえた分析のために,"江崎,貴裕",ソシム,202005,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30526175,
-4802613776,本質を捉えたデータ分析のための分析モデル入門 : 統計モデル、深層学習、強化学習等用途・特徴から原理まで一気通貫!,"杉山,聡,データサイエンティスト",ソシム,202208,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16057140,
 4582768717,江戸の読書会 : 会読の思想史,"前田,勉,1956-",平凡社,201809,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2679424X,
 4582474098,放浪学生プラッターの手記 : スイスのルネサンス人,"Platter,Thomas,1499- 阿部,謹也,1935-2006",平凡社,198507,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN0072579X,
 4861007836,ビジュアル・コンプレキシティ : 情報パターンのマッピング,"Lima,Manuel,1978- 奥,いずみ,1973- 久保田,晃弘,1960-",ビー・エヌ・エヌ新社,201203,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB08684578,
 481440042X,ポートスキャナ自作ではじめるペネトレーションテスト : Linux環境で学ぶ攻撃者の思考,株式会社ステラセキュリティ小竹泰一／著,オライリー・ジャパン,20230920,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03912465,
 4320114450,入門情報幾何 = Introduction to Information Geometry : 統計的モデルをひもとく微分幾何学,"藤岡,敦",共立出版,202104,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC07070283,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784320114456&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4297136333,大規模言語モデル入門 = Introduction to Large Language Models,"山田,育矢 鈴木,正敏ソフトウェアエンジニア 山田,康輔 李,凌寒",技術評論社,202308,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03194521,
-4781911463,応用のための関数解析 : その考え方と技法,"吉田,善章,1958-",サイエンス社,200610,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA78762034,
+4781911463,応用のための関数解析 : その考え方と技法,"吉田,善章,1958-",サイエンス社,200610,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA78762034,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784781911465&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4274227332,人工知能が俳句を詠む : AI一茶くんの挑戦,"川村,秀憲,1973- 山下,倫央 横山,想一郎",オーム社,202107,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC08482989,
 4274229629,仕事ですぐに使える!DaVinci Resolveによる動画編集,"小寺,信良,1963-",オーム社,202211,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC18312544,
 4764906635,ベイズ最適化 = Bayesian Optimization : 適応的実験計画の基礎と実践,"今村,秀明 松井,孝太",近代科学社,202308,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03544113,
@@ -67,7 +67,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathli
 4798918431,企業が求める〈主体性〉とは何か : 教育と労働をつなぐ〈主体性〉言説の分析,"武藤,浩子",東信堂,202304,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD02131650,
 4903966364,ホガースの時代 : 版画で読むイギリス,"中村隆 著,中村, 隆, 1961-,",山形大学出版会,"Fri, 12 May 2023 09:00:00 +0900",https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01853376,
 4634591340,将棋の日本史 : 日本将棋はどのように生まれたのか,"永井,晋,1959-",山川出版社,202306,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD02763960,
-453560844X,xのx乗のはなし,"土基,善文,1965- 上野,健爾,1945- 浪川,幸彦,1945- 高橋,陽一郎,1946-",日本評論社,200207,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA57451998,
+453560844X,xのx乗のはなし,"土基,善文,1965- 上野,健爾,1945- 浪川,幸彦,1945- 高橋,陽一郎,1946-",日本評論社,200207,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA57451998,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784535608443&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4787292749,怪談の仕掛け,伊藤龍平／著,青弓社,20230620,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD02729441,
 425420163X,"「かわいい」工学 = ""KAWAII"" Engineering","大倉,典子,1953-",朝倉書店,201703,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2341504X,
 481440039X,RustとWebAssemblyによるゲーム開発 : 安全・高速・プラットフォーム非依存のWebアプリ開発入門,"Smith,Eric 中田,秀基,1967-",オーム社 (発売),202307,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD02922022,
@@ -206,7 +206,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathli
 4812221250,コロナ禍を生きる大学生 : 留学中のパンデミック経験を語り合う,"北野,真帆 内藤,直樹,1974-",昭和堂,202205,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14196612,
 4873119790,Pythonからはじめるアルゴリズムトレード : 自動売買の基礎と機械学習の本格導入に向けたPythonプログラミング,"Hilpisch,YvesJ 村上,振一郎",オーム社 (発売),202204,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13887538,
 4792414962,伝承文学を学ぶ,"小川,直之,1953- 大石,泰夫,1959- 服部,比呂美 飯倉,義之,1975-",清文堂出版,202112,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12912593,
-4621045938,いかにして問題をとくか,"ポリア,ジョージ 柿内賢信",丸善,1954-01,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA68198479,
+4621045938,いかにして問題をとくか,"ポリア,ジョージ 柿内賢信",丸善,1954-01,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA68198479,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784621045930&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4152093854,国家はなぜ衰退するのか : 権力・繁栄・貧困の起源 下,"Acemoglu,Daron,1967- Robinson,JamesA.,1960- ほか",早川書房,201306,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB12774120,
 4152093846,国家はなぜ衰退するのか : 権力・繁栄・貧困の起源 上,"Acemoglu,Daron,1967- Robinson,JamesA.,1960- ほか",早川書房,201306,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB12774120,
 4065178029,統計モデルと推測 = Statistical Model and Inference,"松井,秀俊 小泉,和之 竹村,彰通,1952-",講談社,201911,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2925786X,
@@ -273,7 +273,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathli
 4489021291,入門確率解析とルベーグ積分,"森,真,1948-",東京図書,201206,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB09394642,
 4004319102,民俗学入門,"菊地,暁,1969-",岩波書店,202201,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12229007,
 4758910235,現代高等英文法 = An Advanced Grammar of Present-day English : 学習文法から科学文法へ,"八木,克正,1944-",開拓社,202110,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10102989,
-4320015541,線形代数,"佐武,一郎,1927-2014",共立出版,199704,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA30139466,
+4320015541,線形代数,"佐武,一郎,1927-2014",共立出版,199704,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA30139466,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784320015548&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4297108216,動かしてわかるCPUの作り方10講,"井澤,裕司",技術評論社,201909,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28696831,
 4320122674,計算科学講座 = Computational Science and Engineering 2(第1部計算科学の基盤),"金田,行雄,1949- 笹井,理生 張,紹良,1962-",共立出版,202201,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12116929,
 4254280041,数理計画入門,"福島,雅夫,1950-",朝倉書店,201102,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB04975808,
@@ -332,8 +332,8 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathli
 4904575865,萌える人類学者,"馬場 淳／編,平田 晶子／編,森 昭子／編,小西 公大／編,馬場 淳,平田 晶子,森 昭子,小西 公大,馬場 淳,平田 晶子,森 昭子,小西 公大,",東京外国語大学出版会,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC06506656,
 4903908984,うしろめたさの人類学,松村圭一郎／著,ミシマ社,20170916,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB24488253,
 4344983874,子どものまま中年化する若者たち : 根拠なき万能感とあきらめの心理,"鍋田,恭孝,1947-",幻冬舎,201507,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19260653,
-4535601097,初等整数論,"遠山,啓",日本評論社,197202,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00574592,
-4000068776,代数入門,"上野,健爾,1945-",岩波書店,200405,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA66885740,
+4535601097,初等整数論,"遠山,啓",日本評論社,197202,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00574592,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784535601093&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
+4000068776,代数入門,"上野,健爾,1945-",岩波書店,200405,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA66885740,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784000068772&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4902666383,課題解決のための専門図書館ガイドブック,"専門図書館協議会私立図書館小委員会編,専門図書館協議会私立図書館小委員会,",読書工房,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC01906679,
 4865280111,戦前尖端語辞典,平山亜佐子／著・編集 山田参助／絵・漫画,左右社,20210131,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC05502489,
 4061589962,魔術から数学へ,"森,毅,1928-2010",講談社,199111,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN06923694,
