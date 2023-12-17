@@ -34,7 +34,7 @@
     "prettier": "^3.0.3",
     "ts-migrate": "^0.1.35",
     "tsx": "^4.6.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "type-check": "tsc --pretty --noEmit",
