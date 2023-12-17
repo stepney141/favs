@@ -123,6 +123,11 @@ jobs:
         working-directory: ./nicoseiga
         run: npx tsx ./puppeteer_nicoseiga.ts && bash ./get_url_list.sh
 
+      - name: Togetter Favorites
+        shell: bash
+        working-directory: ./togetter
+        run: npx tsx ./puppeteer_togetter.ts
+
       - name: Set the current datetime
         env:
           TZ: "Asia/Tokyo"
