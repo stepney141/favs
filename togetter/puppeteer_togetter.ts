@@ -89,8 +89,8 @@ class Togetter {
 
     const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
-      // headless: "new",
-      devtools: true,
+      headless: "new",
+      // devtools: true,
       slowMo: 80
     });
 
