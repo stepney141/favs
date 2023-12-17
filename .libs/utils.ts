@@ -1,4 +1,6 @@
+import fs from "node:fs/promises";
 import { AxiosError } from "axios";
+import { unparse } from "papaparse";
 import type { ElementHandle, JSHandle, Page } from "puppeteer";
 
 export const handleAxiosError = (error: AxiosError) => {
@@ -97,7 +99,7 @@ export const getNodeProperty = async <T>(eh: ElementHandle<Node>, prop: string):
   return value;
 };
 
-export const mapToArray = <K extends any, V extends any, M extends Map<K, V>>(map: M): V[] => {
+export const mapToArray = <M extends Map<K, V>, K extends any = string, V extends any = object>(map: M): V[] => {
   const array: V[] = [];
   for (const elem of map.values()) {
     array.push(elem);
@@ -105,12 +107,25 @@ export const mapToArray = <K extends any, V extends any, M extends Map<K, V>>(ma
   return array;
 };
 
-type FileIO<T extends any> = {
+// ファイルは必ずarrayから変換する
+type ArrayFileIO<T extends any[]> = {
   payload: T;
-  filename: string;
-  filetype: "json" | "csv";
+  fileName: string;
+  targetType: "json" | "csv";
 };
 
-export const writeFile = (IO: FileIO<string>) => {};
-export const appendFile = (IO: FileIO<string>) => {};
-export const readFile = (IO: FileIO<string>) => {};
+export const writeFile = async (IO: ArrayFileIO<any>) => {
+  const raw = IO.payload;
+  let output: string = "";
+
+  if (IO.targetType === "csv") {
+    output = unparse(raw);
+  } else if (IO.targetType === "json") {
+    output = JSON.stringify(raw, null, "  ");
+  }
+
+  await fs.writeFile(IO.fileName, output);
+};
+
+export const appendFile = (IO: ArrayFileIO<any>) => {};
+export const readFile = (IO: ArrayFileIO<any>) => {};
