@@ -14,9 +14,13 @@ import { USER_AGENT } from "./../.libs/constants";
 import type { Browser, ElementHandle } from "puppeteer";
 
 const stealthPlugin = StealthPlugin();
-//ref: https://github.com/berstend/puppeteer-extra/issues/668
+/* ref:
+- https://github.com/berstend/puppeteer-extra/issues/668
+- https://github.com/berstend/puppeteer-extra/issues/822
+*/
 stealthPlugin.enabledEvasions.delete("iframe.contentWindow");
 stealthPlugin.enabledEvasions.delete("navigator.plugins");
+stealthPlugin.enabledEvasions.delete("media.codecs");
 puppeteer.use(stealthPlugin);
 
 const JOB_NAME = "Zenn.dev Favorite Articles";
@@ -75,15 +79,11 @@ class Zennist {
   async login() {
     const page = await this.#browser.newPage();
 
-    await page.setExtraHTTPHeaders({ "accept-language": "ja-JP" });
-    await page.setUserAgent(USER_AGENT);
-
     /* https://github.com/berstend/puppeteer-extra/issues/668 */
     await page.setBypassCSP(true);
 
-    const pages = await this.#browser.pages();
-    // Close the new tab that chromium always opens first.
-    await pages[0].close();
+    await page.setExtraHTTPHeaders({ "accept-language": "ja-JP" });
+    await page.setUserAgent(USER_AGENT);
 
     await page.goto(`${baseURI}/enter`, {
       waitUntil: "domcontentloaded"
@@ -128,9 +128,7 @@ class Zennist {
   async explore() {
     const page = await this.#browser.newPage();
 
-    await page.setExtraHTTPHeaders({
-      "accept-language": "ja-JP"
-    });
+    await page.setExtraHTTPHeaders({ "accept-language": "ja-JP" });
     await page.setUserAgent(USER_AGENT);
 
     //「いいねした投稿」のスクレイピング
@@ -197,15 +195,16 @@ async function writeCSV<T>(array: T[]) {
     const browser = await puppeteer.launch({
       executablePath: executablePath(),
       defaultViewport: { width: 1000, height: 1000 },
-      // args: [
-      //     // '--disable-gpu',
-      //     '--disable-dev-shm-usage',
-      //     '--disable-setuid-sandbox',
-      //     '--no-first-run',
-      //     '--no-sandbox',
-      //     '--no-zygote',
-      //     // '--single-process'
-      // ],
+      args: [
+        // '--disable-gpu',
+        "--disable-blink-features=AutomationControlled" /* https://github.com/berstend/puppeteer-extra/issues/822 */,
+        "--disable-dev-shm-usage",
+        "--disable-setuid-sandbox",
+        "--no-first-run",
+        "--no-sandbox",
+        "--no-zygote"
+        // '--single-process'
+      ],
       slowMo: 100,
       // headless: "new",
       headless: false //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
