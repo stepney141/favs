@@ -79,6 +79,11 @@ jobs:
           echo "NICONICO_ACCOUNT=${{ secrets.NICONICO_ACCOUNT }}" >> .env
           echo "NICONICO_PASSWORD=${{ secrets.NICONICO_PASSWORD }}" >> .env
 
+      - name: Bookmeter Wish
+        shell: bash
+        working-directory: ./bookmeter_wish
+        run: npx tsx ./puppeteer_bookmeter.ts && bash ./is_in_my_lib.sh
+
       - name: GitHub Stars
         shell: bash
         working-directory: ./github_stars
@@ -88,11 +93,6 @@ jobs:
         shell: bash
         working-directory: ./qiita_lgtm
         run: npx tsx ./puppeteer_qiita.ts
-
-      - name: Bookmeter Wish
-        shell: bash
-        working-directory: ./bookmeter_wish
-        run: npx tsx ./puppeteer_bookmeter.ts && bash ./is_in_my_lib.sh
 
       - name: BoundHub Faved Movies
         shell: bash
