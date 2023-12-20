@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
+4320122356,メタヒューリスティクスの数理,"久保,幹雄,1963- Pedroso,JoãoPedro",共立出版,200905,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA89986066
 4627077416,"幾何学と代数系 = Geometric Algebra : ハミルトン,グラスマン,クリフォード","金谷,健一,1947-",森北出版,201407,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB16172560
 4873117437,メタプログラミングRuby,"Perrotta,Paolo 角,征典",オーム社,201510,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB19720458
 4588022180,最古の料理,J.ボテロ／著 松島英子／訳,法政大学出版局,20031201,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA6470446X
@@ -47,6 +48,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 4044007527,神秘学講義,"高橋,巌,1928-",KADOKAWA,202303,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD01231456
 4320114949,計算トポロジー入門,"Edelsbrunner,Herbert Harer,John 荒井,迅 竹内,博志",共立出版,202309,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03706306
 4790703428,神秘主義を学ぶ人のために,"久野,昭,1930-",世界思想社,198901,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN02881402
+4814400004,Pythonではじめるオープンエンドな進化的アルゴリズム : 発散型の機械学習による多様な解の探索,岡瑞起／著 齊藤拓己／著 嶋田健志／著,オライリー・ジャパン,20231018,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04318539
 4622090511,儀式をゲーム理論で考える : 協調問題、共通知識とは,"Chwe,MichaelSuk-Young,1965- 安田,雪,1963-",みすず書房,202206,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC15202244
 4339026026,アルゴリズムの自動微分と応用,"久保田,光一,1960- 伊理,正夫,1933-2018",コロナ社,199807,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA36098157
 4274230899,ゲーム理論からの社会ネットワーク分析,藤山英樹／著,オーム社,20231025,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04504034
@@ -113,6 +115,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 429713232X,Pythonで学ぶ衛星データ解析基礎 : 環境変化を定量的に把握しよう,"田中,康平,pub.2022 田村,賢哉 玉置,慎吾 宮﨑,浩之",技術評論社,202212,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC1887794X
 4295012270,Pythonで学ぶ音声合成 = Text-to-speech with Python,"山本,龍一 高道,慎之介",インプレス,202108,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC0920631X
 4862152368,まじなひの研究 : 考古資料と古記録・呪法書,"水野,正好,1934-2015",高志書院,202305,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD02337033
+4867350400,中国神話史,袁珂／著 佐々木猛／翻訳,集広舎,20230710,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD0278479X
 4314011971,眠りつづける少女たち : 脳神経科医は〈謎の病〉を調査する旅に出た,"O'Sullivan,Suzanne 高橋,洋,1960-",紀伊國屋書店,202305,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01878413
 4797386479,ふつうのLinuxプログラミング : Linuxの仕組みから学べるgccプログラミングの王道,"青木,峰郎",SBクリエイティブ,201709,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB24446344
 4121020561,日本語作文術 : 伝わる文章を書くために,"野内,良三,1944-",中央公論新社,201005,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB02066543
