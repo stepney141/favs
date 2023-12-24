@@ -597,20 +597,18 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
     });
 
     const book = new Bookmaker(browser);
-    // const latestBookList = await book.login().then((book) => book.explore());
-    await browser.close();
-
+    const latestBookList = await book.login().then((book) => book.explore());
     const prevBookList = await getPrevBookList(CSV_FILENAME);
 
-    // if (isBookListDifferent(latestBookList, prevBookList)) {
-    console.log(`${JOB_NAME}: Fetching bibliographic information`);
-    const updatedBooklist = await fetchBiblioInfo(prevBookList); //書誌情報取得
-    await writeCSV(mapToArray(updatedBooklist), CSV_FILENAME); //ファイル出力
-    // }
+    await browser.close();
+
+    if (isBookListDifferent(latestBookList, prevBookList)) {
+      console.log(`${JOB_NAME}: Fetching bibliographic information`);
+      const updatedBooklist = await fetchBiblioInfo(latestBookList); //書誌情報取得
+      await writeCSV(mapToArray(updatedBooklist), CSV_FILENAME); //ファイル出力
+    }
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
-
-    await browser.close();
   } catch (e) {
     console.log(e);
     process.exit(1);
