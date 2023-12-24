@@ -1,4 +1,6 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_Sophia,exist_in_UTokyo,central_opac_link,mathlib_opac_link
+https://bookmeter.com/books/9491282,4775313010,図解魔術の歴史,"草野,巧,1956-",新紀元社,201503,No,No,,
+https://bookmeter.com/books/21680054,4867660264,予言獣大図鑑,長野栄俊／編著 岩間理紀／著 笹方政紀／著 峰守ひろかず／著,文学通信,20231206,No,No,,
 https://bookmeter.com/books/170345,4320122356,メタヒューリスティクスの数理,"久保,幹雄,1963- Pedroso,JoãoPedro",共立出版,200905,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA89986066,
 https://bookmeter.com/books/8127826,4627077416,"幾何学と代数系 = Geometric Algebra : ハミルトン,グラスマン,クリフォード","金谷,健一,1947-",森北出版,201407,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB16172560,
 https://bookmeter.com/books/21726988,4814400586,Rustの練習帳 : コマンドラインツールの作成を通してRustを学ぶ,KenYouens-Clark／著 中山光樹／翻訳,オライリー・ジャパン,20240118,No,No,,
@@ -763,7 +765,7 @@ https://bookmeter.com/books/13092418,4896942523,西欧中世宝石誌の世界 :
 https://bookmeter.com/books/11818750,4896942337,ピカトリクス : 中世星辰魔術集成,"大橋,喜之,1955-",八坂書房,201704,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23575749,
 https://bookmeter.com/books/9851418,4774176435,あなたの知らない超絶技巧プログラミングの世界,"遠藤,侑介",技術評論社,201510,No,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB19571008,
 https://bookmeter.com/books/11014191,4861823730,フェティシズム全書,ジャン・ストレフ／著 加藤雅郁／翻訳 橋本克己／翻訳,作品社,20160510,No,No,,
-https://bookmeter.com/books/8311032,,Self-Publishing Made Simple Taking the Guesswork Out of Publishing Your Children's Book,April Cox,,2021-09-15,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN1616688X,
+https://bookmeter.com/books/8311032,,INVALID_ISBN,INVALID_ISBN,INVALID_ISBN,INVALID_ISBN,No,No,,
 https://bookmeter.com/books/18017,4105067060,性の歴史 3,"Foucault,Michel,1926-1984",新潮社,198704,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN01003699,
 https://bookmeter.com/books/18352,4105067052,性の歴史 2,"Foucault,Michel,1926-1984",新潮社,198610,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00561207,
 https://bookmeter.com/books/11421,4105067044,性の歴史 1,"Foucault,Michel,1926-1984",新潮社,198609,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00482202,
