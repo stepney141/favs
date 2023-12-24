@@ -519,8 +519,8 @@ const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): 
     console.log(`${JOB_NAME}: Completed fetching the list of ${listtype} books in Sophia Univ. Math Lib`);
 
     for (const page of parsedPdf.text!) {
-      const matched_all = page.matchAll(REGEX.isbn);
-      for (const match of matched_all) {
+      const matchedIsbn = page.matchAll(REGEX.isbn);
+      for (const match of matchedIsbn) {
         mathlibIsbnList.add(match[0]);
         await fs.appendFile(`./${filename}`, `${match[0]}\n`);
       }
@@ -597,16 +597,16 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
     });
 
     const book = new Bookmaker(browser);
-    const latestBookList = await book.login().then((book) => book.explore());
+    // const latestBookList = await book.login().then((book) => book.explore());
     await browser.close();
 
     const prevBookList = await getPrevBookList(CSV_FILENAME);
 
-    if (isBookListDifferent(latestBookList, prevBookList)) {
-      console.log(`${JOB_NAME}: Fetching bibliographic information`);
-      const updatedBooklist = await fetchBiblioInfo(latestBookList); //書誌情報取得
-      await writeCSV(mapToArray(updatedBooklist), CSV_FILENAME); //ファイル出力
-    }
+    // if (isBookListDifferent(latestBookList, prevBookList)) {
+    console.log(`${JOB_NAME}: Fetching bibliographic information`);
+    const updatedBooklist = await fetchBiblioInfo(prevBookList); //書誌情報取得
+    await writeCSV(mapToArray(updatedBooklist), CSV_FILENAME); //ファイル出力
+    // }
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 

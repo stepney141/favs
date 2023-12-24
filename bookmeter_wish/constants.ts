@@ -52,7 +52,7 @@ export const MATH_LIB_BOOKLIST = {
   ja: [
     "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_j.pdf",
     "https://mathlib-sophia.opac.jp/opac/file/view/2022.4-2023.2.pdf",
-    "https://mathlib-sophia.opac.jp/opac/file/view/202304-202310.pdf"
+    "https://mathlib-sophia.opac.jp/opac/file/view/2023.4-2023.12.pdf"
   ],
   en_with_isbn: "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_F1.pdf"
 };
