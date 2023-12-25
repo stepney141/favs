@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@types/papaparse": "^5.3.10",
-    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.8.0",
     "5to6-codemod": "^1.8.0",
     "esbuild": "^0.19.5",
