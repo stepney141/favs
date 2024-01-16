@@ -13,7 +13,7 @@ const TARGET_URL = `https://togetter.com/id/${TARGET_USER_ID}/favorite`;
 const XPATH = {
   allFavorites: '//*[@id="document"]/main/div/div[4]/ul/li[*]/div',
   allUrls: '//span[@class="title"]/a[h3[@title]]',
-  allTitles: '//a/h3[@title]',
+  allTitles: "//a/h3[@title]",
   allDatesPublished: '//time[@itemprop="datePublished"]',
   linkTolastPage: '//div[@class="pagenation"]/a[3]',
   linkToNextPage: '//div[@class="pagenation"]/a[contains(text(), "次へ")]'
@@ -40,11 +40,13 @@ class Togetter {
     await page.setRequestInterception(true);
     page.on("request", (interceptedRequest) => {
       const url = interceptedRequest.url();
-      if (url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpg:thumb")) {
-        interceptedRequest.abort();
-      } else {
-        interceptedRequest.continue();
-      }
+      (async () => {
+        if (url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpg:thumb")) {
+          await interceptedRequest.abort();
+        } else {
+          await interceptedRequest.continue();
+        }
+      })();
     });
 
     await page.goto(TARGET_URL, {
@@ -97,7 +99,7 @@ class Togetter {
     const togetter = new Togetter(browser);
     const matomelist: MatomeList = await togetter.explore();
 
-    writeFile({ fileName: CSV_FILENAME, payload: mapToArray(matomelist), targetType: "csv" });
+    await writeFile({ fileName: CSV_FILENAME, payload: mapToArray(matomelist), targetType: "csv" });
     console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);

@@ -26,9 +26,9 @@ export type IsOwnBook<T> =
   | ((config: IsOwnBookConfig<T>) => Promise<BookOwningStatus>);
 
 export type BiblioinfoErrorStatus = `Not_found_in_${(typeof BIBLIOINFO_SOURCES)[number]}` | "INVALID_ISBN";
+
 export type CiniiTargetOrgs = (typeof CINII_TARGET_TAGS)[number];
 export type ExistIn = `exist_in_${CiniiTargetOrgs}`;
-
 export type CiniiTarget = {
   tag: CiniiTargetOrgs;
   cinii_kid: string;

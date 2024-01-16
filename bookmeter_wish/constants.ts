@@ -33,8 +33,10 @@ export const REGEX = {
 };
 
 export const BIBLIOINFO_SOURCES = ["OpenBD", "Amazon", "NDL", "GoogleBooks"] as const;
-export const CINII_TARGET_TAGS = ["Sophia", "UTokyo"] as const;
 
+/**
+ * 検索対象となる図書館の情報
+ */
 export const CINII_TARGETS: CiniiTarget[] = [
   {
     tag: "UTokyo",
@@ -47,6 +49,12 @@ export const CINII_TARGETS: CiniiTarget[] = [
     opac: "https://www.lib.sophia.ac.jp"
   }
 ];
+
+/**
+ * この配列の順番で図書館が検索される
+ */
+export const CINII_TARGET_TAGS = ["Sophia", "UTokyo"] as const;
+
 export const MATH_LIB_BOOKLIST = {
   //数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108
   ja: [

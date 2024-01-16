@@ -18,7 +18,8 @@ import {
   bookmeter_baseURI,
   bookmeter_userID,
   MATH_LIB_BOOKLIST,
-  CINII_TARGETS
+  CINII_TARGETS,
+  CINII_TARGET_TAGS
 } from "./constants";
 import {
   type ASIN,
@@ -118,11 +119,13 @@ class Bookmaker {
 
     await page.setRequestInterception(true);
     page.on("request", (interceptedRequest) => {
-      if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
-        interceptedRequest.abort();
-      } else {
-        interceptedRequest.continue();
-      }
+      (async () => {
+        if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
+          await interceptedRequest.abort();
+        } else {
+          await interceptedRequest.continue();
+        }
+      })();
     });
 
     await page.goto(`${bookmeter_baseURI}/login`, {
@@ -157,11 +160,13 @@ class Bookmaker {
 
     await page.setRequestInterception(true);
     page.on("request", (interceptedRequest) => {
-      if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
-        interceptedRequest.abort();
-      } else {
-        interceptedRequest.continue();
-      }
+      (async () => {
+        if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
+          await interceptedRequest.abort();
+        } else {
+          await interceptedRequest.continue();
+        }
+      })();
     });
 
     for (;;) {
@@ -556,7 +561,8 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
     await sleep(randomWait(1500, 0.8, 1.2));
 
     // CiNii所蔵検索
-    for (const library of CINII_TARGETS) {
+    for (const tag of CINII_TARGET_TAGS) {
+      const library = CINII_TARGETS.find((library) => library.tag === tag)!;
       const ciniiStatus = await searchCiNii({ book: updatedBook.book, options: { libraryInfo: library } });
       if (ciniiStatus.isOwning) {
         updatedBook.book = ciniiStatus.book;
