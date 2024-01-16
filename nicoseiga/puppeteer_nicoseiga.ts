@@ -5,11 +5,10 @@ import axios from "axios";
 import { config } from "dotenv";
 import { initializeApp } from "firebase/app";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { unparse } from "papaparse";
 import { launch } from "puppeteer";
 
 import { USER_AGENT } from "../.libs/constants";
-import { getNodeProperty, mapToArray, zip } from "../.libs/utils";
+import { getNodeProperty, mapToArray, exportFile, zip } from "../.libs/utils";
 
 import type { ElementHandle, Page, Protocol, Browser } from "puppeteer";
 
@@ -93,12 +92,12 @@ class Seiga {
         waitUntil: "load"
       });
 
-      const useridInput_Handle = page.$x(XPATH.useridInput);
-      const passwordInput_Handle = page.$x(XPATH.passwordInput);
-      const loginButton_Handle = page.$x(XPATH.loginButton);
+      const useridInput_Handle = await page.$x(XPATH.useridInput);
+      const passwordInput_Handle = await page.$x(XPATH.passwordInput);
+      const loginButton_Handle = await page.$x(XPATH.loginButton);
 
-      await (await useridInput_Handle)[0].type(user_name);
-      await (await passwordInput_Handle)[0].type(password);
+      await useridInput_Handle[0].type(user_name);
+      await passwordInput_Handle[0].type(password);
 
       await Promise.all([
         page.waitForNavigation({
@@ -171,13 +170,6 @@ class Seiga {
   }
 }
 
-function writeCSV(cliplist: ClipList) {
-  const arraylist = mapToArray(cliplist);
-  const jsonData = JSON.stringify(arraylist, null, "  ");
-  fs.writeFileSync(`./${CSV_FILENAME}.csv`, unparse(jsonData));
-  console.log(`${JOB_NAME}: CSV Output Completed!`);
-}
-
 (async () => {
   try {
     const startTime = Date.now();
@@ -192,7 +184,14 @@ function writeCSV(cliplist: ClipList) {
     const seiga = new Seiga(browser);
     const cliplist = await seiga.login().then((sg) => sg.explore());
 
-    writeCSV(cliplist); //ファイル出力
+    await exportFile({
+      fileName: CSV_FILENAME,
+      payload: mapToArray(cliplist),
+      targetType: "csv",
+      mode: "overwrite"
+    }).then(() => {
+      console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
+    });
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 

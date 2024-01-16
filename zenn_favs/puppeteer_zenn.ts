@@ -1,13 +1,11 @@
-import { promises as fs } from "fs";
 import path from "path";
 
 import { config } from "dotenv";
-import { unparse } from "papaparse";
 import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import { mapToArray } from "../.libs/utils";
+import { mapToArray, exportFile } from "../.libs/utils";
 
 import { USER_AGENT } from "./../.libs/constants";
 
@@ -182,12 +180,6 @@ class Zennist {
   }
 }
 
-async function writeCSV<T>(array: T[]) {
-  const jsonData = JSON.stringify(array, null, "  ");
-  await fs.writeFile(`./${CSV_FILENAME}`, unparse(jsonData));
-  console.log(`${JOB_NAME}: CSV Output Completed!`);
-}
-
 (async () => {
   try {
     const startTime = Date.now();
@@ -212,7 +204,15 @@ async function writeCSV<T>(array: T[]) {
 
     const zenn = new Zennist(browser);
     const articles = await zenn.login().then((z) => z.explore());
-    await writeCSV(mapToArray(articles));
+
+    await exportFile({
+      fileName: CSV_FILENAME,
+      payload: mapToArray(articles),
+      targetType: "csv",
+      mode: "overwrite"
+    }).then(() => {
+      console.log(`${JOB_NAME}: CSV Output Completed!`);
+    });
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 

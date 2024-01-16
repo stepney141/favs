@@ -1,11 +1,9 @@
-import fs from "node:fs/promises";
 import path from "path";
 
 import { config } from "dotenv";
-import { unparse } from "papaparse";
 import { launch } from "puppeteer";
 
-import { getNodeProperty, randomWait, sleep } from "../.libs/utils";
+import { getNodeProperty, randomWait, sleep, exportFile } from "../.libs/utils";
 
 import type { Browser, ElementHandle } from "puppeteer";
 
@@ -121,12 +119,6 @@ class BoundHub {
   }
 }
 
-async function writeCSV(array: MovieList) {
-  const jsonData = JSON.stringify(array, null, "  ");
-  await fs.writeFile(`./${CSV_FILENAME}.csv`, unparse(jsonData));
-  console.log(JOB_NAME + ": CSV Output Completed!");
-}
-
 (async () => {
   try {
     const startTime = Date.now();
@@ -141,7 +133,9 @@ async function writeCSV(array: MovieList) {
     const bd = new BoundHub(browser);
     const movielist = await bd.login().then((bd) => bd.explore());
 
-    await writeCSV(movielist);
+    await exportFile({ fileName: CSV_FILENAME, payload: movielist, targetType: "csv", mode: "overwrite" }).then(() => {
+      console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
+    });
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 

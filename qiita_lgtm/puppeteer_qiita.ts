@@ -1,9 +1,6 @@
-import fs from "fs";
-
-import { unparse } from "papaparse";
 import { launch } from "puppeteer";
 
-import { getNodeProperty, zip } from "../.libs/utils";
+import { getNodeProperty, mapToArray, exportFile, zip } from "../.libs/utils";
 
 import type { Browser, ElementHandle } from "puppeteer";
 
@@ -76,12 +73,6 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
   return lgtmList;
 }
 
-function writeCSV(arrayData) {
-  const jsonData = JSON.stringify(arrayData, null, "  ");
-  fs.writeFileSync(`./${CSV_FILENAME}`, unparse(jsonData));
-  console.log(`${JOB_NAME}: CSV Output Completed!`);
-}
-
 (async () => {
   try {
     const startTime = Date.now();
@@ -95,7 +86,12 @@ function writeCSV(arrayData) {
     });
 
     const lgtm = await getLgtm(browser);
-    writeCSV([...lgtm.values()]);
+
+    await exportFile({ fileName: CSV_FILENAME, payload: mapToArray(lgtm), targetType: "csv", mode: "overwrite" }).then(
+      () => {
+        console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
+      }
+    );
 
     console.log("The processs took " + Math.round((Date.now() - startTime) / 1000) + " seconds");
 

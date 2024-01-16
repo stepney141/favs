@@ -4,11 +4,11 @@ import path from "path";
 import axios from "axios";
 import { config } from "dotenv";
 import { XMLParser } from "fast-xml-parser";
-import { parse, unparse } from "papaparse";
+import { parse } from "papaparse";
 import { PdfData } from "pdfdataextract";
 import { launch } from "puppeteer";
 
-import { PromiseQueue, getNodeProperty, mapToArray, randomWait, sleep, zip } from "../.libs/utils";
+import { PromiseQueue, getNodeProperty, mapToArray, randomWait, sleep, exportFile, zip } from "../.libs/utils";
 
 import {
   CSV_FILENAME,
@@ -79,16 +79,6 @@ const convertISBN10To13 = (isbn10: ISBN10): ISBN13 => {
 const matchASIN = (url: string): string | null => {
   const matched = url.match(REGEX.amazon_asin);
   return matched?.[0] ?? null;
-};
-
-const writeCSV = async (array: Book[], filename: string) => {
-  const json = JSON.stringify(array, null, "  ");
-  const csv = unparse(json);
-
-  const filehandle = await fs.open(filename, "w");
-  await fs.appendFile(`./${filename}`, csv);
-  await filehandle.close();
-  console.log(`${JOB_NAME}: CSV Output Completed!`);
 };
 
 const readCSV = async (filename: string) => {
@@ -527,7 +517,7 @@ const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): 
       const matchedIsbn = page.matchAll(REGEX.isbn);
       for (const match of matchedIsbn) {
         mathlibIsbnList.add(match[0]);
-        await fs.appendFile(`./${filename}`, `${match[0]}\n`);
+        await filehandle.appendFile(`${match[0]}\n`);
       }
     }
   }
@@ -611,7 +601,15 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
     if (isBookListDifferent(latestBookList, prevBookList)) {
       console.log(`${JOB_NAME}: Fetching bibliographic information`);
       const updatedBooklist = await fetchBiblioInfo(latestBookList); //書誌情報取得
-      await writeCSV(mapToArray(updatedBooklist), CSV_FILENAME); //ファイル出力
+
+      await exportFile({
+        fileName: CSV_FILENAME,
+        payload: mapToArray(updatedBooklist),
+        targetType: "csv",
+        mode: "overwrite"
+      }).then(() => {
+        console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
+      });
     }
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);

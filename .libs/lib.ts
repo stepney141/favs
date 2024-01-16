@@ -45,7 +45,7 @@ export type ErrorResult = {
 export const Ok = <T>(payload: T): OkResult<T> => {
   return { type: "ok", payload };
 };
-export const Err = (payload): ErrorResult => {
+export const Err = (payload: Error): ErrorResult => {
   return { type: "error", payload };
 };
 export const isOk = <T>(result: Result<T>): result is OkResult<T> => {

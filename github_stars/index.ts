@@ -61,13 +61,6 @@ const getStarredRepos = async (app: Octokit): Promise<Starred[]> => {
   return stars_json;
 };
 
-const writeCSV = async (json: (Starred | Gist)[], filename: string): Promise<void> => {
-  const csv = unparse(json);
-  const filehandle = await fs.open(filename, "w");
-  await fs.appendFile(`./${filename}`, csv);
-  await filehandle.close();
-};
-
 (async () => {
   try {
     const startTime = Date.now();
@@ -76,12 +69,12 @@ const writeCSV = async (json: (Starred | Gist)[], filename: string): Promise<voi
     const gists_list_filename = "starred_gists.csv";
     console.log(`${JOB_NAME}: ${gists_list_filename}`);
     const gists_json = await getStarredGists(app);
-    await writeCSV(gists_json, gists_list_filename);
+    await fs.appendFile(gists_list_filename, unparse(gists_json));
 
     const stars_list_filename = "starred_repos.csv";
     console.log(`${JOB_NAME}: ${stars_list_filename}`);
     const stars_json = await getStarredRepos(app);
-    await writeCSV(stars_json, stars_list_filename);
+    await fs.appendFile(stars_list_filename, unparse(stars_json));
 
     console.log(`${JOB_NAME}: CSV Output Completed!`);
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);

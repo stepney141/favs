@@ -1,6 +1,6 @@
 import { launch } from "puppeteer";
 
-import { getNodeProperty, mapToArray, writeFile, zip } from "../.libs/utils";
+import { getNodeProperty, mapToArray, exportFile, zip } from "../.libs/utils";
 
 import type { ElementHandle, Browser } from "puppeteer";
 
@@ -99,8 +99,14 @@ class Togetter {
     const togetter = new Togetter(browser);
     const matomelist: MatomeList = await togetter.explore();
 
-    await writeFile({ fileName: CSV_FILENAME, payload: mapToArray(matomelist), targetType: "csv" });
-    console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
+    await exportFile({
+      fileName: CSV_FILENAME,
+      payload: mapToArray(matomelist),
+      targetType: "csv",
+      mode: "overwrite"
+    }).then(() => {
+      console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
+    });
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 

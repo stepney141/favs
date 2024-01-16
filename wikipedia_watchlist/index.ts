@@ -46,7 +46,7 @@ const getLoginToken = async (baseURI: TargetUrls): Promise<[string, string[]]> =
     }
   })
     .then((res) => Ok(res))
-    .catch((e) => Err(e));
+    .catch((e: Error) => Err(e));
 
   const login_token = unwrapResult(response).data?.query.tokens.logintoken;
   const cookies = unwrapResult(response).headers["set-cookie"]!;
@@ -80,7 +80,7 @@ const postClientLogin = async (
     }
   })
     .then((res) => Ok(res))
-    .catch((e) => Err(e));
+    .catch((e: Error) => Err(e));
 
   const login_response_json = unwrapResult(response).data?.clientlogin;
   const client_cookies: string[] = unwrapResult(response).headers["set-cookie"]!;
@@ -136,7 +136,7 @@ const getPageId = async (baseURI: TargetUrls, cookies: string[], page_title: str
     }
   })
     .then((res) => Ok(res))
-    .catch((e) => Err(e));
+    .catch((e: Error) => Err(e));
 
   const page_id = Object.keys(unwrapResult(response).data?.query.pages)[0]; // -1なら該当記事なしの意
   return page_id;
@@ -173,7 +173,7 @@ const getWatchlistRaw = async (
     }
   })
     .then((res) => Ok(res))
-    .catch((e) => Err(e));
+    .catch((e: Error) => Err(e));
 
   const watchlist_data: Watchlists = unwrapResult(response).data?.["watchlistraw"];
   const pagination_flag: Pagination = unwrapResult(response).data?.["continue"]?.["wrcontinue"];
@@ -201,16 +201,16 @@ const fetchWatchlist = async function* (baseURI: TargetUrls, cookies: string[]):
 /**
  * APiを叩いてウォッチリストの情報を取得し、それをファイルに出力する
  */
-const extractWatchlist = async (baseURI: TargetUrls, cookies: string[]): Promise<void> => {
+const exportFile = async (baseURI: TargetUrls, cookies: string[]): Promise<void> => {
   const filename = `${baseURI}.csv`;
   const filehandle = await fs.open(filename, "w");
 
-  await fs.appendFile(`./${filename}`, "title,url\n"); //CSVのヘッダ作成
+  await filehandle.appendFile("title,url\n"); //CSVのヘッダ作成
 
   // ref: https://ja.javascript.info/async-iterators-generators
   for await (const [page_title, page_url] of fetchWatchlist(baseURI, cookies)) {
     const output_data = `${page_title},${page_url}\n`;
-    await fs.appendFile(`./${filename}`, output_data);
+    await filehandle.appendFile(output_data);
   }
 
   await filehandle.close();
@@ -226,7 +226,7 @@ const extractWatchlist = async (baseURI: TargetUrls, cookies: string[]): Promise
       const [login_token, login_cookies] = await getLoginToken(url);
       const [, client_cookies] = await login(url, login_token, login_cookies);
 
-      await extractWatchlist(url, client_cookies);
+      await exportFile(url, client_cookies);
       console.log(`${url}: finished`);
     }
 

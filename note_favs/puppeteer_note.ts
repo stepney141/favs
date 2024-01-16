@@ -1,12 +1,10 @@
-import fs from "node:fs/promises";
 import path from "path";
 
 import { config } from "dotenv";
-import { unparse } from "papaparse";
 import { launch } from "puppeteer";
 
 import { USER_AGENT } from "../.libs/constants";
-import { sleep, mapToArray } from "../.libs/utils";
+import { sleep, mapToArray, exportFile } from "../.libs/utils";
 
 import type { Browser, ElementHandle } from "puppeteer";
 
@@ -50,7 +48,7 @@ type NoteApiResponse = {
 class Notebook {
   #browser: Browser;
   #page_num: number;
-  #notelist: Map<string, Note>;
+  #notelist: NoteList;
 
   constructor(browser: Browser) {
     this.#browser = browser;
@@ -152,13 +150,6 @@ class Notebook {
   }
 }
 
-async function writeCSV(notelist: NoteList) {
-  const array = mapToArray(notelist);
-  const json = JSON.stringify(array, null, "  ");
-  await fs.writeFile(`./${CSV_FILENAME}.csv`, unparse(json));
-  console.log(`${JOB_NAME}: CSV Output Completed!`);
-}
-
 (async () => {
   try {
     const startTime = Date.now();
@@ -173,7 +164,14 @@ async function writeCSV(notelist: NoteList) {
     const note = new Notebook(browser);
     const notelist = await note.login().then((n) => n.explore());
 
-    await writeCSV(notelist);
+    await exportFile({
+      fileName: CSV_FILENAME,
+      payload: mapToArray(notelist),
+      targetType: "csv",
+      mode: "overwrite"
+    }).then(() => {
+      console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
+    });
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 
