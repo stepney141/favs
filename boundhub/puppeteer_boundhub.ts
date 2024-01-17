@@ -10,7 +10,7 @@ import type { Browser, ElementHandle } from "puppeteer";
 const baseURI = "https://www.boundhub.com";
 const JOB_NAME = "Boundhub Favorite Movies";
 const PLAYLIST_NAME = "playlist01";
-const CSV_FILENAME = "boundhub_faved_movies";
+const CSV_FILENAME = "boundhub_faved_movies.csv";
 
 const XPATH = {
   useridInput: '//*[@id="login_username"]',

@@ -10,7 +10,7 @@ import type { Browser, ElementHandle } from "puppeteer";
 
 const baseURI = "https://note.com";
 const JOB_NAME = "note.com Favorites";
-const CSV_FILENAME = "note_favorites";
+const CSV_FILENAME = "note_favorites.csv";
 
 const XPATH = {
   useridInput: '//*[@id="email"]',

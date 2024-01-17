@@ -13,7 +13,7 @@ import { getNodeProperty, mapToArray, exportFile, zip } from "../.libs/utils";
 import type { ElementHandle, Page, Protocol, Browser } from "puppeteer";
 
 const JOB_NAME = "Niconico Seiga MyClips";
-const CSV_FILENAME = "nicoseiga_myclips";
+const CSV_FILENAME = "nicoseiga_myclips.csv";
 const LOGIN_URL = "https://account.nicovideo.jp/login?site=seiga&next_url=%2Fmy%2Fclip";
 const MYCLIP_URL = "https://seiga.nicovideo.jp/my/clip";
 const COOKIE_PATH = "seiga_cookie.json";
@@ -101,17 +101,17 @@ class Seiga {
 
       await Promise.all([
         page.waitForNavigation({
-          timeout: 60000,
-          waitUntil: "networkidle2"
+          timeout: 2 * 60 * 1000,
+          waitUntil: ["networkidle0", "domcontentloaded", "load"]
         }),
-        await (loginButton_Handle[0] as ElementHandle<Element>).click()
+        (loginButton_Handle[0] as ElementHandle<Element>).click()
       ]);
     }
 
     const afterCookies = (await page.cookies()) as unknown as string; //cookie更新
-    const afterCookieBlob = new Blob([JSON.stringify(afterCookies)], { type: "application/json" });
+    const afterCookiesBlob = new Blob([JSON.stringify(afterCookies)], { type: "application/json" });
     // ref: https://medium.com/@dorathedev/uploading-json-objects-as-json-files-to-firebase-storage-without-having-or-creating-a-json-file-38ad323af3c4
-    await uploadBytes(pathReference, afterCookieBlob); //cookieをアップロード
+    await uploadBytes(pathReference, afterCookiesBlob); //cookieをアップロード
     fs.unlinkSync(COOKIE_PATH);
 
     console.log(`${JOB_NAME}: Login Completed!`);
@@ -145,7 +145,7 @@ class Seiga {
           clipped_date
         });
 
-        // console.log(url);
+        // console.log(url, title);
       }
 
       const next_eh = await page.$x(XPATH.toNextPageButtons);
@@ -157,10 +157,10 @@ class Seiga {
       } else {
         await Promise.all([
           page.waitForNavigation({
-            timeout: 60000,
-            waitUntil: "load"
+            timeout: 2 * 60 * 1000,
+            waitUntil: "networkidle2"
           }),
-          await (next_eh[0] as ElementHandle<Element>).click() // 「次へ」ボタンを押す
+          (next_eh[0] as ElementHandle<Element>).click() // 「次へ」ボタンを押す
         ]);
       }
     }

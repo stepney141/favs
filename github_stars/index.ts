@@ -1,9 +1,9 @@
-import fs from "fs/promises";
 import path from "path";
 
 import { config } from "dotenv";
 import { Octokit } from "octokit";
-import { unparse } from "papaparse";
+
+import { exportFile } from "../.libs/utils";
 
 const JOB_NAME = "GitHub Starred Repositories";
 
@@ -69,12 +69,26 @@ const getStarredRepos = async (app: Octokit): Promise<Starred[]> => {
     const gists_list_filename = "starred_gists.csv";
     console.log(`${JOB_NAME}: ${gists_list_filename}`);
     const gists_json = await getStarredGists(app);
-    await fs.appendFile(gists_list_filename, unparse(gists_json));
+    await exportFile({
+      fileName: gists_list_filename,
+      payload: gists_json,
+      targetType: "csv",
+      mode: "overwrite"
+    }).then(() => {
+      console.log(`${JOB_NAME}: Finished writing ${gists_list_filename}`);
+    });
 
     const stars_list_filename = "starred_repos.csv";
     console.log(`${JOB_NAME}: ${stars_list_filename}`);
     const stars_json = await getStarredRepos(app);
-    await fs.appendFile(stars_list_filename, unparse(stars_json));
+    await exportFile({
+      fileName: stars_list_filename,
+      payload: stars_json,
+      targetType: "csv",
+      mode: "overwrite"
+    }).then(() => {
+      console.log(`${JOB_NAME}: Finished writing ${gists_list_filename}`);
+    });
 
     console.log(`${JOB_NAME}: CSV Output Completed!`);
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
