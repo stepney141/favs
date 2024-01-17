@@ -52,8 +52,9 @@ export const CINII_TARGETS: CiniiTarget[] = [
 
 /**
  * この配列の順番で図書館が検索される
+ * opacリンクは配列後方のものが優先される
  */
-export const CINII_TARGET_TAGS = ["Sophia", "UTokyo"] as const;
+export const CINII_TARGET_TAGS = ["UTokyo", "Sophia"] as const;
 
 export const MATH_LIB_BOOKLIST = {
   //数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108
