@@ -574,7 +574,7 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
   const ps = PromiseQueue();
   for (const book of updatedBookList) {
     ps.add(fetchOthers(book));
-    await ps.wait(6); // 引数の指定量だけ並列実行
+    await ps.wait(4); // 引数の指定量だけ並列実行
   }
   await ps.all(); // 端数分の処理の待ち合わせ
 
