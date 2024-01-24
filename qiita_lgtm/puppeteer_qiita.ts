@@ -98,5 +98,6 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
     await browser.close();
   } catch (e) {
     console.log(e);
+    process.exit(1);
   }
 })();
