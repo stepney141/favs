@@ -442,24 +442,29 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
 
   if (isbn === null || isbn === undefined) {
     //異常系(与えるべきISBN自体がない)
+    const statusText: BiblioinfoErrorStatus = "INVALID_ISBN";
+    const part = {
+      book_title: statusText,
+      author: statusText,
+      publisher: statusText,
+      published_date: statusText
+    };
     return {
-      book: { ...config.book, [`exist_in_${library.tag}`]: "No" },
+      book: { ...config.book, ...part, [`exist_in_${library.tag}`]: "No" },
       isOwning: false
     };
   }
 
-  const title = encodeURIComponent(config.book["book_title"]);
-  const query = `${isbn}`;
-  const url = `https://ci.nii.ac.jp/books/opensearch/search?isbn=${query}&kid=${library?.cinii_kid}&format=json&appid=${cinii_appid}`;
-
+  // const title = encodeURIComponent(config.book["book_title"]);
+  const url = `https://ci.nii.ac.jp/books/opensearch/search?isbn=${isbn}&kid=${library?.cinii_kid}&format=json&appid=${cinii_appid}`;
   const response: AxiosResponse<CiniiResponse> = await axios({
     method: "get",
     url,
     responseType: "json"
   });
+
   const graph = response.data["@graph"][0];
   const items = graph.items;
-
   if (items === undefined) {
     return {
       book: { ...config.book, [`exist_in_${library.tag}`]: "No" },
@@ -476,7 +481,7 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
       book: {
         ...config.book,
         [`exist_in_${library.tag}`]: "Yes",
-        central_opac_link: `${library?.opac}/opac/opac_openurl/?ncid=${ncid}` //opacのリンク
+        central_opac_link: `${library?.opac}/opac/opac_openurl?ncid=${ncid}` //opacのリンク
       },
       isOwning: true
     };
@@ -485,7 +490,7 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
 
     // CiNiiに未登録なだけで、OPACには所蔵されている場合
     // 所蔵されているなら「"bibid"」がurlに含まれる
-    const opacUrl = `${library?.opac}/opac/opac_openurl/?isbn=${isbn}`;
+    const opacUrl = `${library?.opac}/opac/opac_openurl?isbn=${isbn}`;
     const redirectedOpacUrl = await getRedirectedUrl(opacUrl);
     if (redirectedOpacUrl !== undefined && redirectedOpacUrl.includes("bibid")) {
       return {
