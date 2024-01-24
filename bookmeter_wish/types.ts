@@ -67,24 +67,25 @@ export type NdlResponseJson = {
   };
 };
 
-export type CiniiResponse = {
+export type CiNiiItem = {
+  "@type": string;
   "@id": string;
+  "dc:creator": string;
+  "dc:title": string;
+  "dc:publisher": string;
+  "dc:pubDate": string;
+  "dc:isbn": string;
+};
+
+export type CiniiResponse = {
   "@graph": {
     "@type": string;
     "@id": string;
-    "opensearch:totalResults": string;
-    "opensearch:startIndex": string;
-    "opensearch:itemsPerPage": string;
-    items?: {
-      "@type": string;
-      "@id": string;
-      "dc:creator": string;
-      "dc:title": string;
-      "dc:publisher": string;
-      "dc:pubDate": string;
-      "dc:isbn": string;
-    }[];
-  }[];
+    "opensearch:totalResults": `${number}`;
+    "opensearch:startIndex": `${number}`;
+    "opensearch:itemsPerPage": `${number}`;
+    items?: CiNiiItem[];
+  }[]; // 必ず配列になる
   "@context": {
     dc: string;
     rdf: string;

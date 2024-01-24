@@ -4,6 +4,7 @@ import path from "path";
 import axios from "axios";
 import { config } from "dotenv";
 import { XMLParser } from "fast-xml-parser";
+import fetch from "node-fetch";
 import { parse } from "papaparse";
 import { PdfData } from "pdfdataextract";
 import { launch } from "puppeteer";
@@ -49,6 +50,26 @@ const bookmeter_username = process.env.BOOKMETER_ACCOUNT!.toString();
 const bookmeter_password = process.env.BOOKMETER_PASSWORD!.toString();
 const cinii_appid = process.env.CINII_API_APPID!.toString();
 const google_books_api_key = process.env.GOOGLE_BOOKS_API_KEY!.toString();
+
+/**
+ * @example 
+ * 
+ input: https://www.lib.sophia.ac.jp/opac/opac_openurl/?isbn=1000000000 //invalid
+ => https://www.lib.sophia.ac.jp/opac/opac_search/?direct=1&ou_srh=1&amode=2&lang=0&isbn=1000000000
+ input: https://www.lib.sophia.ac.jp/opac/opac_openurl/?isbn=4326000481 //valid
+ => https://www.lib.sophia.ac.jp/opac/opac_details/?lang=0&opkey=B170611882191096&srvce=0&amode=11&bibid=1003102195
+ */
+const getRedirectedUrl = async (targetUrl: string): Promise<string | undefined> => {
+  try {
+    const response = await fetch(targetUrl, {
+      redirect: "follow"
+    });
+    return response.url;
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+};
 
 /**
  * @link https://qiita.com/iz-j/items/27b9656ebed1a4516ee1
@@ -221,7 +242,11 @@ const getPrevBookList = async (filename: string): Promise<BookList> => {
  * ローカルのCSVとbookmeterのスクレイピング結果を比較する
  * 差分を検出したら、書誌情報を取得してCSVを新規生成する
  */
-const isBookListDifferent = (latestList: BookList, prevList: BookList): boolean => {
+const isBookListDifferent = (latestList: BookList, prevList: BookList, noRemoteCheck: boolean = false): boolean => {
+  if (noRemoteCheck) {
+    return true; // 常に差分を検出したことにする
+  }
+
   for (const key of latestList.keys()) {
     if (prevList.has(key) === false) {
       //ローカルのCSVとbookmeterのスクレイピング結果を比較
@@ -423,35 +448,56 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
     };
   }
 
+  const title = encodeURIComponent(config.book["book_title"]);
+  const query = `${isbn}`;
+  const url = `https://ci.nii.ac.jp/books/opensearch/search?isbn=${query}&kid=${library?.cinii_kid}&format=json&appid=${cinii_appid}`;
+
   const response: AxiosResponse<CiniiResponse> = await axios({
     method: "get",
-    url: `https://ci.nii.ac.jp/books/opensearch/search?isbn=${isbn}&kid=${library?.cinii_kid}&format=json&appid=${cinii_appid}`,
+    url,
     responseType: "json"
   });
-  const json = response.data["@graph"][0];
-  const bookinfo = json.items;
-  if (bookinfo === undefined) {
+  const graph = response.data["@graph"][0];
+  const items = graph.items;
+
+  if (items === undefined) {
     return {
       book: { ...config.book, [`exist_in_${library.tag}`]: "No" },
       isOwning: false
     };
   }
 
-  const totalResults = json["opensearch:totalResults"];
+  const totalResults = graph["opensearch:totalResults"];
   if (totalResults !== "0") {
     //検索結果が1件以上
-    const ncidUrl = bookinfo[0]["@id"];
+    const ncidUrl = items[0]["@id"];
     const ncid = ncidUrl.match(REGEX.ncid_in_cinii_url)?.[0]; //ciniiのURLからncidだけを抽出
     return {
       book: {
         ...config.book,
         [`exist_in_${library.tag}`]: "Yes",
-        central_opac_link: `${library?.opac}/opac/opac_openurl?ncid=${ncid}` //opacのリンク
+        central_opac_link: `${library?.opac}/opac/opac_openurl/?ncid=${ncid}` //opacのリンク
       },
       isOwning: true
     };
   } else {
     //検索結果が0件
+
+    // CiNiiに未登録なだけで、OPACには所蔵されている場合
+    // 所蔵されているなら「"bibid"」がurlに含まれる
+    const opacUrl = `${library?.opac}/opac/opac_openurl/?isbn=${isbn}`;
+    const redirectedOpacUrl = await getRedirectedUrl(opacUrl);
+    if (redirectedOpacUrl !== undefined && redirectedOpacUrl.includes("bibid")) {
+      return {
+        book: {
+          ...config.book,
+          [`exist_in_${library.tag}`]: "Yes",
+          central_opac_link: opacUrl
+        },
+        isOwning: true
+      };
+    }
+
     return {
       book: { ...config.book, [`exist_in_${library.tag}`]: "No" },
       isOwning: false
@@ -585,6 +631,10 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
 (async () => {
   try {
     const startTime = Date.now();
+    const noRemoteCheck = false;
+    if (noRemoteCheck) {
+      console.log(`${JOB_NAME}: To check the remote is disabled`);
+    }
 
     const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
@@ -593,12 +643,12 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
     });
 
     const book = new Bookmaker(browser);
-    const latestBookList = await book.login().then((book) => book.explore());
     const prevBookList = await getPrevBookList(CSV_FILENAME);
+    const latestBookList = noRemoteCheck ? prevBookList : await book.login().then((book) => book.explore());
 
     await browser.close();
 
-    if (isBookListDifferent(latestBookList, prevBookList)) {
+    if (isBookListDifferent(latestBookList, prevBookList, noRemoteCheck)) {
       console.log(`${JOB_NAME}: Fetching bibliographic information`);
       const updatedBooklist = await fetchBiblioInfo(latestBookList); //書誌情報取得
 
