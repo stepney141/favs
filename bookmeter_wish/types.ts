@@ -78,14 +78,19 @@ export type CiNiiItem = {
 };
 
 export type CiniiResponse = {
-  "@graph": {
-    "@type": string;
-    "@id": string;
-    "opensearch:totalResults": `${number}`;
-    "opensearch:startIndex": `${number}`;
-    "opensearch:itemsPerPage": `${number}`;
-    items?: CiNiiItem[];
-  }[]; // 必ず配列になる
+  "@graph":
+    | {
+        "@type": string;
+        "@id": string;
+        "opensearch:totalResults": "0";
+        "opensearch:startIndex": "0";
+        "opensearch:itemsPerPage": "0";
+      }[]
+    | {
+        "@type": string;
+        "@id": string;
+        items: CiNiiItem[];
+      }[];
   "@context": {
     dc: string;
     rdf: string;

@@ -53,7 +53,6 @@ const google_books_api_key = process.env.GOOGLE_BOOKS_API_KEY!.toString();
 
 /**
  * @example 
- * 
  input: https://www.lib.sophia.ac.jp/opac/opac_openurl/?isbn=1000000000 //invalid
  => https://www.lib.sophia.ac.jp/opac/opac_search/?direct=1&ou_srh=1&amode=2&lang=0&isbn=1000000000
  input: https://www.lib.sophia.ac.jp/opac/opac_openurl/?isbn=4326000481 //valid
@@ -459,39 +458,36 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
   const url = `https://ci.nii.ac.jp/books/opensearch/search?isbn=${isbn}&kid=${library?.cinii_kid}&format=json&appid=${cinii_appid}`;
   const response: AxiosResponse<CiniiResponse> = await axios({
     method: "get",
-    url,
-    responseType: "json"
+    responseType: "json",
+    url
   });
-
   const graph = response.data["@graph"][0];
-  const items = graph.items;
-  if (items === undefined) {
-    return {
-      book: { ...config.book, [`exist_in_${library.tag}`]: "No" },
-      isOwning: false
-    };
-  }
 
-  const totalResults = graph["opensearch:totalResults"];
-  if (totalResults !== "0") {
+  if ("items" in graph) {
     //検索結果が1件以上
-    const ncidUrl = items[0]["@id"];
+
+    const ncidUrl = graph.items[0]["@id"];
     const ncid = ncidUrl.match(REGEX.ncid_in_cinii_url)?.[0]; //ciniiのURLからncidだけを抽出
+
     return {
       book: {
         ...config.book,
         [`exist_in_${library.tag}`]: "Yes",
-        central_opac_link: `${library?.opac}/opac/opac_openurl?ncid=${ncid}` //opacのリンク
+        central_opac_link: `${library.opac}/opac/opac_openurl?ncid=${ncid}` //opacのリンク
       },
       isOwning: true
     };
+
   } else {
     //検索結果が0件
 
     // CiNiiに未登録なだけで、OPACには所蔵されている場合
     // 所蔵されているなら「"bibid"」がurlに含まれる
-    const opacUrl = `${library?.opac}/opac/opac_openurl?isbn=${isbn}`;
+    const opacUrl = `${library.opac}/opac/opac_openurl?isbn=${isbn}`;
     const redirectedOpacUrl = await getRedirectedUrl(opacUrl);
+
+    await sleep(randomWait(1000, 0.8, 1.2));
+
     if (redirectedOpacUrl !== undefined && redirectedOpacUrl.includes("bibid")) {
       return {
         book: {
