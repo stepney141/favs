@@ -486,7 +486,7 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
     const opacUrl = `${library.opac}/opac/opac_openurl?isbn=${isbn}`;
     const redirectedOpacUrl = await getRedirectedUrl(opacUrl);
 
-    await sleep(randomWait(1000, 0.8, 1.2));
+    await sleep(1000);
 
     if (redirectedOpacUrl !== undefined && redirectedOpacUrl.includes("bibid")) {
       return {
@@ -621,7 +621,7 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
   const ps = PromiseQueue();
   for (const book of updatedBookList) {
     ps.add(fetchOthers(book));
-    await ps.wait(4); // 引数の指定量だけ並列実行
+    await ps.wait(5); // 引数の指定量だけ並列実行
   }
   await ps.all(); // 端数分の処理の待ち合わせ
 
