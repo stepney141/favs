@@ -1,4 +1,12 @@
 isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
+4627061714,よくわかるトポロジー,"山本,修身",森北出版,201504,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18534265
+4062573962,制御工学の考え方 : 産業革命は「制御」からはじまった,"木村,英紀,1941-",講談社,200212,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA60067160
+4274231534,Pythonによる 制御工学入門（改訂2版）,南裕樹／著,オーム社,20240118,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05301360
+4065301211,はじめての現代制御理論 = A 1st Course in Modern Control Theory,"佐藤,和也,制御工学 下本,陽一 熊澤,典良",講談社,202212,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC18846334
+4065137470,はじめての制御工学 = A 1st Course in Control Engineering,"佐藤,和也,制御工学 平元,和彦 平田,研二",講談社,201811,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27287087
+4274224309,実践ロボット制御 : 基礎から動力学まで,"細田,耕,1965-",オーム社,201911,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29197702
+4263731638,マイナーエマージェンシー,"大滝,純司,1958- 齊藤,裕之 Buttaravoli,PhilipM Leffler,StephenM",医歯薬出版,201503,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18444231
+4065146852,"線形性・固有値・テンソル = Linearity,Eigenvalue,Tensor : 〈線形代数〉応用への最短コース","原,啓介,1968-",講談社,201902,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27796579
 4903342611,整数の分割,G.アンドリュース／著 Ｋ．エリクソン／著 佐藤文広／訳,数学書房,20060531,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA77062795
 4087211169,著作権とは何か : 文化と創造のゆくえ,"福井,健策,1965-",集英社,202003,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29891774
 4320125673,データ分析失敗事例集 = Data Analytics Nightmare : 失敗から学び、成功を手にする,"尾花山,和哉 ホクソエム",共立出版,202308,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03280226
@@ -7,10 +15,10 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 4062576201,高校数学でわかるボルツマンの原理 : 熱力学と統計力学を理解しよう,"竹内,淳,1960-",講談社,200811,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA8792734X
 4062575450,高校数学でわかる半導体の原理 : 電子の動きを知って理解しよう,"竹内,淳,1960-",講談社,200703,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA81239209
 4062574705,高校数学でわかるシュレディンガー方程式 : 量子力学を学びたい人、ほんとうに理解したい人へ,"竹内,淳,1960-",講談社,200503,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA71291064
-4621309048,アルゴリズム設計マニュアル 原書3版 下,StevenS.Skiana／著 平田富夫／翻訳,丸善出版,20240130,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05484690
-462130903X,アルゴリズム設計マニュアル 原書3版 上,StevenS.Skiana／著 平田富夫／翻訳,丸善出版,20240130,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05484635
+4621309048,アルゴリズム設計マニュアル 原書3版 下,StevenS.Skiana／著 平田富夫／翻訳,丸善出版,20240130,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4621309048
+462130903X,アルゴリズム設計マニュアル 原書3版 上,StevenS.Skiana／著 平田富夫／翻訳,丸善出版,20240130,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=462130903X
 4339013730,"可視化と科学・文化・社会 = Visualization for Science,Digital Humanities,and Sociology","竹島,由里子 伊藤,貴之 宮地,英生 田中,覚",コロナ社,202310,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04191303
-4339013749,ゲームグラフィックス表現技法,"金久保, 哲也,金久保哲也 著",コロナ社,"Wed, 14 Feb 2024 06:23:52 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05523486
+4339013749,ゲームグラフィックス表現技法,"金久保, 哲也,金久保哲也 著",コロナ社,"Wed, 21 Feb 2024 20:27:03 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05523486
 4492313702,現代マクロ経済学講義 : 動学的一般均衡モデル入門,"加藤,涼",東洋経済新報社,200701,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA79826584
 4627852614,"超高速グラフ列挙アルゴリズム : 〈フカシギの数え方〉が拓く,組合せ問題への新アプローチ","湊,真一 科学技術振興機構",森北出版,201504,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18406210
 4478113408,Science Fictions　あなたが知らない科学の真実,スチュアート・リッチー／著 矢羽野薫／翻訳,ダイヤモンド社,20240201,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05519988
@@ -29,7 +37,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 4785315652,複素関数論の基礎,"山本,直樹,1976-",裳華房,201511,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB20060491
 4815604975,図解入門TCP/IP = An Illustrated Introduction to TCP/IP : 仕組み・動作が見てわかる,"みやた,ひろし",SBクリエイティブ,202012,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC04797037
 4130606077,光の物理　新装版,小林浩一／著,東京大学出版会,20231102,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04591877
-4627083416,代数学入門 : 群・環・体の基礎とガロワ理論,永井保成／著,森北出版,20240118,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05430363
+4627083416,代数学入門 : 群・環・体の基礎とガロワ理論,永井保成／著,森北出版,20240118,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4627083416
 4785322497,マクスウェル方程式から始める電磁気学,"小宮山,進,1947- 竹川,敦",裳華房,201511,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB24133575
 4759814752,コンピュータ・シミュレーションの基礎 : 分子のミクロな性質を解明するために,"岡崎,進,1954- 吉井,範行",化学同人,201107,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB06301088
 1786347849,Science research writing : for native and non-native speakers of English,"Glasman-Deal, Hilary,Hilary Glasman-Deal",World Scientific,"Thu, 21 Sep 2023 08:21:44 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC04468556
@@ -49,7 +57,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 4320122356,メタヒューリスティクスの数理,"久保,幹雄,1963- Pedroso,JoãoPedro",共立出版,200905,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA89986066
 4627077416,"幾何学と代数系 = Geometric Algebra : ハミルトン,グラスマン,クリフォード","金谷,健一,1947-",森北出版,201407,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB16172560
 4873117437,メタプログラミングRuby,"Perrotta,Paolo 角,征典",オーム社,201510,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB19720458
-4480075941,ブッダという男 初期仏典を読みとく,清水俊史／本文,筑摩書房,20231207,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04784713
+4480075941,ブッダという男 初期仏典を読みとく,清水俊史／本文,筑摩書房,20231207,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4480075941
 4588022180,最古の料理,J.ボテロ／著 松島英子／訳,法政大学出版局,20031201,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA6470446X
 4560028729,悪魔の布 : 縞模様の歴史,"Pastoureau,Michel,1947- 松村,剛,1960- 松村,恵理,1962-",白水社,199305,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN09184462
 4622087936,測りすぎ : なぜパフォーマンス評価は失敗するのか?,"Muller,JerryZ.,1954- 松本,裕",みすず書房,201904,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28158909
