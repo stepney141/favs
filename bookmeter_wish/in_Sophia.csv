@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathlib_opac_link
+4535788987,楕円積分と楕円関数 : おとぎの国の歩き方,"武部,尚志",日本評論社,201909,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28917012,
 4627061714,よくわかるトポロジー,"山本,修身",森北出版,201504,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18534265,
 4062573962,制御工学の考え方 : 産業革命は「制御」からはじまった,"木村,英紀,1941-",講談社,200212,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA60067160,
 4274231534,Pythonによる 制御工学入門（改訂2版）,南裕樹／著,オーム社,20240118,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05301360,
@@ -33,7 +34,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathli
 4320114558,組合せ論の発見 : 古代から現代へ,"Wilson,RobinJ.,1943- Watkins,JohnJ 高瀬,正仁,1951- ほか",共立出版,202106,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC08170024,
 4785315652,複素関数論の基礎,"山本,直樹,1976-",裳華房,201511,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB20060491,
 432745317X,読解のための上級英文法,田上芳彦／著,研究社,20231225,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD0515357X,
-4627083416,代数学入門 : 群・環・体の基礎とガロワ理論,永井保成／著,森北出版,20240118,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4627083416,
+4627083416,代数学入門 : 群・環・体の基礎とガロワ理論,永井保成／著,森北出版,20240118,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05430363,
 4785322497,マクスウェル方程式から始める電磁気学,"小宮山,進,1947- 竹川,敦",裳華房,201511,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB24133575,
 4759814752,コンピュータ・シミュレーションの基礎 : 分子のミクロな性質を解明するために,"岡崎,進,1954- 吉井,範行",化学同人,201107,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB06301088,
 4873117852,アルゴリズムクイックリファレンス,"Heineman,GeorgeT Pollice,Gary Selkow,Stanley ほか",オーム社,201612,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB22781676,
@@ -52,7 +53,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathli
 4320122356,メタヒューリスティクスの数理,"久保,幹雄,1963- Pedroso,JoãoPedro",共立出版,200905,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA89986066,
 4627077416,"幾何学と代数系 = Geometric Algebra : ハミルトン,グラスマン,クリフォード","金谷,健一,1947-",森北出版,201407,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB16172560,
 4814400586,Rustの練習帳 : コマンドラインツールの作成を通してRustを学ぶ,KenYouens-Clark／著 中山光樹／翻訳,オライリー・ジャパン,20240118,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD0545973X,
-4480075941,ブッダという男 初期仏典を読みとく,清水俊史／本文,筑摩書房,20231207,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4480075941,
+4480075941,ブッダという男 初期仏典を読みとく,清水俊史／本文,筑摩書房,20231207,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04784713,
 4588022180,最古の料理,J.ボテロ／著 松島英子／訳,法政大学出版局,20031201,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA6470446X,
 4560028729,悪魔の布 : 縞模様の歴史,"Pastoureau,Michel,1947- 松村,剛,1960- 松村,恵理,1962-",白水社,199305,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN09184462,
 4622087936,測りすぎ : なぜパフォーマンス評価は失敗するのか?,"Muller,JerryZ.,1954- 松本,裕",みすず書房,201904,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28158909,
