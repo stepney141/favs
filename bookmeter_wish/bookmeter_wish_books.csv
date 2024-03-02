@@ -1,5 +1,6 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_Sophia,exist_in_UTokyo,central_opac_link,mathlib_opac_link
-https://bookmeter.com/books/21862091,4535540489,データ駆動型回帰分析 : 計量経済学と機械学習の融合,"末石 直也,末石 直也 著・文・その他","日本評論社,日本評論社","Mon, 26 Feb 2024 00:44:29 +0900",No,No,,
+https://bookmeter.com/books/11079676,4022618655,関西人の正体,"井上,章一,1955-",朝日新聞出版,201607,No,No,,
+https://bookmeter.com/books/21862091,4535540489,データ駆動型回帰分析 : 計量経済学と機械学習の融合,"末石 直也,末石 直也 著・文・その他","日本評論社,日本評論社","Thu, 29 Feb 2024 00:47:37 +0900",No,No,,
 https://bookmeter.com/books/21849623,4254161395,Pythonによる気象・気候データ解析Ⅱ : スペクトル解析・EOFとSVD・統計検定と推定,"神山 翼,神山 翼 著・文・その他","朝倉書店,朝倉書店","Mon, 19 Feb 2024 00:39:34 +0900",No,No,,
 https://bookmeter.com/books/21849511,4254161387,Pythonによる気象・気候データ解析Ⅰ : Pythonの基礎・気候値と偏差・回帰相関分析,"神山 翼,神山 翼 著・文・その他","朝倉書店,朝倉書店","Mon, 19 Feb 2024 00:39:34 +0900",No,No,,
 https://bookmeter.com/books/14302349,4535788987,楕円積分と楕円関数 : おとぎの国の歩き方,"武部,尚志",日本評論社,201909,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28917012,
@@ -24,7 +25,7 @@ https://bookmeter.com/books/556067,4062575450,高校数学でわかる半導体�
 https://bookmeter.com/books/478482,4062574705,高校数学でわかるシュレディンガー方程式 : 量子力学を学びたい人、ほんとうに理解したい人へ,"竹内,淳,1960-",講談社,200503,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA71291064,
 https://bookmeter.com/books/21693778,4621309048,アルゴリズム設計マニュアル 原書3版 下,StevenS.Skiana／著 平田富夫／翻訳,丸善出版,20240130,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4621309048,
 https://bookmeter.com/books/21693779,462130903X,アルゴリズム設計マニュアル 原書3版 上,StevenS.Skiana／著 平田富夫／翻訳,丸善出版,20240130,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=462130903X,
-https://bookmeter.com/books/20714000,4908686165,プログラマーのためのCPU入門 : CPUは如何にしてソフトウェアを高速に実行するか,"Tani, Takenobu,Takenobu Tani著",ラムダノート,"Fri, 15 Dec 2023 14:10:48 +0900",No,No,,
+https://bookmeter.com/books/20714000,4908686165,プログラマーのためのCPU入門 : CPUは如何にしてソフトウェアを高速に実行するか,"Takenobu Tani,Takenobu Tani 著",ラムダノート,"Thu, 29 Feb 2024 23:19:30 +0900",No,No,,
 https://bookmeter.com/books/21551237,4339013730,"可視化と科学・文化・社会 = Visualization for Science,Digital Humanities,and Sociology","竹島,由里子 伊藤,貴之 宮地,英生 田中,覚",コロナ社,202310,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04191303,
 https://bookmeter.com/books/21731202,4339013749,ゲームグラフィックス表現技法,"金久保, 哲也,金久保哲也 著",コロナ社,"Wed, 21 Feb 2024 20:27:03 +0900",No,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05523486,
 https://bookmeter.com/books/35797,4492313702,現代マクロ経済学講義 : 動学的一般均衡モデル入門,"加藤,涼",東洋経済新報社,200701,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA79826584,
