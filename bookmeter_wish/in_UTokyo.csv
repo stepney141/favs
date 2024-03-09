@@ -22,7 +22,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 4621309048,アルゴリズム設計マニュアル 原書3版 下,StevenS.Skiana／著 平田富夫／翻訳,丸善出版,20240130,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4621309048
 462130903X,アルゴリズム設計マニュアル 原書3版 上,StevenS.Skiana／著 平田富夫／翻訳,丸善出版,20240130,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=462130903X
 4339013730,"可視化と科学・文化・社会 = Visualization for Science,Digital Humanities,and Sociology","竹島,由里子 伊藤,貴之 宮地,英生 田中,覚",コロナ社,202310,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04191303
-4339013749,ゲームグラフィックス表現技法,"金久保, 哲也,金久保哲也 著",コロナ社,"Fri, 1 Mar 2024 22:50:39 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05523486
+4339013749,ゲームグラフィックス表現技法,"金久保, 哲也,金久保哲也 著",コロナ社,"Tue, 5 Mar 2024 17:40:41 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05523486
 4492313702,現代マクロ経済学講義 : 動学的一般均衡モデル入門,"加藤,涼",東洋経済新報社,200701,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA79826584
 4627852614,"超高速グラフ列挙アルゴリズム : 〈フカシギの数え方〉が拓く,組合せ問題への新アプローチ","湊,真一 科学技術振興機構",森北出版,201504,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18406210
 4478113408,Science Fictions　あなたが知らない科学の真実,スチュアート・リッチー／著 矢羽野薫／翻訳,ダイヤモンド社,20240201,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05519988
@@ -80,7 +80,6 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 4588200313,からくり,立川昭二／著,法政大学出版局,19690601,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00802380
 4320114973,測度論からの数理統計学,綿森葉子／著 田中秀和／著 田中潮／著,共立出版,20230928,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04057796
 4802613199,統計学入門 : データ分析に必須の知識・考え方 : 仮説検定から統計モデリングまで重要トピックを完全網羅,"阿部,真人,1984-",ソシム,202112,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11258644
-4274230023,Rによる実証分析 : 回帰分析から因果分析へ,"星野,匡郎,1984- 田中,久稔,1974- 北川,梨津,1997-",オーム社,202301,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD00482290
 4254126654,サンプルサイズの決め方,"永田,靖,1957-数学",朝倉書店,200309,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA63714639
 4588200615,結び,額田巌／著,法政大学出版局,19720301,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00927615
 4254111371,美しい不等式の世界 : 数学オリンピックの問題を題材として,"BulajichManfrino,Radmila／著 GómezOrtega,JoséAntonio／著 ほか",朝倉書店,2013-01,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB11424983
@@ -238,7 +237,6 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link
 429713148X,試して理解Linuxのしくみ : 実験と図解で学ぶOS、仮想マシン、コンテナの基礎知識,"武内,覚",技術評論社,202210,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC1716361X
 4796702792,ファッションの文化社会学,"Finkelstein,Joanne 成実,弘至,1964-",せりか書房,200709,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA83156554
 4588276476,鉄道旅行の歴史　〈新装版〉,W.シヴェルブシュ／著 加藤二郎／訳,法政大学出版局,20111209,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB07866139
-4254116330,統計学のための数学入門30講,"永田,靖,1957-数学",朝倉書店,200503,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA7172228X
 4274228991,Pythonではじめる音のプログラミング = Sound Programming with Python : コンピュータミュージックの信号処理,"青木,直史",オーム社,202209,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16633536
 429712811X,ディープラーニングを支える技術 2,"岡野原,大輔,1982-",技術評論社,202205,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14081687
 4297125609,ディープラーニングを支える技術 : 「正解」を導くメカニズム〈技術基礎〉,"岡野原,大輔,1982-",技術評論社,202201,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14376501
