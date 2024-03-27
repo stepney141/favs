@@ -1,4 +1,4 @@
-isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathlib_opac_link
+isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathlib_opac
 4861827116,ヴィクトリア朝怪異譚,ウィルキー・コリンズ／著 ジョージ・エリオット／著 メアリ・エリザベス・ブラッドン／著 ほか,作品社,20180829,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26839166,
 4315523402,犯罪学,"Newburn,Tim 岡邊,健,1975- 大庭,有美 林,カオリ",ニュートンプレス,202103,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC0558096X,
 4326103353,人工知能の哲学入門,"鈴木, 貴之, 1973-,鈴木貴之 著",勁草書房,"Sat, 16 Mar 2024 00:05:00 +0900",https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05889579,
@@ -292,7 +292,7 @@ isbn_or_asin,book_title,author,publisher,published_date,central_opac_link,mathli
 4152093854,国家はなぜ衰退するのか : 権力・繁栄・貧困の起源 下,"Acemoglu,Daron,1967- Robinson,JamesA.,1960- ほか",早川書房,201306,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB12774120,
 4152093846,国家はなぜ衰退するのか : 権力・繁栄・貧困の起源 上,"Acemoglu,Daron,1967- Robinson,JamesA.,1960- ほか",早川書房,201306,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB12774120,
 4065178029,統計モデルと推測 = Statistical Model and Inference,"松井,秀俊 小泉,和之 竹村,彰通,1952-",講談社,201911,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2925786X,
-462106231X,確率論的リスク解析 : 基礎と方法,"Bedford, T.,Cooke, Roger,金野, 秀敏,T. ベッドフォード, R. クック著 ; 金野秀敏訳",丸善出版,"Thu, 21 Sep 2023 08:21:44 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB10681878,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784621062319&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
+462106231X,確率論的リスク解析 : 基礎と方法,"Bedford, T.,Cooke, Roger,金野, 秀敏,T. ベッドフォード, R. クック著 ; 金野秀敏訳",丸善出版,"Thu, 21 Sep 2023 08:21:44 +0900",,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784621062319&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4787234528,趣味とジェンダー,神野由紀／編著 辻泉／編著 飯田豊／編著,青弓社,20190618,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2833261X,
 4065280869,基礎からわかる論文の書き方,"小熊,英二,1962-",講談社,202205,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14601765,
 4130802569,記号と再帰　新装版,田中久美子／著,東京大学出版会,20170401,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23562780,

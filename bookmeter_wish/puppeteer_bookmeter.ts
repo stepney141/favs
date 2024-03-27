@@ -205,8 +205,9 @@ class Bookmaker {
           published_date: "",
           exist_in_Sophia: "No",
           exist_in_UTokyo: "No",
-          central_opac_link: "",
-          mathlib_opac_link: ""
+          sophia_opac: "",
+          utokyo_opac: "",
+          sophia_mathlib_opac: ""
         });
       }
 
@@ -241,8 +242,8 @@ const getPrevBookList = async (filename: string): Promise<BookList> => {
  * ローカルのCSVとbookmeterのスクレイピング結果を比較する
  * 差分を検出したら、書誌情報を取得してCSVを新規生成する
  */
-const isBookListDifferent = (latestList: BookList, prevList: BookList, noRemoteCheck: boolean = false): boolean => {
-  if (noRemoteCheck) {
+const isBookListDifferent = (latestList: BookList, prevList: BookList, passBookListComparison: boolean = false): boolean => {
+  if (passBookListComparison) {
     return true; // 常に差分を検出したことにする
   }
 
@@ -473,11 +474,10 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
       book: {
         ...config.book,
         [`exist_in_${library.tag}`]: "Yes",
-        central_opac_link: `${library.opac}/opac/opac_openurl?ncid=${ncid}` //opacのリンク
+        [`${library.tag.toLowerCase()}_opac`]: `${library.opac}/opac/opac_openurl?ncid=${ncid}` //opacのリンク
       },
       isOwning: true
     };
-
   } else {
     //検索結果が0件
 
@@ -493,7 +493,7 @@ const searchCiNii: IsOwnBook<null> = async (config: IsOwnBookConfig<null>): Prom
         book: {
           ...config.book,
           [`exist_in_${library.tag}`]: "Yes",
-          central_opac_link: opacUrl
+          [`${library.tag.toLowerCase()}_opac`]: opacUrl
         },
         isOwning: true
       };
@@ -529,7 +529,7 @@ const searchSophiaMathLib: IsOwnBook<Set<string>> = (config: IsOwnBookConfig<Set
       book: {
         ...config.book,
         exist_in_Sophia: "Yes",
-        mathlib_opac_link
+        sophia_mathlib_opac: mathlib_opac_link
       },
       isOwning: true
     };
@@ -632,7 +632,8 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
 (async () => {
   try {
     const startTime = Date.now();
-    const noRemoteCheck = false;
+    const noRemoteCheck = false; // default: false
+    const passBookListComparison = false; // default: false
     if (noRemoteCheck) {
       console.log(`${JOB_NAME}: To check the remote is disabled`);
     }
@@ -649,7 +650,7 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
 
     await browser.close();
 
-    if (isBookListDifferent(latestBookList, prevBookList, noRemoteCheck)) {
+    if (isBookListDifferent(latestBookList, prevBookList, passBookListComparison)) {
       console.log(`${JOB_NAME}: Fetching bibliographic information`);
       const updatedBooklist = await fetchBiblioInfo(latestBookList); //書誌情報取得
 

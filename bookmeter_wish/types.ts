@@ -9,8 +9,9 @@ export type Book = {
   author: string;
   publisher: string;
   published_date: string;
-  central_opac_link: string;
-  mathlib_opac_link: string;
+  sophia_mathlib_opac: string;
+} & {
+  [key in OpacLink]: string;
 } & {
   [key in ExistIn]: "Yes" | "No";
 };
@@ -29,6 +30,7 @@ export type BiblioinfoErrorStatus = `Not_found_in_${(typeof BIBLIOINFO_SOURCES)[
 
 export type CiniiTargetOrgs = (typeof CINII_TARGET_TAGS)[number];
 export type ExistIn = `exist_in_${CiniiTargetOrgs}`;
+export type OpacLink = `${Lowercase<CiniiTargetOrgs>}_opac`;
 export type CiniiTarget = {
   tag: CiniiTargetOrgs;
   cinii_kid: string;
