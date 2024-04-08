@@ -73,7 +73,10 @@ class TikToker {
 
     await Promise.all([
       page.waitForResponse((response) => {
-        return response.url().includes(`https://webcast.tiktok.com/webcast/wallet_api/diamond_buy/permission_v2/`) === true && response.status() === 200;
+        return (
+          response.url().includes(`https://webcast.tiktok.com/webcast/wallet_api/diamond_buy/permission_v2/`) ===
+            true && response.status() === 200
+        );
       }),
       (loginButtonEH[0] as ElementHandle<Element>).click()
     ]);
@@ -87,10 +90,7 @@ class TikToker {
     await page.setBypassCSP(true);
     await page.setExtraHTTPHeaders({ "accept-language": "ja-JP" });
 
-    await Promise.all([
-      page.waitForXPath(XPATH.infoBox),
-      page.goto(`${baseURI}/@${USERNAME}`)
-    ]);
+    await Promise.all([page.waitForXPath(XPATH.infoBox), page.goto(`${baseURI}/@${USERNAME}`)]);
 
     const infoBoxEH = await page.$x(XPATH.infoBox);
     if (infoBoxEH.length > 0) {
@@ -109,7 +109,7 @@ class TikToker {
 
     const savedMoviesHrefEH = await page.$x(XPATH.savedMoviesHref);
 
-    for (const href of savedMoviesHrefEH) {      
+    for (const href of savedMoviesHrefEH) {
       const hrefText: string = await getNodeProperty(href, "href");
       console.log(hrefText);
       this.#articleList.push({
@@ -139,7 +139,7 @@ class TikToker {
         // '--single-process'
       ],
       slowMo: 50,
-      headless: false, //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
+      headless: false //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
     });
 
     const tiktok = new TikToker(browser);
