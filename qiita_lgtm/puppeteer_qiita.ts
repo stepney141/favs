@@ -11,7 +11,7 @@ const USER = "stepney141";
 const XPATH = {
   max_pagenation_value: '//*[@id="items"]/div[2]/div[2]/div/div/div/span',
   article_url: '//h2/a[contains(@href, "qiita.com")]',
-  lgtm_count_of_article: "//article/footer/div/div/span[2]",
+  lgtm_count_of_article: "//article/footer/div/span[2]",
   author: "//article/header/div/p",
   created_at: "//article/header/div/span/time" // 'dateTime'プロパティに時刻情報
 };
@@ -38,6 +38,8 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
       waitUntil: ["domcontentloaded", "networkidle0"]
     });
 
+    console.log(`${JOB_NAME}: Reading page ${page_num}...`);
+
     // get max cursor number
     if (page_num == 1) {
       // ref: https://swfz.hatenablog.com/entry/2020/07/23/010044
@@ -57,13 +59,19 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
       createdAtHandles,
       authorHandles
     )) {
-      lgtmList.set(url, {
+      const entry: LGTM = {
         title: await getNodeProperty(url, "innerHTML"), //タイトル取得
         url: await getNodeProperty(url, "href"), //記事URL取得
         lgtm: await getNodeProperty(lgtm, "innerText"), //記事LGTM数取得
         created_at: await getNodeProperty(created_at, "dateTime"), //記事投稿日時取得
         author: await getNodeProperty(author, "innerText") //記事投稿者取得
-      });
+      };
+
+      if (Object.values(entry).some((v) => v === null || v === undefined || v === "")) {
+        throw new Error("Failed to get some data...");
+      };
+
+      lgtmList.set(url, entry);
     }
 
     page_num++;
@@ -87,11 +95,10 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
 
     const lgtm = await getLgtm(browser);
 
-    await exportFile({ fileName: CSV_FILENAME, payload: mapToArray(lgtm), targetType: "csv", mode: "overwrite" }).then(
-      () => {
+    await exportFile({ fileName: CSV_FILENAME, payload: mapToArray(lgtm), targetType: "csv", mode: "overwrite" })
+      .then(() => {
         console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
-      }
-    );
+      });
 
     console.log("The processs took " + Math.round((Date.now() - startTime) / 1000) + " seconds");
 
