@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
+4320124960,機械学習 : ベイズと最適化の観点から,"Theodoridis,Sergios,1951- 岩野,和生 中島,秀之,1952-",共立出版,202212,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC18912508
 4065225493,これならわかる機械学習入門 = Understanding Machine Learning from Scratch,"富谷,昭夫",講談社,202103,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC06494262
 4297111179,効果検証入門 : 正しい比較のための因果推論/計量経済学の基礎,"安井,翔太 ホクソエム",技術評論社,202001,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB29538290
 4758121214,基礎から学ぶ統計学,"中原,治,1966-",羊土社,202209,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC16787507
@@ -25,8 +26,9 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4798068853,Blender Python完全ガイド,ぬっち,秀和システム,202401,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05135512
 4480074996,日本の中絶,塚原久美／著,筑摩書房,20220808,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC16256271
 4627614713,実用メカニズム事典 = Mechanism Encyclopedia : 機械設計の発想力を鍛える機構101選,"岩本,太郎",森北出版,202002,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB29727395
-4254161395,Pythonによる気象・気候データ解析. 2,"神山,翼",朝倉書店,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4254161395
-4254161387,Pythonによる気象・気候データ解析. 1,"神山,翼",朝倉書店,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4254161387
+4535540489,データ駆動型回帰分析 : 計量経済学と機械学習の融合,"末石,直也",日本評論社,202404,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4535540489
+4254161395,Pythonによる気象・気候データ解析. 2,"神山,翼",朝倉書店,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06757289
+4254161387,Pythonによる気象・気候データ解析. 1,"神山,翼",朝倉書店,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06757074
 4535788987,楕円積分と楕円関数 : おとぎの国の歩き方,"武部,尚志",日本評論社,201909,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB28917012
 4627061714,よくわかるトポロジー,"山本,修身",森北出版,201504,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB18534265
 4062573962,制御工学の考え方 : 産業革命は「制御」からはじまった,"木村,英紀,1941-",講談社,200212,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA60067160
@@ -86,7 +88,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4867660264,予言獣大図鑑,長野栄俊／編著 岩間理紀／著 笹方政紀／著 峰守ひろかず／著,文学通信,20231206,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04773648
 4320122356,メタヒューリスティクスの数理,"久保,幹雄,1963- Pedroso,JoãoPedro",共立出版,200905,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA89986066
 4627077416,"幾何学と代数系 = Geometric Algebra : ハミルトン,グラスマン,クリフォード","金谷,健一,1947-",森北出版,201407,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB16172560
-4814400586,Rustの練習帳 : コマンドラインツールの作成を通してRustを学ぶ,"Youens-Clark,Ken 中山,光樹,1991-",オーム社,202401,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4814400586
+4814400586,Rustの練習帳 : コマンドラインツールの作成を通してRustを学ぶ,"Youens-Clark,Ken 中山,光樹,1991-",オーム社,202401,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD0545973X
 4873117437,メタプログラミングRuby,"Perrotta,Paolo 角,征典",オーム社,201510,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB19720458
 4480075941,ブッダという男 初期仏典を読みとく,清水俊史／本文,筑摩書房,20231207,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04784713
 4588022180,最古の料理,J.ボテロ／著 松島英子／訳,法政大学出版局,20031201,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA6470446X
