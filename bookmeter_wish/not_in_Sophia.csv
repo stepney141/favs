@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date
+4814400799,脳に収まるコードの書き方 : 複雑さを避け持続可能にするための経験則とテクニック,MarkSeemann 吉羽龍太郎 原田騎郎 RobertC.Martin,オーム社,
 427423116X,Pythonで学ぶ効果検証入門,安井翔太 伊藤寛武 金子雄祐,オーム社,
 4627097034,ベイズデータ解析（第3版）,AndrewGelman JohnB.Carlin HalS.Stern DavidB.Dunson ほか,森北出版,
 482400702X,ただのぽんこつ母さんだと思っていたらADHDグレーでした。,はなゆい,オーバーラップ,202401
@@ -17,7 +18,6 @@ isbn_or_asin,book_title,author,publisher,published_date
 4087213129,なぜ働いていると本が読めなくなるのか,"三宅,香帆,1994-",集英社,202404
 4798068853,Blender Python完全ガイド,ぬっち,秀和システム,202401
 4022618655,関西人の正体,"井上,章一,1955-",朝日新聞出版,201607
-4535540489,データ駆動型回帰分析 : 計量経済学と機械学習の融合,"末石,直也",日本評論社,202404
 4254161395,Pythonによる気象・気候データ解析. 2,"神山,翼",朝倉書店,202405
 4254161387,Pythonによる気象・気候データ解析. 1,"神山,翼",朝倉書店,202405
 4480512233,ガロアの夢 群論と微分方程式,久賀道郎／本文,筑摩書房,20231211
@@ -89,7 +89,7 @@ isbn_or_asin,book_title,author,publisher,published_date
 4865280685,わたしが先生の「ロリータ」だったころ,アリソン・ウッド／著者 服部理佳／訳者,左右社,20220307
 4798068160,"Good Code,Bad Code : 持続可能な開発のためのソフトウェアエンジニア的思考","Long,Tom 秋,勇紀 高田,新山 山本,大祐,1983-",秀和システム,202302
 1680502549,Domain modeling made functional : tackle software complexity with domain-driven design and F♯,"Wlaschin, Scott,MacDonald, Brian,Scott Wlaschin",The Pragmatic Bookshelf,"Fri, 29 Mar 2024 09:07:28 +0900"
-4764905132,IT技術者の長寿と健康のために,"長野,宏宣,1945- 中川,晋一,1961- 蒲池,孝一,1947- 情報通信医学研究所",近代科学社,201606
+4764905132,IT技術者の長寿と健康のために,"情報通信医学研究所 長野,宏宣,1945- 中川,晋一,1961- 蒲池,孝一,1947-",近代科学社,201606
 0312383215,What people wore when : a complete illustrated history of costume from ancient times to the nineteenth century for every level of society,"Leventon, Melissa,Melissa Leventon",St. Martin's Griffin,"Fri, 29 Mar 2024 09:07:28 +0900"
 4296111914,電子工作パーツ制御完全攻略 : ラズパイ自由自在,"松岡,貴志 日経BP",日経BPマーケティング (発売),202203
 4798061700,実践Rustプログラミング入門 = introduction to rust programming,"初田,直也 山口,聖弘 吉川,哲史 豊田,優貴 松本,健太郎,webエンジニア 原,将己 ほか",秀和システム,202009
@@ -303,6 +303,7 @@ isbn_or_asin,book_title,author,publisher,published_date
 4802611927,"Pythonによるスクレイピング&機械学習〈開発テクニック〉 : Scrapy,BeautifulSoup,scikit-learn,TensorFlowを使ってみよう",クジラ飛行机,ソシム,201901
 4774176435,あなたの知らない超絶技巧プログラミングの世界,"遠藤,侑介",技術評論社,201510
 4861823730,フェティシズム全書,ジャン・ストレフ／著 加藤雅郁／翻訳 橋本克己／翻訳,作品社,20160510
+4622015994,攻撃 : 悪の自然誌,"Lorenz,Konrad,1903-1989 日高,敏隆,1930-2009 久保,和彦,1928-1989",みすず書房,198504
 4022613440,長谷川町子思い出記念館,"長谷川,町子,1920-1992",朝日新聞社,200108
 4861008670,"GUMI GRAPHIXXX : The virtual vocalist ""GUMI"" is the character of VOCALOID Megpoid. : GUMI 5th Anniversary Official Art Book",,ビー・エヌ・エヌ新社,201402
 410610704X,フィリピンパブ嬢の社会学,"中島,弘象,1989-",新潮社,201702

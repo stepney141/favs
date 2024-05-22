@@ -10,6 +10,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4254114850,固有値問題30講,"志賀,浩二,1930-",朝倉書店,199104,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN06247770
 4903814874,時系列分析と状態空間モデルの基礎 = Foundations of Time Series Analysis and State Space Models : RとStanで学ぶ理論と実装,"馬場,真哉,1990-",プレアデス出版,201803,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25542434
 4334044689,日本の少子化対策はなぜ失敗したのか? : 結婚・出産が回避される本当の原因,"山田,昌弘,1957-",光文社,202005,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB30607674
+4065347823,グラフニューラルネットワーク = Graph Neural Networks,"佐藤,竜馬 杉山,将",講談社,202404,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4065347823
 4798157775,最強囲碁AIアルファ碁解体新書 : 深層学習、モンテカルロ木探索、強化学習から見たその仕組み,"大槻,知史 三宅,陽一郎,1975-",翔泳社,201807,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB26440462
 4121101480,日本の小説の翻訳にまつわる特異な問題 : 文化の架橋者たちがみた「あいだ」,"片岡,真伊,1987-",中央公論新社,202402,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05608002
 4864260524,調査されるという迷惑　増補版,宮本常一 安渓遊地,みずのわ出版,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06546443
@@ -29,7 +30,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4798068853,Blender Python完全ガイド,ぬっち,秀和システム,202401,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05135512
 4480074996,日本の中絶,塚原久美／著,筑摩書房,20220808,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC16256271
 4627614713,実用メカニズム事典 = Mechanism Encyclopedia : 機械設計の発想力を鍛える機構101選,"岩本,太郎",森北出版,202002,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB29727395
-4535540489,データ駆動型回帰分析 : 計量経済学と機械学習の融合,"末石,直也",日本評論社,202404,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4535540489
+4535540489,データ駆動型回帰分析 : 計量経済学と機械学習の融合,"末石,直也",日本評論社,202404,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06593647
 4254161395,Pythonによる気象・気候データ解析. 2,"神山,翼",朝倉書店,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06757289
 4254161387,Pythonによる気象・気候データ解析. 1,"神山,翼",朝倉書店,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06757074
 4535788987,楕円積分と楕円関数 : おとぎの国の歩き方,"武部,尚志",日本評論社,201909,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB28917012
@@ -231,6 +232,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4862464831,ゲームエンジンアーキテクチャ,"Gregory,Jason 今給黎,隆,1972- 湊,和久 大貫,宏美 田中,幸,翻訳家",ボーンデジタル,202012,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC04591359
 4771036934,就活の社会学 : 大学生と「やりたいこと」,"妹尾,麻美,1988-",晃洋書房,202301,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD00522952
 4422215450,奇妙な国境や境界の世界地図,"Nikolić,Zoran,1975- 松田,和也,1963-",創元社,202301,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD00395050
+4798068160,"Good Code,Bad Code : 持続可能な開発のためのソフトウェアエンジニア的思考","Long,Tom 秋,勇紀 高田,新山 山本,大祐,1983-",秀和システム,202302,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD00400015
 4873119650,Googleのソフトウェアエンジニアリング : 持続可能なプログラミングを支える技術、文化、プロセス,"Winters,Titus Manshreck,Tom Wright,Hyrum 竹辺,靖昭 ほか",オーム社 (発売),202111,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC11277660
 448068431X,私たちはどう学んでいるのか,鈴木宏昭／著,筑摩書房,20220609,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC15107287
 4334035086,難解な本を読む技術,"高田,明典,1961-",光文社,200905,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA90034954
@@ -239,7 +241,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4622089513,患者の話は医師にどう聞こえるのか : 診察室のすれちがいを科学する,"Ofri,Danielle,1965- 原井,宏明 勝田,さよ",みすず書房,202011,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC03842045
 4320035763,実践計算物理学 = Computational Physics Practical Use of Python for Studying Physics : 物理を理解するためのPython活用法,"野本,拓也 是常,隆 有田,亮太郎 須藤,彰三 岡,真,1953-",共立出版,202301,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD00251119
 4627077319,科学者・技術者のための基礎線形代数と固有値問題,"柴田,正和",森北出版,201312,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB14336736
-4764905132,IT技術者の長寿と健康のために,"長野,宏宣,1945- 中川,晋一,1961- 蒲池,孝一,1947- 情報通信医学研究所",近代科学社,201606,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB21703123
+4764905132,IT技術者の長寿と健康のために,"情報通信医学研究所 長野,宏宣,1945- 中川,晋一,1961- 蒲池,孝一,1947-",近代科学社,201606,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB21703123
 4883842266,はじめての人のための経済学史,"江頭,進,1966-",サイエンス社,201506,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB18904830
 4798061700,実践Rustプログラミング入門 = introduction to rust programming,"初田,直也 山口,聖弘 吉川,哲史 豊田,優貴 松本,健太郎,webエンジニア 原,将己 ほか",秀和システム,202009,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC02162486
 4781915264,ガイダンス確率統計 : 基礎から学び本質の理解へ,"石谷,謙介",サイエンス社,202112,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC11593230
