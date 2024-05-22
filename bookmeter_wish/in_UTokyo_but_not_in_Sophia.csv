@@ -1,8 +1,8 @@
 isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
+4065347823,グラフニューラルネットワーク = Graph Neural Networks,"佐藤,竜馬 杉山,将",講談社,202404,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4065347823
 4121101480,日本の小説の翻訳にまつわる特異な問題 : 文化の架橋者たちがみた「あいだ」,"片岡,真伊,1987-",中央公論新社,202402,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05608002
 4864260524,調査されるという迷惑　増補版,宮本常一 安渓遊地,みずのわ出版,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06546443
 4798068853,Blender Python完全ガイド,ぬっち,秀和システム,202401,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05135512
-4535540489,データ駆動型回帰分析 : 計量経済学と機械学習の融合,"末石,直也",日本評論社,202404,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4535540489
 4254161395,Pythonによる気象・気候データ解析. 2,"神山,翼",朝倉書店,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06757289
 4254161387,Pythonによる気象・気候データ解析. 1,"神山,翼",朝倉書店,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06757074
 4339013749,ゲームグラフィックス表現技法 = Creative Techniques for Game Graphics,"金久保,哲也",コロナ社,202402,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05523486
@@ -31,7 +31,8 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4061592432,ケルト妖精学,"井村,君江,1932-",講談社,199608,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN14853823
 4480087966,ケルト妖精学,"井村, 君江, 1932-,井村君江 著",筑摩書房,"Tue, 20 Jan 2004 01:54:48 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA64375721
 4862464831,ゲームエンジンアーキテクチャ,"Gregory,Jason 今給黎,隆,1972- 湊,和久 大貫,宏美 田中,幸,翻訳家",ボーンデジタル,202012,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC04591359
-4764905132,IT技術者の長寿と健康のために,"長野,宏宣,1945- 中川,晋一,1961- 蒲池,孝一,1947- 情報通信医学研究所",近代科学社,201606,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB21703123
+4798068160,"Good Code,Bad Code : 持続可能な開発のためのソフトウェアエンジニア的思考","Long,Tom 秋,勇紀 高田,新山 山本,大祐,1983-",秀和システム,202302,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD00400015
+4764905132,IT技術者の長寿と健康のために,"情報通信医学研究所 長野,宏宣,1945- 中川,晋一,1961- 蒲池,孝一,1947-",近代科学社,201606,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB21703123
 4798061700,実践Rustプログラミング入門 = introduction to rust programming,"初田,直也 山口,聖弘 吉川,哲史 豊田,優貴 松本,健太郎,webエンジニア 原,将己 ほか",秀和システム,202009,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC02162486
 4344953304,幼なじみ萌え : ラブコメ恋愛文化史,"玉井,建也",幻冬舎,201711,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25511995
 4798125393,実践プログラミングDSL : ドメイン特化言語の設計と実装のノウハウ,"Ghosh,Debasish,1953- 佐藤,竜一,1972-",翔泳社,201206,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB09459260
@@ -96,6 +97,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4314000430,幻想芸術,"Brion,Marcel 坂崎,乙郎",紀伊國屋書店,196805,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN04841271
 4480093133,グレン・グールドは語る,グレン・グールド／著 ジョナサン・コット／著 宮澤淳一／翻訳,筑摩書房,20101001,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB03476507
 4774176435,あなたの知らない超絶技巧プログラミングの世界,"遠藤,侑介",技術評論社,201510,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB19571008
+4622015994,攻撃 : 悪の自然誌,"Lorenz,Konrad,1903-1989 日高,敏隆,1930-2009 久保,和彦,1928-1989",みすず書房,198504,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN0041886X
 4479750479,魔女論 : なぜ空を飛び、人を喰うか,"大和,岩雄,1928-",大和書房,201110,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB06978410
 4891004568,コードコンプリート : 完全なプログラミングを目指して : マイクロソフト公式 下,"McConnell,Steve クイープ",日経BP出版センター,200503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA7176045X
 489100455X,コードコンプリート : 完全なプログラミングを目指して : マイクロソフト公式 上,"McConnell,Steve クイープ",日経BP出版センター,200503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA7176045X
