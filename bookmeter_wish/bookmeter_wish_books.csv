@@ -1,4 +1,7 @@
 bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_Sophia,exist_in_UTokyo,sophia_opac,utokyo_opac,sophia_mathlib_opac
+https://bookmeter.com/books/22001600,4048931164,関数型ドメインモデリング ドメイン駆動設計とF#でソフトウェアの複雑さに立ち向かおう,"Scott Wlaschin,猪股　健太郎,Scott Wlaschin 著・文・その他,猪股　健太郎 翻訳","ドワンゴ,ＫＡＤＯＫＡＷＡ","Thu, 23 May 2024 00:39:19 +0900",No,No,,,
+https://bookmeter.com/books/9781687,4254122128,基礎からのベイズ統計学 : ハミルトニアンモンテカルロ法による実践的入門,"豊田,秀樹,1961-",朝倉書店,201506,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18938264,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB18938264,
+https://bookmeter.com/books/20472088,4845921170,色のコードを読む,ポール・シンプソン／著 中山ゆかり／翻訳,フィルムアート社,20221224,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD00226632,
 https://bookmeter.com/books/21968383,4814400799,脳に収まるコードの書き方 : 複雑さを避け持続可能にするための経験則とテクニック,MarkSeemann 吉羽龍太郎 原田騎郎 RobertC.Martin,オーム社,,No,No,,,
 https://bookmeter.com/books/19949249,4272331078,テレビ番組制作会社のリアリティ : つくり手たちの声と放送の現在,"林,香里,1963- 四方,由美,1969- 北出,真紀恵",大月書店,202208,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16521791,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC16521791,
 https://bookmeter.com/books/14569598,4839969515,詳解ディープラーニング : TensorFlow/Keras・PyTorchによる時系列データ処理,"巣籠,悠輔",マイナビ出版,201911,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4839969515,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB2925816X,
@@ -326,7 +329,6 @@ https://bookmeter.com/books/655008,0312383215,What people wore when : a complete
 https://bookmeter.com/books/9800154,4883842266,はじめての人のための経済学史,"江頭,進,1966-",サイエンス社,201506,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18904830,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB18904830,
 https://bookmeter.com/books/19467687,4296111914,電子工作パーツ制御完全攻略 : ラズパイ自由自在,"松岡,貴志 日経BP",日経BPマーケティング (発売),202203,No,No,,,
 https://bookmeter.com/books/16466190,4798061700,実践Rustプログラミング入門 = introduction to rust programming,"初田,直也 山口,聖弘 吉川,哲史 豊田,優貴 松本,健太郎,webエンジニア 原,将己 ほか",秀和システム,202009,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC02162486,
-https://bookmeter.com/books/19015685,4781915264,ガイダンス確率統計 : 基礎から学び本質の理解へ,"石谷,謙介",サイエンス社,202112,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11593230,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC11593230,
 https://bookmeter.com/books/20207464,4562071990,ポワロと私 : デビッド・スーシェ自伝,"Suchet,David,1946- Wansell,Geoffrey,1945- ほか",原書房,202210,Yes,No,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC17297933,,
 https://bookmeter.com/books/11215133,4814000480,科学論文の英語用法百科　第２編,グレン・パケット／著,京都大学学術出版会,20161017,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2221665X,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB2221665X,
 https://bookmeter.com/books/8169980,4535787603,学んでみよう!記号論理,"高崎,金久,1956-",日本評論社,201408,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB1644619X,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB1644619X,
