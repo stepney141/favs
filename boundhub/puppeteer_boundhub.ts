@@ -20,7 +20,9 @@ const XPATH = {
   linkToPlaylist: `//a[contains(text(), "${PLAYLIST_NAME}")]`,
   playListHeader: '//h2[contains(text(), "My Playlist")]',
   linkToNextPage: '//li[@class="next"]/a',
-  linkToAllMovies: '//*[@id="list_videos_my_favourite_videos_items"]/form/div[*]/a'
+  linkToAllMovies: '//*[@id="list_videos_my_favourite_videos_items"]/form/div[*]/a',
+
+  tagHrefs: "//div[@class='list-tags']//ul[*]/li[*]/a"
 };
 const SELECTOR = {
   dropdownToPlaylist: "#list_videos_my_favourite_videos > div.headline > div > span",
@@ -36,6 +38,10 @@ type Movie = {
   url: string;
 };
 type MovieList = Movie[];
+type Tag = {
+  name: string;
+  url: string;
+};
 
 class BoundHub {
   #browser: Browser;
@@ -68,6 +74,36 @@ class BoundHub {
 
     console.log(`${JOB_NAME}: Logged in!`);
     return this;
+  }
+
+  async fetchTags() {
+    const page = await this.#browser.newPage();
+    await page.goto(`${baseURI}/tags/`, {
+      waitUntil: "networkidle2"
+    });
+
+    const tagHrefs_Handle = await page.$x(XPATH.tagHrefs);
+    const tags: Tag[] = [];
+
+    for (const tagNode of tagHrefs_Handle) {
+      tags.push({
+        name: await getNodeProperty(tagNode, "textContent"),
+        url: await getNodeProperty(tagNode, "href")
+      });
+    }
+    tags.sort((a, b) => {
+      const nameA = a.name.toUpperCase(); // 大文字小文字を無視
+      const nameB = b.name.toUpperCase(); // 大文字小文字を無視
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return tags;
   }
 
   async explore() {
@@ -131,8 +167,13 @@ class BoundHub {
     });
 
     const bd = new BoundHub(browser);
-    const movielist = await bd.login().then((bd) => bd.explore());
 
+    const taglist = await bd.login().then((bd) => bd.fetchTags());
+    await exportFile({ fileName: "boundhub_tags.csv", payload: taglist, targetType: "csv", mode: "overwrite" }).then(() => {
+      console.log(`${JOB_NAME}: Finished writing boundhub_tags.csv`);
+    });
+
+    const movielist = await bd.explore();
     await exportFile({ fileName: CSV_FILENAME, payload: movielist, targetType: "csv", mode: "overwrite" }).then(() => {
       console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
     });
