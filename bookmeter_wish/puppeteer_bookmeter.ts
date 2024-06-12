@@ -6,10 +6,18 @@ import { config } from "dotenv";
 import { XMLParser } from "fast-xml-parser";
 import fetch from "node-fetch";
 import { parse } from "papaparse";
-import { PdfData } from "pdfdataextract";
 import { launch } from "puppeteer";
 
-import { PromiseQueue, getNodeProperty, mapToArray, randomWait, sleep, exportFile, zip } from "../.libs/utils";
+import {
+  PromiseQueue,
+  getNodeProperty,
+  mapToArray,
+  randomWait,
+  sleep,
+  exportFile,
+  zip,
+  extractTextFromPDF
+} from "../.libs/utils";
 
 import {
   CSV_FILENAME,
@@ -242,7 +250,11 @@ const getPrevBookList = async (filename: string): Promise<BookList> => {
  * ローカルのCSVとbookmeterのスクレイピング結果を比較する
  * 差分を検出したら、書誌情報を取得してCSVを新規生成する
  */
-const isBookListDifferent = (latestList: BookList, prevList: BookList, passBookListComparison: boolean = false): boolean => {
+const isBookListDifferent = (
+  latestList: BookList,
+  prevList: BookList,
+  passBookListComparison: boolean = false
+): boolean => {
   if (passBookListComparison) {
     return true; // 常に差分を検出したことにする
   }
@@ -555,12 +567,12 @@ const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): 
       }
     });
 
-    const rawPdf: Uint8Array = response["data"];
-    const parsedPdf = await PdfData.extract(rawPdf, { sort: false });
+    const rawPdf: Uint8Array = new Uint8Array(response["data"]);
+    const parsedPdf = extractTextFromPDF(rawPdf);
 
     console.log(`${JOB_NAME}: Completed fetching the list of ${listtype} books in Sophia Univ. Math Lib`);
 
-    for (const page of parsedPdf.text!) {
+    for await (const page of parsedPdf) {
       const matchedIsbn = page.matchAll(REGEX.isbn);
       for (const match of matchedIsbn) {
         mathlibIsbnList.add(match[0]);

@@ -2,7 +2,10 @@ import fs from "node:fs/promises";
 import { AxiosError } from "axios";
 import { unparse } from "papaparse";
 import type { ElementHandle, JSHandle, Page } from "puppeteer";
-import { parse } from "path/posix";
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
+// see:
+// - https://github.com/mozilla/pdf.js/blob/master/examples/node/getinfo.mjs
+// - https://github.com/mozilla/pdf.js/issues/18006
 
 export const handleAxiosError = (error: AxiosError) => {
   if (error.response) {
@@ -115,6 +118,25 @@ export type FileExportIO<T = any[]> = {
   targetType: "json" | "csv";
   mode: "append" | "overwrite";
 };
+
+/**
+ * @link https://zenn.dev/ptna/articles/63df4a8007f9d3
+ */
+export async function* extractTextFromPDF(pdfData: Uint8Array): AsyncGenerator<string> {
+  const loadingTask = pdfjsLib.getDocument({ data: pdfData });
+  const pdf = await loadingTask.promise;
+  const maxPages = pdf.numPages;
+  let pdfText = "";
+
+  for (let pageNumber = 1; pageNumber <= maxPages; pageNumber++) {
+    const page = await pdf.getPage(pageNumber);
+    const content = await page.getTextContent({ includeMarkedContent: false });
+    const pageText = content.items.map((item) => ("str" in item ? item.str : "")).join("\n");
+    pdfText += pageText + "\n";
+    yield pageText;
+  }
+  return pdfText;
+}
 
 export const exportFile = async (IO: FileExportIO) => {
   const raw = IO.payload;
