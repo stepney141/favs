@@ -567,8 +567,8 @@ const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): 
       }
     });
 
-    const rawPdf: Uint8Array = response["data"];
-    const parsedPdf = await extractTextFromPDF(rawPdf);
+    const rawPdf: Uint8Array = new Uint8Array(response["data"]);
+    const parsedPdf = extractTextFromPDF(rawPdf);
 
     console.log(`${JOB_NAME}: Completed fetching the list of ${listtype} books in Sophia Univ. Math Lib`);
 
