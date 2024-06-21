@@ -33,7 +33,6 @@ import {
 import {
   type ASIN,
   type Book,
-  type OpenBdResponse,
   type CiniiResponse,
   type NdlResponseJson,
   type BiblioinfoErrorStatus,
@@ -46,6 +45,7 @@ import {
   type IsOwnBookConfig,
   type ISBN10,
   type ISBN13,
+  type OpenBD,
   isIsbn10
 } from "./types";
 
@@ -215,7 +215,8 @@ class Bookmaker {
           exist_in_UTokyo: "No",
           sophia_opac: "",
           utokyo_opac: "",
-          sophia_mathlib_opac: ""
+          sophia_mathlib_opac: "",
+          description: ""
         });
       }
 
@@ -253,9 +254,9 @@ const getPrevBookList = async (filename: string): Promise<BookList> => {
 const isBookListDifferent = (
   latestList: BookList,
   prevList: BookList,
-  passBookListComparison: boolean = false
+  skipBookListComparison: boolean = false
 ): boolean => {
-  if (passBookListComparison) {
+  if (skipBookListComparison) {
     return true; // 常に差分を検出したことにする
   }
 
@@ -279,7 +280,7 @@ const bulkFetchOpenBD = async (bookList: BookList): Promise<BiblioInfoStatus[]> 
   const bulkTargetIsbns = [...bookList.values()].map((bookmeter) => bookmeter["isbn_or_asin"]).toString();
   const bookmeterKeys = Array.from(bookList.keys());
 
-  const response: AxiosResponse<OpenBdResponse> = await axios({
+  const response: AxiosResponse<OpenBD.Response> = await axios({
     method: "get",
     url: `https://api.openbd.jp/v1/get?isbn=${bulkTargetIsbns}`,
     responseType: "json"
@@ -303,11 +304,20 @@ const bulkFetchOpenBD = async (bookList: BookList): Promise<BiblioInfoStatus[]> 
     } else {
       //本の情報があった
       const bookinfo = bookResp.summary;
+      let description = "";
+
+      if (bookResp.onix.CollateralDetail.TextContent !== undefined) {
+        for (const text of bookResp.onix.CollateralDetail.TextContent) {
+          description += text.Text.replace(/\r?\n/g, '<br>') + "<br>";
+        }
+      }
+
       const part = {
         book_title: bookinfo.title ?? "",
         author: bookinfo.author ?? "",
         publisher: bookinfo.publisher ?? "",
-        published_date: bookinfo.pubdate ?? ""
+        published_date: bookinfo.pubdate ?? "",
+        description
       };
       results.push({
         book: { ...bookList.get(bookmeterURL)!, ...part },
@@ -644,8 +654,8 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
 (async () => {
   try {
     const startTime = Date.now();
-    const noRemoteCheck = false; // default: false
-    const passBookListComparison = false; // default: false
+    const noRemoteCheck = true; // default: false
+    const skipBookListComparison = true; // default: false
     if (noRemoteCheck) {
       console.log(`${JOB_NAME}: To check the remote is disabled`);
     }
@@ -662,7 +672,7 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
 
     await browser.close();
 
-    if (isBookListDifferent(latestBookList, prevBookList, passBookListComparison)) {
+    if (isBookListDifferent(latestBookList, prevBookList, skipBookListComparison)) {
       console.log(`${JOB_NAME}: Fetching bibliographic information`);
       const updatedBooklist = await fetchBiblioInfo(latestBookList); //書誌情報取得
 

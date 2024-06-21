@@ -10,6 +10,7 @@ export type Book = {
   publisher: string;
   published_date: string;
   sophia_mathlib_opac: string;
+  description: string;
 } & {
   [key in OpacLink]: string;
 } & {
@@ -37,17 +38,31 @@ export type CiniiTarget = {
   opac: string;
 };
 
-export type OpenBdSummary = {
-  isbn: string;
-  title: string;
-  volume: string;
-  series: string;
-  publisher: string;
-  pubdate: string;
-  cover: string;
-  author: string;
-};
-export type OpenBdResponse = ({ summary: OpenBdSummary } | null)[];
+export namespace OpenBD {
+  export type Summary = {
+    isbn: string;
+    title: string;
+    volume: string;
+    series: string;
+    publisher: string;
+    pubdate: string;
+    cover: string;
+    author: string;
+  };
+  export type CollateralDetail = {
+    TextContent?: {
+      TextType: string;
+      ContentAudience: string;
+      Text: string;
+    }[];
+  };
+  export type Response = ({
+    summary: Summary;
+    onix: {
+      CollateralDetail: CollateralDetail;
+    };
+  } | null)[];
+}
 
 export type NdlResponseJson = {
   rss: {
