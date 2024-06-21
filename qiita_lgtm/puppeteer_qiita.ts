@@ -69,7 +69,7 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
 
       if (Object.values(entry).some((v) => v === null || v === undefined || v === "")) {
         throw new Error("Failed to get some data...");
-      };
+      }
 
       lgtmList.set(url, entry);
     }
@@ -95,10 +95,11 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
 
     const lgtm = await getLgtm(browser);
 
-    await exportFile({ fileName: CSV_FILENAME, payload: mapToArray(lgtm), targetType: "csv", mode: "overwrite" })
-      .then(() => {
+    await exportFile({ fileName: CSV_FILENAME, payload: mapToArray(lgtm), targetType: "csv", mode: "overwrite" }).then(
+      () => {
         console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
-      });
+      }
+    );
 
     console.log("The processs took " + Math.round((Date.now() - startTime) / 1000) + " seconds");
 

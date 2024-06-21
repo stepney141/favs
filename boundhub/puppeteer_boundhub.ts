@@ -169,9 +169,11 @@ class BoundHub {
     const bd = new BoundHub(browser);
 
     const taglist = await bd.login().then((bd) => bd.fetchTags());
-    await exportFile({ fileName: "boundhub_tags.csv", payload: taglist, targetType: "csv", mode: "overwrite" }).then(() => {
-      console.log(`${JOB_NAME}: Finished writing boundhub_tags.csv`);
-    });
+    await exportFile({ fileName: "boundhub_tags.csv", payload: taglist, targetType: "csv", mode: "overwrite" }).then(
+      () => {
+        console.log(`${JOB_NAME}: Finished writing boundhub_tags.csv`);
+      }
+    );
 
     const movielist = await bd.explore();
     await exportFile({ fileName: CSV_FILENAME, payload: movielist, targetType: "csv", mode: "overwrite" }).then(() => {
