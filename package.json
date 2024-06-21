@@ -44,6 +44,7 @@
     "exec": "node -r esbuild-register"
   },
   "volta": {
-    "node": "18.19.0"
+    "node": "18.19.0",
+    "npm": "10.8.1"
   }
 }
