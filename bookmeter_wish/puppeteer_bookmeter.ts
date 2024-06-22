@@ -306,11 +306,11 @@ const bulkFetchOpenBD = async (bookList: BookList): Promise<BiblioInfoStatus[]> 
       const bookinfo = bookResp.summary;
       let description = "";
 
-      if (bookResp.onix.CollateralDetail.TextContent !== undefined) {
-        for (const text of bookResp.onix.CollateralDetail.TextContent) {
-          description += text.Text.replace(/\r?\n/g, '<br>') + "<br>";
-        }
-      }
+      // if (bookResp.onix.CollateralDetail.TextContent !== undefined) {
+      //   for (const text of bookResp.onix.CollateralDetail.TextContent) {
+      //     description += text.Text.replace(/\r?\n/g, '<br>') + "<br>";
+      //   }
+      // }
 
       const part = {
         book_title: bookinfo.title ?? "",
@@ -654,8 +654,8 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
 (async () => {
   try {
     const startTime = Date.now();
-    const noRemoteCheck = true; // default: false
-    const skipBookListComparison = true; // default: false
+    const noRemoteCheck = false; // default: false
+    const skipBookListComparison = false; // default: false
     if (noRemoteCheck) {
       console.log(`${JOB_NAME}: To check the remote is disabled`);
     }
