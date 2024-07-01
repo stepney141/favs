@@ -7,7 +7,7 @@
     "axios": "^1.6.5",
     "dotenv": "^16.3.1",
     "fast-xml-parser": "^4.3.3",
-    "firebase": "^10.7.1",
+    "firebase": "^10.12.2",
     "fs": "^0.0.1-security",
     "gaxios": "^6.1.1",
     "octokit": "^3.1.2",
