@@ -1,4 +1,4 @@
-import { REGEX, type BIBLIOINFO_SOURCES, type CINII_TARGET_TAGS } from "./constants";
+import { type BIBLIOINFO_SOURCES, type CINII_TARGET_TAGS } from "./constants";
 
 import type { Brand } from "../.libs/lib";
 
@@ -19,13 +19,17 @@ export type Book = {
 export type BookList = Map<string, Book>;
 
 export type BiblioInfoStatus = { book: Book; isFound: boolean };
-export type FetchBiblioInfo = (book: Book) => BiblioInfoStatus | Promise<BiblioInfoStatus>;
+export type FetchBiblioInfo = (book: Book, credential?: string) => BiblioInfoStatus | Promise<BiblioInfoStatus>;
 
 export type BookOwningStatus = { book: Book; isOwning: boolean };
-export type IsOwnBookConfig<T> = { book: Book; options?: { resources?: T; libraryInfo?: CiniiTarget } };
-export type IsOwnBook<T> =
-  | ((config: IsOwnBookConfig<T>) => BookOwningStatus)
-  | ((config: IsOwnBookConfig<T>) => Promise<BookOwningStatus>);
+export type IsOwnBookConfig<T> = {
+  book: Book;
+  options?: { resources?: T; libraryInfo?: CiniiTarget };
+};
+export type IsOwnBook<T, R extends BookOwningStatus | Promise<BookOwningStatus>> = (
+  config: IsOwnBookConfig<T>,
+  credential?: string
+) => R;
 
 export type BiblioinfoErrorStatus = `Not_found_in_${(typeof BIBLIOINFO_SOURCES)[number]}` | "INVALID_ISBN";
 
@@ -155,16 +159,3 @@ export type GoogleBookApiResponse = {
 export type ISBN10 = Brand<string, "ISBN10">;
 export type ISBN13 = Brand<string, "ISBN13">;
 export type ASIN = Brand<string, "ASIN">;
-
-export const isIsbn10 = (str: string): str is ISBN10 => {
-  return str.match(REGEX.isbn10) !== null;
-};
-export const isIsbn13 = (str: string): str is ISBN13 => {
-  return str.match(REGEX.isbn13) !== null;
-};
-export const isAsin = (str: string): str is ASIN => {
-  if (isIsbn10(str)) {
-    return false;
-  }
-  return str.match(REGEX.amazon_asin) !== null;
-};

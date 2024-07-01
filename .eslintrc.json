@@ -54,7 +54,8 @@
       {
         "ignoreIIFE": true
       }
-    ]
+    ],
+    "@typescript-eslint/no-namespace": "warn"
   },
   "settings": {
     "import/parsers": {
