@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathlib_opac
+462130898X,ネットワーク科学入門 : Pythonで学ぶデータ分析とモデリング,"Menczer,Filippo Fortunato,Santo Davis,ClaytonA ほか",丸善出版,202312,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05165444,
 406512476X,コンパクトデータ構造 : 実践的アプローチ,"Navarro,Gonzalo,1969- 定兼,邦彦,1971-",講談社,202307,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03221544,
 4339013722,音楽情報処理 = Music Information Processing,"後藤,真孝 北原,鉄朗 深山,覚 竹川,佳成 吉井,和佳",コロナ社,202309,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03805104,
 4320017382,これなら分かる応用数学教室 : 最小二乗法からウェーブレットまで,"金谷,健一,1947-",共立出版,200306,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA62447424,
@@ -29,6 +30,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4903814874,時系列分析と状態空間モデルの基礎 = Foundations of Time Series Analysis and State Space Models : RとStanで学ぶ理論と実装,"馬場,真哉,1990-",プレアデス出版,201803,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB25542434,
 4334044689,日本の少子化対策はなぜ失敗したのか? : 結婚・出産が回避される本当の原因,"山田,昌弘,1957-",光文社,202005,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30607674,
 4065347823,グラフニューラルネットワーク = Graph Neural Networks,"佐藤,竜馬,1996- 杉山,将",講談社,202404,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD0659685X,
+4535540284,定量的マクロ経済学と数値計算,北尾早霧 砂川武貴 山田知明,日本評論社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07376881,
 4798157775,最強囲碁AIアルファ碁解体新書 : 深層学習、モンテカルロ木探索、強化学習から見たその仕組み,"大槻,知史 三宅,陽一郎,1975-",翔泳社,201807,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26440462,
 4121101480,日本の小説の翻訳にまつわる特異な問題 : 文化の架橋者たちがみた「あいだ」,"片岡,真伊,1987-",中央公論新社,202402,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05608002,
 4320125797,量子情報科学入門 第2版,石坂智 小川朋宏 河内亮周 木村元 林正人,,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07209223,
@@ -290,7 +292,6 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4575317365,"セックスロボットと人造肉 : テクノロジーは性、食、生、死を""征服""できるか","Kleeman,Jenny 安藤,貴子",双葉社,202208,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16518163,
 4909658874,古典教育をオーバーホールする,菊野雅之／著,文学通信,20220926,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16984100,
 4065133327,深層学習 = Deep Learning,"岡谷,貴之 杉山,将",講談社,202201,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC12180349,
-4320122992,量子情報科学入門 = Introduction to Quantum Information Science,"石坂,智 小川,朋宏 河内,亮周",共立出版,201206,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB09394904,
 4585060634,天皇皇族歴史伝説大事典,"志村,有弘,1941-",勉誠出版,200812,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA88442936,
 4061596845,諸子百家,"浅野,裕一,1946-",講談社,200411,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA69442203,
 4787220942,妖怪の誕生,廣田龍平／著,青弓社,20220527,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14828330,
