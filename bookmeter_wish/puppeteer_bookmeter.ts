@@ -5,15 +5,8 @@ import axios from "axios";
 import { config } from "dotenv";
 import { launch } from "puppeteer";
 
-import {
-  PromiseQueue,
-  getNodeProperty,
-  mapToArray,
-  randomWait,
-  sleep,
-  exportFile,
-  extractTextFromPDF
-} from "../.libs/utils";
+import { getNodeProperty, $x } from "../.libs/pptr-utils";
+import { PromiseQueue, mapToArray, randomWait, sleep, exportFile, extractTextFromPDF } from "../.libs/utils";
 
 import {
   CSV_FILENAME,
@@ -31,7 +24,7 @@ import { getPrevBookList, isBookListDifferent, matchASIN } from "./utils";
 
 import type { ASIN, Book, BookList, BiblioInfoStatus, ISBN10 } from "./types";
 import type { AxiosResponse } from "axios";
-import type { Browser, ElementHandle } from "puppeteer";
+import type { Browser } from "puppeteer";
 
 config({ path: path.join(__dirname, "../.env") });
 const bookmeter_username = process.env.BOOKMETER_ACCOUNT!.toString();
@@ -69,9 +62,9 @@ class Bookmaker {
       waitUntil: "domcontentloaded"
     });
 
-    const accountNameInputHandle = await page.$x(XPATH.accountNameInput);
-    const passwordInputHandle = await page.$x(XPATH.passwordInput);
-    const loginButtonHandle = await page.$x(XPATH.loginButton);
+    const accountNameInputHandle = await $x(page, XPATH.accountNameInput);
+    const passwordInputHandle = await $x(page, XPATH.passwordInput);
+    const loginButtonHandle = await $x(page, XPATH.loginButton);
 
     await accountNameInputHandle[0].type(bookmeter_username);
     await passwordInputHandle[0].type(bookmeter_password);
@@ -81,7 +74,7 @@ class Bookmaker {
         timeout: 2 * 60 * 1000,
         waitUntil: "domcontentloaded"
       }),
-      (loginButtonHandle[0] as ElementHandle<Element>).click()
+      loginButtonHandle[0].click()
       // ref: https://github.com/puppeteer/puppeteer/issues/8852
     ]);
 
@@ -111,9 +104,9 @@ class Bookmaker {
         waitUntil: ["domcontentloaded"]
       });
 
-      const booksUrlHandle = await page.$x(XPATH.booksUrl);
-      const amazonLinkHandle = await page.$x(XPATH.amazonLink);
-      const isBookExistHandle = await page.$x(XPATH.isBookExist);
+      const booksUrlHandle = await $x(page, XPATH.booksUrl);
+      const amazonLinkHandle = await $x(page, XPATH.amazonLink);
+      const isBookExistHandle = await $x(page, XPATH.isBookExist);
 
       for (let i = 0; i < booksUrlHandle.length; i++) {
         const bkmt_raw = await getNodeProperty(booksUrlHandle[i], "href");
@@ -262,7 +255,7 @@ const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
 
     const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
-      headless: "new",
+      headless: true,
       slowMo: 15
     });
 

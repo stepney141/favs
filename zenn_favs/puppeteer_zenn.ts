@@ -5,11 +5,12 @@ import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
+import { $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile } from "../.libs/utils";
 
 import { USER_AGENT } from "./../.libs/constants";
 
-import type { Browser, ElementHandle } from "puppeteer";
+import type { Browser } from "puppeteer";
 
 const stealthPlugin = StealthPlugin();
 /* ref:
@@ -88,13 +89,13 @@ class Zennist {
     });
 
     // login with google
-    const signInButton_Handle = page.$x(XPATH.signInButton);
+    const signInButton_Handle = $x(page, XPATH.signInButton);
     await Promise.all([
       page.waitForNavigation({
         timeout: 60000,
         waitUntil: ["networkidle0", "domcontentloaded", "load"]
       }),
-      ((await signInButton_Handle)[0] as ElementHandle<Element>).click()
+      (await signInButton_Handle)[0].click()
     ]);
 
     // input email
@@ -110,7 +111,7 @@ class Zennist {
 
     // input password
     console.log("Typing password ...");
-    const passwordInputHandle = await page.$x(XPATH.passwordInput);
+    const passwordInputHandle = await $x(page, XPATH.passwordInput);
     await page.screenshot({ path: "test.png" });
     await passwordInputHandle[0].type(zenn_password);
     await Promise.all([
@@ -167,9 +168,9 @@ class Zennist {
     console.log(`${JOB_NAME}: Started to fetch!`);
 
     for (;;) {
-      const button_eh = await page.$x(XPATH.nextPaginationButton);
+      const button_eh = await $x(page, XPATH.nextPaginationButton);
       if (button_eh.length !== 0) {
-        await (button_eh[0] as ElementHandle<Element>).click();
+        await button_eh[0].click();
       } else {
         break;
       }
@@ -198,7 +199,7 @@ class Zennist {
         // '--single-process'
       ],
       slowMo: 100,
-      // headless: "new",
+      // headless: true,
       headless: false //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
     });
 

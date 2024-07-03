@@ -8,9 +8,10 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { launch } from "puppeteer";
 
 import { USER_AGENT } from "../.libs/constants";
-import { getNodeProperty, mapToArray, exportFile, zip } from "../.libs/utils";
+import { getNodeProperty, $x } from "../.libs/pptr-utils";
+import { mapToArray, exportFile, zip } from "../.libs/utils";
 
-import type { ElementHandle, Page, Protocol, Browser } from "puppeteer";
+import type { Page, Protocol, Browser } from "puppeteer";
 
 const JOB_NAME = "Niconico Seiga MyClips";
 const CSV_FILENAME = "nicoseiga_myclips.csv";
@@ -42,7 +43,7 @@ const firebaseConfig = {
 };
 
 async function isNotLoggedInSeiga(page: Page) {
-  const eh = await page.$x(XPATH.eachIllustLinks);
+  const eh = await $x(page, XPATH.eachIllustLinks);
   return eh.length == 0;
 }
 
@@ -92,9 +93,9 @@ class Seiga {
         waitUntil: "load"
       });
 
-      const useridInput_Handle = await page.$x(XPATH.useridInput);
-      const passwordInput_Handle = await page.$x(XPATH.passwordInput);
-      const loginButton_Handle = await page.$x(XPATH.loginButton);
+      const useridInput_Handle = await $x(page, XPATH.useridInput);
+      const passwordInput_Handle = await $x(page, XPATH.passwordInput);
+      const loginButton_Handle = await $x(page, XPATH.loginButton);
 
       await useridInput_Handle[0].type(user_name);
       await passwordInput_Handle[0].type(password);
@@ -104,7 +105,7 @@ class Seiga {
           timeout: 2 * 60 * 1000,
           waitUntil: ["networkidle0", "domcontentloaded", "load"]
         }),
-        (loginButton_Handle[0] as ElementHandle<Element>).click()
+        loginButton_Handle[0].click()
       ]);
     }
 
@@ -124,9 +125,9 @@ class Seiga {
     console.log(`${JOB_NAME}: Scraping Started!`);
 
     for (;;) {
-      const eachIllustLinks_eh = await page.$x(XPATH.eachIllustLinks);
-      const createdDate_eh = await page.$x(XPATH.eachIllustCreatedDates);
-      const clippedDate_eh = await page.$x(XPATH.eachIllustClippedDates);
+      const eachIllustLinks_eh = await $x(page, XPATH.eachIllustLinks);
+      const createdDate_eh = await $x(page, XPATH.eachIllustCreatedDates);
+      const clippedDate_eh = await $x(page, XPATH.eachIllustClippedDates);
 
       for (const [illustLink_dom, created_date_dom, clipped_date_dom] of zip(
         eachIllustLinks_eh,
@@ -148,7 +149,7 @@ class Seiga {
         // console.log(url, title);
       }
 
-      const next_eh = await page.$x(XPATH.toNextPageButtons);
+      const next_eh = await $x(page, XPATH.toNextPageButtons);
       const nextlink_status = await getNodeProperty(next_eh[0], "className");
 
       // 「次へ」ボタンを押すことができなくなったら中断
@@ -160,7 +161,7 @@ class Seiga {
             timeout: 2 * 60 * 1000,
             waitUntil: "networkidle2"
           }),
-          (next_eh[0] as ElementHandle<Element>).click() // 「次へ」ボタンを押す
+          next_eh[0].click() // 「次へ」ボタンを押す
         ]);
       }
     }
@@ -176,7 +177,7 @@ class Seiga {
 
     const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
-      headless: "new",
+      headless: true,
       // devtools: true,
       slowMo: 100
     });

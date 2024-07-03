@@ -5,9 +5,10 @@ import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import { exportFile, getNodeProperty, sleep } from "../.libs/utils";
+import { getNodeProperty, waitForXPath, $x } from "../.libs/pptr-utils";
+import { exportFile, sleep } from "../.libs/utils";
 
-import type { Browser, ElementHandle } from "puppeteer";
+import type { Browser } from "puppeteer";
 
 const stealthPlugin = StealthPlugin();
 /* ref:
@@ -61,15 +62,15 @@ class TikToker {
       waitUntil: "domcontentloaded"
     });
 
-    const usernameInputEH = await page.$x(XPATH.loginUsernameInput);
-    const passwordInputEH = await page.$x(XPATH.loginPasswordInput);
+    const usernameInputEH = await $x(page, XPATH.loginUsernameInput);
+    const passwordInputEH = await $x(page, XPATH.loginPasswordInput);
 
     await usernameInputEH[0].type(USERNAME);
     await passwordInputEH[0].type(PASSWORD);
 
     await sleep(1000);
 
-    const loginButtonEH = await page.$x(XPATH.loginButtonEnabled);
+    const loginButtonEH = await $x(page, XPATH.loginButtonEnabled);
 
     await Promise.all([
       page.waitForResponse((response) => {
@@ -78,7 +79,7 @@ class TikToker {
             true && response.status() === 200
         );
       }),
-      (loginButtonEH[0] as ElementHandle<Element>).click()
+      loginButtonEH[0].click()
     ]);
 
     return this;
@@ -90,24 +91,21 @@ class TikToker {
     await page.setBypassCSP(true);
     await page.setExtraHTTPHeaders({ "accept-language": "ja-JP" });
 
-    await Promise.all([page.waitForXPath(XPATH.infoBox), page.goto(`${baseURI}/@${USERNAME}`)]);
+    await Promise.all([waitForXPath(page, XPATH.infoBox), page.goto(`${baseURI}/@${USERNAME}`)]);
 
-    const infoBoxEH = await page.$x(XPATH.infoBox);
+    const infoBoxEH = await $x(page, XPATH.infoBox);
     if (infoBoxEH.length > 0) {
-      await (infoBoxEH[0] as ElementHandle<Element>).click();
+      await infoBoxEH[0].click();
     }
 
     await sleep(1000);
 
-    const toSavedMoviesEH = await page.$x(XPATH.ToSavedMovies);
-    await Promise.all([
-      page.waitForXPath(XPATH.savedMoviesHref),
-      (toSavedMoviesEH[0] as ElementHandle<Element>).click()
-    ]);
+    const toSavedMoviesEH = await $x(page, XPATH.ToSavedMovies);
+    await Promise.all([waitForXPath(page, XPATH.savedMoviesHref), toSavedMoviesEH[0].click()]);
 
     await sleep(1000);
 
-    const savedMoviesHrefEH = await page.$x(XPATH.savedMoviesHref);
+    const savedMoviesHrefEH = await $x(page, XPATH.savedMoviesHref);
 
     for (const href of savedMoviesHrefEH) {
       const hrefText: string = await getNodeProperty(href, "href");
