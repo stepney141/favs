@@ -1,6 +1,7 @@
 import { launch } from "puppeteer";
 
-import { getNodeProperty, mapToArray, exportFile, zip } from "../.libs/utils";
+import { getNodeProperty, $x } from "../.libs/pptr-utils";
+import { mapToArray, exportFile, zip } from "../.libs/utils";
 
 import type { Browser, ElementHandle } from "puppeteer";
 
@@ -43,15 +44,15 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
     // get max cursor number
     if (page_num == 1) {
       // ref: https://swfz.hatenablog.com/entry/2020/07/23/010044
-      const paginationHandles = await page.$x(XPATH.max_pagenation_value);
+      const paginationHandles = await $x(page, XPATH.max_pagenation_value);
       const page_num_string: string = await getNodeProperty(paginationHandles[0], "innerHTML");
       page_max = Number(page_num_string.substr(-2, 2));
     }
 
-    const articleUrlHandles = await page.$x(XPATH.article_url); // get article urls
-    const articleLgtmHandles = await page.$x(XPATH.lgtm_count_of_article); // get article LGTM counts
-    const authorHandles = await page.$x(XPATH.author); // get author names
-    const createdAtHandles = await page.$x(XPATH.created_at); // get dates that the articles were created at
+    const articleUrlHandles = await $x(page, XPATH.article_url); // get article urls
+    const articleLgtmHandles = await $x(page, XPATH.lgtm_count_of_article); // get article LGTM counts
+    const authorHandles = await $x(page, XPATH.author); // get author names
+    const createdAtHandles = await $x(page, XPATH.created_at); // get dates that the articles were created at
 
     for (const [url, lgtm, created_at, author] of zip(
       articleUrlHandles,
@@ -90,7 +91,7 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
         width: 600,
         height: 700
       },
-      headless: "new"
+      headless: true
     });
 
     const lgtm = await getLgtm(browser);

@@ -1,8 +1,9 @@
 import { launch } from "puppeteer";
 
-import { getNodeProperty, mapToArray, exportFile, zip } from "../.libs/utils";
+import { getNodeProperty, $x } from "../.libs/pptr-utils";
+import { mapToArray, exportFile, zip } from "../.libs/utils";
 
-import type { ElementHandle, Browser } from "puppeteer";
+import type { Browser } from "puppeteer";
 
 const JOB_NAME = "Togetter Favorites";
 const CSV_FILENAME = "togetter_favorites.csv";
@@ -53,16 +54,16 @@ class Togetter {
       waitUntil: ["domcontentloaded"]
     });
 
-    const linkTolastPage = await page.$x(XPATH.linkTolastPage);
+    const linkTolastPage = await $x(page, XPATH.linkTolastPage);
     const pageLength = Number(await getNodeProperty(linkTolastPage[0], "innerText"));
 
     console.log(`${JOB_NAME}: ${pageLength} pages found`);
 
     for (let i = 1; i <= pageLength; i++) {
       console.log(`${JOB_NAME}: Exploring page No${i}...`);
-      const allUrls = await page.$x(XPATH.allUrls);
-      const allTitles = await page.$x(XPATH.allTitles);
-      const allDatesPublished = await page.$x(XPATH.allDatesPublished);
+      const allUrls = await $x(page, XPATH.allUrls);
+      const allTitles = await $x(page, XPATH.allTitles);
+      const allDatesPublished = await $x(page, XPATH.allDatesPublished);
 
       for (const [urlElem, titleElem, publishedDateElem] of zip(allUrls, allTitles, allDatesPublished)) {
         const url: string = await getNodeProperty(urlElem, "href");
@@ -72,11 +73,8 @@ class Togetter {
       }
 
       if (i < pageLength) {
-        const linkToNextPage = await page.$x(XPATH.linkToNextPage);
-        await Promise.all([
-          page.waitForNavigation({ waitUntil: "domcontentloaded" }),
-          (linkToNextPage[0] as ElementHandle<Element>).click()
-        ]);
+        const linkToNextPage = await $x(page, XPATH.linkToNextPage);
+        await Promise.all([page.waitForNavigation({ waitUntil: "domcontentloaded" }), linkToNextPage[0].click()]);
       }
     }
 
@@ -91,7 +89,7 @@ class Togetter {
 
     const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
-      headless: "new",
+      headless: true,
       // devtools: true,
       slowMo: 80
     });

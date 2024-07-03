@@ -14,7 +14,7 @@
     "papaparse": "^5.4.1",
     "path": "^0.12.7",
     "pdfjs-dist": "^4.3.136",
-    "puppeteer": "^21.9.0",
+    "puppeteer": "^22.12.1",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-adblocker": "^2.13.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"

@@ -4,9 +4,10 @@ import { config } from "dotenv";
 import { launch } from "puppeteer";
 
 import { USER_AGENT } from "../.libs/constants";
+import { $x } from "../.libs/pptr-utils";
 import { sleep, mapToArray, exportFile } from "../.libs/utils";
 
-import type { Browser, ElementHandle } from "puppeteer";
+import type { Browser } from "puppeteer";
 
 const baseURI = "https://note.com";
 const JOB_NAME = "note.com Favorites";
@@ -67,9 +68,9 @@ class Notebook {
       waitUntil: "load"
     });
 
-    const useridInput_Handle = page.$x(XPATH.useridInput);
-    const passwordInput_Handle = page.$x(XPATH.passwordInput);
-    const loginButton_Handle = page.$x(XPATH.loginButton);
+    const useridInput_Handle = $x(page, XPATH.useridInput);
+    const passwordInput_Handle = $x(page, XPATH.passwordInput);
+    const loginButton_Handle = $x(page, XPATH.loginButton);
 
     await (await useridInput_Handle)[0].type(user_name);
     await (await passwordInput_Handle)[0].type(password);
@@ -79,7 +80,7 @@ class Notebook {
         timeout: 60000,
         waitUntil: "networkidle2"
       }),
-      ((await loginButton_Handle)[0] as ElementHandle<Element>).click()
+      ((await loginButton_Handle)[0]).click()
     ]);
 
     console.log(`${JOB_NAME}: Login Completed!`);

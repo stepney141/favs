@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
+462130898X,ネットワーク科学入門 : Pythonで学ぶデータ分析とモデリング,"Menczer,Filippo Fortunato,Santo Davis,ClaytonA ほか",丸善出版,202312,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05165444
 406512476X,コンパクトデータ構造 : 実践的アプローチ,"Navarro,Gonzalo,1969- 定兼,邦彦,1971-",講談社,202307,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD03221544
 4339013722,音楽情報処理 = Music Information Processing,"後藤,真孝 北原,鉄朗 深山,覚 竹川,佳成 吉井,和佳",コロナ社,202309,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD03805104
 4320017382,これなら分かる応用数学教室 : 最小二乗法からウェーブレットまで,"金谷,健一,1947-",共立出版,200306,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA62447424
@@ -15,7 +16,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4000298968,テキストアナリティクスの基礎と実践,"金,明哲,1954- 金,明哲,1954-",岩波書店,202103,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC06431783
 479520120X,数論を学ぶ人のための相互法則入門,"平松,豊一,1937-",星雲社,199805,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA35679868
 4535559473,地域データ分析入門 = Introduction to Regional Data Analysis : すぐに役立つEBPM実践ガイドブック,"林,宜嗣,1951- 林,亮輔,1983- 高林,喜久生,1953- 林,勇貴,1988- ほか",日本評論社,202112,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC11791427
-4627078919,数論幾何入門,三枝洋一,森北出版,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4627078919
+4627078919,数論幾何入門,三枝洋一,森北出版,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07163439
 4845921324,映像クリエイターのための完全独学マニュアル,,フィルムアート社,20221026,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC17391975
 4254122128,基礎からのベイズ統計学 : ハミルトニアンモンテカルロ法による実践的入門,"豊田,秀樹,1961-",朝倉書店,201506,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB18938264
 4845921170,色のコードを読む,ポール・シンプソン／著 中山ゆかり／翻訳,フィルムアート社,20221224,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD00226632
@@ -31,11 +32,11 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4903814874,時系列分析と状態空間モデルの基礎 = Foundations of Time Series Analysis and State Space Models : RとStanで学ぶ理論と実装,"馬場,真哉,1990-",プレアデス出版,201803,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25542434
 4334044689,日本の少子化対策はなぜ失敗したのか? : 結婚・出産が回避される本当の原因,"山田,昌弘,1957-",光文社,202005,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB30607674
 4065347823,グラフニューラルネットワーク = Graph Neural Networks,"佐藤,竜馬,1996- 杉山,将",講談社,202404,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD0659685X
-4535540284,定量的マクロ経済学と数値計算,北尾早霧 砂川武貴 山田知明,日本評論社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4535540284
+4535540284,定量的マクロ経済学と数値計算,北尾早霧 砂川武貴 山田知明,日本評論社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07376881
 4798157775,最強囲碁AIアルファ碁解体新書 : 深層学習、モンテカルロ木探索、強化学習から見たその仕組み,"大槻,知史 三宅,陽一郎,1975-",翔泳社,201807,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB26440462
 4121101480,日本の小説の翻訳にまつわる特異な問題 : 文化の架橋者たちがみた「あいだ」,"片岡,真伊,1987-",中央公論新社,202402,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05608002
 4864260524,調査されるという迷惑　増補版,宮本常一 安渓遊地,みずのわ出版,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06546443
-4320125797,量子情報科学入門 第2版,石坂智 小川朋宏 河内亮周 木村元 林正人,,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4320125797
+4320125797,量子情報科学入門 第2版,石坂智 小川朋宏 河内亮周 木村元 林正人,,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07209223
 4535789614,線形代数と数え上げ,"高崎,金久,1956-",日本評論社,202112,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC11558400
 4764906457,ストラング:教養の線形代数,"Strang,Gilbert 松崎,公紀 平鍋,健児",近代科学社,202303,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD01153840
 4764904055,ストラング:線形代数イントロダクション,"Strang,Gilbert 松崎,公紀 新妻,弘,1946-",近代科学社,201512,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB20319753

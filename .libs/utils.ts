@@ -43,16 +43,6 @@ export const randomWait = (baseWaitSeconds: number, min: number, max: number): n
  */
 export const transposeArray = <T>(a: T[][]): T[][] => a[0].map((_, c) => a.map((r) => r[c]));
 
-export const clickMouse = async (page: Page, x: number, y: number, time: number): Promise<boolean> => {
-  try {
-    await Promise.all([page.mouse.move(x, y), page.waitForTimeout(time), page.mouse.click(x, y)]);
-    return true;
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
-};
-
 /**
  * @link https://zenn.dev/sora_kumo/articles/539d7f6e7f3c63
  */
@@ -95,13 +85,6 @@ export function* zip<T extends Array<any>>(...args: Iterableify<T>): Generator<T
   }
 }
 type Iterableify<T> = { [K in keyof T]: Iterable<T[K]> };
-
-export const getNodeProperty = async <T>(eh: ElementHandle<Node>, prop: string): Promise<T> => {
-  const handle = (await eh.getProperty(prop)) as JSHandle<T>;
-  const value = await handle.jsonValue();
-
-  return value;
-};
 
 export const mapToArray = <M extends Map<K, V>, K extends any, V extends any = object>(map: M): V[] => {
   const array: V[] = [];

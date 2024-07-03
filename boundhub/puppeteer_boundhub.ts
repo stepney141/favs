@@ -1,11 +1,23 @@
 import path from "path";
 
 import { config } from "dotenv";
-import { launch } from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import { getNodeProperty, randomWait, sleep, exportFile } from "../.libs/utils";
+import { getNodeProperty, waitForXPath, $x } from "../.libs/pptr-utils";
+import { randomWait, sleep, exportFile } from "../.libs/utils";
 
-import type { Browser, ElementHandle } from "puppeteer";
+import type { Browser } from "puppeteer";
+
+const stealthPlugin = StealthPlugin();
+/* ref:
+- https://github.com/berstend/puppeteer-extra/issues/668
+- https://github.com/berstend/puppeteer-extra/issues/822
+*/
+stealthPlugin.enabledEvasions.delete("iframe.contentWindow");
+stealthPlugin.enabledEvasions.delete("navigator.plugins");
+stealthPlugin.enabledEvasions.delete("media.codecs");
+puppeteer.use(stealthPlugin);
 
 const baseURI = "https://www.boundhub.com";
 const JOB_NAME = "Boundhub Favorite Movies";
@@ -58,9 +70,9 @@ class BoundHub {
       waitUntil: "load"
     });
 
-    const useridInput_Handle = page.$x(XPATH.useridInput);
-    const passwordInput_Handle = page.$x(XPATH.passwordInput);
-    const loginButton_Handle = page.$x(XPATH.loginButton);
+    const useridInput_Handle = $x(page, XPATH.useridInput);
+    const passwordInput_Handle = $x(page, XPATH.passwordInput);
+    const loginButton_Handle = $x(page, XPATH.loginButton);
 
     await (await useridInput_Handle)[0].type(user_name);
     await (await passwordInput_Handle)[0].type(password);
@@ -69,7 +81,7 @@ class BoundHub {
         timeout: 60000,
         waitUntil: "networkidle2"
       }),
-      ((await loginButton_Handle)[0] as ElementHandle<Element>).click()
+      (await loginButton_Handle)[0].click()
     ]);
 
     console.log(`${JOB_NAME}: Logged in!`);
@@ -82,7 +94,7 @@ class BoundHub {
       waitUntil: "networkidle2"
     });
 
-    const tagHrefs_Handle = await page.$x(XPATH.tagHrefs);
+    const tagHrefs_Handle = await $x(page, XPATH.tagHrefs);
     const tags: Tag[] = [];
 
     for (const tagNode of tagHrefs_Handle) {
@@ -113,15 +125,15 @@ class BoundHub {
     });
 
     await page.hover(SELECTOR.dropdownToPlaylist); //マウスホバーしないとプレイリストが表示されない
-    const linkToPlaylist_Handle = (await page.$x(XPATH.linkToPlaylist)) as ElementHandle<Element>[];
+    const linkToPlaylist_Handle = await $x(page, XPATH.linkToPlaylist);
     await Promise.all([
-      page.waitForXPath(XPATH.playListHeader), // 画面の再描画を待ち受けつつ...
+      waitForXPath(page, XPATH.playListHeader), // 画面の再描画を待ち受けつつ...
       linkToPlaylist_Handle[0].click() // ...プレイリストを開く
     ]);
     console.log(`${JOB_NAME}: Started to read Playlist "${PLAYLIST_NAME}"`);
 
     for (;;) {
-      const linkToAllMovies_Handle = await page.$x(XPATH.linkToAllMovies);
+      const linkToAllMovies_Handle = await $x(page, XPATH.linkToAllMovies);
       for (const data of linkToAllMovies_Handle) {
         this.#movielist.push({
           title: await getNodeProperty(data, "title"),
@@ -159,9 +171,9 @@ class BoundHub {
   try {
     const startTime = Date.now();
 
-    const browser = await launch({
+    const browser = await puppeteer.launch({
       defaultViewport: { width: 1000, height: 1000 },
-      headless: "new",
+      headless: true,
       // devtools: true,
       slowMo: 20
     });
