@@ -1,11 +1,22 @@
 import path from "path";
 
 import { config } from "dotenv";
-import { launch } from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
 import { getNodeProperty, randomWait, sleep, exportFile } from "../.libs/utils";
 
 import type { Browser, ElementHandle } from "puppeteer";
+
+const stealthPlugin = StealthPlugin();
+/* ref:
+- https://github.com/berstend/puppeteer-extra/issues/668
+- https://github.com/berstend/puppeteer-extra/issues/822
+*/
+stealthPlugin.enabledEvasions.delete("iframe.contentWindow");
+stealthPlugin.enabledEvasions.delete("navigator.plugins");
+stealthPlugin.enabledEvasions.delete("media.codecs");
+puppeteer.use(stealthPlugin);
 
 const baseURI = "https://www.boundhub.com";
 const JOB_NAME = "Boundhub Favorite Movies";
@@ -159,9 +170,9 @@ class BoundHub {
   try {
     const startTime = Date.now();
 
-    const browser = await launch({
+    const browser = await puppeteer.launch({
       defaultViewport: { width: 1000, height: 1000 },
-      headless: "new",
+      headless: false,
       // devtools: true,
       slowMo: 20
     });
