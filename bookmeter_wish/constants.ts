@@ -1,18 +1,33 @@
 import type { CiniiTarget } from "./types";
 
 export const JOB_NAME = "Bookmeter Wished Books";
-export const CSV_FILENAME = "./csv/bookmeter_wish_books.csv";
+export const CSV_FILENAME = {
+  wish: "./csv/bookmeter_wish_books.csv",
+  stacked: "./csv/bookmeter_stacked_books.csv"
+};
 
 export const bookmeter_baseURI = "https://bookmeter.com";
 export const bookmeter_userID = "1003258";
 
 export const XPATH = {
-  isBookExist: "/html/body/div[1]/div[1]/section/div/div[1]/ul[1]/li",
-  booksUrl: "/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[2]/a",
-  amazonLink: "/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[4]/a",
-  accountNameInput: '//*[@id="session_email_address"]',
-  passwordInput: '//*[@id="session_password"]',
-  loginButton: '//*[@id="js_sessions_new_form"]/form/div[4]/button'
+  book: {
+    amazonLink: "//a[img[@alt='Amazon']]",
+    author: "//header/div[1]/ul/li",
+    title: "//section[1]/header/div[1]/h1"
+  },
+  stacked: {
+    booksUrl: "//ul/li[*]/div[2]/div[2]/a"
+  },
+  wish: {
+    isBookExist: "/html/body/div[1]/div[1]/section/div/div[1]/ul[1]/li",
+    booksUrl: "/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[2]/a",
+    amazonLink: "/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[4]/a"
+  },
+  login: {
+    accountNameInput: '//*[@id="session_email_address"]',
+    passwordInput: '//*[@id="session_password"]',
+    loginButton: '//*[@id="js_sessions_new_form"]/form/div[4]/button'
+  }
 };
 
 export const REGEX = {
