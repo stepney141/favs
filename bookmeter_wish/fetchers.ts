@@ -87,25 +87,14 @@ export const bulkFetchOpenBD = async (bookList: BookList): Promise<BiblioInfoSta
  */
 export const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> => {
   const isbn = book["isbn_or_asin"]; //ISBNデータを取得
+  const title = encodeURIComponent(book["book_title"]);
+  const author = encodeURIComponent(book["author"]);
 
-  if (isbn === null || isbn === undefined) {
-    //有効なISBNではない
-    const statusText: BiblioinfoErrorStatus = "INVALID_ISBN";
-    const part = {
-      book_title: statusText,
-      author: statusText,
-      publisher: statusText,
-      published_date: statusText
-    };
-    return {
-      book: { ...book, ...part },
-      isFound: false
-    };
-  }
+  const query = isbn === null ? `title=${title}&creator=${author}` : `isbn=${isbn}`;
 
   // xml形式でレスポンスが返ってくる
   const response: AxiosResponse<string> = await axios({
-    url: `https://iss.ndl.go.jp/api/opensearch?isbn=${isbn}`,
+    url: `https://ndlsearch.ndl.go.jp/api/opensearch?${query}`,
     responseType: "text"
   });
   const parsedResult = fxp.parse(response.data) as NdlResponseJson; //xmlをjsonに変換
@@ -212,29 +201,16 @@ export const searchCiNii: IsOwnBook<null, Promise<BookOwningStatus>> = async (
   credential?: string
 ): Promise<BookOwningStatus> => {
   const isbn = config.book["isbn_or_asin"]; //ISBNデータを取得
+  const title = encodeURIComponent(config.book["book_title"]);
+  const author = encodeURIComponent(config.book["author"]);
   const library = config.options?.libraryInfo;
 
   if (library === undefined) {
     throw new Error("The library info is undefined");
   }
 
-  if (isbn === null || isbn === undefined) {
-    //異常系(与えるべきISBN自体がない)
-    const statusText: BiblioinfoErrorStatus = "INVALID_ISBN";
-    const part = {
-      book_title: statusText,
-      author: statusText,
-      publisher: statusText,
-      published_date: statusText
-    };
-    return {
-      book: { ...config.book, ...part, [`exist_in_${library.tag}`]: "No" },
-      isOwning: false
-    };
-  }
-
-  // const title = encodeURIComponent(config.book["book_title"]);
-  const url = `https://ci.nii.ac.jp/books/opensearch/search?isbn=${isbn}&kid=${library?.cinii_kid}&format=json&appid=${credential}`;
+  const query = isbn !== null ? `isbn=${isbn}` : `title=${title}&author=${author}`;
+  const url = `https://ci.nii.ac.jp/books/opensearch/search?${query}&kid=${library?.cinii_kid}&format=json&appid=${credential}`;
   const response: AxiosResponse<CiniiResponse> = await axios({
     method: "get",
     responseType: "json",
