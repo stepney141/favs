@@ -151,7 +151,7 @@ const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): 
   const pdfUrl = MATH_LIB_BOOKLIST[listtype];
   const mathlibIsbnList: Set<string> = new Set();
 
-  const filename = `mathlib_${listtype}.text`;
+  const filename = `mathlib_${listtype}.txt`;
   const filehandle = await fs.open(filename, "w");
 
   for (const url of pdfUrl) {

@@ -1,7 +1,7 @@
 import type { CiniiTarget } from "./types";
 
 export const JOB_NAME = "Bookmeter Wished Books";
-export const CSV_FILENAME = "bookmeter_wish_books.csv";
+export const CSV_FILENAME = "./csv/bookmeter_wish_books.csv";
 
 export const bookmeter_baseURI = "https://bookmeter.com";
 export const bookmeter_userID = "1003258";
