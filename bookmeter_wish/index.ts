@@ -1,29 +1,16 @@
-import fs from "node:fs/promises";
 import path from "path";
 
-import axios from "axios";
 import { config } from "dotenv";
 import { launch } from "puppeteer";
 
 import { getNodeProperty, $x } from "../.libs/pptr-utils";
-import { PromiseQueue, mapToArray, randomWait, sleep, exportFile, extractTextFromPDF } from "../.libs/utils";
+import { mapToArray, exportFile } from "../.libs/utils";
 
-import {
-  CSV_FILENAME,
-  JOB_NAME,
-  REGEX,
-  XPATH,
-  bookmeter_baseURI,
-  bookmeter_userID,
-  MATH_LIB_BOOKLIST,
-  CINII_TARGETS,
-  CINII_TARGET_TAGS
-} from "./constants";
-import { bulkFetchOpenBD, fetchGoogleBooks, fetchNDL, searchCiNii, searchSophiaMathLib } from "./fetchers";
+import { CSV_FILENAME, JOB_NAME, XPATH, bookmeter_baseURI, bookmeter_userID } from "./constants";
+import { fetchBiblioInfo } from "./fetchers";
 import { getPrevBookList, isBookListDifferent, matchASIN } from "./utils";
 
-import type { ASIN, Book, BookList, BiblioInfoStatus, ISBN10 } from "./types";
-import type { AxiosResponse } from "axios";
+import type { ASIN, Book, BookList, ISBN10 } from "./types";
 import type { Browser } from "puppeteer";
 
 config({ path: path.join(__dirname, "../.env") });
@@ -87,7 +74,8 @@ class Bookmaker {
   async scanEachBook(bookmeterUrl: string): Promise<Book> {
     const page = await this.#browser.newPage();
     await page.goto(bookmeterUrl, {
-      waitUntil: ["domcontentloaded", "networkidle0"]
+      timeout: 2 * 60 * 1000,
+      waitUntil: ["networkidle0", "domcontentloaded", "load"]
     });
 
     await page.setRequestInterception(true);
@@ -228,103 +216,6 @@ class Bookmaker {
   }
 }
 
-const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): Promise<Set<string>> => {
-  const pdfUrl = MATH_LIB_BOOKLIST[listtype];
-  const mathlibIsbnList: Set<string> = new Set();
-
-  const filename = `mathlib_${listtype}.txt`;
-  const filehandle = await fs.open(filename, "w");
-
-  for (const url of pdfUrl) {
-    const response: AxiosResponse<Uint8Array> = await axios({
-      method: "get",
-      url,
-      responseType: "arraybuffer",
-      headers: {
-        "Content-Type": "application/pdf"
-      }
-    });
-
-    const rawPdf: Uint8Array = new Uint8Array(response["data"]);
-    const parsedPdf = extractTextFromPDF(rawPdf);
-
-    console.log(`${JOB_NAME}: Completed fetching the list of ${listtype} books in Sophia Univ. Math Lib`);
-
-    for await (const page of parsedPdf) {
-      const matchedIsbn = page.matchAll(REGEX.isbn);
-      for (const match of matchedIsbn) {
-        mathlibIsbnList.add(match[0]);
-        await filehandle.appendFile(`${match[0]}\n`);
-      }
-    }
-  }
-
-  await filehandle.close();
-
-  console.log(`${JOB_NAME}: Completed creating a list of ISBNs of ${listtype} books in Sophia Univ. Math Lib`);
-  return mathlibIsbnList;
-};
-
-const fetchBiblioInfo = async (booklist: BookList): Promise<BookList> => {
-  const mathLibIsbnList = await configMathlibBookList("ja");
-
-  const updatedBookList = await bulkFetchOpenBD(booklist);
-
-  const fetchOthers = async (bookInfo: BiblioInfoStatus) => {
-    let updatedBook = { ...bookInfo };
-
-    // NDL検索
-    if (!updatedBook.isFound) {
-      updatedBook = await fetchNDL(updatedBook.book);
-    }
-
-    await sleep(randomWait(1500, 0.8, 1.2));
-
-    // GoogleBooks検索
-    if (!updatedBook.isFound) {
-      updatedBook = await fetchGoogleBooks(updatedBook.book, google_books_api_key);
-    }
-
-    await sleep(randomWait(1500, 0.8, 1.2));
-
-    // CiNii所蔵検索
-    for (const tag of CINII_TARGET_TAGS) {
-      const library = CINII_TARGETS.find((library) => library.tag === tag)!;
-      const ciniiStatus = await searchCiNii(
-        {
-          book: updatedBook.book,
-          options: { libraryInfo: library }
-        },
-        cinii_appid
-      );
-      if (ciniiStatus.isOwning) {
-        updatedBook.book = ciniiStatus.book;
-      }
-    }
-
-    // 数学図書館所蔵検索
-    const smlStatus = searchSophiaMathLib({
-      book: updatedBook.book,
-      options: { resources: mathLibIsbnList }
-    });
-    if (smlStatus.isOwning) {
-      updatedBook.book = smlStatus.book;
-    }
-
-    booklist.set(updatedBook.book.bookmeter_url, updatedBook.book);
-  };
-
-  const ps = PromiseQueue();
-  for (const book of updatedBookList) {
-    ps.add(fetchOthers(book));
-    await ps.wait(5); // 引数の指定量だけ並列実行
-  }
-  await ps.all(); // 端数分の処理の待ち合わせ
-
-  console.log(`${JOB_NAME}: Searching Completed`);
-  return new Map(booklist);
-};
-
 function parseArgv(argv: string[]): "wish" | "stacked" {
   const mode = argv[2];
   if (mode === "wish" || mode === "stacked") {
@@ -358,7 +249,10 @@ function parseArgv(argv: string[]): "wish" | "stacked" {
 
     if (isBookListDifferent(latestBookList, prevBookList, skipBookListComparison)) {
       console.log(`${JOB_NAME}: Fetching bibliographic information`);
-      const updatedBooklist = await fetchBiblioInfo(latestBookList); //書誌情報取得
+      const updatedBooklist = await fetchBiblioInfo(latestBookList, {
+        cinii: cinii_appid,
+        google: google_books_api_key
+      }); //書誌情報取得
 
       await exportFile({
         fileName: CSV_FILENAME[mode],

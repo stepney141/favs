@@ -13,32 +13,6 @@ export const isIsbn10 = (str: string): str is ISBN10 => {
 export const isIsbn13 = (str: string): str is ISBN13 => {
   return str.match(REGEX.isbn13) !== null;
 };
-export const isAsin = (str: string): str is ASIN => {
-  if (isIsbn10(str)) {
-    return false;
-  }
-  return str.match(REGEX.amazon_asin) !== null;
-};
-
-/**
- * OPACのリダイレクトURLを取得
- * @example 
- input: https://www.lib.sophia.ac.jp/opac/opac_openurl/?isbn=1000000000 //invalid
- => https://www.lib.sophia.ac.jp/opac/opac_search/?direct=1&ou_srh=1&amode=2&lang=0&isbn=1000000000
- input: https://www.lib.sophia.ac.jp/opac/opac_openurl/?isbn=4326000481 //valid
- => https://www.lib.sophia.ac.jp/opac/opac_details/?lang=0&opkey=B170611882191096&srvce=0&amode=11&bibid=1003102195
- */
-export const getRedirectedUrl = async (targetUrl: string): Promise<string | undefined> => {
-  try {
-    const response = await fetch(targetUrl, {
-      redirect: "follow"
-    });
-    return response.url;
-  } catch (error) {
-    console.log(error);
-    return undefined;
-  }
-};
 
 /**
  * @link https://qiita.com/iz-j/items/27b9656ebed1a4516ee1
@@ -63,12 +37,39 @@ export const convertISBN10To13 = (isbn10: ISBN10): ISBN13 => {
   return result as ISBN13;
 };
 
+export const isAsin = (str: string): str is ASIN => {
+  if (isIsbn10(str)) {
+    return false;
+  }
+  return str.match(REGEX.amazon_asin) !== null;
+};
+
 /**
  * Amazonへのリンクに含まれるASIN(ISBN含む)を抽出
  */
 export const matchASIN = (url: string): string | null => {
   const matched = url.match(REGEX.amazon_asin);
   return matched?.[0] ?? null;
+};
+
+/**
+ * OPACのリダイレクトURLを取得
+ * @example 
+ input: https://www.lib.sophia.ac.jp/opac/opac_openurl/?isbn=1000000000 //invalid
+ => https://www.lib.sophia.ac.jp/opac/opac_search/?direct=1&ou_srh=1&amode=2&lang=0&isbn=1000000000
+ input: https://www.lib.sophia.ac.jp/opac/opac_openurl/?isbn=4326000481 //valid
+ => https://www.lib.sophia.ac.jp/opac/opac_details/?lang=0&opkey=B170611882191096&srvce=0&amode=11&bibid=1003102195
+ */
+export const getRedirectedUrl = async (targetUrl: string): Promise<string | undefined> => {
+  try {
+    const response = await fetch(targetUrl, {
+      redirect: "follow"
+    });
+    return response.url;
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
 };
 
 export const readCSV = async (filename: string) => {

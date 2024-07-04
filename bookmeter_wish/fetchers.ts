@@ -1,9 +1,11 @@
+import fs from "node:fs/promises";
+
 import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
 
-import { sleep, zip } from "../.libs/utils";
+import { extractTextFromPDF, PromiseQueue, randomWait, sleep, zip } from "../.libs/utils";
 
-import { REGEX } from "./constants";
+import { CINII_TARGET_TAGS, CINII_TARGETS, JOB_NAME, MATH_LIB_BOOKLIST, REGEX } from "./constants";
 import { convertISBN10To13, getRedirectedUrl, isIsbn10 } from "./utils";
 
 import type {
@@ -27,7 +29,7 @@ const fxp = new XMLParser();
 /**
  * OpenBD検索
  */
-export const bulkFetchOpenBD = async (bookList: BookList): Promise<BiblioInfoStatus[]> => {
+const bulkFetchOpenBD = async (bookList: BookList): Promise<BiblioInfoStatus[]> => {
   const bulkTargetIsbns = [...bookList.values()].map((bookmeter) => bookmeter["isbn_or_asin"]).toString();
   const bookmeterKeys = Array.from(bookList.keys());
 
@@ -85,7 +87,7 @@ export const bulkFetchOpenBD = async (bookList: BookList): Promise<BiblioInfoSta
  * 国立国会図書館 書誌検索
  * @link https://iss.ndl.go.jp/information/api/riyou/
  */
-export const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> => {
+const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> => {
   const isbn = book["isbn_or_asin"]; //ISBNデータを取得
   const title = encodeURIComponent(book["book_title"]);
   const author = encodeURIComponent(book["author"]);
@@ -137,7 +139,7 @@ export const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoS
  * Google Booksの検索
  * @link https://developers.google.com/books/docs/v1/reference/volumes/list?hl=en
  */
-export const fetchGoogleBooks: FetchBiblioInfo = async (book: Book, credential?: string): Promise<BiblioInfoStatus> => {
+const fetchGoogleBooks: FetchBiblioInfo = async (book: Book, credential?: string): Promise<BiblioInfoStatus> => {
   const isbn = book["isbn_or_asin"];
 
   if (isbn === null || isbn === undefined) {
@@ -196,7 +198,7 @@ export const fetchGoogleBooks: FetchBiblioInfo = async (book: Book, credential?:
  * 大学図書館 所蔵検索(CiNii)
  * @link https://support.nii.ac.jp/ja/cib/api/b_opensearch
  */
-export const searchCiNii: IsOwnBook<null, Promise<BookOwningStatus>> = async (
+const searchCiNii: IsOwnBook<null, Promise<BookOwningStatus>> = async (
   config: IsOwnBookConfig<null>,
   credential?: string
 ): Promise<BookOwningStatus> => {
@@ -263,7 +265,7 @@ export const searchCiNii: IsOwnBook<null, Promise<BookOwningStatus>> = async (
 /**
  * 数学図書館の所蔵検索
  */
-export const searchSophiaMathLib: IsOwnBook<Set<string>, BookOwningStatus> = (
+const searchSophiaMathLib: IsOwnBook<Set<string>, BookOwningStatus> = (
   config: IsOwnBookConfig<Set<string>>
 ): BookOwningStatus => {
   const bookId = config.book.isbn_or_asin;
@@ -292,4 +294,104 @@ export const searchSophiaMathLib: IsOwnBook<Set<string>, BookOwningStatus> = (
   } else {
     return { book: { ...config.book }, isOwning: false };
   }
+};
+
+const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): Promise<Set<string>> => {
+  const pdfUrl = MATH_LIB_BOOKLIST[listtype];
+  const mathlibIsbnList: Set<string> = new Set();
+
+  const filename = `mathlib_${listtype}.txt`;
+  const filehandle = await fs.open(filename, "w");
+
+  for (const url of pdfUrl) {
+    const response: AxiosResponse<Uint8Array> = await axios({
+      method: "get",
+      url,
+      responseType: "arraybuffer",
+      headers: {
+        "Content-Type": "application/pdf"
+      }
+    });
+
+    const rawPdf: Uint8Array = new Uint8Array(response["data"]);
+    const parsedPdf = extractTextFromPDF(rawPdf);
+
+    console.log(`${JOB_NAME}: Completed fetching the list of ${listtype} books in Sophia Univ. Math Lib`);
+
+    for await (const page of parsedPdf) {
+      const matchedIsbn = page.matchAll(REGEX.isbn);
+      for (const match of matchedIsbn) {
+        mathlibIsbnList.add(match[0]);
+        await filehandle.appendFile(`${match[0]}\n`);
+      }
+    }
+  }
+
+  await filehandle.close();
+
+  console.log(`${JOB_NAME}: Completed creating a list of ISBNs of ${listtype} books in Sophia Univ. Math Lib`);
+  return mathlibIsbnList;
+};
+
+export const fetchBiblioInfo = async (
+  booklist: BookList,
+  credential: { cinii: string; google: string }
+): Promise<BookList> => {
+  const mathLibIsbnList = await configMathlibBookList("ja");
+
+  const updatedBookList = await bulkFetchOpenBD(booklist);
+
+  const fetchOthers = async (bookInfo: BiblioInfoStatus) => {
+    let updatedBook = { ...bookInfo };
+
+    // NDL検索
+    if (!updatedBook.isFound) {
+      updatedBook = await fetchNDL(updatedBook.book);
+    }
+
+    await sleep(randomWait(1500, 0.8, 1.2));
+
+    // GoogleBooks検索
+    if (!updatedBook.isFound) {
+      updatedBook = await fetchGoogleBooks(updatedBook.book, credential.google);
+    }
+
+    await sleep(randomWait(1500, 0.8, 1.2));
+
+    // CiNii所蔵検索
+    for (const tag of CINII_TARGET_TAGS) {
+      const library = CINII_TARGETS.find((library) => library.tag === tag)!;
+      const ciniiStatus = await searchCiNii(
+        {
+          book: updatedBook.book,
+          options: { libraryInfo: library }
+        },
+        credential.cinii
+      );
+      if (ciniiStatus.isOwning) {
+        updatedBook.book = ciniiStatus.book;
+      }
+    }
+
+    // 数学図書館所蔵検索
+    const smlStatus = searchSophiaMathLib({
+      book: updatedBook.book,
+      options: { resources: mathLibIsbnList }
+    });
+    if (smlStatus.isOwning) {
+      updatedBook.book = smlStatus.book;
+    }
+
+    booklist.set(updatedBook.book.bookmeter_url, updatedBook.book);
+  };
+
+  const ps = PromiseQueue();
+  for (const book of updatedBookList) {
+    ps.add(fetchOthers(book));
+    await ps.wait(5); // 引数の指定量だけ並列実行
+  }
+  await ps.all(); // 端数分の処理の待ち合わせ
+
+  console.log(`${JOB_NAME}: Searching Completed`);
+  return new Map(booklist);
 };
