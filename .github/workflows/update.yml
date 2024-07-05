@@ -82,7 +82,7 @@ jobs:
       - name: Bookmeter Wish
         shell: bash
         working-directory: ./bookmeter_wish
-        run: npx tsx ./index.ts && bash ./is_in_my_lib.sh
+        run: npx tsx ./index.ts wish && bash ./is_in_my_lib.sh
 
       - name: GitHub Stars
         shell: bash
@@ -127,6 +127,11 @@ jobs:
         shell: bash
         working-directory: ./togetter
         run: npx tsx ./puppeteer_togetter.ts
+
+      - name: Bookmeter Stacked
+        shell: bash
+        working-directory: ./bookmeter_wish
+        run: npx tsx ./index.ts stacked
 
       - name: Set the current datetime
         env:

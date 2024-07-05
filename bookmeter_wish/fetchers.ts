@@ -6,7 +6,7 @@ import { XMLParser } from "fast-xml-parser";
 import { extractTextFromPDF, PromiseQueue, randomWait, sleep, zip } from "../.libs/utils";
 
 import { CINII_TARGET_TAGS, CINII_TARGETS, JOB_NAME, MATH_LIB_BOOKLIST, REGEX } from "./constants";
-import { convertISBN10To13, getRedirectedUrl, isIsbn10 } from "./utils";
+import { convertISBN10To13, getRedirectedUrl, isAsin, isIsbn10 } from "./utils";
 
 import type {
   BookList,
@@ -14,13 +14,13 @@ import type {
   OpenBD,
   BiblioinfoErrorStatus,
   Book,
-  FetchBiblioInfo,
   NdlResponseJson,
   GoogleBookApiResponse,
   IsOwnBookConfig,
   BookOwningStatus,
   CiniiResponse,
-  IsOwnBook
+  IsOwnBook,
+  ISBN10
 } from "./types";
 import type { AxiosResponse } from "axios";
 
@@ -87,12 +87,12 @@ const bulkFetchOpenBD = async (bookList: BookList): Promise<BiblioInfoStatus[]> 
  * 国立国会図書館 書誌検索
  * @link https://iss.ndl.go.jp/information/api/riyou/
  */
-const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> => {
-  const isbn = book["isbn_or_asin"]; //ISBNデータを取得
+const fetchNDL = async (book: Book, useIsbn: boolean = true): Promise<BiblioInfoStatus> => {
+  const isbn = book["isbn_or_asin"]!; //ISBNデータを取得
   const title = encodeURIComponent(book["book_title"]);
   const author = encodeURIComponent(book["author"]);
 
-  const query = isbn === null ? `title=${title}&creator=${author}` : `isbn=${isbn}`;
+  const query = isIsbn10(isbn) ? `isbn=${isbn}` : `any=${title} ${author}`;
 
   // xml形式でレスポンスが返ってくる
   const response: AxiosResponse<string> = await axios({
@@ -121,6 +121,11 @@ const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> 
 
     //本の情報がなかった
   } else {
+    if (useIsbn) {
+      // ISBNで検索しても情報がなかった場合、タイトルと著者で再検索
+      return await fetchNDL(book, false);
+    }
+
     const statusText: BiblioinfoErrorStatus = "Not_found_in_NDL";
     const part = {
       book_title: statusText,
@@ -139,7 +144,7 @@ const fetchNDL: FetchBiblioInfo = async (book: Book): Promise<BiblioInfoStatus> 
  * Google Booksの検索
  * @link https://developers.google.com/books/docs/v1/reference/volumes/list?hl=en
  */
-const fetchGoogleBooks: FetchBiblioInfo = async (book: Book, credential?: string): Promise<BiblioInfoStatus> => {
+const fetchGoogleBooks = async (book: Book, credential: string): Promise<BiblioInfoStatus> => {
   const isbn = book["isbn_or_asin"];
 
   if (isbn === null || isbn === undefined) {
@@ -211,7 +216,7 @@ const searchCiNii: IsOwnBook<null, Promise<BookOwningStatus>> = async (
     throw new Error("The library info is undefined");
   }
 
-  const query = isbn !== null ? `isbn=${isbn}` : `title=${title}&author=${author}`;
+  const query = isbn === null || isAsin(isbn) ? `title=${title}&author=${author}` : `isbn=${isbn}`;
   const url = `https://ci.nii.ac.jp/books/opensearch/search?${query}&kid=${library?.cinii_kid}&format=json&appid=${credential}`;
   const response: AxiosResponse<CiniiResponse> = await axios({
     method: "get",
@@ -279,7 +284,7 @@ const searchSophiaMathLib: IsOwnBook<Set<string>, BookOwningStatus> = (
     return { book: { ...config.book }, isOwning: false };
   }
 
-  const isbn13 = convertISBN10To13(bookId);
+  const isbn13 = convertISBN10To13(bookId as ISBN10);
 
   if (mathlibIsbnList.has(bookId) || mathlibIsbnList.has(isbn13)) {
     const mathlib_opac_link = `https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=${isbn13}&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1`;

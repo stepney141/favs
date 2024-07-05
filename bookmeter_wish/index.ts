@@ -26,8 +26,8 @@ class Bookmaker {
 
   constructor(browser: Browser) {
     this.#browser = browser;
-    this.#wishBookList = new Map();
-    this.#stackedBookList = new Map();
+    this.#wishBookList = new Map(); //bookmeterの内部リンクをキーにする
+    this.#stackedBookList = new Map(); //bookmeterの内部リンクをキーにする
   }
 
   /**
@@ -154,7 +154,6 @@ class Bookmaker {
           const amzn = matchASIN(amzn_raw) as ISBN10 | ASIN | null;
 
           this.#wishBookList.set(bkmt, {
-            //bookmeterの内部リンクをMapのキーにする
             bookmeter_url: bkmt,
             isbn_or_asin: amzn,
             book_title: "",
@@ -172,7 +171,6 @@ class Bookmaker {
 
         console.log(`scanning page ${pageNum}`);
 
-        // XPathで本の情報を取得し、そのelementHandleに要素が存在しなければループから抜ける
         if (isBookExistHandle.length == 0) {
           break;
         } else {

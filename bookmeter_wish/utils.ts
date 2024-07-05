@@ -7,10 +7,10 @@ import { JOB_NAME, REGEX } from "./constants";
 import type { ASIN, Book, BookList, ISBN10, ISBN13 } from "./types";
 import type { ParseResult } from "papaparse";
 
-export const isIsbn10 = (str: string): str is ISBN10 => {
+export const isIsbn10 = (str: ISBN10 | ISBN13 | ASIN): boolean => {
   return str.match(REGEX.isbn10) !== null;
 };
-export const isIsbn13 = (str: string): str is ISBN13 => {
+export const isIsbn13 = (str: ISBN10 | ISBN13 | ASIN): boolean => {
   return str.match(REGEX.isbn13) !== null;
 };
 
@@ -37,7 +37,7 @@ export const convertISBN10To13 = (isbn10: ISBN10): ISBN13 => {
   return result as ISBN13;
 };
 
-export const isAsin = (str: string): str is ASIN => {
+export const isAsin = (str: ISBN10 | ASIN): boolean => {
   if (isIsbn10(str)) {
     return false;
   }
