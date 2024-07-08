@@ -196,10 +196,12 @@ class Bookmaker {
         for (const node of booksUrlHandle) {
           const bkmt_raw = await getNodeProperty(node, "href");
           const bkmt = String(bkmt_raw);
-          await sleep(randomWait(1500, 0.8, 1.2));
+          await sleep(randomWait(2000, 0.8, 1.2));
           const book = await this.scanEachBook(bkmt);
           this.#wishBookList.set(bkmt, book);
         }
+
+        await sleep(8000);
       }
     }
 
