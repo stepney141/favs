@@ -5,7 +5,7 @@ import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
 import { getNodeProperty, $x, waitForXPath } from "../.libs/pptr-utils";
-import { mapToArray, exportFile, sleep, randomWait } from "../.libs/utils";
+import { mapToArray, exportFile, sleep } from "../.libs/utils";
 
 import { JOB_NAME, XPATH, BOOKMETER_BASE_URI, BOOKMETER_DEFAULT_USER_ID } from "./constants";
 import { fetchBiblioInfo } from "./fetchers";
@@ -180,6 +180,9 @@ class Bookmaker {
         }
       }
     } else {
+      let cnt = 0;
+      let sec = 1;
+
       for (;;) {
         await page.goto(`${BOOKMETER_BASE_URI}/users/${this.#userId}/books/wish?page=${pageNum}`, {
           waitUntil: ["domcontentloaded"]
@@ -196,12 +199,26 @@ class Bookmaker {
         for (const node of booksUrlHandle) {
           const bkmt_raw = await getNodeProperty(node, "href");
           const bkmt = String(bkmt_raw);
-          await sleep(randomWait(2000, 0.8, 1.2));
+
+          cnt++;
+          await sleep(sec * 1000);
+
           const book = await this.scanEachBook(bkmt);
           this.#wishBookList.set(bkmt, book);
         }
 
-        await sleep(8000);
+        await sleep(10000);
+
+        if (BigInt(cnt) % 10n === 0n) {
+          if (Math.floor(Math.random() + 0.8)) {
+            sec += 0.1;
+            console.log("wait: + 0.1ms");
+          }
+
+          console.log("sleeping for 10s...");
+          console.log(`current wait: ${sec}ms`);
+          await sleep(10000);
+        }
       }
     }
 
