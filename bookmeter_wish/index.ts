@@ -5,7 +5,7 @@ import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
 import { getNodeProperty, $x, waitForXPath } from "../.libs/pptr-utils";
-import { mapToArray, exportFile } from "../.libs/utils";
+import { mapToArray, exportFile, sleep, randomWait } from "../.libs/utils";
 
 import { JOB_NAME, XPATH, BOOKMETER_BASE_URI, BOOKMETER_DEFAULT_USER_ID } from "./constants";
 import { fetchBiblioInfo } from "./fetchers";
@@ -87,12 +87,6 @@ class Bookmaker {
 
   async scanEachBook(bookmeterUrl: string): Promise<Book> {
     const page = await this.#browser.newPage();
-    await Promise.all([
-      waitForXPath(page, XPATH.book.amazonLink, {
-        timeout: 2 * 60 * 1000
-      }),
-      page.goto(bookmeterUrl)
-    ]);
 
     await page.setRequestInterception(true);
     page.on("request", (interceptedRequest) => {
@@ -104,6 +98,13 @@ class Bookmaker {
         }
       })();
     });
+
+    await Promise.all([
+      waitForXPath(page, XPATH.book.amazonLink, {
+        timeout: 2 * 60 * 1000
+      }),
+      page.goto(bookmeterUrl)
+    ]);
 
     const amazonLinkHandle = await $x(page, XPATH.book.amazonLink);
     const authorHandle = await $x(page, XPATH.book.author);
@@ -195,7 +196,7 @@ class Bookmaker {
         for (const node of booksUrlHandle) {
           const bkmt_raw = await getNodeProperty(node, "href");
           const bkmt = String(bkmt_raw);
-
+          await sleep(randomWait(1500, 0.8, 1.2));
           const book = await this.scanEachBook(bkmt);
           this.#wishBookList.set(bkmt, book);
         }
