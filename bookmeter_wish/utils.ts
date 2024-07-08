@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 
 import { parse } from "papaparse";
 
-import { JOB_NAME, REGEX } from "./constants";
+import { BOOKMETER_DEFAULT_USER_ID, DEFAULT_CSV_FILENAME, JOB_NAME, REGEX } from "./constants";
 
 import type { ASIN, Book, BookList, ISBN10, ISBN13 } from "./types";
 import type { ParseResult } from "papaparse";
@@ -72,7 +72,29 @@ export const getRedirectedUrl = async (targetUrl: string): Promise<string | unde
   }
 };
 
+export const buildCsvFileName = (userId: string) => {
+  return userId === BOOKMETER_DEFAULT_USER_ID
+    ? DEFAULT_CSV_FILENAME
+    : {
+        wish: `./csv/${userId}_bookmeter_wish_books.csv`,
+        stacked: `./csv/${userId}_bookmeter_stacked_books.csv`
+      };
+};
+
 export const readCSV = async (filename: string) => {
+  /* ref: 
+  - https://garafu.blogspot.com/2017/06/nodejs-exists-directory.html
+  - https://nodejs.org/docs/latest/api/fs.html#fs_fs_access_path_mode_callback
+  >> Do not use fs.access() to check for the accessibility of a file before calling fs.open(), fs.readFile(), or fs.writeFile().
+  >> Doing so introduces a race condition, since other processes may change the file's state between the two calls.
+  >> Instead, user code should open/read/write the file directly and handle the error raised if the file is not accessible.
+  */
+  try {
+    await fs.access(filename);
+  } catch {
+    return null;
+  }
+
   const data = await fs.readFile(filename, "utf-8");
   const parsedObj = parse(data, {
     header: true,
@@ -84,8 +106,10 @@ export const readCSV = async (filename: string) => {
 /**
  * 前回の書籍リストをCSVから読み出し、Mapにデシリアライズする
  */
-export const getPrevBookList = async (filename: string): Promise<BookList> => {
+export const getPrevBookList = async (filename: string): Promise<BookList | null> => {
   const csv = await readCSV(filename);
+  if (csv === null) return null;
+
   const prevList: BookList = new Map();
   for (const obj of csv) {
     prevList.set(obj["bookmeter_url"], { ...obj });
@@ -99,10 +123,10 @@ export const getPrevBookList = async (filename: string): Promise<BookList> => {
  */
 export const isBookListDifferent = (
   latestList: BookList,
-  prevList: BookList,
+  prevList: BookList | null,
   skipBookListComparison: boolean = false
 ): boolean => {
-  if (skipBookListComparison) {
+  if (skipBookListComparison || prevList === null) {
     return true; // 常に差分を検出したことにする
   }
 

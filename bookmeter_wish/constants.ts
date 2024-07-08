@@ -1,13 +1,13 @@
 import type { CiniiTarget } from "./types";
 
 export const JOB_NAME = "Bookmeter Wished Books";
-export const CSV_FILENAME = {
+export const DEFAULT_CSV_FILENAME = {
   wish: "./csv/bookmeter_wish_books.csv",
   stacked: "./csv/bookmeter_stacked_books.csv"
 };
 
-export const bookmeter_baseURI = "https://bookmeter.com";
-export const bookmeter_userID = "1003258";
+export const BOOKMETER_BASE_URI = "https://bookmeter.com";
+export const BOOKMETER_DEFAULT_USER_ID = "1003258";
 
 export const XPATH = {
   book: {
@@ -19,9 +19,14 @@ export const XPATH = {
     booksUrl: "//ul/li[*]/div[2]/div[2]/a"
   },
   wish: {
-    isBookExist: "/html/body/div[1]/div[1]/section/div/div[1]/ul[1]/li",
-    booksUrl: "/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[2]/a",
-    amazonLink: "/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[4]/a"
+    login: {
+      isBookExist: "/html/body/div[1]/div[1]/section/div/div[1]/ul[1]/li",
+      booksUrl: "/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[2]/a",
+      amazonLink: "/html/body/div[1]/div[1]/section/div/div[1]/ul/li/div[2]/div[4]/a"
+    },
+    guest: {
+      booksUrl: "//ul/li[*]/div[2]/div[2]/a"
+    }
   },
   login: {
     accountNameInput: '//*[@id="session_email_address"]',

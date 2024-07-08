@@ -6,12 +6,12 @@ import { launch } from "puppeteer";
 import { getNodeProperty, $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile } from "../.libs/utils";
 
-import { CSV_FILENAME, JOB_NAME, XPATH, bookmeter_baseURI, bookmeter_userID } from "./constants";
+import { JOB_NAME, XPATH, BOOKMETER_BASE_URI, BOOKMETER_DEFAULT_USER_ID } from "./constants";
 import { fetchBiblioInfo } from "./fetchers";
-import { getPrevBookList, isBookListDifferent, matchASIN } from "./utils";
+import { buildCsvFileName, getPrevBookList, isBookListDifferent, matchASIN } from "./utils";
 
 import type { ASIN, Book, BookList, ISBN10 } from "./types";
-import type { Browser } from "puppeteer";
+import type { Browser, Page } from "puppeteer";
 
 config({ path: path.join(__dirname, "../.env") });
 const bookmeter_username = process.env.BOOKMETER_ACCOUNT!.toString();
@@ -21,11 +21,13 @@ const google_books_api_key = process.env.GOOGLE_BOOKS_API_KEY!.toString();
 
 class Bookmaker {
   #browser: Browser;
+  #userId: string;
   #wishBookList: BookList;
   #stackedBookList: BookList;
 
-  constructor(browser: Browser) {
+  constructor(browser: Browser, userId: string) {
     this.#browser = browser;
+    this.#userId = userId;
     this.#wishBookList = new Map(); //bookmeterの内部リンクをキーにする
     this.#stackedBookList = new Map(); //bookmeterの内部リンクをキーにする
   }
@@ -47,7 +49,7 @@ class Bookmaker {
       })();
     });
 
-    await page.goto(`${bookmeter_baseURI}/login`, {
+    await page.goto(`${BOOKMETER_BASE_URI}/login`, {
       waitUntil: "domcontentloaded"
     });
 
@@ -118,33 +120,18 @@ class Bookmaker {
     };
   }
 
-  async explore(mode: "wish" | "stacked"): Promise<Map<string, Book>> {
-    const page = await this.#browser.newPage();
+  async #getWishBooks(page: Page, isSignedIn: boolean): Promise<Map<string, Book>> {
+    let pageNum = 1;
 
-    console.log(`${JOB_NAME}: Scraping Started!`);
-
-    await page.setRequestInterception(true);
-    page.on("request", (interceptedRequest) => {
-      (async () => {
-        if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
-          await interceptedRequest.abort();
-        } else {
-          await interceptedRequest.continue();
-        }
-      })();
-    });
-
-    if (mode === "wish") {
-      let pageNum = 1;
-
+    if (isSignedIn) {
       for (;;) {
-        await page.goto(`${bookmeter_baseURI}/users/${bookmeter_userID}/books/${mode}?page=${pageNum}`, {
+        await page.goto(`${BOOKMETER_BASE_URI}/users/${this.#userId}/books/wish?page=${pageNum}`, {
           waitUntil: ["domcontentloaded"]
         });
 
-        const booksUrlHandle = await $x(page, XPATH.wish.booksUrl);
-        const amazonLinkHandle = await $x(page, XPATH.wish.amazonLink);
-        const isBookExistHandle = await $x(page, XPATH.wish.isBookExist);
+        const booksUrlHandle = await $x(page, XPATH.wish.login.booksUrl);
+        const amazonLinkHandle = await $x(page, XPATH.wish.login.amazonLink);
+        const isBookExistHandle = await $x(page, XPATH.wish.login.isBookExist);
 
         for (let i = 0; i < booksUrlHandle.length; i++) {
           const bkmt_raw = await getNodeProperty(booksUrlHandle[i], "href");
@@ -177,20 +164,13 @@ class Bookmaker {
           pageNum++;
         }
       }
-
-      console.log(`${JOB_NAME}: Bookmeter Scraping Completed!`);
-      return this.#wishBookList;
-    }
-
-    if (mode === "stacked") {
-      let pageNum = 1;
-
+    } else {
       for (;;) {
-        await page.goto(`${bookmeter_baseURI}/users/${bookmeter_userID}/books/${mode}?page=${pageNum}`, {
+        await page.goto(`${BOOKMETER_BASE_URI}/users/${this.#userId}/books/wish?page=${pageNum}`, {
           waitUntil: ["domcontentloaded"]
         });
 
-        const booksUrlHandle = await $x(page, XPATH.stacked.booksUrl);
+        const booksUrlHandle = await $x(page, XPATH.wish.guest.booksUrl);
         if (booksUrlHandle.length === 0) {
           break;
         } else {
@@ -203,11 +183,64 @@ class Bookmaker {
           const bkmt = String(bkmt_raw);
 
           const book = await this.scanEachBook(bkmt);
-          this.#stackedBookList.set(bkmt, book);
+          this.#wishBookList.set(bkmt, book);
         }
       }
+    }
 
-      return this.#stackedBookList;
+    console.log(`${JOB_NAME}: Bookmeter Scraping Completed!`);
+    return this.#wishBookList;
+  }
+
+  async #getStackedBooks(page: Page): Promise<Map<string, Book>> {
+    let pageNum = 1;
+
+    for (;;) {
+      await page.goto(`${BOOKMETER_BASE_URI}/users/${BOOKMETER_DEFAULT_USER_ID}/books/stacked?page=${pageNum}`, {
+        waitUntil: ["domcontentloaded"]
+      });
+
+      const booksUrlHandle = await $x(page, XPATH.stacked.booksUrl);
+      if (booksUrlHandle.length === 0) {
+        break;
+      } else {
+        console.log(`scanning page ${pageNum}`);
+        pageNum++;
+      }
+
+      for (const node of booksUrlHandle) {
+        const bkmt_raw = await getNodeProperty(node, "href");
+        const bkmt = String(bkmt_raw);
+
+        const book = await this.scanEachBook(bkmt);
+        this.#stackedBookList.set(bkmt, book);
+      }
+    }
+
+    return this.#stackedBookList;
+  }
+
+  async explore(mode: "wish" | "stacked", isSignedIn: boolean): Promise<Map<string, Book>> {
+    const page = await this.#browser.newPage();
+
+    console.log(`${JOB_NAME}: Scraping Started!`);
+
+    await page.setRequestInterception(true);
+    page.on("request", (interceptedRequest) => {
+      (async () => {
+        if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
+          await interceptedRequest.abort();
+        } else {
+          await interceptedRequest.continue();
+        }
+      })();
+    });
+
+    if (mode === "wish") {
+      return await this.#getWishBooks(page, isSignedIn);
+    }
+    if (mode === "stacked") {
+      return await this.#getStackedBooks(page);
     }
 
     throw new Error("Specify the process mode");
@@ -223,10 +256,12 @@ function parseArgv(argv: string[]): "wish" | "stacked" {
   }
 }
 
-(async () => {
+async function main(userId: string, doLogin: boolean) {
   try {
     const startTime = Date.now();
     const mode = parseArgv(process.argv);
+    const csvFileName = buildCsvFileName(userId);
+
     const noRemoteCheck = false; // default: false
     const skipBookListComparison = false; // default: false
     if (noRemoteCheck) {
@@ -239,9 +274,17 @@ function parseArgv(argv: string[]): "wish" | "stacked" {
       slowMo: 15
     });
 
-    const book = new Bookmaker(browser);
-    const prevBookList = await getPrevBookList(CSV_FILENAME[mode]);
-    const latestBookList = noRemoteCheck ? prevBookList : await book.login().then((book) => book.explore(mode));
+    const book = new Bookmaker(browser, userId);
+    const prevBookList = await getPrevBookList(csvFileName[mode]);
+    if (prevBookList === null && noRemoteCheck) {
+      throw new Error("前回データが存在しないのにリモートチェックをオフにすることは出来ません");
+    }
+
+    const latestBookList = noRemoteCheck
+      ? (prevBookList as BookList)
+      : doLogin
+        ? await book.login().then((book) => book.explore(mode, doLogin))
+        : await book.explore(mode, doLogin);
 
     await browser.close();
 
@@ -253,12 +296,12 @@ function parseArgv(argv: string[]): "wish" | "stacked" {
       }); //書誌情報取得
 
       await exportFile({
-        fileName: CSV_FILENAME[mode],
+        fileName: csvFileName[mode],
         payload: mapToArray(updatedBooklist),
         targetType: "csv",
         mode: "overwrite"
       }).then(() => {
-        console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME[mode]}`);
+        console.log(`${JOB_NAME}: Finished writing ${csvFileName[mode]}`);
       });
     }
 
@@ -267,4 +310,8 @@ function parseArgv(argv: string[]): "wish" | "stacked" {
     console.log(e);
     process.exit(1);
   }
+}
+
+(async () => {
+  await main(BOOKMETER_DEFAULT_USER_ID, true);
 })();

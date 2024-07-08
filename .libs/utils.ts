@@ -94,14 +94,6 @@ export const mapToArray = <M extends Map<K, V>, K extends any, V extends any = o
   return array;
 };
 
-// 出力時：必ずarrayから変換してjsonかcsvに出力する
-export type FileExportIO<T = any[]> = {
-  payload: T;
-  fileName: string;
-  targetType: "json" | "csv";
-  mode: "append" | "overwrite";
-};
-
 /**
  * @link https://zenn.dev/ptna/articles/63df4a8007f9d3
  */
@@ -120,6 +112,14 @@ export async function* extractTextFromPDF(pdfData: Uint8Array): AsyncGenerator<s
   }
   return pdfText;
 }
+
+// 出力時：必ずarrayから変換してjsonかcsvに出力する
+export type FileExportIO<T = any[]> = {
+  payload: T;
+  fileName: string;
+  targetType: "json" | "csv";
+  mode: "append" | "overwrite";
+};
 
 export const exportFile = async (IO: FileExportIO) => {
   const raw = IO.payload;
