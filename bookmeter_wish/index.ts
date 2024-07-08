@@ -200,25 +200,25 @@ class Bookmaker {
           const bkmt_raw = await getNodeProperty(node, "href");
           const bkmt = String(bkmt_raw);
 
+          const book = await this.scanEachBook(bkmt);
+          this.#wishBookList.set(bkmt, book);
+
           cnt++;
           await sleep(sec * 1000);
 
-          const book = await this.scanEachBook(bkmt);
-          this.#wishBookList.set(bkmt, book);
+          if (BigInt(cnt) % 10n === 0n) {
+            if (Math.floor(Math.random() + 0.8)) {
+              sec += 0.1;
+              console.log("wait: + 0.1ms");
+            }
+
+            console.log("sleeping for 10s...");
+            console.log(`current wait: ${sec}ms`);
+            await sleep(10000);
+          }
         }
 
         await sleep(10000);
-
-        if (BigInt(cnt) % 10n === 0n) {
-          if (Math.floor(Math.random() + 0.8)) {
-            sec += 0.1;
-            console.log("wait: + 0.1ms");
-          }
-
-          console.log("sleeping for 10s...");
-          console.log(`current wait: ${sec}ms`);
-          await sleep(10000);
-        }
       }
     }
 
