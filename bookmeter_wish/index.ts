@@ -313,5 +313,8 @@ async function main(userId: string, doLogin: boolean) {
 }
 
 (async () => {
-  await main(BOOKMETER_DEFAULT_USER_ID, true);
+  const users = ["1503969", "1504818", "1504820", "1504793", "1504772", "1504804", "1504789"];
+  for (const id of users) {
+    await main(id, false);
+  }
 })();
