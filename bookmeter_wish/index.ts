@@ -18,6 +18,7 @@ const bookmeter_username = process.env.BOOKMETER_ACCOUNT!.toString();
 const bookmeter_password = process.env.BOOKMETER_PASSWORD!.toString();
 const cinii_appid = process.env.CINII_API_APPID!.toString();
 const google_books_api_key = process.env.GOOGLE_BOOKS_API_KEY!.toString();
+const isbnDb_api_key = process.env.ISBNDB_API_KEY!.toString();
 
 class Bookmaker {
   #browser: Browser;
@@ -292,7 +293,8 @@ async function main(userId: string, doLogin: boolean) {
       console.log(`${JOB_NAME}: Fetching bibliographic information`);
       const updatedBooklist = await fetchBiblioInfo(latestBookList, {
         cinii: cinii_appid,
-        google: google_books_api_key
+        google: google_books_api_key,
+        isbnDb: isbnDb_api_key
       }); //書誌情報取得
 
       await exportFile({

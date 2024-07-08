@@ -68,6 +68,83 @@ export namespace OpenBD {
   } | null)[];
 }
 
+export namespace IsbnDb {
+  export type Book = {
+    title: string;
+    title_long: string;
+    isbn: string;
+    isbn13: string;
+    dewey_decimal: string;
+    binding: string;
+    publisher: string;
+    language: string;
+    date_published: string;
+    edition: string;
+    pages: 0;
+    dimensions: string;
+    dimensions_structured: {
+      length: {
+        unit: string;
+        value: 0;
+      };
+      width: {
+        unit: string;
+        value: 0;
+      };
+      height: {
+        unit: string;
+        value: 0;
+      };
+      weight: {
+        unit: string;
+        value: 0;
+      };
+    };
+    overview: string;
+    image: string;
+    msrp: 0;
+    excerpt: string;
+    synopsis: string;
+    authors: string[];
+    subjects: string[];
+    reviews: string[];
+    prices: [
+      {
+        condition: string;
+        merchant: string;
+        merchant_logo: string;
+        merchant_logo_offset: {
+          x: string;
+          y: string;
+        };
+        shipping: string;
+        price: string;
+        total: string;
+        link: string;
+      }
+    ];
+    related: {
+      type: string;
+    };
+    other_isbns: [
+      {
+        isbn: string;
+        binding: string;
+      }
+    ];
+  };
+
+  export type SingleResponse =
+    | {
+        book: IsbnDb.Book;
+      }
+    | {
+        errorType: string;
+        errorMessage: "Not Found";
+        trace: [];
+      };
+}
+
 export type NdlResponseJson = {
   rss: {
     channel: {

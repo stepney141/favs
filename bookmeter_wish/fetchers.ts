@@ -20,7 +20,8 @@ import type {
   BookOwningStatus,
   CiniiResponse,
   IsOwnBook,
-  ISBN10
+  ISBN10,
+  IsbnDb
 } from "./types";
 import type { AxiosResponse } from "axios";
 
@@ -84,11 +85,54 @@ const bulkFetchOpenBD = async (bookList: BookList): Promise<BiblioInfoStatus[]> 
 };
 
 /**
+ * ISBNdb検索
+ */
+const fetchISBNdb = async (book: Book, credential: string): Promise<BiblioInfoStatus> => {
+  const isbn = book["isbn_or_asin"]!;
+  const ISBNDB_API_URI = "https://api.pro.isbndb.com";
+
+  const rawResponse: AxiosResponse<IsbnDb.SingleResponse> = await axios({
+    url: `${ISBNDB_API_URI}/book/${isbn}`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: credential
+    },
+    responseType: "json"
+  });
+
+  if ("errorMessage" in rawResponse.data) {
+    const statusText: BiblioinfoErrorStatus = "Not_found_in_ISBNdb";
+    const part = {
+      book_title: statusText,
+      author: statusText,
+      publisher: statusText,
+      published_date: statusText
+    };
+    return {
+      book: { ...book, ...part },
+      isFound: false
+    };
+  }
+
+  const bookinfo = rawResponse.data.book;
+  const part = {
+    book_title: bookinfo["title"] ?? "",
+    author: bookinfo["authors"].toString() ?? "",
+    publisher: bookinfo["publisher"] ?? "",
+    published_date: bookinfo["date_published"] ?? ""
+  };
+  return {
+    book: { ...book, ...part },
+    isFound: true
+  };
+};
+
+/**
  * 国立国会図書館 書誌検索
  * @link https://iss.ndl.go.jp/information/api/riyou/
  */
 const fetchNDL = async (book: Book, useIsbn: boolean = true): Promise<BiblioInfoStatus> => {
-  const isbn = book["isbn_or_asin"]!; //ISBNデータを取得
+  const isbn = book["isbn_or_asin"]!;
   const title = encodeURIComponent(book["book_title"]);
   const author = encodeURIComponent(book["author"]);
 
@@ -340,14 +384,20 @@ const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): 
 
 export const fetchBiblioInfo = async (
   booklist: BookList,
-  credential: { cinii: string; google: string }
+  credential: { cinii: string; google: string; isbnDb: string }
 ): Promise<BookList> => {
   const mathLibIsbnList = await configMathlibBookList("ja");
 
+  // OpenBD検索
   const updatedBookList = await bulkFetchOpenBD(booklist);
 
   const fetchOthers = async (bookInfo: BiblioInfoStatus) => {
     let updatedBook = { ...bookInfo };
+
+    // ISBNdb検索
+    if (!updatedBook.isFound) {
+      updatedBook = await fetchISBNdb(updatedBook.book, credential.isbnDb);
+    }
 
     // NDL検索
     if (!updatedBook.isFound) {

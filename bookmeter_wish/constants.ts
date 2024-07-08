@@ -52,7 +52,7 @@ export const REGEX = {
   ncid_in_cinii_url: /(?<=https:\/\/ci.nii.ac.jp\/ncid\/).*/
 };
 
-export const BIBLIOINFO_SOURCES = ["OpenBD", "Amazon", "NDL", "GoogleBooks"] as const;
+export const BIBLIOINFO_SOURCES = ["OpenBD", "ISBNdb", "Amazon", "NDL", "GoogleBooks"] as const;
 
 /**
  * 検索対象となる図書館の情報
