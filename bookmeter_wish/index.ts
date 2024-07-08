@@ -4,7 +4,7 @@ import { config } from "dotenv";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import { getNodeProperty, $x } from "../.libs/pptr-utils";
+import { getNodeProperty, $x, waitForXPath } from "../.libs/pptr-utils";
 import { mapToArray, exportFile } from "../.libs/utils";
 
 import { JOB_NAME, XPATH, BOOKMETER_BASE_URI, BOOKMETER_DEFAULT_USER_ID } from "./constants";
@@ -87,10 +87,12 @@ class Bookmaker {
 
   async scanEachBook(bookmeterUrl: string): Promise<Book> {
     const page = await this.#browser.newPage();
-    await page.goto(bookmeterUrl, {
-      timeout: 2 * 60 * 1000,
-      waitUntil: ["networkidle0", "domcontentloaded", "load"]
-    });
+    await Promise.all([
+      waitForXPath(page, XPATH.book.amazonLink, {
+        timeout: 2 * 60 * 1000
+      }),
+      page.goto(bookmeterUrl)
+    ]);
 
     await page.setRequestInterception(true);
     page.on("request", (interceptedRequest) => {

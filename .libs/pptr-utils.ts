@@ -1,4 +1,4 @@
-import type { ElementHandle, JSHandle, NodeFor, Page } from "puppeteer";
+import type { ElementHandle, JSHandle, NodeFor, Page, WaitForSelectorOptions } from "puppeteer";
 
 export const getNodeProperty = async <T>(eh: ElementHandle<Node>, prop: string): Promise<T> => {
   const handle = (await eh.getProperty(prop)) as JSHandle<T>;
@@ -9,7 +9,7 @@ export const getNodeProperty = async <T>(eh: ElementHandle<Node>, prop: string):
 
 const xpathToUniversalSelector = (xpath: string): string => `::-p-xpath(${xpath})`;
 
-export async function waitForXPath(page: Page, xpath: string) {
+export async function waitForXPath(page: Page, xpath: string, options?: WaitForSelectorOptions) {
   return await page.waitForSelector(xpathToUniversalSelector(xpath));
 }
 
