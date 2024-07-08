@@ -212,11 +212,11 @@ class Bookmaker {
 
             console.log("sleeping for 10s...");
             console.log(`current wait: ${sec}ms`);
-            await sleep(10000);
+            await sleep(10 * 1000);
           }
         }
 
-        await sleep(10000);
+        await sleep(30 * 1000);
       }
     }
 
