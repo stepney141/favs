@@ -207,10 +207,8 @@ class Bookmaker {
           await sleep(sec * 1000);
 
           if (BigInt(cnt) % 10n === 0n) {
-            if (Math.floor(Math.random() + 0.8)) {
-              sec += 0.1;
-              console.log("wait: + 0.1ms");
-            }
+            sec += 0.2;
+            console.log("wait: + 0.2ms");
 
             console.log("sleeping for 10s...");
             console.log(`current wait: ${sec}ms`);
