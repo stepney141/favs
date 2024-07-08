@@ -1,7 +1,8 @@
 import path from "path";
 
 import { config } from "dotenv";
-import { launch } from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
 import { getNodeProperty, $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile } from "../.libs/utils";
@@ -19,6 +20,16 @@ const bookmeter_password = process.env.BOOKMETER_PASSWORD!.toString();
 const cinii_appid = process.env.CINII_API_APPID!.toString();
 const google_books_api_key = process.env.GOOGLE_BOOKS_API_KEY!.toString();
 const isbnDb_api_key = process.env.ISBNDB_API_KEY!.toString();
+
+const stealthPlugin = StealthPlugin();
+/* ref:
+- https://github.com/berstend/puppeteer-extra/issues/668
+- https://github.com/berstend/puppeteer-extra/issues/822
+*/
+stealthPlugin.enabledEvasions.delete("iframe.contentWindow");
+stealthPlugin.enabledEvasions.delete("navigator.plugins");
+stealthPlugin.enabledEvasions.delete("media.codecs");
+puppeteer.use(stealthPlugin);
 
 class Bookmaker {
   #browser: Browser;
@@ -269,7 +280,7 @@ async function main(userId: string, doLogin: boolean) {
       console.log(`${JOB_NAME}: To check the remote is disabled`);
     }
 
-    const browser = await launch({
+    const browser = await puppeteer.launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: true,
       slowMo: 15
