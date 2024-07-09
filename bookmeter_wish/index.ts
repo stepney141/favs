@@ -356,28 +356,28 @@ export async function main({
 (async () => {
   const mode = parseArgv(process.argv);
 
-  await main({ mode });
+  // await main({ mode });
 
-  // const users = [
-  //   { id: "1504793", name: "Azaika" },
-  //   { id: "1504772", name: "qraphnet" },
-  //   { id: "1504804", name: "caphosra" },
-  //   { id: "1504818", name: "Juei" },
-  //   { id: "1504820", name: "LLUUIIGGEE" },
-  //   { id: "1503969", name: "ゆみや" },
-  //   { id: "1504789", name: "hakatashi" }
-  // ];
+  const users = [
+    { id: "1504793", name: "Azaika" },
+    { id: "1504772", name: "qraphnet" },
+    { id: "1504804", name: "caphosra" },
+    { id: "1504818", name: "Juei" },
+    { id: "1504820", name: "LLUUIIGGEE" },
+    { id: "1503969", name: "ゆみや" },
+    { id: "1504789", name: "hakatashi" }
+  ];
 
-  // for (const u of users) {
-  //   await main({
-  //     mode,
-  //     userId: u.id,
-  //     doLogin: false,
-  //     filePath: {
-  //       wish: `./csv/tsg/${u.name}.csv`,
-  //       stacked: `./csv/tsg/${u.name}_stacked.csv`
-  //     }
-  //   });
-  //   await sleep(60 * 1000);
-  // }
+  for (const u of users) {
+    await main({
+      mode,
+      userId: u.id,
+      doLogin: false,
+      filePath: {
+        wish: `./csv/tsg/${u.name}.csv`,
+        stacked: `./csv/tsg/${u.name}_stacked.csv`
+      }
+    });
+    await sleep(60 * 1000);
+  }
 })();
