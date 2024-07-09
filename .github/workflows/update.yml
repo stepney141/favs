@@ -40,6 +40,7 @@ jobs:
       FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
       FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
       GOOGLE_BOOKS_API_KEY: ${{ secrets.GOOGLE_BOOKS_API_KEY }}
+      ISBNDB_API_KEY: ${{ secrets.ISBNDB_API_KEY }}
 
     steps:
       - uses: actions/checkout@v3
@@ -78,6 +79,7 @@ jobs:
           echo "OAUTH_TOKEN_OF_GITHUB=${{ secrets.OAUTH_TOKEN_OF_GITHUB }}" >> .env
           echo "NICONICO_ACCOUNT=${{ secrets.NICONICO_ACCOUNT }}" >> .env
           echo "NICONICO_PASSWORD=${{ secrets.NICONICO_PASSWORD }}" >> .env
+          echo "ISBNDB_API_KEY=${{ secrets.ISBNDB_API_KEY }}" >> .env
 
       - name: Bookmeter Wish
         shell: bash
