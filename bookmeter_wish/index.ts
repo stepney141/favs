@@ -1,10 +1,11 @@
 import path from "path";
 
 import { config } from "dotenv";
-import { launch } from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import { getNodeProperty, $x } from "../.libs/pptr-utils";
-import { mapToArray, exportFile } from "../.libs/utils";
+import { getNodeProperty, $x, waitForXPath } from "../.libs/pptr-utils";
+import { mapToArray, exportFile, sleep } from "../.libs/utils";
 
 import { JOB_NAME, XPATH, BOOKMETER_BASE_URI, BOOKMETER_DEFAULT_USER_ID } from "./constants";
 import { fetchBiblioInfo } from "./fetchers";
@@ -18,6 +19,17 @@ const bookmeter_username = process.env.BOOKMETER_ACCOUNT!.toString();
 const bookmeter_password = process.env.BOOKMETER_PASSWORD!.toString();
 const cinii_appid = process.env.CINII_API_APPID!.toString();
 const google_books_api_key = process.env.GOOGLE_BOOKS_API_KEY!.toString();
+const isbnDb_api_key = process.env.ISBNDB_API_KEY!.toString();
+
+const stealthPlugin = StealthPlugin();
+/* ref:
+- https://github.com/berstend/puppeteer-extra/issues/668
+- https://github.com/berstend/puppeteer-extra/issues/822
+*/
+stealthPlugin.enabledEvasions.delete("iframe.contentWindow");
+stealthPlugin.enabledEvasions.delete("navigator.plugins");
+stealthPlugin.enabledEvasions.delete("media.codecs");
+puppeteer.use(stealthPlugin);
 
 class Bookmaker {
   #browser: Browser;
@@ -75,10 +87,6 @@ class Bookmaker {
 
   async scanEachBook(bookmeterUrl: string): Promise<Book> {
     const page = await this.#browser.newPage();
-    await page.goto(bookmeterUrl, {
-      timeout: 2 * 60 * 1000,
-      waitUntil: ["networkidle0", "domcontentloaded", "load"]
-    });
 
     await page.setRequestInterception(true);
     page.on("request", (interceptedRequest) => {
@@ -90,6 +98,13 @@ class Bookmaker {
         }
       })();
     });
+
+    await Promise.all([
+      waitForXPath(page, XPATH.book.amazonLink, {
+        timeout: 2 * 60 * 1000
+      }),
+      page.goto(bookmeterUrl)
+    ]);
 
     const amazonLinkHandle = await $x(page, XPATH.book.amazonLink);
     const authorHandle = await $x(page, XPATH.book.author);
@@ -165,6 +180,14 @@ class Bookmaker {
         }
       }
     } else {
+      /*
+      未ログインでスクレイピングする場合、「読みたい本」一覧画面にAmazonのリンクが表示されない。
+      そのためISBNを一括取得することが出来ず、本の数だけ個別ページにアクセスする必要がある。
+      そうなるとすぐにアクセス制限がかかるため、大きめに間隔を設ける必要がある。
+      */
+      let cnt = 0;
+      let sec = 1.5;
+
       for (;;) {
         await page.goto(`${BOOKMETER_BASE_URI}/users/${this.#userId}/books/wish?page=${pageNum}`, {
           waitUntil: ["domcontentloaded"]
@@ -184,7 +207,21 @@ class Bookmaker {
 
           const book = await this.scanEachBook(bkmt);
           this.#wishBookList.set(bkmt, book);
+
+          cnt++;
+          await sleep(sec * 1000);
+
+          if (BigInt(cnt) % 10n === 0n) {
+            if (sec < 5.5) {
+              sec += 0.2;
+              console.log("wait: + 0.2ms");
+              console.log(`current wait: ${sec}ms`);
+            }
+          }
         }
+
+        console.log("sleeping for 40s...");
+        await sleep(40 * 1000);
       }
     }
 
@@ -268,7 +305,7 @@ async function main(userId: string, doLogin: boolean) {
       console.log(`${JOB_NAME}: To check the remote is disabled`);
     }
 
-    const browser = await launch({
+    const browser = await puppeteer.launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: true,
       slowMo: 15
@@ -292,7 +329,8 @@ async function main(userId: string, doLogin: boolean) {
       console.log(`${JOB_NAME}: Fetching bibliographic information`);
       const updatedBooklist = await fetchBiblioInfo(latestBookList, {
         cinii: cinii_appid,
-        google: google_books_api_key
+        google: google_books_api_key,
+        isbnDb: isbnDb_api_key
       }); //書誌情報取得
 
       await exportFile({
@@ -314,4 +352,9 @@ async function main(userId: string, doLogin: boolean) {
 
 (async () => {
   await main(BOOKMETER_DEFAULT_USER_ID, true);
+  // const users = ["1504793", "1504772", "1504804", "1504818", "1504820", "1503969", "1504789"];
+  // for (const id of users) {
+  //   await main(id, false);
+  //   await sleep(60 * 1000);
+  // }
 })();

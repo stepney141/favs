@@ -45,12 +45,11 @@ export const transposeArray = <T>(a: T[][]): T[][] => a[0].map((_, c) => a.map((
 
 /**
  * @link https://zenn.dev/sora_kumo/articles/539d7f6e7f3c63
+ * @link https://github.com/SoraKumo001/promise-parallels/blob/master/src/index.ts
  */
 export const PromiseQueue = (ps = new Set<Promise<unknown>>()) => ({
-  add: (p: Promise<unknown>) => {
-    p.then(() => ps.delete(p)).catch(() => ps.delete(p));
-    ps.add(p);
-  },
+  add: (p: Promise<unknown> | (() => Promise<unknown>)) =>
+    ps.add(typeof p === "function" ? p() : !!p.then(() => ps.delete(p)).catch(() => ps.delete(p)) && p),
   wait: (limit: number) => ps.size >= limit && Promise.race(ps),
   all: () => Promise.all(ps)
 });

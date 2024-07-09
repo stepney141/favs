@@ -18,18 +18,12 @@ export type Book = {
 };
 export type BookList = Map<string, Book>;
 
-export type BiblioInfoStatus = { book: Book; isFound: boolean };
-export type FetchBiblioInfo = (book: Book, credential?: string) => BiblioInfoStatus | Promise<BiblioInfoStatus>;
-
-export type BookOwningStatus = { book: Book; isOwning: boolean };
-export type IsOwnBookConfig<T> = {
+export type BookSearchState = { book: Book; isFound: boolean };
+export type BookOwningStatus = { book: Book; isFound?: boolean; isOwning: boolean };
+export type BookOwingSearchConfig<T> = {
   book: Book;
   options?: { resources?: T; libraryInfo?: CiniiTarget };
 };
-export type IsOwnBook<T, R extends BookOwningStatus | Promise<BookOwningStatus>> = (
-  config: IsOwnBookConfig<T>,
-  credential?: string
-) => R;
 
 export type BiblioinfoErrorStatus = `Not_found_in_${(typeof BIBLIOINFO_SOURCES)[number]}` | "INVALID_ISBN";
 
@@ -68,18 +62,99 @@ export namespace OpenBD {
   } | null)[];
 }
 
+export namespace IsbnDb {
+  export type Book = {
+    title: string;
+    title_long: string;
+    isbn: string;
+    isbn13: string;
+    dewey_decimal: string;
+    binding: string;
+    publisher: string;
+    language: string;
+    date_published: string;
+    edition: string;
+    pages: 0;
+    dimensions: string;
+    dimensions_structured: {
+      length: {
+        unit: string;
+        value: 0;
+      };
+      width: {
+        unit: string;
+        value: 0;
+      };
+      height: {
+        unit: string;
+        value: 0;
+      };
+      weight: {
+        unit: string;
+        value: 0;
+      };
+    };
+    overview: string;
+    image: string;
+    msrp: 0;
+    excerpt: string;
+    synopsis: string;
+    authors: string[];
+    subjects: string[];
+    reviews: string[];
+    prices: [
+      {
+        condition: string;
+        merchant: string;
+        merchant_logo: string;
+        merchant_logo_offset: {
+          x: string;
+          y: string;
+        };
+        shipping: string;
+        price: string;
+        total: string;
+        link: string;
+      }
+    ];
+    related: {
+      type: string;
+    };
+    other_isbns: [
+      {
+        isbn: string;
+        binding: string;
+      }
+    ];
+  };
+
+  export type SingleResponse =
+    | {
+        book: IsbnDb.Book;
+      }
+    | {
+        errorType: string;
+        errorMessage: "Not Found";
+        trace: [];
+      };
+}
+
 export type NdlResponseJson = {
   rss: {
     channel: {
       item:
         | {
             title: string;
+            "dcndl:seriesTitle"?: string;
+            "dcndl:volume"?: string;
             author: string;
             "dc:publisher": string;
             pubDate: string;
           }
         | {
             title: string;
+            "dcndl:seriesTitle"?: string;
+            "dcndl:volume"?: string;
             author: string;
             "dc:publisher": string;
             pubDate: string;
