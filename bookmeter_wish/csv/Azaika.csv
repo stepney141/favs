@@ -1,21 +1,21 @@
-bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_Sophia,exist_in_UTokyo,sophia_opac,utokyo_opac,sophia_mathlib_opac,description
-https://bookmeter.com/books/1176723,4254121407,LATEX 2ε文典,"生田,誠三,1941-",朝倉書店,200006,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA47389661,,
-https://bookmeter.com/books/102787,4894712261,プログラミング言語Scheme,"Dybvig,R.Kent 村上,雅章,1960-",ピアソン・エデュケーション,200005,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA47069707,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA47069707,,
-https://bookmeter.com/books/258911,443170986X,天書の証明,"Aigner, Martin, 1942-,Ziegler, Günter M., 1963-,蟹江, 幸博, 1948-,M.アイグナー, G.M.ツィーグラー 著,蟹江幸博 訳",シュプリンガー・フェアラーク東京,"Thu, 21 Jan 2016 07:01:39 +0900",Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA60388288,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA60388288,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784431709862&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1,
-https://bookmeter.com/books/3147904,4000055364,数学基礎論,"新井,敏康,1958-",岩波書店,201105,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB05694597,,
-https://bookmeter.com/books/3346695,048628462X,Introduction to Logic: And to the Methodology of Deductive Sciences (Dover Books on Mathematics),"Tarski, Alfred",Dover Publications,1995-03-27,No,No,,,,
-https://bookmeter.com/books/346632,0486683702,First-order logic,"Smullyan,RaymondM／著",Dover,c1995-01,No,No,,,,
-https://bookmeter.com/books/2794464,0486422593,First Course in Mathematical Logic (Dover Books on Mathematics),"Patrick Suppes,Shirley Hill",Dover Publications,2010-06-17,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA62285865,,
-https://bookmeter.com/books/1961710,0521295157,Modal Logic: An Introduction,"Chellas, Brian F.",Cambridge University Press,1980-02-29,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA00349007,,
-https://bookmeter.com/books/3124210,0195325923,The Oxford Handbook of Philosophy of Mathematics and Logic (Oxford Handbooks),,Oxford University Press,2007-06-04,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=0195325923,,
-https://bookmeter.com/books/245516,4627015208,証明のすすめ : 数学の証明,"Thiele,Rüdiger 金井,省二,1941-",森北出版,199007,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN05042455,,
-https://bookmeter.com/books/4522297,0486634620,Foundations of Mathematical Logic (Dover Books on Mathematics),Haskell B. Curry,Dover Publications,2010-11-18,No,No,,,,
-https://bookmeter.com/books/20751,4826901380,メタマス! : オメガをめぐる数学の冒険,"Chaitin,GregoryJ,1947- 黒川,利明,1948-",白揚社,200709,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA83158662,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA83158662,,
-https://bookmeter.com/books/22070606,052109058X,Mathematical Logic with Special Reference to the Natural Numbers,"Steen, S. W. P.",Cambridge University Press,2008-11-27,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA0497334X,,
-https://bookmeter.com/books/4572142,0415226759,Introduction to Logic,Harry Gensler,Routledge,2001-12-31,Yes,No,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=0415226759,,,
-https://bookmeter.com/books/3106652,0198537794,Modal logic,"Chagrov,Alexander Zakharyaschev,Michael",Oxford University Press,1997,No,No,,,,
-https://bookmeter.com/books/1736992,0521527147,"Modal Logic (Cambridge Tracts in Theoretical Computer Science, Series Number 53)","Blackburn, Patrick,Rijke, Maarten de,Venema, Yde",Cambridge University Press,2002-09-30,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=0521527147,,
-https://bookmeter.com/books/22070605,0534558461,Predicate Logic: The Semantic Foundations of Logic,"Epstein, Richard L.",Wadsworth Pub Co,2000,No,No,,,,
-https://bookmeter.com/books/6330217,1107029570,Practical Foundations for Programming Languages,"Harper, Robert",Cambridge University Press,2012-12-17,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=1107029570,,
-https://bookmeter.com/books/187063,013507245X,The Algebra of Programming (Prentice-hall International Series in Computer Science),"Bird, Richard,Moor, Oege de",Prentice Hall,1997,No,Yes,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB21147948,,
-https://bookmeter.com/books/4137179,0387987606,Model theory : an introduction,"Marker,D.(David)",Springer,2002,Yes,Yes,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=0387987606,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA58993748,,
+bookmeter_url,isbn_or_asin,book_title,author,publisher,published_date,exist_in_UTokyo,utokyo_opac
+https://bookmeter.com/books/1176723,4254121407,LATEX 2ε文典,"生田,誠三,1941-",朝倉書店,200006,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA47389661
+https://bookmeter.com/books/102787,4894712261,プログラミング言語Scheme,"Dybvig,R.Kent 村上,雅章,1960-",ピアソン・エデュケーション,200005,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA47069707
+https://bookmeter.com/books/258911,443170986X,天書の証明,"Aigner, Martin, 1942-,Ziegler, Günter M., 1963-,蟹江, 幸博, 1948-,M.アイグナー, G.M.ツィーグラー 著,蟹江幸博 訳",シュプリンガー・フェアラーク東京,"Thu, 21 Jan 2016 07:01:39 +0900",Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA60388288
+https://bookmeter.com/books/3147904,4000055364,数学基礎論,"新井,敏康,1958-",岩波書店,201105,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB05694597
+https://bookmeter.com/books/3346695,048628462X,Introduction to Logic: And to the Methodology of Deductive Sciences (Dover Books on Mathematics),"Tarski, Alfred",Dover Publications,1995-03-27,No,
+https://bookmeter.com/books/346632,0486683702,First-order logic,"Smullyan,RaymondM／著",Dover,c1995-01,No,
+https://bookmeter.com/books/2794464,0486422593,First Course in Mathematical Logic (Dover Books on Mathematics),"Patrick Suppes,Shirley Hill",Dover Publications,2010-06-17,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA62285865
+https://bookmeter.com/books/1961710,0521295157,Modal Logic: An Introduction,"Chellas, Brian F.",Cambridge University Press,1980-02-29,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA00349007
+https://bookmeter.com/books/3124210,0195325923,The Oxford Handbook of Philosophy of Mathematics and Logic (Oxford Handbooks),,Oxford University Press,2007-06-04,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=0195325923
+https://bookmeter.com/books/245516,4627015208,証明のすすめ : 数学の証明,"Thiele,Rüdiger 金井,省二,1941-",森北出版,199007,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN05042455
+https://bookmeter.com/books/4522297,0486634620,Foundations of Mathematical Logic (Dover Books on Mathematics),Haskell B. Curry,Dover Publications,2010-11-18,No,
+https://bookmeter.com/books/20751,4826901380,メタマス! : オメガをめぐる数学の冒険,"Chaitin,GregoryJ,1947- 黒川,利明,1948-",白揚社,200709,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA83158662
+https://bookmeter.com/books/22070606,052109058X,Mathematical Logic with Special Reference to the Natural Numbers,"Steen, S. W. P.",Cambridge University Press,2008-11-27,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA0497334X
+https://bookmeter.com/books/4572142,0415226759,Introduction to Logic,Harry Gensler,Routledge,2001-12-31,No,
+https://bookmeter.com/books/3106652,0198537794,Modal logic,"Chagrov,Alexander Zakharyaschev,Michael",Oxford University Press,1997,No,
+https://bookmeter.com/books/1736992,0521527147,"Modal Logic (Cambridge Tracts in Theoretical Computer Science, Series Number 53)","Blackburn, Patrick,Rijke, Maarten de,Venema, Yde",Cambridge University Press,2002-09-30,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=0521527147
+https://bookmeter.com/books/22070605,0534558461,Predicate Logic: The Semantic Foundations of Logic,"Epstein, Richard L.",Wadsworth Pub Co,2000,No,
+https://bookmeter.com/books/6330217,1107029570,Practical Foundations for Programming Languages,"Harper, Robert",Cambridge University Press,2012-12-17,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=1107029570
+https://bookmeter.com/books/187063,013507245X,The Algebra of Programming (Prentice-hall International Series in Computer Science),"Bird, Richard,Moor, Oege de",Prentice Hall,1997,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB21147948
+https://bookmeter.com/books/4137179,0387987606,Model theory : an introduction,"Marker,D.(David)",Springer,2002,Yes,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA58993748
