@@ -186,7 +186,7 @@ class Bookmaker {
       そうなるとすぐにアクセス制限がかかるため、大きめに間隔を設ける必要がある。
       */
       let cnt = 0;
-      let sec = 1;
+      let sec = 1.5;
 
       for (;;) {
         await page.goto(`${BOOKMETER_BASE_URI}/users/${this.#userId}/books/wish?page=${pageNum}`, {
@@ -354,5 +354,6 @@ async function main(userId: string, doLogin: boolean) {
   const users = ["1504793", "1504772", "1504804", "1504818", "1504820", "1503969", "1504789"];
   for (const id of users) {
     await main(id, false);
+    await sleep(60 * 1000);
   }
 })();
