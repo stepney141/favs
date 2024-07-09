@@ -218,15 +218,10 @@ class Bookmaker {
               console.log(`current wait: ${sec}ms`);
             }
           }
-
-          if (BigInt(cnt) % 20n === 0n) {
-            console.log("sleeping for 10s...");
-            await sleep(10 * 1000);
-          }
         }
 
         console.log("sleeping for 30s...");
-        await sleep(30 * 1000);
+        await sleep(35 * 1000);
       }
     }
 
