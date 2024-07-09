@@ -209,13 +209,13 @@ class Bookmaker {
           this.#wishBookList.set(bkmt, book);
 
           cnt++;
-          console.log(`current wait: ${sec}ms`);
           await sleep(sec * 1000);
 
           if (BigInt(cnt) % 10n === 0n) {
-            if (sec < 6) {
+            if (sec < 5.5) {
               sec += 0.2;
               console.log("wait: + 0.2ms");
+              console.log(`current wait: ${sec}ms`);
             }
           }
 
