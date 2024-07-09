@@ -180,6 +180,11 @@ class Bookmaker {
         }
       }
     } else {
+      /*
+      未ログインでスクレイピングする場合、「読みたい本」一覧画面にAmazonのリンクが表示されない。
+      そのためISBNを一括取得することが出来ず、本の数だけ個別ページにアクセスする必要がある。
+      そうなるとすぐにアクセス制限がかかるため、大きめに間隔を設ける必要がある。
+      */
       let cnt = 0;
       let sec = 1;
 
@@ -204,6 +209,7 @@ class Bookmaker {
           this.#wishBookList.set(bkmt, book);
 
           cnt++;
+          console.log(`current wait: ${sec}ms`);
           await sleep(sec * 1000);
 
           if (BigInt(cnt) % 10n === 0n) {
@@ -215,7 +221,6 @@ class Bookmaker {
 
           if (BigInt(cnt) % 20n === 0n) {
             console.log("sleeping for 10s...");
-            console.log(`current wait: ${sec}ms`);
             await sleep(10 * 1000);
           }
         }
@@ -351,7 +356,7 @@ async function main(userId: string, doLogin: boolean) {
 }
 
 (async () => {
-  const users = ["1503969", "1504818", "1504820", "1504793", "1504772", "1504804", "1504789"];
+  const users = ["1504793", "1504772", "1504804", "1504818", "1504820", "1503969", "1504789"];
   for (const id of users) {
     await main(id, false);
   }

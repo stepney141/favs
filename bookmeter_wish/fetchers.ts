@@ -91,7 +91,10 @@ const fetchISBNdb = async (book: Book, credential: string): Promise<BiblioInfoSt
   const isbn = book["isbn_or_asin"]!;
   const ISBNDB_API_URI = "https://api.pro.isbndb.com";
 
-  const rawResponse: AxiosResponse<IsbnDb.SingleResponse> = await axios({
+  const instanse = axios.create({
+    validateStatus: (status) => (status >= 200 && status < 300) || status == 404
+  });
+  const rawResponse: AxiosResponse<IsbnDb.SingleResponse> = await instanse({
     url: `${ISBNDB_API_URI}/book/${isbn}`,
     headers: {
       "Content-Type": "application/json",
@@ -100,7 +103,7 @@ const fetchISBNdb = async (book: Book, credential: string): Promise<BiblioInfoSt
     responseType: "json"
   });
 
-  if ("errorMessage" in rawResponse.data) {
+  if ("errorMessage" in rawResponse.data || rawResponse.status === 404) {
     const statusText: BiblioinfoErrorStatus = "Not_found_in_ISBNdb";
     const part = {
       book_title: statusText,
