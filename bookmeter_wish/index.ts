@@ -220,8 +220,8 @@ class Bookmaker {
           }
         }
 
-        console.log("sleeping for 30s...");
-        await sleep(35 * 1000);
+        console.log("sleeping for 40s...");
+        await sleep(40 * 1000);
       }
     }
 
