@@ -120,7 +120,7 @@ const fetchISBNdb = async (book: Book, credential: string): Promise<BiblioInfoSt
   const bookinfo = rawResponse.data.book;
   const part = {
     book_title: bookinfo["title"] ?? "",
-    author: bookinfo["authors"].toString() ?? "",
+    author: bookinfo["authors"]?.toString() ?? "",
     publisher: bookinfo["publisher"] ?? "",
     published_date: bookinfo["date_published"] ?? ""
   };
