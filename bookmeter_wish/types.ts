@@ -2,6 +2,15 @@ import { type BIBLIOINFO_SOURCES, type CINII_TARGET_TAGS } from "./constants";
 
 import type { Brand } from "../.libs/lib";
 
+export type MainFuncOption = {
+  mode: "wish" | "stacked";
+  userId?: string;
+  doLogin?: boolean;
+  filePath?: OutputFilePath | null;
+  noRemoteCheck?: boolean;
+  skipBookListComparison?: boolean;
+};
+
 export type Book = {
   bookmeter_url: string;
   isbn_or_asin: ISBN10 | ASIN | null;
@@ -9,12 +18,13 @@ export type Book = {
   author: string;
   publisher: string;
   published_date: string;
-  sophia_mathlib_opac: string;
-  description: string;
 } & {
   [key in OpacLink]: string;
 } & {
   [key in ExistIn]: "Yes" | "No";
+} & {
+  sophia_mathlib_opac: string;
+  description: string;
 };
 export type BookList = Map<string, Book>;
 
@@ -34,6 +44,11 @@ export type CiniiTarget = {
   tag: CiniiTargetOrgs;
   cinii_kid: string;
   opac: string;
+};
+
+export type OutputFilePath = {
+  wish: string;
+  stacked: string;
 };
 
 export namespace OpenBD {

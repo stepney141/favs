@@ -11,7 +11,7 @@ import { JOB_NAME, XPATH, BOOKMETER_BASE_URI, BOOKMETER_DEFAULT_USER_ID } from "
 import { fetchBiblioInfo } from "./fetchers";
 import { buildCsvFileName, getPrevBookList, isBookListDifferent, matchASIN } from "./utils";
 
-import type { ASIN, Book, BookList, ISBN10 } from "./types";
+import type { ASIN, Book, BookList, ISBN10, MainFuncOption } from "./types";
 import type { Browser, Page } from "puppeteer";
 
 config({ path: path.join(__dirname, "../.env") });
@@ -293,14 +293,17 @@ function parseArgv(argv: string[]): "wish" | "stacked" {
   }
 }
 
-async function main(userId: string, doLogin: boolean) {
+export async function main({
+  mode,
+  userId = BOOKMETER_DEFAULT_USER_ID,
+  doLogin = true,
+  filePath = null,
+  noRemoteCheck = false,
+  skipBookListComparison = false
+}: MainFuncOption) {
   try {
     const startTime = Date.now();
-    const mode = parseArgv(process.argv);
-    const csvFileName = buildCsvFileName(userId);
-
-    const noRemoteCheck = false; // default: false
-    const skipBookListComparison = false; // default: false
+    const csvFileName = buildCsvFileName(userId, filePath);
     if (noRemoteCheck) {
       console.log(`${JOB_NAME}: To check the remote is disabled`);
     }
@@ -311,18 +314,18 @@ async function main(userId: string, doLogin: boolean) {
       slowMo: 15
     });
 
-    const book = new Bookmaker(browser, userId);
     const prevBookList = await getPrevBookList(csvFileName[mode]);
-    if (prevBookList === null && noRemoteCheck) {
-      throw new Error("前回データが存在しないのにリモートチェックをオフにすることは出来ません");
+    if (prevBookList === null) {
+      console.log(`${JOB_NAME}: The previous result is not found. Path: ${csvFileName[mode]}`);
+      if (noRemoteCheck) throw new Error("前回データが存在しないのにリモートチェックをオフにすることは出来ません");
     }
 
+    const book = new Bookmaker(browser, userId);
     const latestBookList = noRemoteCheck
       ? (prevBookList as BookList)
       : doLogin
         ? await book.login().then((book) => book.explore(mode, doLogin))
         : await book.explore(mode, doLogin);
-
     await browser.close();
 
     if (isBookListDifferent(latestBookList, prevBookList, skipBookListComparison)) {
@@ -351,9 +354,30 @@ async function main(userId: string, doLogin: boolean) {
 }
 
 (async () => {
-  const users = ["1504793", "1504772", "1504804", "1504818", "1504820", "1503969", "1504789"];
-  for (const id of users) {
-    await main(id, false);
-    await sleep(60 * 1000);
-  }
+  const mode = parseArgv(process.argv);
+
+  await main({ mode });
+
+  // const users = [
+  //   { id: "1504793", name: "Azaika" },
+  //   { id: "1504772", name: "qraphnet" },
+  //   { id: "1504804", name: "caphosra" },
+  //   { id: "1504818", name: "Juei" },
+  //   { id: "1504820", name: "LLUUIIGGEE" },
+  //   { id: "1503969", name: "ゆみや" },
+  //   { id: "1504789", name: "hakatashi" }
+  // ];
+
+  // for (const u of users) {
+  //   await main({
+  //     mode,
+  //     userId: u.id,
+  //     doLogin: false,
+  //     filePath: {
+  //       wish: `./csv/tsg/${u.name}.csv`,
+  //       stacked: `./csv/tsg/${u.name}_stacked.csv`
+  //     }
+  //   });
+  //   await sleep(60 * 1000);
+  // }
 })();

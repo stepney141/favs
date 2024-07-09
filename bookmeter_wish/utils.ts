@@ -4,7 +4,7 @@ import { parse } from "papaparse";
 
 import { BOOKMETER_DEFAULT_USER_ID, DEFAULT_CSV_FILENAME, JOB_NAME, REGEX } from "./constants";
 
-import type { ASIN, Book, BookList, ISBN10, ISBN13 } from "./types";
+import type { ASIN, Book, BookList, ISBN10, ISBN13, OutputFilePath } from "./types";
 import type { ParseResult } from "papaparse";
 
 export const isIsbn10 = (str: ISBN10 | ISBN13 | ASIN): boolean => {
@@ -72,13 +72,16 @@ export const getRedirectedUrl = async (targetUrl: string): Promise<string | unde
   }
 };
 
-export const buildCsvFileName = (userId: string) => {
-  return userId === BOOKMETER_DEFAULT_USER_ID
-    ? DEFAULT_CSV_FILENAME
-    : {
-        wish: `./csv/${userId}_bookmeter_wish_books.csv`,
-        stacked: `./csv/${userId}_bookmeter_stacked_books.csv`
-      };
+export const buildCsvFileName = (userId: string, filePath: OutputFilePath | null = null): OutputFilePath => {
+  if (filePath === null) {
+    if (userId === BOOKMETER_DEFAULT_USER_ID) return DEFAULT_CSV_FILENAME;
+    return {
+      wish: `./csv/${userId}_bookmeter_wish_books.csv`,
+      stacked: `./csv/${userId}_bookmeter_stacked_books.csv`
+    };
+  } else {
+    return filePath;
+  }
 };
 
 export const readCSV = async (filename: string) => {

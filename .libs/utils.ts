@@ -130,6 +130,9 @@ export const exportFile = async (IO: FileExportIO) => {
     output = JSON.stringify(raw, null, "  ");
   }
 
+  const pathElements = IO.fileName.split("/");
+  await fs.mkdir(pathElements.slice(0, -1).join("/"), { recursive: true });
+
   // ref: https://blog.katsubemakito.net/nodejs/file-write#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E9%96%8B%E3%81%8F%E9%9A%9B%E3%81%AE%E3%83%A2%E3%83%BC%E3%83%89%E4%B8%80%E8%A6%A7
   const fileFlag = IO.mode === "append" ? "a" : "w";
   const filehandle = await fs.open(IO.fileName, fileFlag);
