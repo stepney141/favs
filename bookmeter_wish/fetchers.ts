@@ -298,24 +298,22 @@ const isBookAvailableInCinii = async (
       [`${libraryInfo.tag.toLowerCase()}_opac`]: `${libraryInfo.opac}/opac/opac_openurl?ncid=${ncid}` //opacのリンク
     };
 
-    if (!biblioInfo.isFound) {
-      return {
-        book: {
-          ...biblioInfo.book,
-          ...infoToUpdate,
-          ...owingStatus
-        },
-        isFound: true,
-        isOwning: true
-      };
-    } else {
+    if (biblioInfo.isFound) {
       // 他のAPIで情報が見つかっている場合は上書きしない
       return {
         book: {
           ...biblioInfo.book,
           ...owingStatus
         },
-        isFound: false,
+        isOwning: true
+      };
+    } else {
+      return {
+        book: {
+          ...biblioInfo.book,
+          ...infoToUpdate,
+          ...owingStatus
+        },
         isOwning: true
       };
     }
@@ -336,14 +334,12 @@ const isBookAvailableInCinii = async (
           [`exist_in_${libraryInfo.tag}`]: "Yes",
           [`${libraryInfo.tag.toLowerCase()}_opac`]: opacUrl
         },
-        isFound: true,
         isOwning: true
       };
     }
 
     return {
       book: { ...biblioInfo.book, [`exist_in_${libraryInfo.tag}`]: "No" },
-      isFound: false,
       isOwning: false
     };
   }
@@ -425,14 +421,14 @@ const fetchSingleRequestAPIs = async (
 ): Promise<{ bookmeterUrl: string; updatedBook: Book }> => {
   let updatedSearchState = { ...searchState };
 
-  // ISBNdb検索
-  if (!updatedSearchState.isFound) {
-    updatedSearchState = await fetchISBNdb(updatedSearchState.book, credential.isbnDb);
-  }
-
   // NDL検索
   if (!updatedSearchState.isFound) {
     updatedSearchState = await fetchNDL(updatedSearchState.book);
+  }
+
+  // ISBNdb検索
+  if (!updatedSearchState.isFound) {
+    updatedSearchState = await fetchISBNdb(updatedSearchState.book, credential.isbnDb);
   }
 
   await sleep(randomWait(1500, 0.8, 1.2));
@@ -448,7 +444,7 @@ const fetchSingleRequestAPIs = async (
   for (const tag of CINII_TARGET_TAGS) {
     const library = CINII_TARGETS.find((library) => library.tag === tag)!;
     const ciniiStatus = await isBookAvailableInCinii(updatedSearchState, library, credential.cinii);
-    if (ciniiStatus.isOwning || ciniiStatus?.isFound) {
+    if (ciniiStatus.isOwning) {
       updatedSearchState.book = ciniiStatus.book;
     }
   }
