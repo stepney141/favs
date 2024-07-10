@@ -164,7 +164,7 @@ async function fetchNDL(book: Book, useIsbn: boolean = true): Promise<BookSearch
     const series = bookinfo["dcndl:seriesTitle"] ?? "";
 
     const part = {
-      book_title: `${title}${volume === "" ? volume : " " + volume + " "}${series === "" ? series : " (" + series + ")"}`,
+      book_title: `${title}${volume === "" ? volume : " " + volume}${series === "" ? series : " / " + series}`,
       author: bookinfo["author"] ?? "",
       publisher: bookinfo["dc:publisher"] ?? "",
       published_date: bookinfo["pubDate"] ?? ""
