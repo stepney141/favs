@@ -29,7 +29,7 @@ const fxp = new XMLParser();
 /**
  * OpenBD検索
  */
-const bulkFetchOpenBD = async (bookList: BookList): Promise<BookSearchState[]> => {
+async function bulkFetchOpenBD(bookList: BookList): Promise<BookSearchState[]> {
   const bulkTargetIsbns = [...bookList.values()].map((bookmeter) => bookmeter["isbn_or_asin"]).toString();
   const bookmeterKeys = Array.from(bookList.keys());
 
@@ -85,13 +85,13 @@ const bulkFetchOpenBD = async (bookList: BookList): Promise<BookSearchState[]> =
     }
   }
   return results;
-};
+}
 
 /**
  * ISBNdb検索
  */
-const fetchISBNdb = async (book: Book, credential: string): Promise<BookSearchState> => {
-  const isbn = book["isbn_or_asin"]!;
+async function fetchISBNdb(book: Book, credential: string): Promise<BookSearchState> {
+  const isbn = book["isbn_or_asin"];
   const ISBNDB_API_URI = "https://api.pro.isbndb.com";
 
   const instanse = axios.create({
@@ -131,14 +131,14 @@ const fetchISBNdb = async (book: Book, credential: string): Promise<BookSearchSt
     book: { ...book, ...part },
     isFound: true
   };
-};
+}
 
 /**
  * 国立国会図書館 書誌検索
  * @link https://iss.ndl.go.jp/information/api/riyou/
  */
-const fetchNDL = async (book: Book, useIsbn: boolean = true): Promise<BookSearchState> => {
-  const isbn = book["isbn_or_asin"]!;
+async function fetchNDL(book: Book, useIsbn: boolean = true): Promise<BookSearchState> {
+  const isbn = book["isbn_or_asin"];
   const title = encodeURIComponent(book["book_title"]);
   const author = encodeURIComponent(book["author"]);
 
@@ -193,13 +193,13 @@ const fetchNDL = async (book: Book, useIsbn: boolean = true): Promise<BookSearch
       isFound: false
     };
   }
-};
+}
 
 /**
  * Google Booksの検索
  * @link https://developers.google.com/books/docs/v1/reference/volumes/list?hl=en
  */
-const fetchGoogleBooks = async (book: Book, credential: string): Promise<BookSearchState> => {
+async function fetchGoogleBooks(book: Book, credential: string): Promise<BookSearchState> {
   const isbn = book["isbn_or_asin"];
 
   if (isbn === null || isbn === undefined) {
@@ -253,17 +253,17 @@ const fetchGoogleBooks = async (book: Book, credential: string): Promise<BookSea
       isFound: false
     };
   }
-};
+}
 
 /**
  * 大学図書館 所蔵検索(CiNii)
  * @link https://support.nii.ac.jp/ja/cib/api/b_opensearch
  */
-const isBookAvailableInCinii = async (
+async function isBookAvailableInCinii(
   biblioInfo: BookSearchState,
   libraryInfo: CiniiTarget,
   credential: string
-): Promise<BookOwningStatus> => {
+): Promise<BookOwningStatus> {
   const isbn = biblioInfo.book["isbn_or_asin"]; //ISBNデータを取得
   const title = encodeURIComponent(biblioInfo.book["book_title"]);
   const author = encodeURIComponent(biblioInfo.book["author"]);
@@ -343,12 +343,12 @@ const isBookAvailableInCinii = async (
       isOwning: false
     };
   }
-};
+}
 
 /**
  * 数学図書館の所蔵検索
  */
-const searchSophiaMathLib = (book: Book, dataSource: Set<string>): BookOwningStatus => {
+function searchSophiaMathLib(book: Book, dataSource: Set<string>): BookOwningStatus {
   const bookId = book.isbn_or_asin;
   const mathlibIsbnList = dataSource;
 
@@ -375,9 +375,9 @@ const searchSophiaMathLib = (book: Book, dataSource: Set<string>): BookOwningSta
   } else {
     return { book: { ...book }, isOwning: false };
   }
-};
+}
 
-const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): Promise<Set<string>> => {
+async function configMathlibBookList(listtype: keyof typeof MATH_LIB_BOOKLIST): Promise<Set<string>> {
   const pdfUrl = MATH_LIB_BOOKLIST[listtype];
   const mathlibIsbnList: Set<string> = new Set();
 
@@ -412,23 +412,46 @@ const configMathlibBookList = async (listtype: keyof typeof MATH_LIB_BOOKLIST): 
 
   console.log(`${JOB_NAME}: Completed creating a list of ISBNs of ${listtype} books in Sophia Univ. Math Lib`);
   return mathlibIsbnList;
-};
+}
 
-const fetchSingleRequestAPIs = async (
+const routeIsbn10 = (isbn10: ISBN10): "Japan" | "Others" => (isbn10[0] === "4" ? "Japan" : "Others");
+
+async function fetchSingleRequestAPIs(
   searchState: BookSearchState,
   credential: { cinii: string; google: string; isbnDb: string },
   mathLibIsbnList: Set<string>
-): Promise<{ bookmeterUrl: string; updatedBook: Book }> => {
-  let updatedSearchState = { ...searchState };
-
-  // NDL検索
-  if (!updatedSearchState.isFound) {
-    updatedSearchState = await fetchNDL(updatedSearchState.book);
+): Promise<{ bookmeterUrl: string; updatedBook: Book }> {
+  const isbn = searchState.book["isbn_or_asin"];
+  if (isAsin(isbn)) {
+    return {
+      bookmeterUrl: searchState.book.bookmeter_url,
+      updatedBook: { ...searchState.book }
+    };
   }
 
-  // ISBNdb検索
-  if (!updatedSearchState.isFound) {
-    updatedSearchState = await fetchISBNdb(updatedSearchState.book, credential.isbnDb);
+  let updatedSearchState = { ...searchState };
+
+  // 和書は国立国会図書館の情報を優先する
+  if (routeIsbn10(isbn as ISBN10) === "Japan") {
+    // NDL検索
+    if (!updatedSearchState.isFound) {
+      updatedSearchState = await fetchNDL(updatedSearchState.book);
+    }
+
+    // ISBNdb検索
+    if (!updatedSearchState.isFound) {
+      updatedSearchState = await fetchISBNdb(updatedSearchState.book, credential.isbnDb);
+    }
+  } else {
+    // ISBNdb検索
+    if (!updatedSearchState.isFound) {
+      updatedSearchState = await fetchISBNdb(updatedSearchState.book, credential.isbnDb);
+    }
+
+    // NDL検索
+    if (!updatedSearchState.isFound) {
+      updatedSearchState = await fetchNDL(updatedSearchState.book);
+    }
   }
 
   await sleep(randomWait(1500, 0.8, 1.2));
@@ -459,12 +482,12 @@ const fetchSingleRequestAPIs = async (
     bookmeterUrl: updatedSearchState.book.bookmeter_url,
     updatedBook: updatedSearchState.book
   };
-};
+}
 
-export const fetchBiblioInfo = async (
+export async function fetchBiblioInfo(
   booklist: BookList,
   credential: { cinii: string; google: string; isbnDb: string }
-): Promise<BookList> => {
+): Promise<BookList> {
   const mathLibIsbnList = await configMathlibBookList("ja");
 
   // OpenBD検索
@@ -482,4 +505,4 @@ export const fetchBiblioInfo = async (
 
   console.log(`${JOB_NAME}: Searching Completed`);
   return new Map(booklist);
-};
+}
