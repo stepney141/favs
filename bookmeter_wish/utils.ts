@@ -145,3 +145,20 @@ export const isBookListDifferent = (
   console.log(`${JOB_NAME}: Cannot find any differences between the local and remote. The process will be aborted...`);
   return false;
 };
+
+export const makeEmptyBook = (isbn: ISBN10): Book => {
+  return {
+    bookmeter_url: "",
+    isbn_or_asin: isbn,
+    book_title: "",
+    author: "",
+    publisher: "",
+    published_date: "",
+    exist_in_Sophia: "No",
+    exist_in_UTokyo: "No",
+    sophia_opac: "",
+    utokyo_opac: "",
+    sophia_mathlib_opac: "",
+    description: ""
+  };
+};
