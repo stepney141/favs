@@ -111,7 +111,7 @@ class Bookmaker {
     const titleHandle = await $x(page, XPATH.book.title);
 
     const amzn_raw: string = await getNodeProperty(amazonLinkHandle[0], "href");
-    const amzn = matchASIN(amzn_raw) as ISBN10 | ASIN | null;
+    const amzn = matchASIN(amzn_raw) as ISBN10 | ASIN;
 
     const author: string = await getNodeProperty(authorHandle[0], "textContent");
     const title: string = await getNodeProperty(titleHandle[0], "textContent");
@@ -153,7 +153,7 @@ class Bookmaker {
           const bkmt = String(bkmt_raw); //本の情報のbookmeter内部リンクを取得
 
           const amzn_raw: string = await getNodeProperty(amazonLinkHandle[i], "href");
-          const amzn = matchASIN(amzn_raw) as ISBN10 | ASIN | null;
+          const amzn = matchASIN(amzn_raw) as ISBN10 | ASIN;
 
           this.#wishBookList.set(bkmt, {
             bookmeter_url: bkmt,
