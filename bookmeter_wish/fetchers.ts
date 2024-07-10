@@ -164,7 +164,7 @@ async function fetchNDL(book: Book, useIsbn: boolean = true): Promise<BookSearch
     const series = bookinfo["dcndl:seriesTitle"] ?? "";
 
     const part = {
-      book_title: `${title || title + " "}${volume || volume + " "}${series || "(" + series + ")"}`,
+      book_title: `${title}${volume === "" ? volume : " " + volume + " "}${series === "" ? series : " (" + series + ")"}`,
       author: bookinfo["author"] ?? "",
       publisher: bookinfo["dc:publisher"] ?? "",
       published_date: bookinfo["pubDate"] ?? ""
@@ -230,7 +230,7 @@ async function fetchGoogleBooks(book: Book, credential: string): Promise<BookSea
     const bookinfo = json.items[0].volumeInfo;
     const subtitle = bookinfo.subtitle ?? "";
     const part = {
-      book_title: `${bookinfo.title}${subtitle || " " + subtitle}`,
+      book_title: `${bookinfo.title}${subtitle === "" ? subtitle : " " + subtitle}`,
       author: bookinfo.authors?.toString() ?? "",
       publisher: bookinfo.publisher ?? "",
       published_date: bookinfo.publishedDate ?? ""
