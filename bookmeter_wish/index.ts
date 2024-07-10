@@ -362,7 +362,7 @@ export async function main({
     { id: "1504793", name: "Azaika" },
     { id: "1504772", name: "qraphnet" },
     { id: "1504804", name: "caphosra" },
-    { id: "1504818", name: "Juei" },
+    { id: "1504818", name: "Jiei" },
     { id: "1504820", name: "LLUUIIGGEE" },
     { id: "1503969", name: "ゆみや" },
     { id: "1504789", name: "hakatashi" }
@@ -376,7 +376,8 @@ export async function main({
       filePath: {
         wish: `./csv/tsg/${u.name}.csv`,
         stacked: `./csv/tsg/${u.name}_stacked.csv`
-      }
+      },
+      skipBookListComparison: true
     });
     await sleep(60 * 1000);
   }
