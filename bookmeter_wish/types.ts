@@ -13,7 +13,7 @@ export type MainFuncOption = {
 
 export type Book = {
   bookmeter_url: string;
-  isbn_or_asin: ISBN10 | ASIN | null;
+  isbn_or_asin: ISBN10 | ASIN;
   book_title: string;
   author: string;
   publisher: string;
