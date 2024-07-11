@@ -188,6 +188,9 @@ class Zennist {
     const browser = await puppeteer.launch({
       executablePath: executablePath(),
       defaultViewport: { width: 1000, height: 1000 },
+      // ref: https://github.com/puppeteer/puppeteer/issues/10144
+      ignoreHTTPSErrors: true,
+      ignoreDefaultArgs: ['--enable-automation'],
       args: [
         // '--disable-gpu',
         "--disable-blink-features=AutomationControlled" /* https://github.com/berstend/puppeteer-extra/issues/822 */,
@@ -195,12 +198,11 @@ class Zennist {
         "--disable-setuid-sandbox",
         "--no-first-run",
         "--no-sandbox",
-        "--no-zygote"
-        // '--single-process'
+        "--no-zygote",
+        '--single-process'
       ],
       slowMo: 100,
-      // headless: true,
-      headless: false //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
+      headless: false //Googleの認証の問題でheadfullの方が楽
     });
 
     const zenn = new Zennist(browser);
@@ -220,5 +222,6 @@ class Zennist {
     await browser.close();
   } catch (e) {
     console.log(e);
+    process.exit(1);
   }
 })();
