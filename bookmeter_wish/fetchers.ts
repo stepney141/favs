@@ -92,7 +92,7 @@ async function bulkFetchOpenBD(bookList: BookList): Promise<BookSearchState[]> {
  */
 async function fetchISBNdb(book: Book, credential: string): Promise<BookSearchState> {
   const isbn = book["isbn_or_asin"];
-  const ISBNDB_API_URI = "https://api.pro.isbndb.com";
+  const ISBNDB_API_URI = "https://api2.isbndb.com";
 
   const instanse = axios.create({
     validateStatus: (status) => (status >= 200 && status < 300) || status == 404
