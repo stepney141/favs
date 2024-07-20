@@ -1,4 +1,6 @@
 isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
+4784216162,着衣する身体と女性の周縁化,"武田,佐知子,1948-",思文閣出版,201204,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB09174690
+4903474496,コンピュータグラフィックス = Computer graphics,画像情報教育振興協会,画像情報教育振興協会,201503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB1832415X
 4910292020,言語学者、外の世界へ羽ばたく : ラッパー・声優・歌手とのコラボからプリキュア・ポケモン名の分析まで 2 (リベラルアーツコトバ双書),"川原,繁人,1980-",教養検定会議,202204,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC14677574
 462130898X,ネットワーク科学入門 : Pythonで学ぶデータ分析とモデリング,"Menczer,Filippo Fortunato,Santo Davis,ClaytonA ほか",丸善出版,202312,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05165444
 406512476X,コンパクトデータ構造 : 実践的アプローチ,"Navarro,Gonzalo,1969- 定兼,邦彦,1971-",講談社,202307,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD03221544
@@ -21,7 +23,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4845921324,映像クリエイターのための完全独学マニュアル,,フィルムアート社,20221026,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC17391975
 4254122128,基礎からのベイズ統計学 : ハミルトニアンモンテカルロ法による実践的入門,"豊田,秀樹,1961-",朝倉書店,201506,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB18938264
 4845921170,色のコードを読む,ポール・シンプソン／著 中山ゆかり／翻訳,フィルムアート社,20221224,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD00226632
-4839969515,詳解ディープラーニング : TensorFlow/Keras・PyTorchによる時系列データ処理,"巣籠,悠輔",マイナビ出版,201911,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB2925816X
+4814400799,脳に収まるコードの書き方 : 複雑さを避け持続可能にするための経験則とテクニック,"Seemann,Mark 吉羽,龍太郎 原田,騎郎",オーム社,202406,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4814400799
 4771036543,聖家族の終焉とおじさんの逆襲 = Das Ende der Heiligen Familie und der Gegenangriff des Onkels : 両大戦間期ドイツ児童文学の世界,"佐藤,文彦,1973-",晃洋書房,202212,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC18881379
 427423116X,Pythonで学ぶ効果検証入門 = Learn Impact Evaluation With Python,"安井,翔太 伊藤,寛武 金子,雄祐",オーム社,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07209154
 4320124960,機械学習 : ベイズと最適化の観点から,"Theodoridis,Sergios,1951- 岩野,和生 中島,秀之,1952-",共立出版,202212,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC18912508
@@ -212,6 +214,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4872596447,アーカイブズとアーキビスト 76 (阪大リーブル),大阪大学アーカイブズ／編 高橋明男／著 菅真城／著 三阪佳弘／著 矢切努／著 三輪宗弘／著 ほか,大阪大学出版会,20210410,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC06512105
 4622095556,デジタル時代のアーカイブ系譜学,"柳,与志夫,1954- 加藤,諭,1978- 宮本,隆史,1979-",みすず書房,202212,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC18724483
 4326000481,デジタルアーカイブの理論と政策 : デジタル文化資源の活用に向けて,"柳,与志夫,1954-",勁草書房,202001,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB29719998
+4883673790,デジタルアーカイブの理論と実践 : デジタルアーキビスト入門,"日本デジタルアーキビスト資格認定機構 井上,透,1952- 大井,将生 細川,季穂",樹村房,202304,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD0179071X
 4130502077,メディア考古学とは何か？,ユッシパリッカ／著 梅田拓也／翻訳 大久保遼／翻訳 近藤和都／翻訳 光岡寿郎／翻訳,東京大学出版会,20230725,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD03076445
 4758925992,イギリス哲学者の英語 : 通時的研究 99 (開拓社言語・文化選書),"秋元,実治,1941-",開拓社,202305,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD02133973
 4422701274,コンスピリチュアリティ入門 : スピリチュアルな人は陰謀論を信じやすいか 03 (叢書パルマコン・ミクロス),"横山,茂雄,1954- 竹下,節子,1951- 清,義明,1967- 堀江,宗正,1969- ほか",創元社,202303,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD01487755
