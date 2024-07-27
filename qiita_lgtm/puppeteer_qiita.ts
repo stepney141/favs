@@ -10,7 +10,7 @@ const CSV_FILENAME = "lgtm_article_url.csv";
 const BASE_URI = "https://qiita.com";
 const USER = "stepney141";
 const XPATH = {
-  max_pagenation_value: '//*[@id="items"]/div[2]/div[2]/div/div/div/span',
+  max_pagenation_value: '//*[@id="items"]/div[2]/div[2]/div/nav/div[2]/div[2]/span[1]',
   article_url: '//h2/a[contains(@href, "qiita.com")]',
   lgtm_count_of_article: "//article/footer/div/span[2]",
   author: "//article/header/div/p",
