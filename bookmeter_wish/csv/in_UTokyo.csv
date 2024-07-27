@@ -1,4 +1,7 @@
 isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
+4000061917,論理と計算のしくみ,"萩谷,昌己,1957- 西崎,真也",岩波書店,200706,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA82343895
+4758918228,形式意味論入門 27 (開拓社叢書),"田中,拓郎",開拓社,201609,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB22032012
+4627062311,定理のつくりかた = How to Make a Theorem,"竹山,美宏",森北出版,201802,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25769881
 4784216162,着衣する身体と女性の周縁化,"武田,佐知子,1948-",思文閣出版,201204,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB09174690
 4903474496,コンピュータグラフィックス = Computer graphics,画像情報教育振興協会,画像情報教育振興協会,201503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB1832415X
 4910292020,言語学者、外の世界へ羽ばたく : ラッパー・声優・歌手とのコラボからプリキュア・ポケモン名の分析まで 2 (リベラルアーツコトバ双書),"川原,繁人,1980-",教養検定会議,202204,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC14677574
@@ -23,7 +26,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4845921324,映像クリエイターのための完全独学マニュアル,,フィルムアート社,20221026,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC17391975
 4254122128,基礎からのベイズ統計学 : ハミルトニアンモンテカルロ法による実践的入門,"豊田,秀樹,1961-",朝倉書店,201506,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB18938264
 4845921170,色のコードを読む,ポール・シンプソン／著 中山ゆかり／翻訳,フィルムアート社,20221224,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD00226632
-4814400799,脳に収まるコードの書き方 : 複雑さを避け持続可能にするための経験則とテクニック,"Seemann,Mark 吉羽,龍太郎 原田,騎郎",オーム社,202406,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4814400799
+4814400799,脳に収まるコードの書き方 : 複雑さを避け持続可能にするための経験則とテクニック,"Seemann,Mark 吉羽,龍太郎 原田,騎郎",オーム社,202406,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07378220
 4771036543,聖家族の終焉とおじさんの逆襲 = Das Ende der Heiligen Familie und der Gegenangriff des Onkels : 両大戦間期ドイツ児童文学の世界,"佐藤,文彦,1973-",晃洋書房,202212,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC18881379
 427423116X,Pythonで学ぶ効果検証入門 = Learn Impact Evaluation With Python,"安井,翔太 伊藤,寛武 金子,雄祐",オーム社,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07209154
 4320124960,機械学習 : ベイズと最適化の観点から,"Theodoridis,Sergios,1951- 岩野,和生 中島,秀之,1952-",共立出版,202212,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC18912508
@@ -32,7 +35,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4758121214,基礎から学ぶ統計学,"中原,治,1966-",羊土社,202209,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC16787507
 4807920294,データサイエンスと機械学習 : 理論からPythonによる実装まで (DIGITAL FOREST),"Kroese,DirkP Botev,ZdravkoI.,1982- Taimre,Thomas,1983- ほか",東京化学同人,202212,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC18727710
 4254114850,固有値問題30講 10 (数学30講シリーズ),"志賀,浩二,1930-",朝倉書店,199104,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN06247770
-4627097034,ベイズデータ解析（第3版）,AndrewGelman JohnB.Carlin HalS.Stern DavidB.Dunson ほか,森北出版,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07649394
+4627097034,ベイズデータ解析,"Gelman,Andrew Carlin,JohnB Stern,HalSteven ほか",森北出版,202406,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07649394
 4903814874,時系列分析と状態空間モデルの基礎 = Foundations of Time Series Analysis and State Space Models : RとStanで学ぶ理論と実装,"馬場,真哉,1990-",プレアデス出版,201803,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25542434
 4334044689,日本の少子化対策はなぜ失敗したのか? : 結婚・出産が回避される本当の原因 1067 (光文社新書),"山田,昌弘,1957-",光文社,202005,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB30607674
 4065347823,グラフニューラルネットワーク = Graph Neural Networks (機械学習プロフェッショナルシリーズ),"佐藤,竜馬,1996- 杉山,将",講談社,202404,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD0659685X
@@ -275,7 +278,6 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4814000480,科学論文の英語用法百科　第２編,グレン・パケット／著,京都大学学術出版会,20161017,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB2221665X
 4535787603,学んでみよう!記号論理,"高崎,金久,1956-",日本評論社,201408,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB1644619X
 4344953304,幼なじみ萌え : ラブコメ恋愛文化史,"玉井,建也",幻冬舎,201711,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25511995
-4798125393,実践プログラミングDSL : ドメイン特化言語の設計と実装のノウハウ (Programmer's SELECTION),"Ghosh,Debasish,1953- 佐藤,竜一,1972-",翔泳社,201206,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB09459260
 4788508427,神、人を喰う : 人身御供の民俗学,"六車,由実,1970-",新曜社,200303,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA61847518
 4641163642,比較制度分析・入門 (単行本),中林真幸／編集 石黒真吾／編集,有斐閣,20101223,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB0432979X
 4896944712,図説数の文化史 : 世界の数字と計算法,"Menninger,Karl,1898-1963 内林,政夫,1930-",八坂書房,200104,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA51768812
