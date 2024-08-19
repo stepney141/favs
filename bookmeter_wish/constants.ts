@@ -13,7 +13,9 @@ export const XPATH = {
   book: {
     amazonLink: "//a[img[@alt='Amazon']]",
     author: "//header/div[1]/ul/li",
-    title: "//section[1]/header/div[1]/h1"
+    title: "//section[1]/header/div[1]/h1",
+    registerStackedBook: '//*[@id="js-book-registration-button"]/li[3]',
+    registerWishBook: '//*[@id="js-book-registration-button"]/li[4]'
   },
   stacked: {
     booksUrl: "//ul/li[*]/div[2]/div[2]/a"

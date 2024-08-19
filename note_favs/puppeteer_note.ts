@@ -80,7 +80,7 @@ class Notebook {
         timeout: 60000,
         waitUntil: "networkidle2"
       }),
-      ((await loginButton_Handle)[0]).click()
+      (await loginButton_Handle)[0].click()
     ]);
 
     console.log(`${JOB_NAME}: Login Completed!`);

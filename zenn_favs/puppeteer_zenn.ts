@@ -190,7 +190,7 @@ class Zennist {
       defaultViewport: { width: 1000, height: 1000 },
       // ref: https://github.com/puppeteer/puppeteer/issues/10144
       ignoreHTTPSErrors: true,
-      ignoreDefaultArgs: ['--enable-automation'],
+      ignoreDefaultArgs: ["--enable-automation"],
       args: [
         // '--disable-gpu',
         "--disable-blink-features=AutomationControlled" /* https://github.com/berstend/puppeteer-extra/issues/822 */,
@@ -199,7 +199,7 @@ class Zennist {
         "--no-first-run",
         "--no-sandbox",
         "--no-zygote",
-        '--single-process'
+        "--single-process"
       ],
       slowMo: 100,
       headless: false //Googleの認証の問題でheadfullの方が楽

@@ -6,7 +6,7 @@ export type MainFuncOption = {
   mode: "wish" | "stacked";
   userId?: string;
   doLogin?: boolean;
-  filePath?: OutputFilePath | null;
+  outputFilePath?: OutputFilePath | null;
   noRemoteCheck?: boolean;
   skipBookListComparison?: boolean;
 };

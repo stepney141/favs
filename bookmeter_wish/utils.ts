@@ -107,6 +107,20 @@ export const readCSV = async (filename: string) => {
 };
 
 /**
+ * bookmeter urlのリストを配列にデシリアライズする
+ */
+export const readUrlList = async (filename: string): Promise<string[] | null> => {
+  try {
+    await fs.access(filename);
+  } catch {
+    return null;
+  }
+
+  const data = await fs.readFile(filename, "utf-8");
+  return data.split("\n").filter((line) => line !== "");
+};
+
+/**
  * 前回の書籍リストをCSVから読み出し、Mapにデシリアライズする
  */
 export const getPrevBookList = async (filename: string): Promise<BookList | null> => {
