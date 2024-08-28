@@ -1,9 +1,12 @@
 isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
+4295015997,Pythonで学ぶ画像認識 = Image Recognition with Python (機械学習実践シリーズ),"田村,雅人 中村,克行",インプレス,202303,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD01332748
+4295009849,Pythonで学ぶ音源分離 = Sound Source Separation with Python (機械学習実践シリーズ),"戸上,真人",インプレス,202008,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC02130264
+4582468144,日本遊戯史 : 古代から現代までの遊びと社会,"増川,宏一,1930-",平凡社,201202,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB08390464
+4582468179,日本遊戯思想史,"増川,宏一,1930-",平凡社,201409,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB16817644
 4760139745,世界史と西洋占星術,"Campion,Nicholas,1953- 鏡,リュウジ,1968- 宇佐,和通,1962- ほか",柏書房,201208,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB10092709
 4480427457,絶滅寸前季語辞典,夏井いつき／著,筑摩書房,20100801,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB02970632
 4873119235,ハンズオンNode.js,"今村,謙士",オーム社,202011,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC03828474
 4334103804,まったく新しいアカデミック・ライティングの教科書,阿部幸大,光文社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07847398
-4000061917,論理と計算のしくみ,"萩谷,昌己,1957- 西崎,真也",岩波書店,200706,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA82343895
 4758918228,形式意味論入門 27 (開拓社叢書),"田中,拓郎",開拓社,201609,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB22032012
 4121028147,吾妻鏡ー鎌倉幕府「正史」の虚実 (中公新書 ； 2814),藪本勝治,中央公論新社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07945568
 4627062311,定理のつくりかた = How to Make a Theorem,"竹山,美宏",森北出版,201802,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25769881
@@ -19,6 +22,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4336075514,ナポレオン時代の犯罪,ジャン・チュラール 辻谷泰志,国書刊行会,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07157050
 4065356350,暗号の理論と技術 = Theory and Practice of Cryptography : 量子時代のセキュリティ理解のために,"国広,昇 安田,雅哉",講談社,202405,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD06987711
 4826902131,事実はなぜ人の意見を変えられないのか : 説得力と影響力の科学,"Sharot,Tali 上原,直子",白揚社,201908,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB28705455
+491125601X,絶望からの新聞論,南彰／著,地平社,20240430,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=491125601X
 462205051X,ロビンソン変形譚小史 : 物語の漂流 (みすずライブラリー),"岩尾,竜太郎,1952-2010",みすず書房,200003,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA45944863
 4000612468,社会科学のためのデータ分析入門. 下,"今井,耕介 粕谷,祐子,1968- 原田,勝孝 久保,浩樹",岩波書店,201804,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25765042
 400061245X,社会科学のためのデータ分析入門. 上,"今井,耕介 粕谷,祐子,1968- 原田,勝孝",岩波書店,201803,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25765042
@@ -149,7 +153,6 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4588200313,からくり 3 (ものと人間の文化史),立川昭二／著,法政大学出版局,19690601,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN00802380
 4320114973,測度論からの数理統計学,綿森葉子／著 田中秀和／著 田中潮／著,共立出版,20230928,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04057796
 4802613199,統計学入門 : データ分析に必須の知識・考え方 : 仮説検定から統計モデリングまで重要トピックを完全網羅,"阿部,真人,1984-",ソシム,202112,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC11258644
-4254126654,サンプルサイズの決め方 (統計ライブラリー),"永田,靖,1957-数学",朝倉書店,200309,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA63714639
 4588200615,結び 6 (ものと人間の文化史),額田巌／著,法政大学出版局,19720301,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN00927615
 4254111371,美しい不等式の世界 : 数学オリンピックの問題を題材として,"BulajichManfrino,Radmila／著 GómezOrtega,JoséAntonio／著 ほか",朝倉書店,2013-01,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB11424983
 4627097212,確率的シミュレーション,"大久保,潤",森北出版,202312,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05018235
@@ -206,7 +209,6 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4320094700,なぜ壁のシミが顔に見えるのか : パレイドリアとアニマシーの認知心理学 10 (越境する認知科学),日本認知科学会／編集 高橋康介／著,共立出版,20230912,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD03747314
 4785322799,理工系学生のための量子力学・統計力学入門,"小鍋,哲,1979-",裳華房,202307,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD0328174X
 4815809798,ヨーロッパ中世の想像界,池上俊一／著,名古屋大学出版会,20200305,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB29850110
-4274065979,ハッカーと画家 : コンピュータ時代の創造者たち,"Graham,Paul,1964- 川合,史朗",オーム社,200501,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA70640882
 4585303022,共振するデジタル人文学とデジタルアーカイブ (デジタルアーカイブ・ベーシックス),"鈴木,親彦,1980-",勉誠社,202307,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD03075409
 4873117283,ヘルシープログラマ : プログラミングを楽しく続けるための健康Hack,"Kutner,Joe 玉川,竜司,1964-",オーム社,201507,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB19178847
 4798918431,企業が求める〈主体性〉とは何か : 教育と労働をつなぐ〈主体性〉言説の分析,"武藤,浩子",東信堂,202304,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD02131650
@@ -462,7 +464,6 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4627870019,超巨大リスクの定量的評価,"Garrick,B.John,-2020 山口,彰",森北出版,202110,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC10307405
 4791774191,データ視覚化の人類史 : グラフの発明から時間と空間の可視化まで,"Friendly,Michael Wainer,Howard 飯嶋,貴子,1967-",青土社,202111,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC10584110
 4627852916,はじめて学ぶオートマトンと言語理論,"藤原,暁宏",森北出版,201507,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB19183767
-4627062419,Coq/SSReflect/MathCompによる定理証明 : フリーソフトではじめる数学の形式化,"萩原,学,1974- Affeldt,Reynald,1976-",森北出版,201804,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25944631
 4297125161,"暗号から学ぶ代数学 (数学のみかた,考え方)","川添,充,1968- 上野,健爾,1945-",技術評論社,202112,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC11098661
 4896942647,中世紋章史,"Scheibelreiter,Georg,1943- 津山,拓也,1962-",八坂書房,201908,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB28770810
 4422215329,〈図説〉紋章学事典,"Slater,Stephen 朝治,啓三,1948-",創元社,201909,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB28947239
@@ -507,7 +508,6 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4103137010,エッダ : 古代北欧歌謡集,V.G.ネッケル 谷口幸男,新潮社,1973-01,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN02432613
 4787234919,就職と体育会系神話,束原文郎／著,青弓社,20210727,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC08820720
 4480098801,西洋古典学入門 叙事詩から演劇詩へ (ちくま学芸文庫),久保正彰／著,筑摩書房,20180808,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB26615431
-4908686033,Goならわかるシステムプログラミング,"渋川, よしき,渋川よしき 著",ラムダノート,"Tue, 12 Jun 2018 02:58:39 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC07866544
 4798106577,教科書には載らないニッポンのインターネットの歴史教科書 (NT2X),ばるぼら,翔泳社,200505,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA72043261
 430946730X,ヒーラ細胞の数奇な運命 : 医学の革命と忘れ去られた黒人女性 ス4-1 (河出文庫),"Skloot,Rebecca,1972- 中里,京子,1955-",河出書房新社,202103,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC06045225
 4560509085,チェスへの招待 908 (文庫クセジュ),"Maufras,Jérôme 成相,恭二,1937- 小倉,尚子,1932-",白水社,200701,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA80142666
@@ -674,7 +674,6 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4480094393,数学の好きな人のために : 続・数学をいかに使うか / ちくま学芸文庫 ; シ20-3. [Math & science],"志村, 五郎, 1930-2019,志村五郎 著",筑摩書房,"Thu, 16 May 2019 07:07:39 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB08282144
 4480093257,数学をいかに使うか,志村五郎／著,筑摩書房,20101201,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB04212431
 4891004568,コードコンプリート : 完全なプログラミングを目指して : マイクロソフト公式 下,"McConnell,Steve クイープ",日経BP出版センター,200503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA7176045X
-489100455X,コードコンプリート : 完全なプログラミングを目指して : マイクロソフト公式 上,"McConnell,Steve クイープ",日経BP出版センター,200503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA7176045X
 4805753293,続　　剣と愛と 中世ロマニアの文学 40 (中央大学人文科学研究所研究叢書),中央大学人文科学研究所／編,中央大学出版部,20061109,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA68316713
 4062922177,醒睡笑 : 全訳注 2217 (講談社学術文庫),"安楽庵,策伝,1554-1642 宮尾,与男,1948-",講談社,201402,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB14787393
 4434133632,Let Over Lambda : Edition 1.0,"Hoyte,Doug タイムインターメディア",星雲社,200907,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA9115019X

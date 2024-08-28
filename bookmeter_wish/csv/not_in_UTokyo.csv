@@ -7,8 +7,8 @@ isbn_or_asin,book_title,author,publisher,published_date
 441662378X,スイッチバック大全 : 日本の“折り返し停車場”140ヶ所の魅力と歴史を全紹介,江上英樹 栗原景,誠文堂新光社,
 4480684611,体育がきらい ４３７ (ちくまプリマー新書),坂本拓弥／本文,筑摩書房,20231006
 4334038638,教育という病 : 子どもと先生を苦しめる「教育リスク」 760 (光文社新書),"内田,良",光文社,201506
-4535540438,因果推論の計量経済学,"川口 康平,澤田 真行,川口 康平 著・文・その他,澤田 真行 著・文・その他","日本評論社,日本評論社","Fri, 9 Aug 2024 00:38:28 +0900"
-4163918949,コード・ブッダ 機械仏教史縁起,"円城 塔,円城 塔 著・文・その他","文藝春秋,文藝春秋","Wed, 7 Aug 2024 00:38:24 +0900"
+4535540438,因果推論の計量経済学,川口康平 澤田真行,日本評論社,
+4163918949,コード・ブッダ 機械仏教史縁起,円城塔,文藝春秋,
 4297143097,深層ニューラルネットワークの高速化,佐藤竜馬,技術評論社,
 4480076409,歴史学はこう考える １８１５ (ちくま新書),松沢裕作／本文,筑摩書房,20240911
 4562074663,古代ギリシア・ローマの魔術のある日常,"フィリップ・マティザック,上京 恵,フィリップ・マティザック 著・文・その他,上京 恵 翻訳","原書房,原書房","Mon, 22 Jul 2024 00:45:48 +0900"
@@ -17,7 +17,6 @@ isbn_or_asin,book_title,author,publisher,published_date
 4839984166,大規模データセットのためのアルゴリズムとデータ構造 (Compass),DzejlaMedjedovic EminTahirovic InesDedovic ほか,マイナビ出版,
 4814400853,Binary Hacks Rebooted : 低レイヤの世界を探検するテクニック89選,河田旺 小池悠生 渡邉慶一 佐伯学哉 荒田実樹,,
 4764907070,統計学再入門ー科学哲学から探る統計思考の原点ー (統計スポットライト・シリーズ　 ； 第7巻),森元良太,近代科学社,
-491125601X,絶望からの新聞論,南彰／著,地平社,20240430
 4297125625,コンセプトから理解するRust,"原,旅人,1975-",技術評論社,202202
 4798635758,アクションポーズ大全　アクション漫画家が欲しかった魅せるポーズ5000,霧月,ホビージャパン,
 4480430695,中華料理の文化史,張競／著,筑摩書房,20130601
@@ -97,7 +96,6 @@ isbn_or_asin,book_title,author,publisher,published_date
 4865280685,わたしが先生の「ロリータ」だったころ,アリソン・ウッド／著者 服部理佳／訳者,左右社,20220307
 1680502549,Domain Modeling Made Functional: Tackle Software Complexity with Domain-Driven Design and F#,Scott Wlaschin,Pragmatic Bookshelf,2018-03-06
 0312383215,What People Wore When: A Complete Illustrated History of Costume from Ancient Times to the Nineteenth Century for Every Level of Society,Melissa Leventon,St. Martin's Griffin,2008-07-08
-4296111914,電子工作パーツ制御完全攻略 : ラズパイ自由自在,"松岡,貴志 日経BP",日経BPマーケティング (発売),202203
 4562071990,ポワロと私 : デビッド・スーシェ自伝,"Suchet,David,1946- Wansell,Geoffrey,1945- ほか",原書房,202210
 4562072547,世界を騙した女詐欺師たち,"Telfer,Tori 富原,まさ江,1965-",原書房,202302
 3031004418,General Game Playing (Synthesis Lectures on Artificial Intelligence and Machine Learning),"Michael Genesereth,Michael Thielscher",Springer,2014-03-18
