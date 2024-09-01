@@ -9,7 +9,7 @@ import { launch } from "puppeteer";
 
 import { USER_AGENT } from "../.libs/constants";
 import { getNodeProperty, $x } from "../.libs/pptr-utils";
-import { mapToArray, exportFile, zip } from "../.libs/utils";
+import { mapToArray, exportFile, zip, sleep, randomWait } from "../.libs/utils";
 
 import type { Page, Protocol, Browser } from "puppeteer";
 
@@ -84,13 +84,16 @@ class Seiga {
       console.log(`${JOB_NAME}: loaded existing cookies`);
     }
 
-    await page.goto(MYCLIP_URL, {
-      waitUntil: "load"
-    });
+    await page
+      .goto(MYCLIP_URL, {
+        waitUntil: "load"
+      })
+      .then(() => console.log(`${JOB_NAME}: Accessing MyClip...`));
 
     if (await isNotLoggedInSeiga(page)) {
+      console.log(`${JOB_NAME}: Revoking cookies...`);
       await page.goto(LOGIN_URL, {
-        waitUntil: "load"
+        waitUntil: "networkidle2"
       });
 
       const useridInput_Handle = await $x(page, XPATH.useridInput);
@@ -121,6 +124,7 @@ class Seiga {
 
   async explore() {
     const page = (await this.#browser.pages())[1];
+    let cnt = 1;
 
     console.log(`${JOB_NAME}: Scraping Started!`);
 
@@ -128,6 +132,8 @@ class Seiga {
       const eachIllustLinks_eh = await $x(page, XPATH.eachIllustLinks);
       const createdDate_eh = await $x(page, XPATH.eachIllustCreatedDates);
       const clippedDate_eh = await $x(page, XPATH.eachIllustClippedDates);
+
+      console.log(`Reading page ${cnt}`);
 
       for (const [illustLink_dom, created_date_dom, clipped_date_dom] of zip(
         eachIllustLinks_eh,
@@ -138,17 +144,16 @@ class Seiga {
         const title: string = await getNodeProperty(illustLink_dom, "innerText");
         const created_date: string = await getNodeProperty(created_date_dom, "innerText");
         const clipped_date: string = await getNodeProperty(clipped_date_dom, "innerText");
-
         this.#cliplist.set(url, {
           url,
           title,
           created_date,
           clipped_date
         });
-
         // console.log(url, title);
       }
 
+      cnt++;
       const next_eh = await $x(page, XPATH.toNextPageButtons);
       const nextlink_status = await getNodeProperty(next_eh[0], "className");
 
@@ -159,8 +164,9 @@ class Seiga {
         await Promise.all([
           page.waitForNavigation({
             timeout: 2 * 60 * 1000,
-            waitUntil: "networkidle2"
+            waitUntil: ["domcontentloaded", "load"]
           }),
+          sleep(randomWait(3000, 0.5, 1.1)),
           next_eh[0].click() // 「次へ」ボタンを押す
         ]);
       }
@@ -177,9 +183,9 @@ class Seiga {
 
     const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
-      headless: true,
+      headless: true, // i3wmにてヘッドフルモードで実行する場合、ブラウザのウィンドウが常に最前面に表示されていないとページ読み込みが発火しない？(未確認)
       // devtools: true,
-      slowMo: 100
+      slowMo: 30
     });
 
     const seiga = new Seiga(browser);
