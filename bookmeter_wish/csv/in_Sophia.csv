@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathlib_opac
+4535540411,データで広がる日本ワインの世界 : ワインエコノミクス入門,原田喜美枝,日本評論社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08107535,
 4621303112,ルネサンスの多面体百科,"Wade,David,1941- 宮崎,興二,1940- 奈尾,信英 日野,雅之 山下,俊介,博物館学",丸善出版,201807,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26571289,
 462130044X,多面体百科,"宮崎,興二,1940-",丸善出版,201610,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB22341130,
 4295015997,Pythonで学ぶ画像認識 = Image Recognition with Python (機械学習実践シリーズ),"田村,雅人 中村,克行",インプレス,202303,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01332748,
@@ -34,6 +35,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4535559473,地域データ分析入門 = Introduction to Regional Data Analysis : すぐに役立つEBPM実践ガイドブック,"林,宜嗣,1951- 林,亮輔,1983- 高林,喜久生,1953- 林,勇貴,1988- ほか",日本評論社,202112,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC11791427,
 4627078919,数論幾何入門,三枝洋一,森北出版,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07163439,
 4297141922,Rustで作るプログラミング言語 —— コンパイラ／インタプリタの基礎からプログラミング言語の新潮流まで,佐久田昌博,技術評論社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07372654,
+4048931164,関数型ドメインモデリング : ドメイン駆動設計とF#でソフトウェアの複雑さに立ち向かおう,"Wlaschin,Scott 猪股,健太郎,1975-",KADOKAWA,202406,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07594714,
 4254122128,基礎からのベイズ統計学 : ハミルトニアンモンテカルロ法による実践的入門,"豊田,秀樹,1961-",朝倉書店,201506,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18938264,
 4814400799,脳に収まるコードの書き方 : 複雑さを避け持続可能にするための経験則とテクニック,"Seemann,Mark 吉羽,龍太郎 原田,騎郎",オーム社,202406,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07378220,
 4771036543,聖家族の終焉とおじさんの逆襲 = Das Ende der Heiligen Familie und der Gegenangriff des Onkels : 両大戦間期ドイツ児童文学の世界,"佐藤,文彦,1973-",晃洋書房,202212,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4771036543,
@@ -68,7 +70,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4003117530,酒道楽 (岩波文庫),"村井,弦斎,1863-1927",岩波書店,200612,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA79707836,
 4562074043,読めない人が「読む」世界 : 読むことの多様性,"Rubery,Matthew 片桐,晶",原書房,202403,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05975025,
 4000058428,はじめての統計的因果推論,"林,岳彦,1974-",岩波書店,202402,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05898241,
-4087213129,なぜ働いていると本が読めなくなるのか 1212 (集英社新書),"三宅,香帆,1994-",集英社,202404,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4087213129,
+4087213129,なぜ働いていると本が読めなくなるのか 1212 (集英社新書),"三宅,香帆,1994-",集英社,202404,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD06546920,
 4480074996,日本の中絶 １６７７ (ちくま新書),塚原久美／著,筑摩書房,20220808,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16256271,
 4627614713,実用メカニズム事典 = Mechanism Encyclopedia : 機械設計の発想力を鍛える機構101選,"岩本,太郎",森北出版,202002,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29727395,
 4535540489,データ駆動型回帰分析 : 計量経済学と機械学習の融合,"末石,直也",日本評論社,202404,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD06593647,
@@ -279,7 +281,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4641165483,実証のための計量時系列分析 (単行本),ウォルター・エンダース（Walter／著 新谷元嗣／翻訳 藪友良／翻訳,有斐閣,20191212,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29344647,
 425412841X,経済・ファイナンスのためのカルマンフィルター入門 (統計ライブラリー),"森平,爽一郎,1947-",朝倉書店,201902,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27703782,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784254128413&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4002710521,「私物化」される国公立大学 No.1052 (岩波ブックレット),"駒込,武,1962-",岩波書店,202109,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC09664223,
-4774407763,調べる技術,小林昌樹／著,皓星社,20221209,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC18847472,
+4774407763,調べる技術,小林昌樹／著,皓星社,20221209,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07928365,
 4274229181,Pythonで始める機器分析データの解析とケモメトリックス = Chemometrics Starting with Python,"森田,成昭",オーム社,202209,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16891021,
 4910612041,大学院・大学編入のための応用数学 : 基本事項の整理と問題演習および入試問題研究,"桜井,基晴",プレアデス出版,202209,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16505365,
 453554042X,経済論文の書き方 = The Craft of Economic Research Writing,日本評論社,日本評論社,202209,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16683024,
@@ -355,7 +357,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4152093854,国家はなぜ衰退するのか : 権力・繁栄・貧困の起源 下,"Acemoglu,Daron,1967- Robinson,JamesA.,1960- ほか",早川書房,201306,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB12774120,
 4152093846,国家はなぜ衰退するのか : 権力・繁栄・貧困の起源 上,"Acemoglu,Daron,1967- Robinson,JamesA.,1960- ほか",早川書房,201306,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB12774120,
 4065178029,統計モデルと推測 = Statistical Model and Inference (データサイエンス入門シリーズ),"松井,秀俊 小泉,和之 竹村,彰通,1952-",講談社,201911,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2925786X,
-462106231X,確率論的リスク解析 : 基礎と方法,"Bedford, T.,Cooke, Roger,金野, 秀敏,T. ベッドフォード, R. クック著 ; 金野秀敏訳",丸善出版,"Fri, 29 Mar 2024 09:07:28 +0900",,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784621062319&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
+462106231X,確率論的リスク解析 : 基礎と方法,"Bedford, T.,Cooke, Roger,金野, 秀敏,T. ベッドフォード, R. クック著 ; 金野秀敏訳",丸善出版,"Sun, 25 Aug 2024 00:00:10 +0900",,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784621062319&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4787234528,趣味とジェンダー,神野由紀／編著 辻泉／編著 飯田豊／編著,青弓社,20190618,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2833261X,
 4065280869,基礎からわかる論文の書き方 2660 (講談社現代新書),"小熊,英二,1962-",講談社,202205,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14601765,
 4130802569,記号と再帰　新装版,田中久美子／著,東京大学出版会,20170401,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23562780,
@@ -486,7 +488,6 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4000068776,代数入門 (現代数学への入門),"上野,健爾,1945-",岩波書店,200405,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA66885740,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784000068772&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4314011521,中古典のすすめ,"斉藤,美奈子,1956-",紀伊國屋書店,202009,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4314011521,
 4902666383,課題解決のための専門図書館ガイドブック,"専門図書館協議会,専門図書館協議会私立図書館小委員会 編",読書工房,"Fri, 3 Nov 2023 21:00:21 +0900",https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC01906679,
-439393038X,音楽分析の歴史 : ムシカ・ポエティカからシェンカー分析へ,"久保田,慶一,1955-",春秋社,202003,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=439393038X,
 4865280111,戦前尖端語辞典,平山亜佐子／著・編集 山田参助／絵・漫画,左右社,20210131,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC05502489,
 4061589962,魔術から数学へ (講談社学術文庫),"森,毅,1928-2010",講談社,199111,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN06923694,
 4121026055,民衆暴力 : 一揆・暴動・虐殺の日本近代 2605 (中公新書),"藤野,裕子,1976-",中央公論新社,202008,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC01959959,
