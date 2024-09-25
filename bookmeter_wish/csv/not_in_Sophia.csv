@@ -1,4 +1,7 @@
 isbn_or_asin,book_title,author,publisher,published_date
+4781651062,とんねるずと『めちゃイケ』の終わり : 〈ポスト平成〉のテレビバラエティ論 106 (イースト新書),ラリー遠田,イースト・プレス,201808
+4798153222,プログラマのためのDocker教科書 : インフラの基礎知識&コードによる環境構築の自動化,"阿佐,志保 山田,祥寛",翔泳社,201804
+4798071501,開発系エンジニアのためのDocker絵とき入門 : 定番技術の基本をビジュアルで理解する : Dockerの「なぜ」を解決!,"鈴木,亮,pub.2024",秀和システム,202401
 4576221477,オカルト・クロニクル = OCCULT CHRONICLE : 奇妙な事件奇妙な出来事奇妙な人物,"松閣,オルタ",二見書房,202210
 4000058894,地力をつける 微分と積分,小林俊行,岩波書店,
 4873117208,作ることで学ぶ : Makerを育てる新しい教育のメソッド (Make : Japan Books),"Martinez,SylviaLibow Stager,Gary 阿部,和広 酒匂,寛,1958-",オーム社,201503
@@ -80,7 +83,6 @@ isbn_or_asin,book_title,author,publisher,published_date
 490868605X,数式組版,"木枝, 祐介,木枝祐介 著",ラムダノート,"Wed, 13 Jun 2018 18:33:52 +0900"
 4789837513,ディジタル回路の設計入門 : ハードウェアの動きを理解しながら学ぶ (トランジスタ技術special no.90),湯山俊夫,CQ出版,2005-4-1
 4478117764,大学図鑑! 2024,,ダイヤモンド社,202303
-4814400497,雑に作る : 電子工作で好きなものを作る近道集 (Make : PROJECTS),"石川,大樹,1980- ギャル電 藤原,麻里菜,1993-",オーム社,202310
 4044007527,神秘学講義 G124-1 (角川ソフィア文庫),"高橋,巌,1928-",KADOKAWA,202303
 4906529925,信州の秘境駅・小駅を巡る : 近代化から過疎化への100年旅,"久保田,稔,1960-",川辺書林,202203
 4299042387,クセがスゴい不動産,あなたの理想不動産,宝島社,202306
@@ -118,6 +120,7 @@ isbn_or_asin,book_title,author,publisher,published_date
 4862464831,ゲームエンジンアーキテクチャ,"Gregory,Jason 今給黎,隆,1972- 湊,和久 大貫,宏美 田中,幸,翻訳家",ボーンデジタル,202012
 4865280685,わたしが先生の「ロリータ」だったころ,アリソン・ウッド／著者 服部理佳／訳者,左右社,20220307
 4798068160,"Good Code,Bad Code : 持続可能な開発のためのソフトウェアエンジニア的思考","Long,Tom 秋,勇紀 高田,新山 山本,大祐,1983-",秀和システム,202302
+4622089513,患者の話は医師にどう聞こえるのか : 診察室のすれちがいを科学する,"Ofri,Danielle,1965- 原井,宏明 勝田,さよ",みすず書房,202011
 1680502549,Domain Modeling Made Functional: Tackle Software Complexity with Domain-Driven Design and F#,Scott Wlaschin,Pragmatic Bookshelf,2018-03-06
 4764905132,IT技術者の長寿と健康のために,"情報通信医学研究所 長野,宏宣,1945- 中川,晋一,1961- 蒲池,孝一,1947-",近代科学社,201606
 0312383215,What People Wore When: A Complete Illustrated History of Costume from Ancient Times to the Nineteenth Century for Every Level of Society,Melissa Leventon,St. Martin's Griffin,2008-07-08
@@ -178,6 +181,7 @@ isbn_or_asin,book_title,author,publisher,published_date
 4802209525,廃線系鉄道考古学 : あなたの知らない消散軌道風景 Vol.1(2021) / イカロスMOOK,岡本憲之 総合プロデューサー,イカロス出版,"Fri, 16 Apr 2021 00:20:06 +0900"
 4802211015,廃線系鉄道考古学 : あなたの知らない消散軌道風景 2022Vol.3 (イカロスMOOK),,イカロス出版,202202
 0764574817,Reversing: Secrets of Reverse Engineering,Eldad Eilam,Wiley,2005-04-15
+4106035952,拷問と処刑の西洋史 (新潮選書),"浜本,隆志,1944-",新潮社,200712
 4798164739,ゲームメカニクス大全 : ボードゲームに学ぶ「おもしろさ」の仕掛け,"Engelstein,Geoffrey Shalev,Isaac 小野,卓也",翔泳社,202010
 4866365366,ライトノベルの新・潮流 = LIGHT NOVEL NEW TIDE CURRENT : 黎明期→2021,"石井,ぜんじ 太田,祥暉,1996- 松浦,恵介,1980-",スタンダーズ,202201
 4863543638,OSSライセンスを正しく理解するための本 = Understand the Open Source Software License Correctly,"姉崎,章博",シーアンドアール研究所,202111
@@ -231,6 +235,7 @@ isbn_or_asin,book_title,author,publisher,published_date
 4404042167,最新日本古代史の論争51,新人物往来社,新人物往来社,201206
 4802612168,Pythonでいかにして暗号を破るか : 古典暗号解読プログラムを自作する本,"Sweigart,Al IPUSIRON,1979-",ソシム,202101
 4535606137,数学の言葉づかい100 : 数学地方のおもしろ方言,数学セミナー編集部,日本評論社,199904
+4873119200,生成Deep Learning : 絵を描き、物語や音楽を作り、ゲームをプレイする,"Foster,David 松田,晃一,1960- 小沼,千絵",オーム社,202010
 4844379038,入門GUI : Webブラウザで作る本格インタラクション / Next Publishing. 技術の泉SERIES,"hashrock,daiiz,miyaoka,f_subal,hashrock, daiiz, miyaoka, f_subal 著","インプレスR&D,インプレス","Wed, 25 Jan 2023 06:16:45 +0900"
 4299004507,塀の中の元極道YouTuberが明かすヤクザの裏知識,"懲役,太郎",宝島社,202006
 4309228038,まじないの文化史 : 見るだけで楽しめる! : 日本の呪術を読み解く (視点で変わるオモシロさ!),新潟県立歴史博物館,河出書房新社,202005
