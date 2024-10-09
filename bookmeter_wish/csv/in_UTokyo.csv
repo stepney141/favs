@@ -1,4 +1,7 @@
 isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
+4867800252,ハートの図像学,須藤温子／監修 木村三郎／著・編集 植月惠一郎／著・編集,小鳥遊書房,20240510,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07051989
+4130629573,線形代数の世界 抽象数学の入り口 (大学数学の入門),斎藤毅／著,東京大学出版会,20071001,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA83455475
+4621061623,対称性からの群論入門,"Armstrong,M.A.(MarkAnthony) 佐藤,信哉",丸善出版,201205,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB09647806
 4320111664,共立講座数学の魅力 11,"新井,仁之,1959- 小林,俊行,1962- 斎藤,毅,1961- 久保川,達也,1959-",共立出版,201704,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB23387239
 4764905671,計算折り紙入門 = Introduction to Computational Origami : あたらしい計算幾何学の世界,"上原,隆平",近代科学社,201806,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB26359193
 4297138891,LATEX美文書作成入門,"奥村,晴彦,1951- 黒木,裕介,1982-",技術評論社,202312,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04793011
@@ -10,7 +13,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4845913143,ラッセンとは何だったのか? : 消費とアートを越えた「先」,"原田, 裕規, 1989-,原田裕規 編著",フィルムアート社,"Fri, 8 Mar 2024 17:31:33 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB12853522
 484592322X,ラッセンとは何だったのか？［増補改訂版］,原田裕規／著・編集 石岡良治／著 上田和彦／著 大野左紀子／著 大山エンリコイサム／著 ほか,フィルムアート社,20240223,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05757705
 4535540411,データで広がる日本ワインの世界 : ワインエコノミクス入門,原田喜美枝,日本評論社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD08107535
-4627084218,暗号理論入門,安永憲司,森北出版,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4627084218
+4627084218,暗号理論入門,安永憲司,森北出版,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD08525874
 4621303112,ルネサンスの多面体百科,"Wade,David,1941- 宮崎,興二,1940- 奈尾,信英 日野,雅之 山下,俊介,博物館学",丸善出版,201807,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB26571289
 462130044X,多面体百科,"宮崎,興二,1940-",丸善出版,201610,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB22341130
 448068493X,東大ファッション論集中講義 ４６７ (ちくまプリマー新書),平芳裕子／本文,筑摩書房,20240911,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD08553494
@@ -31,6 +34,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4480076409,歴史学はこう考える １８１５ (ちくま新書),松沢裕作／本文,筑摩書房,20240911,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD08538694
 4784216162,着衣する身体と女性の周縁化,"武田,佐知子,1948-",思文閣出版,201204,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB09174690
 4903474496,コンピュータグラフィックス = Computer graphics,画像情報教育振興協会,画像情報教育振興協会,201503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB1832415X
+4764907070,統計学再入門ー科学哲学から探る統計思考の原点ー (統計スポットライト・シリーズ　 ； 第7巻),森元良太,近代科学社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4764907070
 4910292020,言語学者、外の世界へ羽ばたく : ラッパー・声優・歌手とのコラボからプリキュア・ポケモン名の分析まで 2 (リベラルアーツコトバ双書),"川原,繁人,1980-",教養検定会議,202204,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC14677574
 462130898X,ネットワーク科学入門 : Pythonで学ぶデータ分析とモデリング,"Menczer,Filippo Fortunato,Santo Davis,ClaytonA ほか",丸善出版,202312,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05165444
 406512476X,コンパクトデータ構造 : 実践的アプローチ,"Navarro,Gonzalo,1969- 定兼,邦彦,1971-",講談社,202307,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD03221544
