@@ -23,7 +23,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4320115686,はじめて学ぶ集合と位相 : データサイエンスへの応用を目指して,"田村,篤史,数学教育学 猪股,俊光",共立出版,202409,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08572262,
 4760139745,世界史と西洋占星術,"Campion,Nicholas,1953- 鏡,リュウジ,1968- 宇佐,和通,1962- ほか",柏書房,201208,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB10092709,
 4535790272,見える！ 群論入門［増補版］,𦚰克志,,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08462129,
-4535790191,特殊関数探訪 : 三角関数からはじめる不思議な世界,数学セミナー編集部,日本評論社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4535790191,
+4535790191,特殊関数探訪 : 三角関数からはじめる不思議な世界,数学セミナー編集部,日本評論社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08855595,
 4895907813,真に役立つ研究のデザインと統計処理 : 統計学の論理的なストーリーを理解する,"関屋, 昇,関屋曻 著",三輪書店,"Thu, 3 Oct 2024 00:57:31 +0900",https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08607287,
 4480684611,体育がきらい ４３７ (ちくまプリマー新書),坂本拓弥／本文,筑摩書房,20231006,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04190231,
 4334038638,教育という病 : 子どもと先生を苦しめる「教育リスク」 760 (光文社新書),"内田,良",光文社,201506,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18865433,
@@ -67,7 +67,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4297111179,効果検証入門 : 正しい比較のための因果推論/計量経済学の基礎,"安井,翔太 ホクソエム",技術評論社,202001,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB29538290,
 4758121214,基礎から学ぶ統計学,"中原,治,1966-",羊土社,202209,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC16787507,
 4807920294,データサイエンスと機械学習 : 理論からPythonによる実装まで (DIGITAL FOREST),"Kroese,DirkP Botev,ZdravkoI.,1982- Taimre,Thomas,1983- ほか",東京化学同人,202212,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC18727710,
-4254114850,固有値問題30講 10 (数学30講シリーズ),"志賀,浩二,1930-",朝倉書店,199104,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN06247770,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784254114850&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
+4254114850,固有値問題30講 10 (数学30講シリーズ),"志賀,浩二,1930-",朝倉書店,199104,,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784254114850&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4627097034,ベイズデータ解析,"Gelman,Andrew Carlin,JohnB Stern,HalSteven ほか",森北出版,202406,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07649394,
 4903814874,時系列分析と状態空間モデルの基礎 = Foundations of Time Series Analysis and State Space Models : RとStanで学ぶ理論と実装,"馬場,真哉,1990-",プレアデス出版,201803,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB25542434,
 4334044689,日本の少子化対策はなぜ失敗したのか? : 結婚・出産が回避される本当の原因 1067 (光文社新書),"山田,昌弘,1957-",光文社,202005,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30607674,
