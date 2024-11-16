@@ -9,6 +9,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4130629573,線形代数の世界 抽象数学の入り口 (大学数学の入門),斎藤毅／著,東京大学出版会,20071001,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA83455475,
 4320111664,共立講座数学の魅力 11,"新井,仁之,1959- 小林,俊行,1962- 斎藤,毅,1961- 久保川,達也,1959-",共立出版,201704,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23387239,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784320111660&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4764905671,計算折り紙入門 = Introduction to Computational Origami : あたらしい計算幾何学の世界,"上原,隆平",近代科学社,201806,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26359193,
+4535789878,パズルの算法 : 手とコンピュータでのパズルの味わい方,上原隆平,日本評論社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4535789878,
 4336076456,物語要素事典,神山重彦,国書刊行会,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD09290051,
 4814400217,入門モダンLinux : オンプレミスからクラウドまで、幅広い知識を会得する,"Hausenblas,Michael 武内,覚 大岩,尚宏",オーム社 (発売),202304,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01566148,
 4814400500,Raspberry Piクックブック (Make : PROJECTS),"Monk,Simon 水原,文",オーム社,202401,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05639458,
@@ -45,6 +46,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4297141574,TCP/IP技術入門 : プロトコルスタックの基礎×実装 : HTTP/3 QUIC モバイル Wi-Fi IoT (Tech×Books plus),"中山,悠 丸田,一輝",技術評論社,202405,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07089176,
 4784216162,着衣する身体と女性の周縁化,"武田,佐知子,1948-",思文閣出版,201204,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB09174690,
 4814400853,Binary Hacks Rebooted : 低レイヤの世界を探検するテクニック89選,河田旺 小池悠生 渡邉慶一 佐伯学哉 荒田実樹,,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08563738,
+4764907070,統計学再入門ー科学哲学から探る統計思考の原点ー (統計スポットライト・シリーズ　 ； 第7巻),森元良太,近代科学社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4764907070,
 4910292020,言語学者、外の世界へ羽ばたく : ラッパー・声優・歌手とのコラボからプリキュア・ポケモン名の分析まで 2 (リベラルアーツコトバ双書),"川原,繁人,1980-",教養検定会議,202204,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC14677574,
 462130898X,ネットワーク科学入門 : Pythonで学ぶデータ分析とモデリング,"Menczer,Filippo Fortunato,Santo Davis,ClaytonA ほか",丸善出版,202312,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05165444,
 406512476X,コンパクトデータ構造 : 実践的アプローチ,"Navarro,Gonzalo,1969- 定兼,邦彦,1971-",講談社,202307,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD03221544,
@@ -424,7 +426,6 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4909658149,ネット文化資源の読み方・作り方,岡田一祐／著,文学通信,20190810,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28729533,
 4862464505,AlphaZero深層学習・強化学習・探索 人工知能プログラミング実践入門,"布留川,英一,1975-",ボーンデジタル,201906,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB28462987,
 4627856512,Pythonで学ぶ解析表現文法と構文解析 = Parsing Expression Grammar and Syntax Analysis,"倉光,君郎",森北出版,202202,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC13001682,
-4535787719,線型代数 = Linear Algebra,"長谷川,浩司,1963-",日本評論社,201503,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4535787719,
 4768704727,入門入門群論 : 代数的構造への第一歩,"石谷,茂,1913-",現代数学社,201706,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23969653,
 4320110390,計算で身につくトポロジー = Introduction to Topology,"阿原,一志",共立出版,201307,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB13023972,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784320110397&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4535787557,数学ビギナーズマニュアル : これだけは知っておきたい,"佐藤,文広,1949-",日本評論社,201402,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB15032497,
