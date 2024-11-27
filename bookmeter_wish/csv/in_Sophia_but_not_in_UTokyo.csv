@@ -1,11 +1,21 @@
 isbn_or_asin,book_title,author,publisher,published_date,sophia_opac
+4562074760,北朝鮮の食卓 : 食からみる歴史、文化、未来,キム・ヤンヒ 金知子,原書房,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD09194808
+4582468268,詰将棋の誕生 : 『詰むや詰まざるや』を読み解く,"若島,正,1952-",平凡社,202408,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08531356
+4535789878,パズルの算法 : 手とコンピュータでのパズルの味わい方,上原隆平,日本評論社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08645978
+4336076456,物語要素事典,神山重彦,国書刊行会,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD09290051
+4814400217,入門モダンLinux : オンプレミスからクラウドまで、幅広い知識を会得する,"Hausenblas,Michael 武内,覚 大岩,尚宏",オーム社 (発売),202304,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01566148
+4814400500,Raspberry Piクックブック (Make : PROJECTS),"Monk,Simon 水原,文",オーム社,202401,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05639458
 4480684611,体育がきらい ４３７ (ちくまプリマー新書),坂本拓弥／本文,筑摩書房,20231006,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04190231
 4334038638,教育という病 : 子どもと先生を苦しめる「教育リスク」 760 (光文社新書),"内田,良",光文社,201506,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB18865433
 4297141574,TCP/IP技術入門 : プロトコルスタックの基礎×実装 : HTTP/3 QUIC モバイル Wi-Fi IoT (Tech×Books plus),"中山,悠 丸田,一輝",技術評論社,202405,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07089176
+4814400853,Binary Hacks Rebooted : 低レイヤの世界を探検するテクニック89選,河田旺 小池悠生 渡邉慶一 佐伯学哉 荒田実樹,,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08563738
+4309421121,日本怪奇物語 と13-1 (河出文庫),"富岡,直方",河出書房新社,202406,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07213978
 4297141922,Rustで作るプログラミング言語 —— コンパイラ／インタプリタの基礎からプログラミング言語の新潮流まで,佐久田昌博,技術評論社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07372654
+4048931164,関数型ドメインモデリング : ドメイン駆動設計とF#でソフトウェアの複雑さに立ち向かおう,"Wlaschin,Scott 猪股,健太郎,1975-",KADOKAWA,202406,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07594714
 4106109697,ドーパミン中毒 969 (新潮新書),"Lembke,Anna,1967- 恩蔵,絢子",新潮社,202210,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC17153897
 4480017925,漫画家が見た　百年前の西洋 ２７３ (筑摩選書),和田博文／本文,筑摩書房,20240216,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05673150
 4861827116,ヴィクトリア朝怪異譚,ウィルキー・コリンズ／著 ジョージ・エリオット／著 メアリ・エリザベス・ブラッドン／著 ほか,作品社,20180829,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26839166
+4087213080,カレー移民の謎 : 日本を制覇する「インネパ」 1208. ノンフィクション (集英社新書),"室橋,裕和,1974-",集英社,202403,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD06080518
 4863544332,改訂新版 インフラエンジニアの教科書,佐野裕／著,シーアンドアール研究所,20231114,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD04616628
 432745317X,読解のための上級英文法,,研究社,202312,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD0515357X
 4044003505,カクレキリシタン : 現代に生きる民俗信仰 [J123-1] ([角川ソフィア文庫]),"宮崎,賢太郎,1950-",KADOKAWA,201802,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB25615301
@@ -29,7 +39,6 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac
 4327452831,文芸翻訳教室,"越前,敏弥,1961-",研究社,201804,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26048036
 4065250455,なぜオナニーはうしろめたいのか 199 (星海社新書),"赤川,学,1967- 小堀,善友,1975- シオリーヌ,1991- 典雅",講談社 (発売),202110,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC10723432
 4863542755,組込みエンジニアの教科書 = The textbook of the Embedded engineer,"渡辺,登,pub.2019 牧野,進二",シーアンドアール研究所,201904,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2814003X
-4106035952,拷問と処刑の西洋史 (新潮選書),"浜本,隆志,1944-",新潮社,200712,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA84246517
 4000298739,松坂和夫数学入門シリーズ = Kazuo Matsuzaka's Introduction to Mathematics. 3,"松坂,和夫,1927-2012",岩波書店,201811,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27181144
 4061975978,新約聖書外典 (講談社文芸文庫),"荒井,献,1930-",講談社,199712,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA34100225
 4151201009,地下鉄道 100 (ハヤカワepi文庫),"Whitehead,Colson,1969- 谷崎,由依",早川書房,202010,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4151201009
