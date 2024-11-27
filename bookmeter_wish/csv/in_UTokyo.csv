@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
+4048930621,深層学習,"Goodfellow,Ian Bengio,Yoshua Courville,Aaron ほか",KADOKAWA,201802,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25655758
 4642039317,夜更かしの社会史 : 安眠と不眠の日本近現代,"近森,高明 右田,裕規",吉川弘文館,202402,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05522290
 4469042412,大修館英語学事典,"松浪,有 池上,嘉彦 今井,邦彦",大修館書店,198307,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN00086599
 4004320380,象徴天皇の実像 「昭和天皇拝謁記」を読む (岩波新書 ； 新赤版 2038),原武史,岩波書店,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD09125827
@@ -12,6 +13,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4320111664,共立講座数学の魅力 11,"新井,仁之,1959- 小林,俊行,1962- 斎藤,毅,1961- 久保川,達也,1959-",共立出版,201704,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB23387239
 4764905671,計算折り紙入門 = Introduction to Computational Origami : あたらしい計算幾何学の世界,"上原,隆平",近代科学社,201806,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB26359193
 4297138891,LATEX美文書作成入門,"奥村,晴彦,1951- 黒木,裕介,1982-",技術評論社,202312,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04793011
+4297145464,［作って学ぶ］ブラウザのしくみ──HTTP、HTML、CSS、JavaScriptの裏側,土井麻未,技術評論社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD0948059X
 4798153222,プログラマのためのDocker教科書 : インフラの基礎知識&コードによる環境構築の自動化,"阿佐,志保 山田,祥寛",翔泳社,201804,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB25926163
 4814400756,生成 Deep Learning 第2版 : 絵を描き、物語や音楽を作り、ゲームをプレイする,DavidFoster 松田晃一 小沼千絵,,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD08144021
 4588364057,ファランの痙攣派,中村浩巳／著,法政大学出版局,19940601,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN1101904X
@@ -131,6 +133,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4062574705,高校数学でわかるシュレディンガー方程式 : 量子力学を学びたい人、ほんとうに理解したい人へ (ブルーバックス),"竹内,淳,1960-",講談社,200503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA71291064
 4621309048,アルゴリズム設計マニュアル. 下,"Skiena,StevenS 平田,富夫,1949-",丸善出版,202401,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05484690
 462130903X,アルゴリズム設計マニュアル. 上,"Skiena,StevenS 平田,富夫,1949-",丸善出版,202401,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05484635
+4908686165,プログラマーのためのCPU入門 : CPUは如何にしてソフトウェアを高速に実行するか,"Takenobu Tani,Takenobu Tani 著",ラムダノート,"Fri, 8 Mar 2024 18:48:48 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD0052128X
 4339013730,"可視化と科学・文化・社会 = Visualization for Science,Digital Humanities,and Sociology 3 (メディアテクノロジーシリーズ)","竹島,由里子 伊藤,貴之 宮地,英生 田中,覚",コロナ社,202310,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04191303
 4339013749,ゲームグラフィックス表現技法 = Creative Techniques for Game Graphics 4 (メディアテクノロジーシリーズ),"金久保,哲也",コロナ社,202402,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD05523486
 4492313702,現代マクロ経済学講義 : 動学的一般均衡モデル入門,"加藤,涼",東洋経済新報社,200701,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA79826584
