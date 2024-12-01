@@ -1,7 +1,7 @@
 import path from "path";
 
+import { Octokit } from "@octokit/rest";
 import { config } from "dotenv";
-import { Octokit } from "octokit";
 
 import { exportFile } from "../.libs/utils";
 
