@@ -36,7 +36,7 @@
     "eslint-plugin-unused-imports": "^3.0.0",
     "prettier": "^3.2.4",
     "tsx": "^4.7.0",
-    "typescript": "^5.5.2"
+    "typescript": "^5.7.2"
   },
   "scripts": {
     "type-check": "tsc --pretty --noEmit",
@@ -44,7 +44,6 @@
     "exec": "node -r esbuild-register"
   },
   "volta": {
-    "node": "18.20.5",
-    "npm": "10.8.1"
+    "node": "22.11.0"
   }
 }
