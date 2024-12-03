@@ -1,11 +1,12 @@
 import fs from "node:fs/promises";
-import { AxiosError } from "axios";
+
 import { unparse } from "papaparse";
-import type { ElementHandle, JSHandle, Page } from "puppeteer";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 // see:
 // - https://github.com/mozilla/pdf.js/blob/master/examples/node/getinfo.mjs
 // - https://github.com/mozilla/pdf.js/issues/18006
+
+import type { AxiosError } from "axios";
 
 export const handleAxiosError = (error: AxiosError) => {
   if (error.response) {

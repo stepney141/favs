@@ -1,4 +1,4 @@
-import { Browser } from "puppeteer";
+import type { Browser } from "puppeteer";
 
 type CrawlState<T> = Initial<T> | Prepared<T> | LoggedIn<T>;
 type Initial<T> = {
