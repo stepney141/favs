@@ -120,10 +120,10 @@ jobs:
         working-directory: ./wikipedia_watchlist
         run: npx tsx ./index.ts
 
-      - name: Niconico Seiga MyClips
-        shell: bash
-        working-directory: ./nicoseiga
-        run: npx tsx ./puppeteer_nicoseiga.ts && bash ./get_url_list.sh
+      # - name: Niconico Seiga MyClips
+      #   shell: bash
+      #   working-directory: ./nicoseiga
+      #   run: npx tsx ./puppeteer_nicoseiga.ts && bash ./get_url_list.sh
 
       - name: Togetter Favorites
         shell: bash
