@@ -1,4 +1,6 @@
 isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathlib_opac
+4061538322,ベイズ推論による機械学習入門 = Introduction to Machine Learning by Bayesian Inference (機械学習スタートアップシリーズ),"須山,敦志 杉山,将",講談社,201710,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB24665734,
+4873118360,ゼロから作るDeep Learning 2,"斎藤,康毅,1984-",オーム社,201807,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26462476,
 4254122411,入門統計的因果推論,"Pearl,Judea Glymour,Madelyn Jewell,NicholasP.,1952- ほか",朝倉書店,201908,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4254122411,
 4320113217,数学の問題をうまくきれいに解く秘訣,"Posamentier,AlfredS Krulik,Stephen 桐木,由美 桐木,紳",共立出版,201709,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB24468562,
 4627062613,1つの定理を証明する99の方法,"Ording,Philip 冨永,星,1955-",森北出版,202101,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC05337338,
@@ -20,6 +22,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4764905671,計算折り紙入門 = Introduction to Computational Origami : あたらしい計算幾何学の世界,"上原,隆平",近代科学社,201806,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26359193,
 4535789878,パズルの算法 : 手とコンピュータでのパズルの味わい方,上原隆平,日本評論社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08645978,
 4336076456,物語要素事典,神山重彦,国書刊行会,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD09290051,
+4814400942,Effective Rust : Rustコードを改善し、エコシステムを最大限に活用するための35項目,DavidDrysdale 中田秀基,オーム社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD09457146,
 4814400217,入門モダンLinux : オンプレミスからクラウドまで、幅広い知識を会得する,"Hausenblas,Michael 武内,覚 大岩,尚宏",オーム社 (発売),202304,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01566148,
 4814400500,Raspberry Piクックブック (Make : PROJECTS),"Monk,Simon 水原,文",オーム社,202401,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD05639458,
 4814400756,生成 Deep Learning 第2版 : 絵を描き、物語や音楽を作り、ゲームをプレイする,DavidFoster 松田晃一 小沼千絵,,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08144021,
