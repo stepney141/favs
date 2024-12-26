@@ -1,5 +1,6 @@
 import { launch } from "puppeteer";
 
+import { CHROME_ARGS } from "../.libs/constants";
 import { getNodeProperty, $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile, zip } from "../.libs/utils";
 
@@ -90,6 +91,7 @@ class Togetter {
     const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: true,
+      args: CHROME_ARGS,
       // devtools: true,
       slowMo: 80
     });

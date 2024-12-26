@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { launch } from "puppeteer";
 
-import { USER_AGENT } from "../.libs/constants";
+import { CHROME_ARGS, USER_AGENT } from "../.libs/constants";
 import { getNodeProperty, $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile, zip, sleep, randomWait } from "../.libs/utils";
 
@@ -185,6 +185,7 @@ class Seiga {
       defaultViewport: { width: 1000, height: 1000 },
       headless: true, // i3wmにてヘッドフルモードで実行する場合、ブラウザのウィンドウが常に最前面に表示されていないとページ読み込みが発火しない？(未確認)
       // devtools: true,
+      args: CHROME_ARGS,
       slowMo: 30
     });
 

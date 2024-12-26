@@ -1,5 +1,6 @@
 import { launch } from "puppeteer";
 
+import { CHROME_ARGS } from "../.libs/constants";
 import { getNodeProperty, $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile, zip } from "../.libs/utils";
 
@@ -91,6 +92,7 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
         width: 600,
         height: 700
       },
+      args: CHROME_ARGS,
       headless: true
     });
 

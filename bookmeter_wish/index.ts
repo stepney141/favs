@@ -4,6 +4,7 @@ import { config } from "dotenv";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
+import { CHROME_ARGS } from "../.libs/constants";
 import { mapToArray, exportFile } from "../.libs/utils";
 
 import { Bookmaker } from "./bookmaker";
@@ -55,6 +56,7 @@ export async function main({
     const browser = await puppeteer.launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: true,
+      args: CHROME_ARGS,
       slowMo: 15
     });
 

@@ -8,7 +8,7 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile } from "../.libs/utils";
 
-import { USER_AGENT } from "./../.libs/constants";
+import { CHROME_ARGS, USER_AGENT } from "./../.libs/constants";
 
 import type { Browser } from "puppeteer";
 
@@ -26,7 +26,7 @@ const JOB_NAME = "Zenn.dev Favorite Articles";
 const CSV_FILENAME = "zenn_faved_articles.csv";
 const baseURI = "https://zenn.dev";
 const XPATH = {
-  signInButton: '//button[contains(text(), "Login with Google")]',
+  signInButton: '//button[contains(text(), "Googleでログイン")]',
   accountNameInput: '//*[@id="session_email_address"]',
   passwordInput: '//*[@id="password"]/div[1]/div/div[1]/input',
   loginButton: '//*[@id="js_sessions_new_form"]/form/div[4]/button',
@@ -189,15 +189,14 @@ class Zennist {
       executablePath: executablePath(),
       defaultViewport: { width: 1000, height: 1000 },
       // ref: https://github.com/puppeteer/puppeteer/issues/10144
-      ignoreHTTPSErrors: true,
+      // ignoreHTTPSErrors: true,
       ignoreDefaultArgs: ["--enable-automation"],
       args: [
+        ...CHROME_ARGS,
         // '--disable-gpu',
         "--disable-blink-features=AutomationControlled" /* https://github.com/berstend/puppeteer-extra/issues/822 */,
         "--disable-dev-shm-usage",
-        "--disable-setuid-sandbox",
         "--no-first-run",
-        "--no-sandbox",
         "--no-zygote",
         "--single-process"
       ],

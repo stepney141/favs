@@ -5,6 +5,7 @@ import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
+import { CHROME_ARGS } from "../.libs/constants";
 import { getNodeProperty, waitForXPath, $x } from "../.libs/pptr-utils";
 import { exportFile, sleep } from "../.libs/utils";
 
@@ -127,12 +128,11 @@ class TikToker {
       executablePath: executablePath(),
       defaultViewport: { width: 1000, height: 1000 },
       args: [
+        ...CHROME_ARGS,
         // '--disable-gpu',
         "--disable-blink-features=AutomationControlled" /* https://github.com/berstend/puppeteer-extra/issues/822 */,
         "--disable-dev-shm-usage",
-        "--disable-setuid-sandbox",
         "--no-first-run",
-        "--no-sandbox",
         "--no-zygote"
         // '--single-process'
       ],

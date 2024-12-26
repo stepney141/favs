@@ -3,7 +3,7 @@ import path from "path";
 import { config } from "dotenv";
 import { launch } from "puppeteer";
 
-import { USER_AGENT } from "../.libs/constants";
+import { CHROME_ARGS, USER_AGENT } from "../.libs/constants";
 import { $x } from "../.libs/pptr-utils";
 import { sleep, mapToArray, exportFile } from "../.libs/utils";
 
@@ -158,6 +158,7 @@ class Notebook {
     const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: false,
+      args: CHROME_ARGS,
       // devtools: true,
       slowMo: 80
     });

@@ -4,6 +4,7 @@ import { config } from "dotenv";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
+import { CHROME_ARGS } from "../.libs/constants";
 import { getNodeProperty, waitForXPath, $x } from "../.libs/pptr-utils";
 import { randomWait, sleep, exportFile } from "../.libs/utils";
 
@@ -174,6 +175,7 @@ class BoundHub {
     const browser = await puppeteer.launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: true,
+      args: CHROME_ARGS,
       // devtools: true,
       slowMo: 20
     });
