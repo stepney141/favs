@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      CHROME_DEVEL_SANDBOX: "/opt/google/chrome/chrome-sandbox"
       BOOKMETER_ACCOUNT: ${{ secrets.BOOKMETER_ACCOUNT }}
       BOOKMETER_PASSWORD: ${{ secrets.BOOKMETER_PASSWORD }}
       CINII_API_APPID: ${{ secrets.CINII_API_APPID }}
@@ -80,6 +81,10 @@ jobs:
           echo "NICONICO_ACCOUNT=${{ secrets.NICONICO_ACCOUNT }}" >> .env
           echo "NICONICO_PASSWORD=${{ secrets.NICONICO_PASSWORD }}" >> .env
           echo "ISBNDB_API_KEY=${{ secrets.ISBNDB_API_KEY }}" >> .env
+
+      - name: Environment variables
+        shell: bash
+        run: echo $CHROME_DEVEL_SANDBOX >> ~/.bashrc
 
       - name: Bookmeter Wish
         shell: bash
