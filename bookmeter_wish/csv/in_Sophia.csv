@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathlib_opac
+4394190045,泉鏡花〈怪談会〉全集,"泉,鏡花,1873-1939 東,雅夫,1958-",春陽堂書店,202005,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB30824606,
 4781912850,プログラミング言語の基礎概念 24 (ライブラリ情報学コア・テキスト),"五十嵐,淳,1973-",サイエンス社,201107,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB06214835,
 4320124502,プログラミング言語の基礎理論,"大堀,淳,1957-",共立出版,201908,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4320124502,
 4621307630,プログラミング言語の形式的意味論入門,"Winskel,G.(Glynn) 末永,幸平 勝股,審也 中澤,巧爾 西村,進 前田,敦司",丸善出版,202301,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD00399346,
@@ -20,7 +21,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4582468268,詰将棋の誕生 : 『詰むや詰まざるや』を読み解く,"若島,正,1952-",平凡社,202408,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08531356,
 4787233076,夜食の文化誌 (青弓社ライブラリー　62),西村大志／編著,青弓社,20100117,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB00878297,
 4422202340,「図説」アラビア文字事典,"Mandel, Gabriele,矢島, 文夫, 1928-2006,緑, 慎也, 1976-,ガブリエル・マンデル・ハーン 著,矢島文夫 監修,緑慎也 訳",創元社,"Wed, 14 Feb 2024 18:57:39 +0900",https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA68923986,
-483998624X,暗号解読 実践ガイド,ElonkaDunin KlausSchmeh IPUSIRON 協力：Smoky,マイナビ出版,,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=483998624X,
+483998624X,暗号解読 実践ガイド,ElonkaDunin KlausSchmeh IPUSIRON 協力：Smoky,マイナビ出版,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD0919520X,
 4757142846,謎のチェス指し人形「ターク」,"Standage,Tom,1969- 服部,桂,1951-",NTT出版,201112,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB0778166X,
 4867800252,ハートの図像学,須藤温子／監修 木村三郎／著・編集 植月惠一郎／著・編集,小鳥遊書房,20240510,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD07051989,
 4130629573,線形代数の世界 抽象数学の入り口 (大学数学の入門),斎藤毅／著,東京大学出版会,20071001,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA83455475,
@@ -538,7 +539,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4344983874,子どものまま中年化する若者たち : 根拠なき万能感とあきらめの心理 な-22-1 (幻冬舎新書),"鍋田,恭孝,1947-",幻冬舎,201507,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB19260653,
 4535601097,初等整数論 (日評数学選書),"遠山,啓",日本評論社,197202,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN00574592,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784535601093&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4000298313,代数への出発 (新装版数学入門シリーズ),"松坂,和夫,1927-2012",岩波書店,201503,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4000298313,
-4000068776,代数入門 (現代数学への入門),"上野,健爾,1945-",岩波書店,200405,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA66885740,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784000068772&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
+4000068776,代数入門 (現代数学への入門),"上野,健爾,1945-",岩波書店,200405,,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784000068772&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4314011521,中古典のすすめ,"斉藤,美奈子,1956-",紀伊國屋書店,202009,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4314011521,
 4902666383,課題解決のための専門図書館ガイドブック,"専門図書館協議会,専門図書館協議会私立図書館小委員会 編",読書工房,"Fri, 3 Nov 2023 21:00:21 +0900",https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BC01906679,
 439393038X,音楽分析の歴史 : ムシカ・ポエティカからシェンカー分析へ,"久保田,慶一,1955-",春秋社,202003,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=439393038X,
@@ -612,7 +613,6 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4582760953,日本残酷物語 1 (貧しき人々のむれ) (平凡社ライブラリー),,平凡社,199504,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BN1240734X,
 448006513X,完全教祖マニュアル,架神恭介／著 辰巳一世／著,筑摩書房,20091101,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=448006513X,
 4781617417,ダークウェブ・アンダーグラウンド : 社会秩序を逸脱するネット暗部の住人たち,"木澤,佐登志,1988-",イースト・プレス,201901,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2753349X,
-476490408X,"アルゴリズムイントロダクション : 世界標準MIT教科書. 総合版 (第1巻+第2巻+精選トピックス〈第1～35章,付録〉)","Cormen,ThomasH Leiserson,CharlesEric Rivest,RonaldL ほか",近代科学社,201312,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB14321546,
 4309224881,憑き物耳袋,"倉光,清六,1894-1963",河出書房新社,200808,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA86876709,
 4000111442,時空の力学 : 一般相対論の物理 4 (岩波講座物理の世界 素粒子と時空),"細谷,暁夫,1946- 佐藤,文隆,1938-",岩波書店,200204,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA56416936,
 4766425677,ビデオゲームの美学,松永伸司／著,慶應義塾大学出版会,20181020,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB27046466,
