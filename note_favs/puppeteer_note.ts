@@ -16,7 +16,7 @@ const CSV_FILENAME = "note_favorites.csv";
 const XPATH = {
   useridInput: '//*[@id="email"]',
   passwordInput: '//*[@id="password"]',
-  loginButton: '//button[@data-type="primary"]'
+  loginButton: '//button[@data-type="primaryNext"]'
 };
 
 config({ path: path.join(__dirname, "../.env") });
