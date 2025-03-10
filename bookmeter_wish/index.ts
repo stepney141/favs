@@ -74,7 +74,7 @@ export async function main({
         : await book.explore(mode, doLogin);
     await browser.close();
 
-    if (isBookListDifferent(latestBookList, prevBookList, skipBookListComparison)) {
+    if (isBookListDifferent(prevBookList, latestBookList, skipBookListComparison)) {
       console.log(`${JOB_NAME}: Fetching bibliographic information`);
       const updatedBooklist = await fetchBiblioInfo(latestBookList, {
         cinii: cinii_appid,

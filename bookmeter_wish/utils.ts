@@ -84,7 +84,7 @@ export const buildCsvFileName = (userId: string, filePath: OutputFilePath | null
   }
 };
 
-export const readCSV = async (filename: string) => {
+export const readBookListCSV = async (filename: string) => {
   /* ref: 
   - https://garafu.blogspot.com/2017/06/nodejs-exists-directory.html
   - https://nodejs.org/docs/latest/api/fs.html#fs_fs_access_path_mode_callback
@@ -124,40 +124,56 @@ export const readUrlList = async (filename: string): Promise<string[] | null> =>
  * 前回の書籍リストをCSVから読み出し、Mapにデシリアライズする
  */
 export const getPrevBookList = async (filename: string): Promise<BookList | null> => {
-  const csv = await readCSV(filename);
+  const csv = await readBookListCSV(filename);
   if (csv === null) return null;
 
   const prevList: BookList = new Map();
   for (const obj of csv) {
+    if (obj["bookmeter_url"] === "") continue;
     prevList.set(obj["bookmeter_url"], { ...obj });
   }
   return prevList;
 };
+
+type BookListDiffResult = {
+  prev: Book[];
+  same: Book[];
+  latest: Book[];
+};
+
+export function getBookListDiff(prevMap: BookList, latestMap: BookList): BookListDiffResult {
+  const prevIds = new Set(prevMap.keys());
+  const latestIds = new Set(latestMap.keys());
+
+  return {
+    prev: [...prevIds.difference(latestIds)].map((id) => prevMap.get(id)!),
+    same: [...prevIds.intersection(latestIds)].map((id) => prevMap.get(id)!),
+    latest: [...latestIds.difference(prevIds)].map((id) => latestMap.get(id)!)
+  };
+}
 
 /**
  * ローカルのCSVとbookmeterのスクレイピング結果を比較する
  * 差分を検出したら、書誌情報を取得してCSVを新規生成する
  */
 export const isBookListDifferent = (
-  latestList: BookList,
   prevList: BookList | null,
+  latestList: BookList,
   skipBookListComparison: boolean = false
 ): boolean => {
   if (skipBookListComparison || prevList === null) {
     return true; // 常に差分を検出したことにする
   }
-
-  for (const key of latestList.keys()) {
-    if (prevList.has(key) === false) {
-      //ローカルのCSVとbookmeterのスクレイピング結果を比較
-      console.log(`${JOB_NAME}: Detected some diffs between the local and remote.`); //差分を検出した場合
-      return true;
-    }
+  const diff = getBookListDiff(prevList, latestList);
+  if (diff.latest.length > 0) {
+    console.log(`${JOB_NAME}: Detected some diffs between the local and remote.`); //差分を検出した場合
+    return true;
+  } else {
+    console.log(
+      `${JOB_NAME}: Cannot find any differences between the local and remote. The process will be aborted...`
+    );
+    return false;
   }
-
-  //差分を検出しなかった場合
-  console.log(`${JOB_NAME}: Cannot find any differences between the local and remote. The process will be aborted...`);
-  return false;
 };
 
 export const makeEmptyBook = (isbn: ISBN10): Book => {

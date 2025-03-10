@@ -414,7 +414,7 @@ async function configMathlibBookList(listtype: keyof typeof MATH_LIB_BOOKLIST): 
   return mathlibIsbnList;
 }
 
-const routeIsbn10 = (isbn10: ISBN10): "Japan" | "Others" => (isbn10[0] === "4" ? "Japan" : "Others");
+export const routeIsbn10 = (isbn10: ISBN10): "Japan" | "Others" => (isbn10[0] === "4" ? "Japan" : "Others");
 
 async function fetchSingleRequestAPIs(
   searchState: BookSearchState,
