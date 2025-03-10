@@ -1,5 +1,6 @@
 import path from "path";
 
+import { isAxiosError } from "axios";
 import { config } from "dotenv";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
@@ -94,7 +95,12 @@ export async function main({
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
   } catch (e) {
-    console.log(e);
+    if (isAxiosError(e)) {
+      const { status, message } = e;
+      console.error(`Error: ${status} ${message}`);
+    } else {
+      console.log(e);
+    }
     process.exit(1);
   }
 }

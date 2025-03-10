@@ -81,9 +81,8 @@ export const CINII_TARGET_TAGS = ["Sophia", "UTokyo"] as const;
 export const MATH_LIB_BOOKLIST = {
   //数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108
   ja: [
-    "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_j.pdf",
-    "https://mathlib-sophia.opac.jp/opac/file/view/2022.4-2023.2.pdf",
-    "https://mathlib-sophia.opac.jp/opac/file/view/20234.1-2024.3.31.pdf"
+    "https://mathlib-sophia.opac.jp/opac/file/view/1965-2023_j.pdf",
+    "https://mathlib-sophia.opac.jp/opac/file/view/202404-202503.pdf"
   ],
-  en_with_isbn: "https://mathlib-sophia.opac.jp/opac/file/view/1965-2021_F1.pdf"
+  en_with_isbn: "https://mathlib-sophia.opac.jp/opac/file/view/1965-2023_F_1.pdf"
 };
