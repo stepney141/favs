@@ -11,6 +11,7 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4794227663,古本屋の誕生 : 東京古書店史,"鹿島, 茂, 1949-,鹿島茂 著",草思社,"Tue, 11 Mar 2025 23:58:29 +0900",https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD10712331,
 4627872518,有理算術演算 = Rational Arithmetic : 高精度数値計算のためのアルゴリズムとプログラミング,"寒川,光 高橋,大介",森北出版,202310,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD0422081X,
 4779513103,文系大学教育は仕事の役に立つのか = Is University Education Useful for Job? : 職業的レリバンスの検討,"本田,由紀,1964-",ナカニシヤ出版,201808,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB2668716X,
+4865284540,「女子マネージャー」の社会学,関めぐみ／著,左右社,20250314,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4865284540,
 4759823700,理系のための読解術入門 : 文章の構造から，論理展開，批判的読み方まで,西出利一,化学同人,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD10237078,
 4621307010,数論入門 2 第9巻 (数学クラシックス),"Hardy,GodfreyHarold,1877-1947 Wright,EdwardMaitland,1906-2005 ほか",丸善出版,202204,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4621307010,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784621307014&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4621307002,数論入門 1 第8巻 (数学クラシックス),"Hardy,GodfreyHarold,1877-1947 Wright,EdwardMaitland,1906-2005 ほか",丸善出版,202204,https://www.lib.sophia.ac.jp/opac/opac_openurl?isbn=4621307002,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784621307007&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
@@ -61,7 +62,6 @@ isbn_or_asin,book_title,author,publisher,published_date,sophia_opac,sophia_mathl
 4130629573,線形代数の世界 抽象数学の入り口 (大学数学の入門),斎藤毅／著,東京大学出版会,20071001,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BA83455475,
 4320111664,共立講座数学の魅力. 11,"新井,仁之,1959- 小林,俊行,1962- 斎藤,毅,1961- 久保川,達也,1959-",共立出版,201704,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB23387239,https://mathlib-sophia.opac.jp/opac/Advanced_search/search?isbn=9784320111660&mtl1=1&mtl2=1&mtl3=1&mtl4=1&mtl5=1
 4764905671,計算折り紙入門 = Introduction to Computational Origami : あたらしい計算幾何学の世界,"上原,隆平",近代科学社,201806,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BB26359193,
-4535789878,パズルの算法 : 手とコンピュータでのパズルの味わい方,上原隆平,日本評論社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD08645978,
 4336076456,物語要素事典,神山重彦,国書刊行会,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD09290051,
 4814400942,Effective Rust : Rustコードを改善し、エコシステムを最大限に活用するための35項目,DavidDrysdale 中田秀基,オーム社,,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD09457146,
 4814400217,入門モダンLinux : オンプレミスからクラウドまで、幅広い知識を会得する,"Hausenblas,Michael 武内,覚 大岩,尚宏",オーム社 (発売),202304,https://www.lib.sophia.ac.jp/opac/opac_openurl?ncid=BD01566148,

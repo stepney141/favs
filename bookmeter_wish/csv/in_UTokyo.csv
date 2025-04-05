@@ -7,6 +7,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4845920336,文体の舵をとれ ル＝グウィンの小説教室,アーシュラ・Ｋ・ル＝グウィン／著 大久保ゆう／翻訳,フィルムアート社,20210803,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC08842337
 4065172519,Pythonで学ぶ強化学習 = Reinforcement Learning by Python : 入門から実践まで (機械学習スタートアップシリーズ),"久保,隆宏",講談社,201909,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB28907223
 406117925X,現代数学小事典 Ｂ３２５ (ブルーバックス),寺阪‖英孝,講談社,1977-06,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN01795713
+4130626280,進化の原理と基礎 : 計算機シミュレーションで理解する進化の物理,市橋伯一 金井雄樹,東京大学出版会,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4130626280
 4779513103,文系大学教育は仕事の役に立つのか = Is University Education Useful for Job? : 職業的レリバンスの検討,"本田,由紀,1964-",ナカニシヤ出版,201808,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB2668716X
 4759823700,理系のための読解術入門 : 文章の構造から，論理展開，批判的読み方まで,西出利一,化学同人,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD10237078
 4621307010,数論入門 2 第9巻 (数学クラシックス),"Hardy,GodfreyHarold,1877-1947 Wright,EdwardMaitland,1906-2005 ほか",丸善出版,202204,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC14387916
@@ -18,7 +19,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4000296108,科学者の卵たちに贈る言葉 : 江上不二夫が伝えたかったこと 210 (岩波科学ライブラリー),"笠井,献一,1939-",岩波書店,201307,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB12896004
 4006002319,日本型「教養」の運命 : 歴史社会学的考察 G231 (岩波現代文庫),"筒井,清忠,1948-",岩波書店,200912,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB0049679X
 4163919090,西洋の敗北 日本と世界に何が起きるのか,エマニュエル・トッド 大野舞,文藝春秋,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD09366390
-4065386470,線形代数の半歩先　データサイエンス・機械学習に挑む前の30話 (KS理工学専門書),大久保潤,講談社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4065386470
+4065386470,線形代数の半歩先 = Half a Step Beyond Linear Algebra : データサイエンス・機械学習に挑む前の30話,"大久保,潤",講談社,202503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD10941179
 4326102942,オッカムのかみそり : 最節約性と統計学の哲学,"Sober,Elliott,1948- 森元,良太",勁草書房,202105,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC07278648
 4627079214,"これからの線形代数 = Linear Algebra : 3重対角化,特異値分解,一般逆行列","藤岡,敦",森北出版,202412,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD09921367
 4560073767,中世のパン / 白水Uブックス,"Desportes, Françoise,見崎, 恵子, 1951-,フランソワーズ・デポルト [著],見崎恵子 訳",白水社,"Fri, 25 Jul 2014 07:02:52 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA69313390
@@ -54,7 +55,6 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4621061623,対称性からの群論入門,"Armstrong,M.A.(MarkAnthony) 佐藤,信哉",丸善出版,201205,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB09647806
 4320111664,共立講座数学の魅力. 11,"新井,仁之,1959- 小林,俊行,1962- 斎藤,毅,1961- 久保川,達也,1959-",共立出版,201704,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB23387239
 4764905671,計算折り紙入門 = Introduction to Computational Origami : あたらしい計算幾何学の世界,"上原,隆平",近代科学社,201806,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB26359193
-4535789878,パズルの算法 : 手とコンピュータでのパズルの味わい方,上原隆平,日本評論社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD08645978
 4336076456,物語要素事典,神山重彦,国書刊行会,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD09290051
 4297138891,LATEX美文書作成入門,"奥村,晴彦,1951- 黒木,裕介,1982-",技術評論社,202312,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD04793011
 4297145464,［作って学ぶ］ブラウザのしくみ──HTTP、HTML、CSS、JavaScriptの裏側,土井麻未,技術評論社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD0948059X
