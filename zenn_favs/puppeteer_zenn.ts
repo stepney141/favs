@@ -162,7 +162,7 @@ class Zennist {
       })();
     });
 
-    await page.goto(`${baseURI}/dashboard/library`, {
+    await page.goto(`${baseURI}/dashboard/library?type=liked_items`, {
       waitUntil: ["networkidle0", "domcontentloaded", "load"]
     });
     console.log(`${JOB_NAME}: Started to fetch!`);
