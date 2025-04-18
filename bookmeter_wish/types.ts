@@ -9,6 +9,7 @@ export type MainFuncOption = {
   outputFilePath?: OutputFilePath | null;
   noRemoteCheck?: boolean;
   skipBookListComparison?: boolean;
+  skipFetchingBiblioInfo?: boolean;
 };
 
 export type Book = {

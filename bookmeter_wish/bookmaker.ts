@@ -20,6 +20,15 @@ export class Bookmaker {
   #userId: string;
   #wishBookList: BookList;
   #stackedBookList: BookList;
+  #hasChanges: boolean = false;
+
+  get hasChanges(): boolean {
+    return this.#hasChanges;
+  }
+
+  setHasChanges(value: boolean): void {
+    this.#hasChanges = value;
+  }
 
   constructor(browser: Browser, userId: string) {
     this.#browser = browser;

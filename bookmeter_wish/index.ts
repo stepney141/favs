@@ -11,6 +11,8 @@ import { mapToArray, exportFile } from "../.libs/utils";
 import { Bookmaker } from "./bookmaker";
 import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID } from "./constants";
 import { fetchBiblioInfo } from "./fetchers";
+import { crawlKinokuniya } from "./kinokuniya";
+import { saveBookListToDatabase } from "./sqlite";
 import { buildCsvFileName, getPrevBookList, isBookListDifferent } from "./utils";
 
 import type { BookList, MainFuncOption } from "./types";
@@ -45,7 +47,8 @@ export async function main({
   doLogin = true,
   outputFilePath = null,
   noRemoteCheck = false,
-  skipBookListComparison = false
+  skipBookListComparison = false,
+  skipFetchingBiblioInfo = false
 }: MainFuncOption) {
   try {
     const startTime = Date.now();
@@ -75,22 +78,56 @@ export async function main({
         : await book.explore(mode, doLogin);
     await browser.close();
 
-    if (isBookListDifferent(prevBookList, latestBookList, skipBookListComparison)) {
-      console.log(`${JOB_NAME}: Fetching bibliographic information`);
-      const updatedBooklist = await fetchBiblioInfo(latestBookList, {
-        cinii: cinii_appid,
-        google: google_books_api_key,
-        isbnDb: isbnDb_api_key
-      }); //書誌情報取得
+    const hasDifferences = isBookListDifferent(prevBookList, latestBookList, skipBookListComparison);
+    book.setHasChanges(hasDifferences);
 
-      await exportFile({
-        fileName: csvFileName[mode],
-        payload: mapToArray(updatedBooklist),
-        targetType: "csv",
-        mode: "overwrite"
-      }).then(() => {
-        console.log(`${JOB_NAME}: Finished writing ${csvFileName[mode]}`);
-      });
+    if (hasDifferences) {
+      let updatedBooklist = latestBookList; // Initialize
+
+      if (!skipFetchingBiblioInfo) {
+        // Check the flag
+        try {
+          console.log(`${JOB_NAME}: Fetching bibliographic information`);
+          updatedBooklist = await fetchBiblioInfo(latestBookList, {
+            // Update if fetched
+            cinii: cinii_appid,
+            google: google_books_api_key,
+            isbnDb: isbnDb_api_key
+          }); //書誌情報取得
+        } catch (error) {
+          console.error(`${JOB_NAME}: Error fetching bibliographic information:`, error);
+          // If fetching fails, updatedBooklist remains latestBookList (as initialized)
+        }
+      } else {
+        console.log(`${JOB_NAME}: Skipping bibliographic information fetch.`); // Optional: Add a log message
+      }
+
+      // Export the result (either original or updated)
+      try {
+        await exportFile({
+          fileName: csvFileName[mode],
+          payload: mapToArray(updatedBooklist), // Use the final updatedBooklist
+          targetType: "csv",
+          mode: "overwrite"
+        }).then(() => {
+          console.log(`${JOB_NAME}: Finished writing ${csvFileName[mode]}`);
+        });
+      } catch (error) {
+        console.error(`${JOB_NAME}: Error exporting file:`, error);
+      }
+
+      // Save to SQLite and crawl Kinokuniya (using the final updatedBooklist)
+      if (book.hasChanges) {
+        try {
+          console.log(`${JOB_NAME}: Saving data to SQLite database`);
+          await saveBookListToDatabase(updatedBooklist, mode);
+
+          console.log(`${JOB_NAME}: Crawling Kinokuniya for book descriptions`);
+          await crawlKinokuniya();
+        } catch (error) {
+          console.error(`${JOB_NAME}: Error during SQLite save or Kinokuniya crawling:`, error);
+        }
+      }
     }
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
@@ -109,5 +146,5 @@ export async function main({
 (async () => {
   const mode = parseArgv(process.argv);
 
-  await main({ mode });
+  await main({ mode, noRemoteCheck: true, skipBookListComparison: true, skipFetchingBiblioInfo: true });
 })();
