@@ -1,4 +1,5 @@
 isbn_or_asin,book_title,author,publisher,published_date
+4003725174,芥川龍之介選 英米怪異・幻想譚 (岩波文庫 ； 赤N208-1),芥川龍之介 澤西祐典 柴田元幸,岩波書店,
 4623097978,史料と旅する中世ヨーロッパ,図師宣忠 中村敦子 西岡健司,ミネルヴァ書房,
 4908686203,型システムのしくみ  TypeScriptで実装しながら学ぶ型とプログラミング言語,"遠藤侑介,遠藤侑介 著・文・その他","ラムダノート,ラムダノート","Wed, 9 Apr 2025 00:48:00 +0900"
 4480076786,「東大卒」の研究 １８５０ (ちくま新書),本田由紀／編著 久保京子／本文 近藤千洋／本文 中野円佳／著 九鬼成美／著,筑摩書房,20250410
@@ -11,7 +12,7 @@ isbn_or_asin,book_title,author,publisher,published_date
 4862466087,職種と用途で探せる Blenderアドオン事典（仮）,3D人,ボーンデジタル,
 4535559260,［新版］社会的選択理論への招待 : 投票と多数決の科学,坂井豊貴,,
 4585303057,デジタルデータの長期保存・活用 : その理論と実践 / デジタルアーカイブ・ベーシックス,"嘉村哲郎,嘉村哲郎 編集","勉誠社,勉誠社","Tue, 11 Mar 2025 00:26:00 +0900"
-4065392187,ヒューリスティック探索　合理的なAIをつくるためのアルゴリズム / KS情報科学専門書,"陣内 佑,陣内 佑 著・文・その他",講談社,"Thu, 10 Apr 2025 00:43:00 +0900"
+4065392187,ヒューリスティック探索　合理的なAIをつくるためのアルゴリズム (KS情報科学専門書),陣内佑,講談社,
 4296205455,ポストモーテム みずほ銀行システム障害 事後検証報告 (日経ビジネス人文庫),日経コンピュータ,,
 4779518547,文系大学生は専門分野で何を学ぶのか,本田由紀／編集 小山治／著,ナカニシヤ出版,202503
 4041155126,ニセコ化するニッポン,"谷頭,和希,1997-",KADOKAWA,202501
@@ -98,7 +99,7 @@ isbn_or_asin,book_title,author,publisher,published_date
 1837639965,Architecture and Design of the Linux Storage Stack: Gain a deep understanding of the Linux storage landscape and its well-coordinated layers,Muhammad Umer,Packt Publishing,2023-07-28
 4905033314,プロジェクト・シン・エヴァンゲリオン : 実績・省察・評価・総括,"カラー,カラー 編","カラー,グラウンドワークス","Thu, 10 Aug 2023 06:20:19 +0900"
 4065324017,プリキュアコスチュームクロニクル = Precure Costume Chronicle : プリキュア20周年アニバーサリー,東映アニメーション株式会社,講談社,202310
-9811379661,"Kawaii Engineering: Measurements, Evaluations, and Applications of Attractiveness (Springer Series on Cultural Computing)","Ohkura,Michiko (edt)",Springer,2020-08-15
+9811379661,"Kawaii Engineering: Measurements, Evaluations, and Applications of Attractiveness (Springer Series on Cultural Computing)",Michiko Ohkura,Springer,2020-08-15
 4309419690,日本怪談実話 た52-1 (河出文庫),"田中,貢太郎,1880-1941",河出書房新社,202306
 4309419712,戦前のこわい話 : 怪奇実話集 し10-3 (河出文庫),"志村,有弘,1941-",河出書房新社,202306
 4800307961,元報道記者が見た昭和事件史 : 歴史から抹殺された惨劇の記録,"石川,清,1964-",洋泉社,201511
@@ -115,7 +116,7 @@ isbn_or_asin,book_title,author,publisher,published_date
 4798125393,実践プログラミングDSL : ドメイン特化言語の設計と実装のノウハウ (Programmer's SELECTION),"Ghosh,Debasish,1953- 佐藤,竜一,1972-",翔泳社,201206
 4839967091,囲碁ディープラーニングプログラミング,"Pumperla,Max Ferguson,Kevin 山岡,忠夫",マイナビ出版,201904
 4309460631,ホームズ贋作展覧会 / 河出文庫,"各務, 三郎, 1936-,各務三郎 編",河出書房新社,"Thu, 5 Oct 1989 09:00:00 +0900"
-0321842685,Hacker's Delight,"Warren, Henry S.",Addison-wesley,2012-09-25
+0321842685,Hacker's Delight,Henry Warren,Addison-Wesley Professional,2012-09-25
 4814400160,自分だけのボードゲームを作ろう : ゲームをデザインして、作って、みんなでプレイする (Make : Japan Books),"Daniels,JesseTerrance 金井,哲夫,1958-",オーム社 (発売),202212
 4480438319,神田神保町書肆街考 か－２７－２ (ちくま文庫),鹿島茂／著,筑摩書房,20221013
 4787210130,ボンデージ進化論,北原童夢／著,青弓社,19920401
