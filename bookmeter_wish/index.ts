@@ -116,16 +116,17 @@ export async function main({
         console.error(`${JOB_NAME}: Error exporting file:`, error);
       }
 
-      // Save to SQLite and crawl Kinokuniya (using the final updatedBooklist)
+      // First crawl Kinokuniya, then save to SQLite (using the final updatedBooklist)
       if (book.hasChanges) {
         try {
+          console.log(`${JOB_NAME}: Crawling Kinokuniya for book descriptions`);
+          // Pass the in-memory BookList directly to crawlKinokuniya instead of loading from CSV
+          await crawlKinokuniya(updatedBooklist, mode);
+
           console.log(`${JOB_NAME}: Saving data to SQLite database`);
           await saveBookListToDatabase(updatedBooklist, mode);
-
-          console.log(`${JOB_NAME}: Crawling Kinokuniya for book descriptions`);
-          await crawlKinokuniya();
         } catch (error) {
-          console.error(`${JOB_NAME}: Error during SQLite save or Kinokuniya crawling:`, error);
+          console.error(`${JOB_NAME}: Error during Kinokuniya crawling or SQLite save:`, error);
         }
       }
     }
@@ -146,5 +147,7 @@ export async function main({
 (async () => {
   const mode = parseArgv(process.argv);
 
-  await main({ mode, noRemoteCheck: true, skipBookListComparison: true, skipFetchingBiblioInfo: true });
+  // For degugging:
+  // await main({ mode, noRemoteCheck: true, skipBookListComparison: true, skipFetchingBiblioInfo: true });
+  await main({ mode });
 })();

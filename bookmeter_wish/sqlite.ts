@@ -3,6 +3,8 @@ import fs from "node:fs";
 import { open } from "sqlite";
 import { Database } from "sqlite3";
 
+import { JOB_NAME } from "./constants";
+
 import type { Book, BookList } from "./types";
 
 const DB_FILE = "./books.sqlite";
@@ -51,9 +53,12 @@ export async function saveBookListToDatabase(bookList: BookList, tableName: stri
 
     // --- Synchronization Logic ---
 
-    // 1. Get all existing bookmeter_urls from the database table
+    // 1. Get all existing bookmeter_urls and descriptions from the database table
     //    Ensure the type reflects that db.all returns an array.
-    const existingRows = await db.all<{ bookmeter_url: string }[]>(`SELECT bookmeter_url FROM ${safeTableName}`);
+    const existingRows = await db.all<{ bookmeter_url: string; description: string | null }[]>(
+      `SELECT bookmeter_url, description FROM ${safeTableName}`
+    );
+    const existingData = new Map(existingRows.map((row) => [row.bookmeter_url, row.description]));
     const existingUrls = new Set(existingRows.map((row) => row.bookmeter_url));
 
     // 2. Get all bookmeter_urls from the input bookList
@@ -102,6 +107,10 @@ export async function saveBookListToDatabase(bookList: BookList, tableName: stri
 
     console.log(`Inserting/Updating ${bookList.size} books into ${safeTableName}...`);
     for (const book of bookList.values()) {
+      const descriptionToInsert =
+        book.description !== undefined && book.description !== null
+          ? book.description
+          : (existingData.get(book.bookmeter_url) ?? null);
       await insertStmt.run([
         book.bookmeter_url,
         book.isbn_or_asin, // Use null if undefined
@@ -114,7 +123,7 @@ export async function saveBookListToDatabase(bookList: BookList, tableName: stri
         book.exist_in_Sophia,
         book.exist_in_UTokyo,
         book.sophia_mathlib_opac,
-        book.description ?? null // Use null if undefined
+        descriptionToInsert
       ]);
     }
     await insertStmt.finalize(); // Finalize insert statement
@@ -226,10 +235,10 @@ export async function updateDescription(tableName: string, isbnOrAsin: string, n
 
 /**
  * Checks if a book with the given ISBN/ASIN exists in the specified table
- * and has a non-empty description.
+ * and has a description (either populated or explicitly set as empty).
  * @param tableName - The name of the table to check.
  * @param isbnOrAsin - The ISBN or ASIN of the book to check.
- * @returns A Promise that resolves to true if the book exists and has a description, false otherwise.
+ * @returns A Promise that resolves to true if the book exists and has a description field that has been checked, false otherwise.
  */
 export async function checkBookDescriptionExists(tableName: string, isbnOrAsin: string): Promise<boolean> {
   const db = await open({ filename: DB_FILE, driver: Database });
@@ -241,21 +250,30 @@ export async function checkBookDescriptionExists(tableName: string, isbnOrAsin: 
       FROM ${safeTableName}
       WHERE isbn_or_asin = ?
     `;
+
+    console.log(
+      `${JOB_NAME || "SQLite"}: Checking if description exists for isbn_or_asin: ${isbnOrAsin} in table ${safeTableName}`
+    );
+
     // Ensure the type reflects that db.get might return undefined if no row is found.
     const result = await db.get<{ description: string | null }>(query, isbnOrAsin);
 
+    console.log(
+      `${JOB_NAME || "SQLite"}: Query result for ${isbnOrAsin}: ${result ? (result.description === null ? "description is NULL" : `description exists (length: ${result.description.length})`) : "no row found"}`
+    );
+
     // Check if a row was found and if the description is not null.
     // An empty string means it was checked but no description was found.
-    if (result && result.description !== null) {
+    if (result && result.description && result.description.trim().length > 0) {
       console.log(
-        `Description status known (found or confirmed empty) for isbn_or_asin: ${isbnOrAsin} in table ${safeTableName}.`
+        `${JOB_NAME || "SQLite"}: Description exists for isbn_or_asin: ${isbnOrAsin} (length: ${result.description.trim().length}). Skipping fetch.`
       );
-      return true; // Row exists and description is not NULL (could be empty string)
+      return true;
     } else {
       console.log(
-        `Description is NULL or book not found for isbn_or_asin: ${isbnOrAsin} in table ${safeTableName}. Needs fetching.`
+        `${JOB_NAME || "SQLite"}: Description missing or empty for isbn_or_asin: ${isbnOrAsin} in table ${safeTableName}. Needs fetching.`
       );
-      return false; // Row doesn't exist or description is NULL
+      return false;
     }
   } catch (error) {
     console.error(`Error checking description for isbn_or_asin ${isbnOrAsin} in table ${safeTableName}:`, error);
