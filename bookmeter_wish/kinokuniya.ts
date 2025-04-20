@@ -3,6 +3,7 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { open } from "sqlite";
 import { Database } from "sqlite3";
 
+import { CHROME_ARGS } from "../.libs/constants";
 import { $x } from "../.libs/pptr-utils";
 import { sleep } from "../.libs/utils";
 
@@ -57,6 +58,7 @@ export async function crawlKinokuniya(bookListToProcess?: BookList, mode?: "wish
   const browser = await puppeteer.launch({
     defaultViewport: { width: 1000, height: 1000 },
     headless: true,
+    args: CHROME_ARGS,
     slowMo: 15
   });
   const page = await browser.newPage();
