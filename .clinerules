@@ -49,11 +49,11 @@ Clineは、以下のベストプラクティスに従ってコーディングを
   - Prettier
   - ESLint
 
-## bookmeter_wish
+## bookmeter
 
 このディレクトリは、このリポジトリの中で最も重要な部分です。読書メーター(bookmeter.com)のクローラとその出力結果(`/csv/*`)を含みます。特に、読みたい本(wish)および積読本(stacked)のデータが格納されています。
 
-`bookmeter_wish`ディレクトリには、以下のファイルが含まれています。
+`bookmeter`ディレクトリには、以下のファイルが含まれています。
 
 - `index.ts`: エントリポイント
 - `bookmaker.ts`: bookmeterのクローラ
@@ -61,15 +61,15 @@ Clineは、以下のベストプラクティスに従ってコーディングを
 - `constants.ts`: 定数を定義
 - `types.ts`: 型定義
 - `utils.ts`: ユーティリティ関数
-- `csv/bookmeter_wish.csv`: bookmeterから取得したwishデータ
-- `csv/bookmeter_stacked.csv`: bookmeterから取得したstackedデータ
+- `csv/bookmeter_wish_books.csv`: bookmeterから取得したwishデータ
+- `csv/bookmeter_stacked_books.csv`: bookmeterから取得したstackedデータ
 
-現在の`bookmeter_wish`プロジェクトは、以下のような流れで動作します。
+現在の`bookmeter`プロジェクトは、以下のような流れで動作します。
 
 1. `index.ts`がエントリポイントとなり、クローラを起動します。
 2. `bookmaker.ts`がpuppeteerを使用して、bookmeter.comにアクセスし、wish/stackedデータを取得します。前回の実行時のデータと比較して、変更があった場合のみ、データを更新します。
 3. `fetchers.ts`を使用して、書誌情報APIにリクエストを行い、書籍の詳細情報を取得します。これらの情報は、wish/stackedデータに追加され、ISBNをキーとするMapオブジェクトとして管理されます。
-4. 取得したデータは、`csv/bookmeter_wish.csv`および`csv/bookmeter_stacked.csv`に保存されます。
+4. 取得したデータは、`csv/bookmeter_wish_books.csv`および`csv/bookmeter_stacked_books.csv`に保存されます。
 
 さらに、あらすじ・目次の情報を取得する機能もあります。以下は、この機能に関わるファイルです。
 
