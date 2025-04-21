@@ -11,7 +11,7 @@ import { CHROME_ARGS, USER_AGENT } from "../.libs/constants";
 import { getNodeProperty, $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile, zip, sleep, randomWait } from "../.libs/utils";
 
-import type { Page, Browser, CookieParam } from "puppeteer";
+import type { Page, Browser, CookieData } from "puppeteer";
 
 const JOB_NAME = "Niconico Seiga MyClips";
 const CSV_FILENAME = "nicoseiga_myclips.csv";
@@ -77,10 +77,8 @@ class Seiga {
 
     if (fs.existsSync(COOKIE_PATH)) {
       //cookieがあれば読み込む
-      const savedCookies = JSON.parse(fs.readFileSync(COOKIE_PATH, "utf-8")) as CookieParam[];
-      for (const cookie of savedCookies) {
-        await page.setCookie(cookie);
-      }
+      const savedCookies: CookieData = JSON.parse(fs.readFileSync(COOKIE_PATH, "utf-8"));
+      await this.#browser.setCookie(savedCookies);
       console.log(`${JOB_NAME}: loaded existing cookies`);
     }
 
