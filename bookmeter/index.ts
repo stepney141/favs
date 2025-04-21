@@ -13,6 +13,7 @@ import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID } from "./constants";
 import { fetchBiblioInfo } from "./fetchers";
 import { crawlKinokuniya } from "./kinokuniya";
 import { saveBookListToDatabase } from "./sqlite";
+import { uploadDatabaseToFirebase } from "./firebase";
 import { buildCsvFileName, getPrevBookList, isBookListDifferent } from "./utils";
 
 import type { BookList, MainFuncOption } from "./types";
@@ -125,8 +126,11 @@ export async function main({
 
           console.log(`${JOB_NAME}: Saving data to SQLite database`);
           await saveBookListToDatabase(updatedBooklist, mode);
+          
+          // SQLiteデータベースをFirebase Storageにアップロード
+          await uploadDatabaseToFirebase();
         } catch (error) {
-          console.error(`${JOB_NAME}: Error during Kinokuniya crawling or SQLite save:`, error);
+          console.error(`${JOB_NAME}: Error during Kinokuniya crawling, SQLite save, or Firebase upload:`, error);
         }
       }
     }
