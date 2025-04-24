@@ -36,7 +36,13 @@ export type BookOwingSearchConfig<T> = {
   options?: { resources?: T; libraryInfo?: CiniiTarget };
 };
 
-export type BiblioinfoErrorStatus = `Not_found_in_${(typeof BIBLIOINFO_SOURCES)[number]}` | "INVALID_ISBN";
+export type BiblioinfoErrorStatus =
+  | `Not_found_in_${(typeof BIBLIOINFO_SOURCES)[number]}`
+  | "INVALID_ISBN"
+  | "OpenBD_API_Error"
+  | "ISBNdb_API_Error"
+  | "NDL_API_Error"
+  | "GoogleBooks_API_Error";
 
 export type CiniiTargetOrgs = (typeof CINII_TARGET_TAGS)[number];
 export type ExistIn = `exist_in_${CiniiTargetOrgs}`;

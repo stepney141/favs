@@ -11,9 +11,9 @@ import { mapToArray, exportFile } from "../.libs/utils";
 import { Bookmaker } from "./bookmaker";
 import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID } from "./constants";
 import { fetchBiblioInfo } from "./fetchers";
+import { uploadDatabaseToFirebase } from "./firebase";
 import { crawlKinokuniya } from "./kinokuniya";
 import { saveBookListToDatabase } from "./sqlite";
-import { uploadDatabaseToFirebase } from "./firebase";
 import { buildCsvFileName, getPrevBookList, isBookListDifferent } from "./utils";
 
 import type { BookList, MainFuncOption } from "./types";
@@ -126,7 +126,7 @@ export async function main({
 
           console.log(`${JOB_NAME}: Saving data to SQLite database`);
           await saveBookListToDatabase(updatedBooklist, mode);
-          
+
           // SQLiteデータベースをFirebase Storageにアップロード
           await uploadDatabaseToFirebase();
         } catch (error) {
