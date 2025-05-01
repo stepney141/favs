@@ -1,7 +1,8 @@
 {
   "include": ["**/*", ".libs/**/*.d.ts"],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "eslint.config.mjs"
   ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
