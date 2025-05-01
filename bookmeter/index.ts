@@ -13,7 +13,7 @@ import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID } from "./constants";
 import { fetchBiblioInfo } from "./fetchers";
 import { uploadDatabaseToFirebase } from "./firebase";
 import { crawlKinokuniya } from "./kinokuniya";
-import { saveBookListToDatabase } from "./sqlite";
+import { exportDatabaseTableToCsv, saveBookListToDatabase } from "./sqlite";
 import { buildCsvFileName, getPrevBookList, isBookListDifferent } from "./utils";
 
 import type { BookList, MainFuncOption } from "./types";
@@ -103,21 +103,7 @@ export async function main({
         console.log(`${JOB_NAME}: Skipping bibliographic information fetch.`); // Optional: Add a log message
       }
 
-      // Export the result (either original or updated)
-      try {
-        await exportFile({
-          fileName: csvFileName[mode],
-          payload: mapToArray(updatedBooklist), // Use the final updatedBooklist
-          targetType: "csv",
-          mode: "overwrite"
-        }).then(() => {
-          console.log(`${JOB_NAME}: Finished writing ${csvFileName[mode]}`);
-        });
-      } catch (error) {
-        console.error(`${JOB_NAME}: Error exporting file:`, error);
-      }
-
-      // First crawl Kinokuniya, then save to SQLite (using the final updatedBooklist)
+      // まずSQLiteに保存
       if (book.hasChanges) {
         try {
           console.log(`${JOB_NAME}: Crawling Kinokuniya for book descriptions`);
@@ -127,10 +113,29 @@ export async function main({
           console.log(`${JOB_NAME}: Saving data to SQLite database`);
           await saveBookListToDatabase(updatedBooklist, mode);
 
+          // SQLiteデータベースからCSVを生成
+          console.log(`${JOB_NAME}: Generating CSV from SQLite database`);
+          await exportDatabaseTableToCsv(mode, csvFileName[mode]);
+          console.log(`${JOB_NAME}: Finished writing ${csvFileName[mode]}`);
+
           // SQLiteデータベースをFirebase Storageにアップロード
           await uploadDatabaseToFirebase();
         } catch (error) {
-          console.error(`${JOB_NAME}: Error during Kinokuniya crawling, SQLite save, or Firebase upload:`, error);
+          console.error(`${JOB_NAME}: Error during data processing or export:`, error);
+
+          // エラー発生時はフォールバックとして直接CSVに保存
+          try {
+            console.log(`${JOB_NAME}: Error occurred, falling back to direct CSV export`);
+            await exportFile({
+              fileName: csvFileName[mode],
+              payload: mapToArray(updatedBooklist),
+              targetType: "csv",
+              mode: "overwrite"
+            });
+            console.log(`${JOB_NAME}: Finished fallback writing to ${csvFileName[mode]}`);
+          } catch (csvError) {
+            console.error(`${JOB_NAME}: Error in fallback CSV export:`, csvError);
+          }
         }
       }
     }
@@ -152,6 +157,6 @@ export async function main({
   const mode = parseArgv(process.argv);
 
   // For degugging:
-  // await main({ mode, noRemoteCheck: true, skipBookListComparison: true, skipFetchingBiblioInfo: true });
-  await main({ mode });
+  await main({ mode, noRemoteCheck: true, skipBookListComparison: true, skipFetchingBiblioInfo: true });
+  // await main({ mode });
 })();

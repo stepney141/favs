@@ -3,9 +3,11 @@ import fs from "node:fs";
 import { open } from "sqlite";
 import { Database } from "sqlite3";
 
+import { mapToArray, exportFile } from "../.libs/utils";
+
 import { JOB_NAME } from "./constants";
 
-import type { Book, BookList } from "./types";
+import type { Book, BookList, CsvBookList } from "./types";
 
 const DB_FILE = "./books.sqlite";
 
@@ -230,6 +232,44 @@ export async function updateDescription(tableName: string, isbnOrAsin: string, n
     throw error;
   } finally {
     await db.close();
+  }
+}
+
+/**
+ * Exports the data from a database table to a CSV file.
+ * @param tableName - The name of the table to export data from.
+ * @param csvFilePath - The path where the CSV file should be saved.
+ * @returns A Promise that resolves when the export is complete.
+ */
+export async function exportDatabaseTableToCsv(tableName: string, csvFilePath: string): Promise<void> {
+  console.log(`${JOB_NAME || "SQLite"}: Exporting table ${tableName} to CSV file ${csvFilePath}`);
+
+  try {
+    // Load data from database
+    const bookList = await loadBookListFromDatabase(tableName);
+
+    // 'description' is not needed in the CSV export
+    const csvBookList: CsvBookList = new Map();
+    for (const [key, book] of bookList.entries()) {
+      const { description, ...rest } = book;
+      csvBookList.set(key, rest);
+    }
+
+    // Convert BookList Map to array of objects for CSV export
+    const bookArray = mapToArray(csvBookList);
+
+    // Export to CSV
+    await exportFile({
+      fileName: csvFilePath,
+      payload: bookArray,
+      targetType: "csv",
+      mode: "overwrite"
+    });
+
+    console.log(`${JOB_NAME || "SQLite"}: Successfully exported ${bookArray.length} books to ${csvFilePath}`);
+  } catch (error) {
+    console.error(`${JOB_NAME || "SQLite"}: Error exporting table ${tableName} to CSV:`, error);
+    throw error;
   }
 }
 

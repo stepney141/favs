@@ -124,7 +124,7 @@ async function processBookList(page: Page, tableName: "wish" | "stacked", bookLi
         // Update the book object with the existing description
         // Use non-null assertion since we've already checked with .has()
         book.description = existingDescription!;
-        console.log(`${JOB_NAME}: Preserved existing description for ISBN ${id}.`);
+        // console.log(`${JOB_NAME}: Preserved existing description for ISBN ${id}.`);
         continue; // Skip to the next book
       }
 

@@ -1,8 +1,10 @@
+import * as fsSync from "node:fs";
 import fs from "node:fs/promises";
 
 import { parse } from "papaparse";
 
 import { BOOKMETER_DEFAULT_USER_ID, DEFAULT_CSV_FILENAME, JOB_NAME, REGEX } from "./constants";
+import { loadBookListFromDatabase } from "./sqlite";
 
 import type { ASIN, Book, BookList, ISBN10, ISBN13, OutputFilePath } from "./types";
 import type { ParseResult } from "papaparse";
@@ -121,9 +123,53 @@ export const readUrlList = async (filename: string): Promise<string[] | null> =>
 };
 
 /**
- * 前回の書籍リストをCSVから読み出し、Mapにデシリアライズする
+ * 前回の書籍リストをSQLiteデータベースから読み出す。
+ * データベースが存在しない場合は従来通りCSVから読み出す。
  */
 export const getPrevBookList = async (filename: string): Promise<BookList | null> => {
+  try {
+    // CSVファイル名からモード（wish/stacked）を推測
+    let tableName: string;
+    if (filename.includes("wish")) {
+      tableName = "wish";
+    } else if (filename.includes("stacked")) {
+      tableName = "stacked";
+    } else {
+      console.warn(`${JOB_NAME}: Could not determine table name from filename ${filename}, falling back to CSV`);
+      return getPrevBookListFromCsv(filename);
+    }
+
+    // データベースファイルが存在するか確認
+    if (fsSync.existsSync("./books.sqlite")) {
+      console.log(`${JOB_NAME}: Loading previous book list from SQLite database (table: ${tableName})`);
+      try {
+        const bookList = await loadBookListFromDatabase(tableName);
+        if (bookList.size > 0) {
+          return bookList;
+        } else {
+          console.log(`${JOB_NAME}: SQLite table ${tableName} exists but is empty, falling back to CSV`);
+          return getPrevBookListFromCsv(filename);
+        }
+      } catch (error) {
+        console.error(`${JOB_NAME}: Error loading from SQLite:`, error);
+        console.log(`${JOB_NAME}: Falling back to CSV file`);
+        return getPrevBookListFromCsv(filename);
+      }
+    } else {
+      console.log(`${JOB_NAME}: SQLite database does not exist, falling back to CSV`);
+      return getPrevBookListFromCsv(filename);
+    }
+  } catch (error) {
+    console.error(`${JOB_NAME}: Error in getPrevBookList:`, error);
+    return null;
+  }
+};
+
+/**
+ * 前回の書籍リストをCSVから読み出し、Mapにデシリアライズする
+ * 後方互換性のために保持
+ */
+export const getPrevBookListFromCsv = async (filename: string): Promise<BookList | null> => {
   const csv = await readBookListCSV(filename);
   if (csv === null) return null;
 

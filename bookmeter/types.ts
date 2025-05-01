@@ -28,6 +28,7 @@ export type Book = {
   description: string;
 };
 export type BookList = Map<string, Book>;
+export type CsvBookList = Map<string, Omit<Book, "description">>;
 
 export type BookSearchState = { book: Book; isFound: boolean };
 export type BookOwningStatus = { book: Book; isFound?: boolean; isOwning: boolean };
