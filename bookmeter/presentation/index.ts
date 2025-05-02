@@ -2,7 +2,6 @@ import path from "path";
 
 import { config } from "dotenv";
 
-import { FetchBiblioInfoUseCase } from "../application/usecases/fetchBiblioInfoUseCase";
 import { GetBookListUseCase } from "../application/usecases/getBookListUseCase";
 import { failure } from "../domain/models/valueObjects";
 import { OpenBdApiClient } from "../infrastructure/adapters/apis/openBdApiClient";

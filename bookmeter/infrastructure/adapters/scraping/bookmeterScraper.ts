@@ -5,7 +5,6 @@ import { IsbnService } from "../../../domain/services/isbnService";
 import type { BookScraperService, BrowserSession } from "../../../application/ports/output/bookScraperService";
 import type { BookList, Book, LibraryAvailability } from "../../../domain/models/book";
 import type { Result, UserId, BookId, ISBN10, ISBN13, ASIN, LibraryId } from "../../../domain/models/valueObjects";
-// ElementHandleは未使用のため削除
 
 /**
  * ブクメータースクレイパーの設定
