@@ -69,7 +69,7 @@ Clineは、以下のベストプラクティスに従ってコーディングを
 1. `index.ts`がエントリポイントとなり、クローラを起動します。
 2. `bookmaker.ts`がpuppeteerを使用して、bookmeter.comにアクセスし、wish/stackedデータを取得します。前回の実行時のデータと比較して、変更があった場合のみ、データを更新します。
 3. `fetchers.ts`を使用して、書誌情報APIにリクエストを行い、書籍の詳細情報を取得します。これらの情報は、wish/stackedデータに追加され、ISBNをキーとするMapオブジェクトとして管理されます。
-4. 取得したデータは、`csv/bookmeter_wish_books.csv`および`csv/bookmeter_stacked_books.csv`に保存されます。
+4. 取得したデータは、SQLiteにエクスポートされます。その結果を元に`csv/bookmeter_wish_books.csv`および`csv/bookmeter_stacked_books.csv`が更新されます。
 
 さらに、あらすじ・目次の情報を取得する機能もあります。以下は、この機能に関わるファイルです。
 
