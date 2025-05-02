@@ -9,10 +9,14 @@ export const getNodeProperty = async <T>(eh: ElementHandle<Node>, prop: string):
 
 const xpathToUniversalSelector = (xpath: string): string => `::-p-xpath(${xpath})`;
 
-export async function waitForXPath(page: Page, xpath: string, options?: WaitForSelectorOptions) {
-  return await page.waitForSelector(xpathToUniversalSelector(xpath));
+export async function waitForXPath(
+  page: Page,
+  xpath: string,
+  options?: WaitForSelectorOptions
+): Promise<ElementHandle<Element> | null> {
+  return page.waitForSelector(xpathToUniversalSelector(xpath), options);
 }
 
-export async function $x(page: Page, xpath: string) {
+export async function $x(page: Page, xpath: string): Promise<ElementHandle<Element>[]> {
   return await page.$$(xpathToUniversalSelector(xpath));
 }

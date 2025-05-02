@@ -40,7 +40,7 @@ export class Bookmaker {
   /**
    * Amazon詳細リンクはアカウントにログインしなければ表示されないため、ログインする
    */
-  async login() {
+  async login(): Promise<this> {
     const page = await this.#browser.newPage();
 
     await page.setRequestInterception(true);

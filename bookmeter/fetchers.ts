@@ -40,7 +40,8 @@ function logAxiosError(error: unknown, apiName: string, context?: string): void 
         (axiosError.config?.url ? ` [URL: ${axiosError.config.url}]` : "")
     );
   } else {
-    console.error(`${JOB_NAME}: ${apiName} Unknown error: ${error}`);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error(`${JOB_NAME}: ${apiName} Unknown error: ${errorMessage}`);
   }
 }
 
@@ -610,7 +611,8 @@ export async function fetchBiblioInfo(
     console.log(`${JOB_NAME}: Searching Completed`);
     return new Map(booklist);
   } catch (error) {
-    console.error(`${JOB_NAME}: 書誌情報の取得中にエラーが発生しました: ${error}`);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error(`${JOB_NAME}: 書誌情報の取得中にエラーが発生しました: ${errorMessage}`);
     return booklist; // エラー時は元のbooklistを返す
   }
 }

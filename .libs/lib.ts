@@ -1,24 +1,24 @@
 import type { Browser } from "puppeteer";
 
-type CrawlState<T> = Initial<T> | Prepared<T> | LoggedIn<T>;
-type Initial<T> = {
-  status: "Initial";
-  payload?: T;
-  isPrepared: false;
-  isLoggedIn: false;
-};
-type Prepared<T> = {
-  status: "Prepared";
-  payload?: T;
-  isPrepared: true;
-  isLoggedIn: false;
-};
-type LoggedIn<T> = {
-  status: "LoggedIn";
-  payload?: T;
-  isPrepared: true;
-  isLoggedIn: true;
-};
+// type CrawlState<T> = Initial<T> | Prepared<T> | LoggedIn<T>;
+// type Initial<T> = {
+//   status: "Initial";
+//   payload?: T;
+//   isPrepared: false;
+//   isLoggedIn: false;
+// };
+// type Prepared<T> = {
+//   status: "Prepared";
+//   payload?: T;
+//   isPrepared: true;
+//   isLoggedIn: false;
+// };
+// type LoggedIn<T> = {
+//   status: "LoggedIn";
+//   payload?: T;
+//   isPrepared: true;
+//   isLoggedIn: true;
+// };
 export interface Crawler<T> {
   browser: Browser;
   fetchedData: T;

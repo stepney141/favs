@@ -42,7 +42,7 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID!
 };
 
-async function isNotLoggedInSeiga(page: Page) {
+async function isNotLoggedInSeiga(page: Page): Promise<boolean> {
   const eh = await $x(page, XPATH.eachIllustLinks);
   return eh.length == 0;
 }
@@ -63,7 +63,7 @@ class Seiga {
     this.#cliplist = new Map();
   }
 
-  async login() {
+  async login(): Promise<Seiga> {
     const page = await this.#browser.newPage();
 
     await page.setExtraHTTPHeaders({
@@ -77,7 +77,7 @@ class Seiga {
 
     if (fs.existsSync(COOKIE_PATH)) {
       //cookieがあれば読み込む
-      const savedCookies: CookieData = JSON.parse(fs.readFileSync(COOKIE_PATH, "utf-8"));
+      const savedCookies: CookieData = JSON.parse(fs.readFileSync(COOKIE_PATH, "utf-8")) as unknown as CookieData;
       await this.#browser.setCookie(savedCookies);
       console.log(`${JOB_NAME}: loaded existing cookies`);
     }
@@ -110,7 +110,7 @@ class Seiga {
       ]);
     }
 
-    const afterCookies = (await page.cookies()) as unknown as string; //cookie更新
+    const afterCookies = await page.cookies(); //cookie更新
     const afterCookiesBlob = new Blob([JSON.stringify(afterCookies)], { type: "application/json" });
     // ref: https://medium.com/@dorathedev/uploading-json-objects-as-json-files-to-firebase-storage-without-having-or-creating-a-json-file-38ad323af3c4
     await uploadBytes(pathReference, afterCookiesBlob); //cookieをアップロード
@@ -120,7 +120,7 @@ class Seiga {
     return this;
   }
 
-  async explore() {
+  async explore(): Promise<ClipList> {
     const page = (await this.#browser.pages())[1];
     let cnt = 1;
 

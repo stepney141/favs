@@ -8,10 +8,11 @@ import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 
 import type { AxiosError } from "axios";
 
-export const handleAxiosError = (error: AxiosError) => {
+export const handleAxiosError = (error: AxiosError<unknown>): void => {
   if (error.response) {
     console.log({
       status: error.response.status,
+
       error: error.response.data,
       errorMsg: error.message
     });
@@ -48,9 +49,17 @@ export const transposeArray = <T>(a: T[][]): T[][] => a[0].map((_, c) => a.map((
  * @link https://zenn.dev/sora_kumo/articles/539d7f6e7f3c63
  * @link https://github.com/SoraKumo001/promise-parallels/blob/master/src/index.ts
  */
-export const PromiseQueue = (ps = new Set<Promise<unknown>>()) => ({
-  add: (p: Promise<unknown> | (() => Promise<unknown>)) =>
-    ps.add(typeof p === "function" ? p() : !!p.then(() => ps.delete(p)).catch(() => ps.delete(p)) && p),
+type PromiseQueueType = {
+  add: (p: Promise<unknown> | (() => Promise<unknown>)) => Set<Promise<unknown>>;
+  wait: (limit: number) => false | Promise<unknown>;
+  all: () => Promise<unknown[]>;
+};
+export const PromiseQueue = (ps = new Set<Promise<unknown>>()): PromiseQueueType => ({
+  add: (p: Promise<unknown> | (() => Promise<unknown>)): Set<Promise<unknown>> => {
+    const promise = typeof p === "function" ? p() : p;
+    void promise.finally(() => ps.delete(promise));
+    return ps.add(promise);
+  },
   wait: (limit: number) => ps.size >= limit && Promise.race(ps),
   all: () => Promise.all(ps)
 });
@@ -74,19 +83,20 @@ export const sliceByNumber = <T = object>(array: T[], n: number): T[][] =>
        console.log(elm1, elm2, elm3);
    }
  */
-export function* zip<T extends Array<any>>(...args: Iterableify<T>): Generator<T> {
+export function* zip<T extends unknown[]>(...args: Iterableify<T>): Generator<T> {
   const iterators = args.map((it) => it[Symbol.iterator]());
   while (true) {
     const results = iterators.map((i) => i.next());
     if (results.some(({ done }) => done)) {
       break;
     }
-    yield results.map(({ value }) => value) as T;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    yield results.map(({ value }) => value) as unknown as T;
   }
 }
 type Iterableify<T> = { [K in keyof T]: Iterable<T[K]> };
 
-export const mapToArray = <M extends Map<K, V>, K extends any, V extends any = object>(map: M): V[] => {
+export const mapToArray = <M extends Map<K, V>, K, V = object>(map: M): V[] => {
   const array: V[] = [];
   for (const elem of map.values()) {
     array.push(elem);
@@ -114,14 +124,14 @@ export async function* extractTextFromPDF(pdfData: Uint8Array): AsyncGenerator<s
 }
 
 // 出力時：必ずarrayから変換してjsonかcsvに出力する
-export type FileExportIO<T = any[]> = {
+export type FileExportIO<T = unknown[]> = {
   payload: T;
   fileName: string;
   targetType: "json" | "csv";
   mode: "append" | "overwrite";
 };
 
-export const exportFile = async (IO: FileExportIO) => {
+export const exportFile = async (IO: FileExportIO): Promise<void> => {
   const raw = IO.payload;
   let output: string = "";
 
