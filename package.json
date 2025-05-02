@@ -41,14 +41,18 @@
     "prettier": "^3.2.4",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.17.0"
+    "typescript-eslint": "^8.17.0",
+    "vitest": "^3.1.2"
   },
   "scripts": {
     "type-check": "tsc --pretty --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "exec": "tsx"
+    "fix": "eslint . --fix && prettier --write .",
+    "exec": "tsx",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "volta": {
     "node": "22.11.0"

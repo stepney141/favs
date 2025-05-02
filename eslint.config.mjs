@@ -33,7 +33,6 @@ export default [
       "plugin:import/typescript"
     )
   ),
-  eslintConfigPrettier,
   // Apply general rules (excluding typed rules) to all files first
   {
     files: ["**/*.ts", "**/*.js", "**/*.mjs"], // Include .mjs for config file
@@ -134,5 +133,6 @@ export default [
       "functional/no-expression-statements": "off",
       "functional/no-return-void": "off"
     }
-  }
+  },
+  eslintConfigPrettier
 ];
