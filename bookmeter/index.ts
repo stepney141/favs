@@ -157,6 +157,6 @@ export async function main({
   const mode = parseArgv(process.argv);
 
   // For degugging:
-  await main({ mode, noRemoteCheck: true, skipBookListComparison: true, skipFetchingBiblioInfo: true });
-  // await main({ mode });
+  // await main({ mode, noRemoteCheck: true, skipBookListComparison: true, skipFetchingBiblioInfo: true });
+  await main({ mode });
 })();
