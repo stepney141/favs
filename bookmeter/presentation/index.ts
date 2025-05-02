@@ -1,197 +1,212 @@
-import { success, failure } from '../domain/models/valueObjects';
+import path from "path";
 
-import type { BiblioInfoProviderAggregator } from '../application/ports/output/biblioInfoProvider';
-import type { BookRepository } from '../application/ports/output/bookRepository';
-import type { BookScraperService } from '../application/ports/output/bookScraperService';
-import type { CompareBookListsUseCase } from '../application/usecases/compareBookListsUseCase';
-import type { FetchBiblioInfoBatchUseCase } from '../application/usecases/fetchBiblioInfoUseCase';
-import type { GetWishBookListUseCase, GetStackedBookListUseCase } from '../application/usecases/getBookListUseCase';
-import type { BookListType, Result, UserId} from '../domain/models/valueObjects';
+import { config } from "dotenv";
+
+import { FetchBiblioInfoUseCase } from "../application/usecases/fetchBiblioInfoUseCase";
+import { GetBookListUseCase } from "../application/usecases/getBookListUseCase";
+import { failure } from "../domain/models/valueObjects";
+import { OpenBdApiClient } from "../infrastructure/adapters/apis/openBdApiClient";
+import { SqliteBookRepository } from "../infrastructure/adapters/repositories/sqliteBookRepository";
+import { BookmeterScraper } from "../infrastructure/adapters/scraping/bookmeterScraper";
+import { PuppeteerBrowserSession } from "../infrastructure/adapters/scraping/puppeteerBrowserSession";
+
+import type { BiblioInfoProvider, BiblioInfoProviderAggregator } from "../application/ports/output/biblioInfoProvider";
+import type { Book } from "../domain/models/book";
+import type { BookListType, UserId, BiblioinfoErrorStatus, Result } from "../domain/models/valueObjects";
+
+// 環境変数の読み込み
+config({ path: path.join(__dirname, "../../.env") });
+
+// デフォルト値
+const DEFAULT_DB_PATH = path.join(__dirname, "../books.sqlite");
+const DEFAULT_USER_ID = "1003258" as UserId;
+
+// ログインに必要な場合
+const BOOKMETER_USERNAME = process.env.BOOKMETER_ACCOUNT || "";
+const BOOKMETER_PASSWORD = process.env.BOOKMETER_PASSWORD || "";
+
+// API資格情報
+const BIBLIOINFO_CREDENTIALS = {
+  cinii: process.env.CINII_API_APPID || "",
+  google: process.env.GOOGLE_BOOKS_API_KEY || "",
+  isbnDb: process.env.ISBNDB_API_KEY || ""
+};
 
 /**
- * Bookmeterメインアプリケーションクラス
- * CLIからの呼び出しに応じて適切なユースケースを実行する
+ * BiblioInfoProviderの集約実装
  */
-export class BookmeterApp {
-  /**
-   * コンストラクタ
-   * @param wishBookListUseCase 読みたい本リスト取得ユースケース
-   * @param stackedBookListUseCase 積読本リスト取得ユースケース
-   * @param biblioInfoBatchUseCase 書誌情報一括取得ユースケース
-   * @param compareBookListsUseCase 書籍リスト比較ユースケース
-   * @param bookRepository 書籍リポジトリ
-   */
-  constructor(
-    private readonly wishBookListUseCase: GetWishBookListUseCase,
-    private readonly stackedBookListUseCase: GetStackedBookListUseCase,
-    private readonly biblioInfoBatchUseCase: FetchBiblioInfoBatchUseCase,
-    private readonly compareBookListsUseCase: CompareBookListsUseCase,
-    private readonly bookRepository: BookRepository
-  ) {}
+/**
+ * BiblioInfoProviderの集約実装
+ */
+class BiblioInfoProviderAggregatorImpl implements BiblioInfoProviderAggregator {
+  private readonly providers: BiblioInfoProvider[];
 
-  /**
-   * メイン処理を実行する
-   * @param options 実行オプション
-   * @returns 実行結果
-   */
-  async run(options: RunOptions): Promise<Result<void>> {
-    // 実装すべき処理:
-    // 1. オプションのバリデーション
-    // 2. モードに応じたユースケースの実行（願望リストか積読リスト）
-    // 3. 書誌情報の取得（必要な場合）
-    // 4. 前回のデータとの比較（必要な場合）
-    // 5. 結果の保存とエクスポート
-    // 6. 実行結果の返却
-    
-    try {
-      // 各ユースケースを適切に実行
-      return success(undefined);
-    } catch (error) {
-      return failure(error instanceof Error ? error : new Error('実行中にエラーが発生しました'));
-    }
+  constructor() {
+    // 現時点ではOpenBDのみ実装
+    this.providers = [new OpenBdApiClient()];
   }
-}
 
-/**
- * 実行オプション
- */
-export interface RunOptions {
-  /**
-   * 処理対象のモード（wishまたはstacked）
-   */
-  mode: BookListType;
-  
-  /**
-   * ユーザーID
-   */
-  userId: UserId;
-  
-  /**
-   * ログインするかどうか
-   */
-  doLogin?: boolean;
-  
-  /**
-   * 出力ファイルパス
-   */
-  outputFilePath?: string;
-  
-  /**
-   * リモートチェックをスキップするかどうか
-   */
-  noRemoteCheck?: boolean;
-  
-  /**
-   * 書籍リスト比較をスキップするかどうか
-   */
-  skipBookListComparison?: boolean;
-  
-  /**
-   * 書誌情報取得をスキップするかどうか
-   */
-  skipFetchingBiblioInfo?: boolean;
-}
+  getProviders(): BiblioInfoProvider[] {
+    return this.providers;
+  }
 
-/**
- * CLIからの呼び出し時のエントリーポイント
- * @param args コマンドライン引数
- * @returns 終了コード（0: 成功、1: 失敗）
- */
-export async function main(args: string[]): Promise<number> {
-  // 実装すべき処理:
-  // 1. コマンドライン引数の解析
-  // 2. 依存関係の解決（DI）
-  // 3. BookmeterAppのインスタンス化
-  // 4. アプリケーションの実行
-  // 5. 結果に応じた終了コードの返却
-  
-  try {
-    // コマンドライン引数の解析
-    const options = parseArgs(args);
-    
-    // 依存関係の解決
-    const dependencies = setupDependencies();
-    
-    // アプリケーションの実行
-    const app = new BookmeterApp(
-      dependencies.wishBookListUseCase,
-      dependencies.stackedBookListUseCase,
-      dependencies.biblioInfoBatchUseCase,
-      dependencies.compareBookListsUseCase,
-      dependencies.bookRepository
-    );
-    
-    const result = await app.run(options);
-    
-    // 結果に応じた処理
-    if (result.type === 'success') {
-      console.log('処理が正常に完了しました');
-      return 0;
-    } else {
-      console.error(`エラーが発生しました: ${result.error.message}`);
-      return 1;
+  async fetchInfoByIsbn(isbn: string): Promise<Result<Partial<Book>, BiblioinfoErrorStatus>> {
+    // プロバイダーを順に試行
+    for (const provider of this.providers) {
+      const result = await provider.fetchInfoByIsbn(isbn);
+      if (result.type === "success") {
+        return result;
+      }
     }
-  } catch (error) {
-    console.error('予期しないエラーが発生しました:', error);
-    return 1;
+
+    // すべて失敗した場合
+    return failure("Not_found_in_OpenBD" as BiblioinfoErrorStatus);
+  }
+
+  async enrichBook(book: Book): Promise<Result<Book, BiblioinfoErrorStatus>> {
+    // 順番にエンリッチメントを適用
+    let enrichedBook = book;
+
+    for (const provider of this.providers) {
+      const result = await provider.enrichBook(enrichedBook);
+      if (result.type === "success") {
+        enrichedBook = result.value;
+      }
+    }
+
+    return { type: "success" as const, value: enrichedBook };
   }
 }
 
 /**
  * コマンドライン引数を解析する
  * @param args コマンドライン引数
- * @returns 実行オプション
+ * @returns 解析結果
  */
-function parseArgs(args: string[]): RunOptions {
-  // 実装すべき処理:
-  // 1. コマンドライン引数の検証
-  // 2. 値の取得とデフォルト値の設定
-  // 3. オプションオブジェクトの構築
-  
+function parseArgs(args: string[]): {
+  mode: BookListType;
+  userId?: UserId;
+  refresh?: boolean;
+  noRemoteCheck?: boolean;
+  skipBookListComparison?: boolean;
+  skipFetchingBiblioInfo?: boolean;
+  outputFilePath?: string;
+} {
+  const mode = args[2] as BookListType;
+
+  if (mode !== "wish" && mode !== "stacked") {
+    throw new Error("処理モードを指定してください（wish または stacked）");
+  }
+
   return {
-    mode: 'wish',
-    userId: 'default-user-id' as UserId,
-    // その他のオプションはデフォルト値を設定
+    mode,
+    userId: DEFAULT_USER_ID,
+    refresh: args.includes("--refresh"),
+    noRemoteCheck: args.includes("--no-remote"),
+    skipBookListComparison: args.includes("--skip-comparison"),
+    skipFetchingBiblioInfo: args.includes("--skip-biblio"),
+    outputFilePath: args.find((arg) => arg.startsWith("--output="))?.split("=")[1]
   };
 }
 
 /**
- * 依存関係を設定する
- * @returns 依存オブジェクト
+ * メイン関数
+ * @param args コマンドライン引数
  */
-function setupDependencies(): {
-  wishBookListUseCase: GetWishBookListUseCase;
-  stackedBookListUseCase: GetStackedBookListUseCase;
-  biblioInfoBatchUseCase: FetchBiblioInfoBatchUseCase;
-  compareBookListsUseCase: CompareBookListsUseCase;
-  bookRepository: BookRepository;
-  bookScraper: BookScraperService;
-  biblioProviders: BiblioInfoProviderAggregator;
-  } {
-  // 実装すべき処理:
-  // 1. 各インフラストラクチャコンポーネントのインスタンス化
-  // 2. ユースケースのインスタンス化
-  // 3. 依存オブジェクトの返却
-  
-  return {
-    wishBookListUseCase: {} as GetWishBookListUseCase,
-    stackedBookListUseCase: {} as GetStackedBookListUseCase,
-    biblioInfoBatchUseCase: {} as FetchBiblioInfoBatchUseCase,
-    compareBookListsUseCase: {} as CompareBookListsUseCase,
-    bookRepository: {} as BookRepository,
-    bookScraper: {} as BookScraperService,
-    biblioProviders: {} as BiblioInfoProviderAggregator
-  };
+export async function main(args: string[]): Promise<void> {
+  try {
+    console.log("Bookmeter Books Fetcher - リファクタリング版");
+
+    // 引数の解析
+    const params = parseArgs(args);
+    console.log(`モード: ${params.mode}`);
+
+    // リポジトリの作成
+    const bookRepository = new SqliteBookRepository(DEFAULT_DB_PATH);
+
+    // ブラウザセッションの作成
+    const browserSession = new PuppeteerBrowserSession({
+      headless: process.env.DEBUG ? false : "new"
+    });
+
+    // スクレイパーの作成
+    const bookScraper = new BookmeterScraper(browserSession);
+
+    // 書籍リスト取得ユースケースの作成
+    const getBookListUseCase = new GetBookListUseCase(bookRepository, bookScraper);
+
+    // 書籍リスト取得の実行
+    const bookListResult = await getBookListUseCase.execute({
+      type: params.mode,
+      userId: params.userId || DEFAULT_USER_ID,
+      refresh: params.refresh || false,
+      doLogin: true,
+      credentials: {
+        username: BOOKMETER_USERNAME,
+        password: BOOKMETER_PASSWORD
+      }
+    });
+
+    if (bookListResult.type === "failure") {
+      console.error(`エラー: ${bookListResult.error.message}`);
+      process.exit(1);
+    }
+
+    const bookList = bookListResult.value;
+    console.log(`${bookList.size()}冊の書籍情報を取得しました`);
+
+    // 書誌情報の取得（必要な場合）
+    if (!params.skipFetchingBiblioInfo) {
+      const biblioInfoProviders = new BiblioInfoProviderAggregatorImpl();
+      const fetchBiblioInfoUseCase = new FetchBiblioInfoUseCase(biblioInfoProviders);
+
+      console.log("書誌情報を取得しています...");
+
+      // ここでは単純化のため、一冊ずつ処理
+      let enrichedBookList = bookList;
+
+      for (const book of bookList.items.values()) {
+        const result = await fetchBiblioInfoUseCase.execute({
+          book,
+          apiKeys: BIBLIOINFO_CREDENTIALS
+        });
+
+        if (result.type === "success") {
+          enrichedBookList = enrichedBookList.add(result.value);
+        }
+      }
+
+      console.log("書誌情報の取得が完了しました");
+
+      // 更新された書籍リストを保存
+      await bookRepository.save(enrichedBookList);
+
+      // CSVにエクスポート
+      const csvPath = params.outputFilePath || `./csv/bookmeter_${params.mode}_books.csv`;
+      await bookRepository.export(enrichedBookList, csvPath);
+
+      console.log(`CSVファイル ${csvPath} にエクスポートしました`);
+    } else {
+      console.log("書誌情報の取得をスキップしました");
+
+      // CSVにエクスポート
+      const csvPath = params.outputFilePath || `./csv/bookmeter_${params.mode}_books.csv`;
+      await bookRepository.export(bookList, csvPath);
+
+      console.log(`CSVファイル ${csvPath} にエクスポートしました`);
+    }
+
+    console.log("処理が完了しました");
+  } catch (error) {
+    console.error("エラーが発生しました:", error instanceof Error ? error.message : String(error));
+    process.exit(1);
+  }
 }
 
-// スクリプトとして直接実行された場合に実行
+// エントリーポイント
 if (require.main === module) {
-  main(process.argv.slice(2))
-    .then((exitCode) => {
-      process.exit(exitCode);
-    })
-    .catch((error) => {
-      console.error('致命的なエラーが発生しました:', error);
-      process.exit(1);
-    });
+  main(process.argv).catch((error) => {
+    console.error("致命的なエラーが発生しました:", error);
+    process.exit(1);
+  });
 }
