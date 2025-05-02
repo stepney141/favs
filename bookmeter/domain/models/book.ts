@@ -1,7 +1,7 @@
-import { fromNullable, isSome } from './option';
+import { fromNullable, isSome } from "./option";
 
-import type { Option} from './option';
-import type { ISBN10, ISBN13, ASIN, BookId, LibraryId } from './valueObjects';
+import type { Option } from "./option";
+import type { ISBN10, ISBN13, ASIN, BookId, LibraryId } from "./valueObjects";
 
 /**
  * 書籍エンティティ
@@ -12,17 +12,17 @@ export interface Book {
   readonly id: BookId;
   readonly bookmeterUrl: string;
   readonly isbn: ISBN10 | ISBN13 | ASIN;
-  
+
   // 基本情報
   readonly title: string;
   readonly author: string;
-  readonly publisher: Option<string>;  // Option型に変更
-  readonly publishedDate: Option<string>;  // Option型に変更
-  
+  readonly publisher: Option<string>; // Option型に変更
+  readonly publishedDate: Option<string>; // Option型に変更
+
   // オプション情報
-  readonly description: Option<string>;  // Option型に変更
-  readonly tableOfContents: Option<string>;  // Option型に変更
-  
+  readonly description: Option<string>; // Option型に変更
+  readonly tableOfContents: Option<string>; // Option型に変更
+
   // 図書館蔵書情報
   readonly libraryAvailability: ReadonlyMap<LibraryId, LibraryAvailability>;
 }
@@ -32,7 +32,7 @@ export interface Book {
  */
 export interface LibraryAvailability {
   readonly isAvailable: boolean;
-  readonly opacUrl: Option<string>;  // Option型に変更
+  readonly opacUrl: Option<string>; // Option型に変更
 }
 
 /**
@@ -65,7 +65,7 @@ export const createBook = (
 /**
  * 書籍を更新する純粋関数
  */
-export const updateBook = (book: Book, updates: Partial<Omit<Book, 'id' | 'isbn' | 'bookmeterUrl'>>): Book => ({
+export const updateBook = (book: Book, updates: Partial<Omit<Book, "id" | "isbn" | "bookmeterUrl">>): Book => ({
   ...book,
   ...updates
 });
@@ -106,9 +106,9 @@ export const setTableOfContents = (book: Book, toc: string | null | undefined): 
  * 図書館の情報を追加する
  */
 export const addLibraryAvailability = (
-  book: Book, 
-  libraryId: LibraryId, 
-  isAvailable: boolean, 
+  book: Book,
+  libraryId: LibraryId,
+  isAvailable: boolean,
   opacUrl?: string | null
 ): Book => {
   const newAvailabilities = new Map(book.libraryAvailability);
@@ -116,7 +116,7 @@ export const addLibraryAvailability = (
     isAvailable,
     opacUrl: fromNullable(opacUrl)
   });
-  
+
   return {
     ...book,
     libraryAvailability: newAvailabilities
@@ -129,52 +129,52 @@ export const addLibraryAvailability = (
  */
 export interface BookList {
   readonly items: ReadonlyMap<string, Book>;
-  readonly type: 'wish' | 'stacked';
-  
+  readonly type: "wish" | "stacked";
+
   /**
    * サイズを取得
    */
   size(): number;
-  
+
   /**
    * 書籍を追加
    * @param book 追加する書籍
    * @returns 新しい書籍リスト
    */
   add(book: Book): BookList;
-  
+
   /**
    * 書籍を削除
    * @param isbn ISBN
    * @returns 新しい書籍リスト
    */
   remove(isbn: string): BookList;
-  
+
   /**
    * 書籍を取得
    * @param isbn ISBN
    * @returns 書籍（存在しない場合はnone）
    */
   get(isbn: string): Option<Book>;
-  
+
   /**
    * ISBNの配列を取得
    * @returns ISBNの配列
    */
   getIsbns(): readonly string[];
-  
+
   /**
    * Iterable プロトコルをサポート
    */
   [Symbol.iterator](): IterableIterator<[string, Book]>;
-  
+
   /**
    * リスト内の全書籍に関数を適用して新しいリストを作成
    * @param f 各書籍に適用する関数
    * @returns 新しい書籍リスト
    */
   map(f: (book: Book) => Book): BookList;
-  
+
   /**
    * 条件を満たす書籍のみを含む新しいリストを作成
    * @param predicate フィルタ条件
@@ -189,71 +189,71 @@ export interface BookList {
 export class BookListImpl implements BookList {
   private constructor(
     public readonly items: ReadonlyMap<string, Book>,
-    public readonly type: 'wish' | 'stacked'
+    public readonly type: "wish" | "stacked"
   ) {}
-  
+
   /**
    * 空の書籍リストを作成
    * @param type リストの種類
    * @returns 空の書籍リスト
    */
-  static createEmpty(type: 'wish' | 'stacked'): BookList {
+  static createEmpty(type: "wish" | "stacked"): BookList {
     return new BookListImpl(new Map<string, Book>(), type);
   }
-  
+
   /**
    * Mapから書籍リストを作成
    * @param items 書籍のMap
    * @param type リストの種類
    * @returns 書籍リスト
    */
-  static fromMap(items: Map<string, Book> | ReadonlyMap<string, Book>, type: 'wish' | 'stacked'): BookList {
+  static fromMap(items: Map<string, Book> | ReadonlyMap<string, Book>, type: "wish" | "stacked"): BookList {
     return new BookListImpl(new Map(items), type);
   }
-  
+
   /**
    * 配列から書籍リストを作成
    * @param books 書籍の配列
    * @param type リストの種類
    * @returns 書籍リスト
    */
-  static fromArray(books: readonly Book[], type: 'wish' | 'stacked'): BookList {
+  static fromArray(books: readonly Book[], type: "wish" | "stacked"): BookList {
     const map = new Map<string, Book>();
     for (const book of books) {
       map.set(book.isbn.toString(), book);
     }
     return new BookListImpl(map, type);
   }
-  
+
   size(): number {
     return this.items.size;
   }
-  
+
   add(book: Book): BookList {
     const newMap = new Map(this.items);
     newMap.set(book.isbn.toString(), book);
     return new BookListImpl(newMap, this.type);
   }
-  
+
   remove(isbn: string): BookList {
     const newMap = new Map(this.items);
     newMap.delete(isbn);
     return new BookListImpl(newMap, this.type);
   }
-  
+
   get(isbn: string): Option<Book> {
     const book = this.items.get(isbn);
     return fromNullable(book);
   }
-  
+
   getIsbns(): readonly string[] {
     return [...this.items.keys()];
   }
-  
+
   [Symbol.iterator](): IterableIterator<[string, Book]> {
     return this.items.entries();
   }
-  
+
   map(f: (book: Book) => Book): BookList {
     const newItems = new Map<string, Book>();
     for (const [isbn, book] of this.items) {
@@ -261,7 +261,7 @@ export class BookListImpl implements BookList {
     }
     return new BookListImpl(newItems, this.type);
   }
-  
+
   filter(predicate: (book: Book) => boolean): BookList {
     const newItems = new Map<string, Book>();
     for (const [isbn, book] of this.items) {
@@ -292,9 +292,9 @@ export interface BookListDiff {
 export const diffBookLists = (oldList: BookList, newList: BookList): BookListDiff => {
   const added: Book[] = [];
   const removed: Book[] = [];
-  const changed: Array<{ old: Book, new: Book }> = [];
+  const changed: Array<{ old: Book; new: Book }> = [];
   const unchanged: Book[] = [];
-  
+
   // 削除されたものを検出
   for (const [isbn, oldBook] of oldList) {
     const newBookOption = newList.get(isbn);
@@ -302,27 +302,24 @@ export const diffBookLists = (oldList: BookList, newList: BookList): BookListDif
       removed.push(oldBook);
     }
   }
-  
+
   // 追加されたものと変更されたものを検出
   for (const [isbn, newBook] of newList) {
     const oldBookOption = oldList.get(isbn);
-    
+
     if (!isSome(oldBookOption)) {
       added.push(newBook);
     } else {
       const oldBook = oldBookOption.value;
       // 書籍の内容が変更されたかどうかの判定 (簡易版)
-      if (
-        oldBook.title !== newBook.title ||
-        oldBook.author !== newBook.author
-      ) {
+      if (oldBook.title !== newBook.title || oldBook.author !== newBook.author) {
         changed.push({ old: oldBook, new: newBook });
       } else {
         unchanged.push(newBook);
       }
     }
   }
-  
+
   return {
     added,
     removed,

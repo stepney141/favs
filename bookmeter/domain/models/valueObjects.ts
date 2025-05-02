@@ -1,5 +1,5 @@
-import { Either, left, right, isLeft, isRight, fold } from './either';
-import { Option, some, none, fromNullable } from './option';
+import { Either, left, right, isLeft, isRight, fold } from "./either";
+import { Option, some, none, fromNullable } from "./option";
 
 /**
  * ドメイン固有の値オブジェクトを定義するファイル
@@ -14,37 +14,37 @@ export type Brand<K, T> = K & { readonly _brand: T };
 /**
  * ISBNの値オブジェクト
  */
-export type ISBN10 = Brand<string, 'ISBN10'>;
-export type ISBN13 = Brand<string, 'ISBN13'>;
-export type ASIN = Brand<string, 'ASIN'>;
-export type BookId = Brand<string, 'BookId'>;
-export type UserId = Brand<string, 'UserId'>;
+export type ISBN10 = Brand<string, "ISBN10">;
+export type ISBN13 = Brand<string, "ISBN13">;
+export type ASIN = Brand<string, "ASIN">;
+export type BookId = Brand<string, "BookId">;
+export type UserId = Brand<string, "UserId">;
 
 /**
  * 書籍リストの種類
  */
-export type BookListType = 'wish' | 'stacked';
+export type BookListType = "wish" | "stacked";
 
 /**
  * 図書館の識別子
  */
-export type LibraryId = Brand<string, 'LibraryId'>;
+export type LibraryId = Brand<string, "LibraryId">;
 
 /**
  * 書誌情報のソース
  */
-export type BiblioInfoSource = 'OpenBD' | 'ISBNdb' | 'Amazon' | 'NDL' | 'GoogleBooks';
+export type BiblioInfoSource = "OpenBD" | "ISBNdb" | "Amazon" | "NDL" | "GoogleBooks";
 
 /**
  * 書誌情報取得時のエラー状態
  */
 export type BiblioinfoErrorStatus =
   | `Not_found_in_${BiblioInfoSource}`
-  | 'INVALID_ISBN'
-  | 'OpenBD_API_ERROR'
-  | 'ISBNdb_API_ERROR'
-  | 'NDL_API_ERROR'
-  | 'GoogleBooks_API_ERROR';
+  | "INVALID_ISBN"
+  | "OpenBD_API_ERROR"
+  | "ISBNdb_API_ERROR"
+  | "NDL_API_ERROR"
+  | "GoogleBooks_API_ERROR";
 
 /**
  * 処理結果を表す型（成功か失敗か）
@@ -53,30 +53,28 @@ export type BiblioinfoErrorStatus =
 export type Result<T, E = Error> = Success<T> | Failure<E>;
 
 export interface Success<T> {
-  readonly type: 'success';
+  readonly type: "success";
   readonly value: T;
 }
 
 export interface Failure<E> {
-  readonly type: 'failure';
+  readonly type: "failure";
   readonly error: E;
 }
 
 export const success = <T>(value: T): Success<T> => ({
-  type: 'success',
-  value,
+  type: "success",
+  value
 });
 
 export const failure = <E>(error: E): Failure<E> => ({
-  type: 'failure',
-  error,
+  type: "failure",
+  error
 });
 
-export const isSuccess = <T, E>(result: Result<T, E>): result is Success<T> => 
-  result.type === 'success';
+export const isSuccess = <T, E>(result: Result<T, E>): result is Success<T> => result.type === "success";
 
-export const isFailure = <T, E>(result: Result<T, E>): result is Failure<E> => 
-  result.type === 'failure';
+export const isFailure = <T, E>(result: Result<T, E>): result is Failure<E> => result.type === "failure";
 
 /**
  * ResultをEitherに変換
@@ -102,7 +100,7 @@ export const unwrap = <T, E>(result: Result<T, E>): T => {
   if (isSuccess(result)) {
     return result.value;
   }
-  
+
   // エラーがErrorオブジェクトでない場合は、Errorオブジェクトでラップする
   if (result.error instanceof Error) {
     throw result.error;
