@@ -1,131 +1,114 @@
-import type { BookList } from '../../../domain/models/book';
-import type { Result, UserId } from '../../../domain/models/valueObjects';
+import type { Book, BookList } from '../../../domain/models/book';
+import type { Either } from '../../../domain/models/either';
+import type { UserId } from '../../../domain/models/valueObjects';
 
 /**
- * 書籍スクレイパーサービスインターフェース
- * ウェブサイトから書籍情報をスクレイピングするための抽象化
+ * 書籍スクレイパーのエラー型
  */
-export interface BookScraperService {
-  /**
-   * ログイン状態かどうか
-   */
-  readonly isLoggedIn: boolean;
-  
-  /**
-   * スクレイパーの初期化
-   * @returns 初期化結果
-   */
-  initialize(): Promise<Result<void>>;
-  
-  /**
-   * ウェブサイトにログインする
-   * @param username ユーザー名
-   * @param password パスワード
-   * @returns ログイン結果
-   */
-  login(username: string, password: string): Promise<Result<void>>;
-  
-  /**
-   * 読みたい本リストを取得する
-   * @param userId ユーザーID
-   * @returns 取得結果
-   */
-  getWishBooks(userId: UserId): Promise<Result<BookList>>;
-  
-  /**
-   * 積読本リストを取得する
-   * @param userId ユーザーID
-   * @returns 取得結果
-   */
-  getStackedBooks(userId: UserId): Promise<Result<BookList>>;
-  
-  /**
-   * スクレイパーのリソースを解放する
-   * @returns 解放結果
-   */
-  dispose(): Promise<Result<void>>;
+export interface BookScraperError {
+  readonly code: string;
+  readonly message: string;
+  readonly cause?: unknown;
 }
 
 /**
- * ブラウザセッション管理インターフェース
- * Puppeteerなどのブラウザ自動操作ライブラリを抽象化
+ * ブラウザセッションのインターフェース
  */
 export interface BrowserSession {
   /**
    * ブラウザを初期化する
-   * @returns 初期化結果
    */
-  initialize(): Promise<Result<void>>;
+  initialize(): Promise<Either<BookScraperError, void>>;
   
   /**
-   * 指定したURLにナビゲートする
+   * 指定URLに移動する
    * @param url 移動先URL
-   * @returns ナビゲーション結果
    */
-  navigateTo(url: string): Promise<Result<void>>;
+  navigateTo(url: string): Promise<Either<BookScraperError, void>>;
   
   /**
-   * 指定したセレクタの要素をクリックする
-   * @param selector 要素のセレクタ
-   * @returns クリック結果
+   * セレクタに一致する要素にクリックする
+   * @param selector セレクタ
    */
-  click(selector: string): Promise<Result<void>>;
+  click(selector: string): Promise<Either<BookScraperError, void>>;
   
   /**
-   * 指定したセレクタの要素にテキストを入力する
-   * @param selector 要素のセレクタ
-   * @param text 入力するテキスト
-   * @returns 入力結果
+   * セレクタに一致する要素に文字列を入力する
+   * @param selector セレクタ
+   * @param text 入力テキスト
    */
-  type(selector: string, text: string): Promise<Result<void>>;
+  type(selector: string, text: string): Promise<Either<BookScraperError, void>>;
   
   /**
-   * 指定したセレクタの要素のテキストを取得する
-   * @param selector 要素のセレクタ
-   * @returns テキスト取得結果
-   */
-  getText(selector: string): Promise<Result<string>>;
-  
-  /**
-   * 指定したセレクタの要素のHTML属性を取得する
-   * @param selector 要素のセレクタ
-   * @param attributeName 属性名
-   * @returns 属性値取得結果
-   */
-  getAttribute(selector: string, attributeName: string): Promise<Result<string | null>>;
-  
-  /**
-   * 指定したXPathの要素を取得する
-   * @param xpath XPath式
-   * @returns 要素取得結果
-   */
-  getElementByXPath(xpath: string): Promise<Result<unknown>>;
-  
-  /**
-   * 指定したXPathの要素のテキストを取得する
-   * @param xpath XPath式
-   * @returns テキスト取得結果
-   */
-  getTextByXPath(xpath: string): Promise<Result<string>>;
-  
-  /**
-   * 指定したXPathの要素の属性を取得する
-   * @param xpath XPath式
-   * @param attributeName 属性名
-   * @returns 属性値取得結果
-   */
-  getAttributeByXPath(xpath: string, attributeName: string): Promise<Result<string | null>>;
-  
-  /**
-   * ページ上でJavaScriptを実行する
+   * JavaScriptを実行する
    * @param script 実行するスクリプト
    * @returns 実行結果
    */
-  evaluate<T>(script: string | ((...args: unknown[]) => T)): Promise<Result<T>>;
+  evaluate<T>(script: string): Promise<Either<BookScraperError, T>>;
   
   /**
-   * セッションを終了する
-   * @returns 終了結果
+   * セレクタに一致する要素の属性を取得する
+   * @param selector セレクタ
+   * @param attributeName 属性名
+   * @returns 属性値
    */
-  close(): Promise<Result<void>>;
+  getAttribute(selector: string, attributeName: string): Promise<Either<BookScraperError, string>>;
+  
+  /**
+   * セレクタに一致する要素のテキスト内容を取得する
+   * @param selector セレクタ
+   * @returns テキスト内容
+   */
+  getText(selector: string): Promise<Either<BookScraperError, string>>;
+  
+  /**
+   * ブラウザを閉じる
+   */
+  close(): Promise<Either<BookScraperError, void>>;
+}
+
+/**
+ * 書籍スクレイパーサービスのインターフェース
+ */
+export interface BookScraperService {
+  /**
+   * 読みたい本リストを取得する
+   * @param userId ユーザーID
+   * @returns 処理結果
+   */
+  getWishBooks(userId: UserId): Promise<Either<BookScraperError, BookList>>;
+  
+  /**
+   * 積読本リストを取得する
+   * @param userId ユーザーID
+   * @returns 処理結果
+   */
+  getStackedBooks(userId: UserId): Promise<Either<BookScraperError, BookList>>;
+  
+  /**
+   * 特定の書籍情報を取得する
+   * @param bookmeterUrl ブクメーターの書籍URL
+   * @returns 処理結果
+   */
+  getBookDetails?(bookmeterUrl: string): Promise<Either<BookScraperError, Book>>;
+  
+  /**
+   * ログイン状態にする
+   * @param username ユーザー名
+   * @param password パスワード
+   * @returns 処理結果
+   */
+  login?(username: string, password: string): Promise<Either<BookScraperError, void>>;
+  
+  /**
+   * 初期化
+   * @returns 処理結果
+   */
+  initialize?(): Promise<Either<BookScraperError, void>>;
+  
+  /**
+   * 後処理を行う
+   * @returns 処理結果
+   */
+  dispose?(): Promise<Either<BookScraperError, void>>;
 }

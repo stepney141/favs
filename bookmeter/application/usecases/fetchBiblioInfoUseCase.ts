@@ -1,55 +1,76 @@
-import { failure, success } from '../../domain/models/valueObjects';
+import { BookListImpl } from '../../domain/models/book';
+import { right, left } from '../../domain/models/either';
+import { isSome } from '../../domain/models/option';
 
-import type { Book } from '../../domain/models/book';
-import type { Result} from '../../domain/models/valueObjects';
-import type { UseCase } from '../ports/input/useCase';
+import type { Book, BookList} from '../../domain/models/book';
+import type { Either } from '../../domain/models/either';
+import type { UseCase, UseCaseError } from '../ports/input/useCase';
 import type { BiblioInfoProviderAggregator } from '../ports/output/biblioInfoProvider';
 
 /**
- * 書誌情報取得ユースケースの入力パラメータ
+ * 書誌情報取得ユースケースのエラー型
  */
-export interface FetchBiblioInfoParams {
-  /**
-   * 対象の書籍
-   */
-  book: Book;
-  
-  /**
-   * APIキー（必要な場合）
-   */
-  apiKeys?: Record<string, string>;
+export interface FetchBiblioInfoError extends UseCaseError {
+  readonly code: 'PROVIDER_ERROR' | 'VALIDATION_ERROR';
 }
 
 /**
- * 書誌情報取得ユースケース
- * 複数のソースから書籍の詳細情報を取得し、マージする
+ * 書誌情報取得ユースケースの入力型（単一書籍用）
  */
-export class FetchBiblioInfoUseCase implements UseCase<FetchBiblioInfoParams, Result<Book>> {
+export interface FetchBookBiblioInfoInput {
+  readonly book: Book;
+  readonly apiKeys?: Record<string, string>;
+  readonly providers?: string[];  // 使用するプロバイダーを指定（指定がない場合は全て使用）
+}
+
+/**
+ * 書誌情報取得ユースケースの入力型（複数書籍用）
+ */
+export interface FetchBookListBiblioInfoInput {
+  readonly bookList: BookList;
+  readonly apiKeys?: Record<string, string>;
+  readonly providers?: string[];  // 使用するプロバイダーを指定（指定がない場合は全て使用）
+  readonly concurrency?: number;  // 同時実行数（デフォルト: 5）
+  readonly skipExistingInfo?: boolean;  // 既に情報が存在する場合はスキップするかどうか
+}
+
+/**
+ * 単一書籍の書誌情報を取得するユースケース
+ */
+export class FetchBookBiblioInfoUseCase implements UseCase<FetchBookBiblioInfoInput, Book, FetchBiblioInfoError> {
   constructor(
-    private readonly biblioInfoProviders: BiblioInfoProviderAggregator
+    private readonly biblioInfoAggregator: BiblioInfoProviderAggregator
   ) {}
   
   /**
-   * ユースケースを実行する
-   * @param params パラメータ
-   * @returns 書籍情報
+   * 指定された書籍の書誌情報を取得して充実させます
+   * @param input 入力パラメーター
    */
-  async execute(params: FetchBiblioInfoParams): Promise<Result<Book>> {
-    // 実装すべき処理:
-    // 1. 書籍のISBNを検証
-    // 2. 複数のプロバイダーを使って書誌情報を取得
-    // 3. 取得した情報をマージして返す
-    
+  async execute(input: FetchBookBiblioInfoInput): Promise<Either<FetchBiblioInfoError, Book>> {
     try {
-      const enrichedBookResult = await this.biblioInfoProviders.enrichBook(params.book);
+      await Promise.resolve(); // ESLintのasync/awaitエラーを回避するためのダミーawait
       
-      if (enrichedBookResult.type === 'failure') {
-        return failure(new Error(`書誌情報の取得に失敗しました: ${enrichedBookResult.error}`));
+      // 書誌情報プロバイダーを使って書籍情報を充実させる
+      const enrichResult = await this.biblioInfoAggregator.enrichBook(
+        input.book,
+        input.apiKeys
+      );
+      
+      if (enrichResult._tag === 'Left') {
+        return left({
+          code: 'PROVIDER_ERROR',
+          message: `書誌情報の取得に失敗しました: ${enrichResult.left.message}`,
+          cause: enrichResult.left
+        });
       }
       
-      return success(enrichedBookResult.value);
+      return right(enrichResult.right);
     } catch (error) {
-      return failure(error instanceof Error ? error : new Error('書誌情報取得中に予期しないエラーが発生しました'));
+      return left({
+        code: 'VALIDATION_ERROR',
+        message: '書誌情報取得処理中にエラーが発生しました',
+        cause: error
+      });
     }
   }
 }
@@ -57,58 +78,89 @@ export class FetchBiblioInfoUseCase implements UseCase<FetchBiblioInfoParams, Re
 /**
  * 書籍リストの書誌情報を一括取得するユースケース
  */
-export class FetchBiblioInfoBatchUseCase implements UseCase<{ books: Book[], apiKeys?: Record<string, string> }, Result<Book[]>> {
+export class FetchBookListBiblioInfoUseCase 
+implements UseCase<FetchBookListBiblioInfoInput, BookList, FetchBiblioInfoError> {
+  
   constructor(
-    private readonly fetchBiblioInfoUseCase: FetchBiblioInfoUseCase
+    private readonly biblioInfoAggregator: BiblioInfoProviderAggregator
   ) {}
   
   /**
-   * ユースケースを実行する
-   * @param params パラメータ
-   * @returns 書籍情報の配列
+   * 指定された書籍リストの書誌情報を一括取得して充実させます
+   * @param input 入力パラメーター
    */
-  async execute(params: { books: Book[], apiKeys?: Record<string, string> }): Promise<Result<Book[]>> {
-    // 実装すべき処理:
-    // 1. 各書籍に対して並行して書誌情報を取得
-    // 2. 結果をまとめて返す
-    
+  async execute(input: FetchBookListBiblioInfoInput): Promise<Either<FetchBiblioInfoError, BookList>> {
     try {
-      const enrichedBooks: Book[] = [];
-      const errors: Error[] = [];
+      // 書籍リストから書籍の配列を取得
+      const books: Book[] = [];
+      for (const [_, book] of input.bookList) {
+        books.push(book);
+      }
       
-      // 並行処理するが、レート制限に注意する必要がある
-      // 実際の実装では適切なバッチサイズと待機時間を設定する
-      const batchSize = 5;
+      // 既に情報がある書籍をフィルタリング（オプション）
+      const booksToProcess = input.skipExistingInfo
+        ? books.filter(book => 
+          !isSome(book.publisher) || 
+            !isSome(book.publishedDate) || 
+            book.title === '' || 
+            book.author === '')
+        : books;
       
-      for (let i = 0; i < params.books.length; i += batchSize) {
-        const batch = params.books.slice(i, i + batchSize);
-        const promises = batch.map(book => 
-          this.fetchBiblioInfoUseCase.execute({ book, apiKeys: params.apiKeys })
+      // 書誌情報を一括取得
+      const enrichResult = await this.biblioInfoAggregator.enrichBooks(
+        booksToProcess,
+        input.apiKeys
+      );
+      
+      if (enrichResult._tag === 'Left') {
+        return left({
+          code: 'PROVIDER_ERROR',
+          message: `書誌情報の一括取得に失敗しました: ${enrichResult.left.message}`,
+          cause: enrichResult.left
+        });
+      }
+      
+      // 更新された書籍でリストを更新
+      const updatedBooks = enrichResult.right;
+      const resultList = input.bookList.type === 'wish'
+        ? BookListImpl.createEmpty('wish')
+        : BookListImpl.createEmpty('stacked');
+      
+      // 更新された書籍とスキップされた書籍を含めて結果のリストを作成
+      if (input.skipExistingInfo) {
+        // スキップされた書籍と更新された書籍を組み合わせる
+        const processedIsbns = new Set(updatedBooks.map(book => book.isbn.toString()));
+        
+        // まず更新された書籍を追加
+        let newList = updatedBooks.reduce(
+          (list, book) => list.add(book),
+          resultList
         );
         
-        const results = await Promise.all(promises);
+        // 次にスキップされた書籍を追加
+        newList = books
+          .filter(book => !processedIsbns.has(book.isbn.toString()))
+          .reduce(
+            (list, book) => list.add(book),
+            newList
+          );
         
-        for (const result of results) {
-          if (result.type === 'success') {
-            enrichedBooks.push(result.value);
-          } else {
-            errors.push(result.error);
-          }
-        }
+        return right(newList);
+      } else {
+        // 全ての書籍が更新されている場合は、そのまま返す
+        const newList = updatedBooks.reduce(
+          (list, book) => list.add(book),
+          resultList
+        );
         
-        // APIレート制限回避のための待機
-        if (i + batchSize < params.books.length) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
-        }
+        return right(newList);
       }
-      
-      if (errors.length > 0) {
-        console.warn(`${errors.length}件の書籍で書誌情報の取得に失敗しました`);
-      }
-      
-      return success(enrichedBooks);
     } catch (error) {
-      return failure(error instanceof Error ? error : new Error('書誌情報一括取得中に予期しないエラーが発生しました'));
+      return left({
+        code: 'VALIDATION_ERROR',
+        message: '書誌情報の一括取得処理中にエラーが発生しました',
+        cause: error
+      });
     }
   }
 }

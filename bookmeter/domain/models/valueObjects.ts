@@ -1,3 +1,6 @@
+import { Either, left, right, isLeft, isRight, fold } from './either';
+import { Option, some, none, fromNullable } from './option';
+
 /**
  * ドメイン固有の値オブジェクトを定義するファイル
  * これらは単なる型ではなく、検証ロジックを伴う値オブジェクト
@@ -38,13 +41,14 @@ export type BiblioInfoSource = 'OpenBD' | 'ISBNdb' | 'Amazon' | 'NDL' | 'GoogleB
 export type BiblioinfoErrorStatus =
   | `Not_found_in_${BiblioInfoSource}`
   | 'INVALID_ISBN'
-  | 'OpenBD_API_Error'
-  | 'ISBNdb_API_Error'
-  | 'NDL_API_Error'
-  | 'GoogleBooks_API_Error';
+  | 'OpenBD_API_ERROR'
+  | 'ISBNdb_API_ERROR'
+  | 'NDL_API_ERROR'
+  | 'GoogleBooks_API_ERROR';
 
 /**
  * 処理結果を表す型（成功か失敗か）
+ * 互換性のために残すが、新しいコードではEitherを使用する
  */
 export type Result<T, E = Error> = Success<T> | Failure<E>;
 
@@ -75,6 +79,23 @@ export const isFailure = <T, E>(result: Result<T, E>): result is Failure<E> =>
   result.type === 'failure';
 
 /**
+ * ResultをEitherに変換
+ */
+export const toEither = <T, E>(result: Result<T, E>): Either<E, T> =>
+  isSuccess(result) ? right(result.value) : left(result.error);
+
+/**
+ * EitherをResultに変換
+ */
+export const fromEither = <E, T>(either: Either<E, T>): Result<T, E> => {
+  if (isRight(either)) {
+    return success(either.right);
+  } else {
+    return failure(either.left);
+  }
+};
+
+/**
  * 値を取得。失敗の場合は例外を投げる
  */
 export const unwrap = <T, E>(result: Result<T, E>): T => {
@@ -88,3 +109,7 @@ export const unwrap = <T, E>(result: Result<T, E>): T => {
   }
   throw new Error(String(result.error));
 };
+
+// Option型とEither型をエクスポート
+export { Option, some, none, fromNullable };
+export { Either, left, right, isLeft, isRight, fold };
