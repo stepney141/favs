@@ -1,9 +1,10 @@
 isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4492224025,先生、どうか皆の前でほめないで下さい : いい子症候群の若者たち,"金間,大介",東洋経済新報社,202203,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC13487085
 4062881160,発達障害のいま 2116 (講談社現代新書),"杉山,登志郎,1951-",講談社,201107,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB06206994
-4322134084,アルゴリズム取引の正体,"NTTデータフィナンシャルソリューションズ,NTTデータ・フィナンシャル・ソリューションズ先端金融工学センター 編著","金融財政事情研究会,きんざい (発売)","Fri, 9 Nov 2018 18:43:37 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB27039915
+4322134084,アルゴリズム取引の正体,"NTTデータフィナンシャルソリューションズ,NTTデータ・フィナンシャル・ソリューションズ先端金融工学センター 編著",[object Object],"Fri, 9 Nov 2018 18:43:37 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB27039915
 4322128629,数理ファイナンスの歴史 = The History of Mathematical Finance,"櫻井,豊,1962-",きんざい,201604,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB21047105
 4766427831,新版　市場を創る,ジョン・マクミラン／著 瀧澤弘和／訳 木村友二／訳,慶應義塾大学出版会,20211020,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC10444880
+4766430158,一歩ずつマスターする論理学入門,"峯島, 宏次,峯島宏次 著",慶應義塾大学出版会,"Thu, 17 Apr 2025 20:22:24 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4766430158
 4006003900,確率論と私 390 (岩波現代文庫. 学術),"伊藤,清,1915-2008",岩波書店,201810,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB27000239
 4774408409,書庫をあるく アーカイブの隠れた魅力,南陀楼綾繁／著,皓星社,20241213,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD0991981X
 4065386039,ゼロから始める　無敵のレポート・論文術,尾崎俊介,,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD11083843
@@ -128,7 +129,6 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4000298968,テキストアナリティクスの基礎と実践 1 (テキストアナリティクス),"金,明哲,1954- 金,明哲,1954-",岩波書店,202103,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC06431783
 479520120X,数論を学ぶ人のための相互法則入門 18 (数理情報科学シリーズ),"平松,豊一,1937-",星雲社,199805,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA35679868
 4535559473,地域データ分析入門 = Introduction to Regional Data Analysis : すぐに役立つEBPM実践ガイドブック,"林,宜嗣,1951- 林,亮輔,1983- 高林,喜久生,1953- 林,勇貴,1988- ほか",日本評論社,202112,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC11791427
-4627078919,数論幾何入門,三枝洋一,森北出版,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD07163439
 4845921324,映像クリエイターのための完全独学マニュアル,,フィルムアート社,20221026,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC17391975
 4254122128,基礎からのベイズ統計学 : ハミルトニアンモンテカルロ法による実践的入門,"豊田,秀樹,1961-",朝倉書店,201506,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB18938264
 4845921170,色のコードを読む,ポール・シンプソン／著 中山ゆかり／翻訳,フィルムアート社,20221224,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD00226632
@@ -314,7 +314,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4787292749,怪談の仕掛け,伊藤龍平／著,青弓社,20230620,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD02729441
 425420163X,"「かわいい」工学 = ""KAWAII"" Engineering","大倉,典子,1953-",朝倉書店,201703,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB2341504X
 481440039X,RustとWebAssemblyによるゲーム開発 : 安全・高速・プラットフォーム非依存のWebアプリ開発入門,"Smith,Eric 中田,秀基,1967-",オーム社 (発売),202307,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD02922022
-4331150526,プログラム学習による基礎電気工学 交流編 / 電気基礎講座 ; 3,"松下電器工学院,松下電器工学院 編著","松下電器産業,広済堂出版","Thu, 17 Apr 1997 00:00:00 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN02383030
+4331150526,プログラム学習による基礎電気工学 交流編 / 電気基礎講座 ; 3,"松下電器工学院,松下電器工学院 編著",[object Object],"Thu, 17 Apr 1997 00:00:00 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN02383030
 4331150518,プログラム学習による基礎電気工学 直流編 / 電気基礎講座 1,"松下電器工学院,松下電器工学院 編著",松下電器産業,"Thu, 3 Dec 2009 09:00:00 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN02383030
 433115050X,基礎電子工学 : プログラム学習による 電子回路編　１ ５ (電気基礎講座),松下電器工学院 末武国弘,松下電器産業,1975,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN02383289
 4641150044,金融のエッセンス = THE ESSENCE OF BANKING & FINANCE (有斐閣ストゥディア),"川西,諭 山崎,福寿,1954-",有斐閣,201312,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB14311338
