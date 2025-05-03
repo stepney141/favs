@@ -6,6 +6,34 @@ export const DEFAULT_CSV_FILENAME = {
   stacked: "./csv/bookmeter_stacked_books.csv"
 };
 
+/**
+ * CSVエクスポート時に含めるカラム
+ */
+export const CSV_EXPORT_COLUMNS = {
+  wish: [
+    "bookmeter_url",
+    "isbn_or_asin",
+    "book_title",
+    "author",
+    "publisher",
+    "published_date",
+    "exist_in_Sophia",
+    "exist_in_UTokyo",
+    "sophia_opac",
+    "utokyo_opac",
+    "sophia_mathlib_opac"
+  ],
+  stacked: [
+    "bookmeter_url",
+    "isbn_or_asin",
+    "book_title",
+    "author",
+    "publisher",
+    "published_date"
+    // stackedでは所蔵情報は不要と仮定
+  ]
+} as const;
+
 export const BOOKMETER_BASE_URI = "https://bookmeter.com";
 export const BOOKMETER_DEFAULT_USER_ID = "1003258";
 

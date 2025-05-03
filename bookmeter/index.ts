@@ -6,10 +6,10 @@ import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
 import { CHROME_ARGS } from "../.libs/constants";
-import { mapToArray, exportFile } from "../.libs/utils";
+import { exportFile } from "../.libs/utils"; // mapToArray is no longer needed here
 
 import { Bookmaker } from "./bookmaker";
-import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID } from "./constants";
+import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID, CSV_EXPORT_COLUMNS } from "./constants"; // Import CSV_EXPORT_COLUMNS
 import { fetchBiblioInfo } from "./fetchers";
 import { uploadDatabaseToFirebase } from "./firebase";
 import { crawlKinokuniya } from "./kinokuniya";
@@ -50,7 +50,7 @@ export async function main({
   noRemoteCheck = false,
   skipBookListComparison = false,
   skipFetchingBiblioInfo = false
-}: MainFuncOption) {
+}: MainFuncOption): Promise<void> {
   try {
     const startTime = Date.now();
     const csvFileName = buildCsvFileName(userId, outputFilePath);
@@ -113,9 +113,9 @@ export async function main({
           console.log(`${JOB_NAME}: Saving data to SQLite database`);
           await saveBookListToDatabase(updatedBooklist, mode);
 
-          // SQLiteデータベースからCSVを生成
+          // SQLiteデータベースからCSVを生成 (カラムを指定)
           console.log(`${JOB_NAME}: Generating CSV from SQLite database`);
-          await exportDatabaseTableToCsv(mode, csvFileName[mode]);
+          await exportDatabaseTableToCsv(mode, csvFileName[mode], CSV_EXPORT_COLUMNS[mode]); // Pass columns
           console.log(`${JOB_NAME}: Finished writing ${csvFileName[mode]}`);
 
           // SQLiteデータベースをFirebase Storageにアップロード
@@ -125,10 +125,17 @@ export async function main({
 
           // エラー発生時はフォールバックとして直接CSVに保存
           try {
-            console.log(`${JOB_NAME}: Error occurred, falling back to direct CSV export`);
+            console.log(
+              `${JOB_NAME}: Error occurred, falling back to direct CSV export (using all columns except description)`
+            );
+            // フォールバック時は description を除いた全カラムを出力する
+            const fallbackPayload = Array.from(updatedBooklist.values()).map((book) => {
+              const { description, ...rest } = book;
+              return rest;
+            });
             await exportFile({
               fileName: csvFileName[mode],
-              payload: mapToArray(updatedBooklist),
+              payload: fallbackPayload, // Use the modified payload
               targetType: "csv",
               mode: "overwrite"
             });

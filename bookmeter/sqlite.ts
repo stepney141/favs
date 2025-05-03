@@ -1,13 +1,13 @@
 import fs from "node:fs";
 
-import { open } from "sqlite";
+import { open, type Database as SqliteDb } from "sqlite"; // Import Database type
 import { Database } from "sqlite3";
 
-import { mapToArray, exportFile } from "../.libs/utils";
+import { exportFile } from "../.libs/utils"; // mapToArray is no longer needed here
 
 import { JOB_NAME } from "./constants";
 
-import type { Book, BookList, CsvBookList } from "./types";
+import type { Book, BookList } from "./types"; // CsvBookList is no longer needed here
 
 const DB_FILE = "./books.sqlite";
 
@@ -25,7 +25,7 @@ function sanitizeTableName(name: string): string {
  * @param bookList - A Map representing the desired state of the books. Keys are bookmeter_urls.
  * @param tableName - The name of the table to synchronize.
  */
-export async function saveBookListToDatabase(bookList: BookList, tableName: string) {
+export async function saveBookListToDatabase(bookList: BookList, tableName: string): Promise<void> {
   const safeTableName = sanitizeTableName(tableName);
   console.log(`Synchronizing book list with database table: ${safeTableName}`);
   const db = await open({ filename: DB_FILE, driver: Database });
@@ -239,37 +239,58 @@ export async function updateDescription(tableName: string, isbnOrAsin: string, n
  * Exports the data from a database table to a CSV file.
  * @param tableName - The name of the table to export data from.
  * @param csvFilePath - The path where the CSV file should be saved.
+ * @param columns - An array of column names to include in the CSV export.
  * @returns A Promise that resolves when the export is complete.
  */
-export async function exportDatabaseTableToCsv(tableName: string, csvFilePath: string): Promise<void> {
-  console.log(`${JOB_NAME || "SQLite"}: Exporting table ${tableName} to CSV file ${csvFilePath}`);
+export async function exportDatabaseTableToCsv(
+  tableName: string,
+  csvFilePath: string,
+  columns: readonly string[] // Accept columns as a parameter
+): Promise<void> {
+  console.log(
+    `${JOB_NAME || "SQLite"}: Exporting columns [${columns.join(", ")}] from table ${tableName} to CSV file ${csvFilePath}`
+  );
+  const safeTableName = sanitizeTableName(tableName);
+  let db: SqliteDb | null = null; // Declare db variable outside try block
 
   try {
-    // Load data from database
-    const bookList = await loadBookListFromDatabase(tableName);
-
-    // 'description' is not needed in the CSV export
-    const csvBookList: CsvBookList = new Map();
-    for (const [key, book] of bookList.entries()) {
-      const { description, ...rest } = book;
-      csvBookList.set(key, rest);
+    // Check if database file exists
+    if (!fs.existsSync(DB_FILE)) {
+      throw new Error(`Database file ${DB_FILE} does not exist.`);
     }
 
-    // Convert BookList Map to array of objects for CSV export
-    const bookArray = mapToArray(csvBookList);
+    db = await open({ filename: DB_FILE, driver: Database }); // Open database connection
 
-    // Export to CSV
+    // Construct the SELECT query dynamically based on the provided columns
+    const selectColumns = columns.join(", ");
+    const query = `SELECT ${selectColumns} FROM ${safeTableName}`;
+
+    console.log(`${JOB_NAME || "SQLite"}: Executing query: ${query}`);
+
+    // Fetch only the specified columns directly from the database
+    // The result is already an array of objects, suitable for CSV export
+    const dataToExport = await db.all(query);
+
+    console.log(`${JOB_NAME || "SQLite"}: Fetched ${dataToExport.length} rows from ${safeTableName}.`);
+
+    // Export the fetched data to CSV
     await exportFile({
       fileName: csvFilePath,
-      payload: bookArray,
+      payload: dataToExport, // Use the directly fetched data
       targetType: "csv",
       mode: "overwrite"
     });
 
-    console.log(`${JOB_NAME || "SQLite"}: Successfully exported ${bookArray.length} books to ${csvFilePath}`);
+    console.log(`${JOB_NAME || "SQLite"}: Successfully exported ${dataToExport.length} books to ${csvFilePath}`);
   } catch (error) {
     console.error(`${JOB_NAME || "SQLite"}: Error exporting table ${tableName} to CSV:`, error);
-    throw error;
+    throw error; // Re-throw the error
+  } finally {
+    // Ensure the database connection is closed
+    if (db) {
+      await db.close();
+      console.log(`${JOB_NAME || "SQLite"}: Database connection closed.`);
+    }
   }
 }
 
