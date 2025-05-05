@@ -1,11 +1,11 @@
-import type { BookId, BookIdentifier, LibraryTag } from './valueObjects';
+import type { BookId, BookIdentifier, LibraryTag } from "./valueObjects";
 
 /**
  * 書籍リストのタイプ
  * - wish: 読みたい本リスト
  * - stacked: 積読本リスト
  */
-export type BookListType = 'wish' | 'stacked';
+export type BookListType = "wish" | "stacked";
 
 /**
  * 図書館情報
@@ -61,13 +61,13 @@ export function createBook(params: {
     url: params.url,
     title: params.title,
     author: params.author,
-    publisher: params.publisher || '',
-    publishedDate: params.publishedDate || '',
-    description: params.description || '',
+    publisher: params.publisher || "",
+    publishedDate: params.publishedDate || "",
+    description: params.description || "",
     libraryInfo: {
       existsIn: new Map(params.libraryInfo?.existsIn || []),
       opacLinks: new Map(params.libraryInfo?.opacLinks || []),
-      mathLibOpacLink: params.libraryInfo?.mathLibOpacLink || ''
+      mathLibOpacLink: params.libraryInfo?.mathLibOpacLink || ""
     }
   };
 }
@@ -98,7 +98,7 @@ export function updateBook(book: Book, updates: Partial<Book>): Book {
  * @returns 書籍リスト
  */
 export function createBookList(books: Book[]): BookList {
-  return new Map(books.map(book => [book.url, book]));
+  return new Map(books.map((book) => [book.url, book]));
 }
 
 /**
@@ -139,7 +139,5 @@ export function bookListToArray(bookList: BookList): Book[] {
  * @returns フィルタリングされた新しい書籍リスト
  */
 export function filterBooks(bookList: BookList, predicate: (book: Book) => boolean): BookList {
-  return new Map(
-    Array.from(bookList.entries()).filter(([, book]) => predicate(book))
-  );
+  return new Map(Array.from(bookList.entries()).filter(([, book]) => predicate(book)));
 }

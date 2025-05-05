@@ -6,6 +6,8 @@ import { config } from "dotenv";
 import { executeCommand } from "./cli/commandExecutor";
 import { setupDependencies } from "./di/container";
 
+import type { DIContainer } from "./di/container";
+
 // 環境変数の読み込み
 config({ path: path.join(__dirname, "../../.env") });
 
@@ -58,7 +60,7 @@ export async function main(argv: string[]): Promise<void> {
     const options = parseOptions(argv);
 
     // 依存性注入コンテナのセットアップ
-    const container = setupDependencies();
+    const container: DIContainer = setupDependencies();
 
     // コマンドの実行
     await executeCommand(container, mode, options);
@@ -84,7 +86,17 @@ export async function main(argv: string[]): Promise<void> {
 // スクリプト直接実行時のエントリポイント
 if (require.main === module) {
   // デバッグ用オプション
-  // main(["node", "ts-node", "wish", "--no-remote-check", "--skip-book-list-comparison", "--skip-fetching-biblio-info"]);
+  // main([
+  //   "npx",
+  //   "tsx",
+  //   "stacked",
+  //   "--no-remote-check",
+  //   "--skip-book-list-comparison",
+  //   "--skip-fetching-biblio-info"
+  // ]).catch((error) => {
+  //   console.error("予期しないエラーが発生しました:", error);
+  //   process.exit(1);
+  // });
 
   main(process.argv).catch((error) => {
     console.error("予期しないエラーが発生しました:", error);

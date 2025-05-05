@@ -1,11 +1,13 @@
 import { TYPES } from "../di/types";
 
 import type { Logger } from "../../application/ports/output/logger";
-import type { CrawlBookDescriptionUseCase } from "../../application/usecases/crawlBookDescriptionUseCase";
-import type { FetchBiblioInfoUseCase } from "../../application/usecases/fetchBiblioInfoUseCase";
-import type { GetBookListUseCase } from "../../application/usecases/getBookListUseCase";
-import type { SaveBookListUseCase } from "../../application/usecases/saveBookListUseCase";
-import type { Container } from "inversify";
+import type { DIContainer } from "../di/container";
+import type {
+  CrawlBookDescriptionUseCase,
+  FetchBiblioInfoUseCase,
+  GetBookListUseCase,
+  SaveBookListUseCase
+} from "../di/types";
 
 /**
  * コマンド実行時のオプション
@@ -26,7 +28,7 @@ export interface CommandOptions {
  * @param options コマンドオプション
  */
 export async function executeCommand(
-  container: Container,
+  container: DIContainer,
   mode: "wish" | "stacked",
   options: Record<string, unknown>
 ): Promise<void> {

@@ -1,6 +1,6 @@
-import type { BookList, BookListType } from '../../../domain/models/book';
-import type { AppError } from '../../../domain/models/errors';
-import type { Result } from '../../../domain/models/result';
+import type { BookList, BookListType } from "../../../domain/models/book";
+import type { AppError } from "../../../domain/models/errors";
+import type { Result } from "../../../domain/models/result";
 
 /**
  * ストレージサービスのポート
@@ -14,7 +14,7 @@ export interface StorageService {
    * @returns 成功時はファイルパス、失敗時はエラー
    */
   exportToCsv(books: BookList, filePath: string): Promise<Result<AppError, string>>;
-  
+
   /**
    * データベースに保存された書籍リストをCSVにエクスポート
    * @param type 書籍リストのタイプ（wish または stacked）
@@ -23,35 +23,32 @@ export interface StorageService {
    * @returns 成功時はvoid、失敗時はエラー
    */
   exportBookList(
-    type: BookListType, 
-    filePath: string, 
+    type: BookListType,
+    filePath: string,
     options?: Record<string, unknown>
   ): Promise<Result<AppError, void>>;
-  
+
   /**
    * SQLiteデータベースファイルをクラウドストレージにアップロード
    * @param options アップロードオプション
    * @returns 成功時はvoid、失敗時はエラー
    */
-  uploadDatabaseToCloud(options?: {
-    dbFilePath?: string;
-    targetPath?: string;
-  }): Promise<Result<AppError, void>>;
-  
+  uploadDatabaseToCloud(options?: { dbFilePath?: string; targetPath?: string }): Promise<Result<AppError, void>>;
+
   /**
    * CSVファイルを読み込んで書籍リストを取得
    * @param filePath CSVファイルのパス
    * @returns 書籍リスト
    */
   importFromCsv(filePath: string): Promise<Result<AppError, BookList>>;
-  
+
   /**
    * ファイルが存在するかどうかを確認
    * @param filePath ファイルパス
    * @returns ファイルが存在するかどうか
    */
   fileExists(filePath: string): Promise<Result<AppError, boolean>>;
-  
+
   /**
    * テキストファイルのURL一覧を読み込む
    * @param filePath ファイルパス

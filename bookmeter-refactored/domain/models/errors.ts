@@ -28,7 +28,7 @@ export class ValidationError extends AppError {
   readonly value?: unknown;
 
   constructor(message: string, field: string, value?: unknown, cause?: unknown) {
-    super(message, 'VALIDATION_ERROR', cause);
+    super(message, "VALIDATION_ERROR", cause);
     this.field = field;
     this.value = value;
   }
@@ -43,7 +43,7 @@ export class ApiError extends AppError {
   readonly endpoint: string;
 
   constructor(message: string, statusCode: number | undefined, endpoint: string, cause?: unknown) {
-    super(message, `API_ERROR_${statusCode || 'UNKNOWN'}`, cause);
+    super(message, `API_ERROR_${statusCode || "UNKNOWN"}`, cause);
     this.statusCode = statusCode;
     this.endpoint = endpoint;
   }
@@ -90,7 +90,7 @@ export class DatabaseError extends AppError {
   readonly tableName?: string;
 
   constructor(message: string, operation: string, tableName?: string, cause?: unknown) {
-    super(message, 'DATABASE_ERROR', cause);
+    super(message, "DATABASE_ERROR", cause);
     this.operation = operation;
     this.tableName = tableName;
   }
@@ -105,7 +105,7 @@ export class ScrapingError extends AppError {
   readonly selector?: string;
 
   constructor(message: string, url: string, selector?: string, cause?: unknown) {
-    super(message, 'SCRAPING_ERROR', cause);
+    super(message, "SCRAPING_ERROR", cause);
     this.url = url;
     this.selector = selector;
   }
@@ -117,15 +117,15 @@ export class ScrapingError extends AppError {
  */
 export class FileError extends AppError {
   readonly path: string;
-  readonly operation: 'read' | 'write' | 'delete' | 'create' | 'move' | 'copy';
+  readonly operation: "read" | "write" | "delete" | "create" | "move" | "copy";
 
   constructor(
     message: string,
     path: string,
-    operation: 'read' | 'write' | 'delete' | 'create' | 'move' | 'copy',
+    operation: "read" | "write" | "delete" | "create" | "move" | "copy",
     cause?: unknown
   ) {
-    super(message, 'FILE_ERROR', cause);
+    super(message, "FILE_ERROR", cause);
     this.path = path;
     this.operation = operation;
   }
@@ -139,7 +139,7 @@ export class ConfigError extends AppError {
   readonly key?: string;
 
   constructor(message: string, key?: string, cause?: unknown) {
-    super(message, 'CONFIG_ERROR', cause);
+    super(message, "CONFIG_ERROR", cause);
     this.key = key;
   }
 }
@@ -159,17 +159,9 @@ export function normalizeError(error: unknown, context?: string): AppError {
 
   // Error型の場合
   if (error instanceof Error) {
-    return new AppError(
-      `${context ? `[${context}] ` : ''}${error.message}`,
-      'UNKNOWN_ERROR',
-      error
-    );
+    return new AppError(`${context ? `[${context}] ` : ""}${error.message}`, "UNKNOWN_ERROR", error);
   }
 
   // その他の値
-  return new AppError(
-    `${context ? `[${context}] ` : ''}予期せぬエラー: ${String(error)}`,
-    'UNKNOWN_ERROR',
-    error
-  );
+  return new AppError(`${context ? `[${context}] ` : ""}予期せぬエラー: ${String(error)}`, "UNKNOWN_ERROR", error);
 }
