@@ -20,13 +20,13 @@ export interface StorageService {
    * @param type 書籍リストのタイプ（wish または stacked）
    * @param filePath 出力先ファイルパス
    * @param options 追加のオプション
-   * @returns 成功時はvoid、失敗時はエラー
+   * @returns 成功時はファイルパス、失敗時はエラー
    */
   exportBookList(
     type: BookListType,
-    filePath: string,
+    filePath?: string, // filePathをオプショナルに変更
     options?: Record<string, unknown>
-  ): Promise<Result<AppError, void>>;
+  ): Promise<Result<AppError, string>>; // 戻り値をstringに変更
 
   /**
    * SQLiteデータベースファイルをクラウドストレージにアップロード

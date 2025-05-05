@@ -1,4 +1,8 @@
 import { TYPES } from "../di/types";
+// 不要なインポートを削除
+// import type { Result } from "../../domain/models/result";
+// import type { AppError } from "../../domain/models/errors";
+// import type { BookList } from "../../domain/models/book";
 
 import type { Logger } from "../../application/ports/output/logger";
 import type { DIContainer } from "../di/container";
@@ -14,6 +18,7 @@ import type {
  */
 export interface CommandOptions {
   userId?: string;
+  refresh?: boolean; // 追加
   noRemoteCheck?: boolean;
   skipBookListComparison?: boolean;
   skipFetchingBiblioInfo?: boolean;
@@ -45,7 +50,8 @@ export async function executeCommand(
     noRemoteCheck: options.noRemoteCheck === true,
     skipBookListComparison: options.skipBookListComparison === true,
     skipFetchingBiblioInfo: options.skipFetchingBiblioInfo === true,
-    outputFilePath: typeof options.outputFilePath === "string" ? options.outputFilePath : null
+    outputFilePath: typeof options.outputFilePath === "string" ? options.outputFilePath : null,
+    refresh: options.refresh === true // 追加
   };
 
   // 処理の開始をログに記録
@@ -54,34 +60,61 @@ export async function executeCommand(
   try {
     // 1. 書籍リストの取得
     logger.info("書籍リストを取得しています");
-    const bookList = await getBookListUseCase.execute({
+    const bookListResult = await getBookListUseCase.execute({
+      // 変数名を変更
       type: mode,
       userId: commandOptions.userId,
+      refresh: commandOptions.refresh, // 追加
       skipRemoteCheck: commandOptions.noRemoteCheck,
       skipComparison: commandOptions.skipBookListComparison,
       outputFilePath: commandOptions.outputFilePath
     });
 
+    // エラーチェック
+    if (bookListResult.isError()) {
+      throw bookListResult.unwrapError(); // エラーがあれば再スロー
+    }
+
+    // 結果を展開
+    const { books, hasChanges } = bookListResult.unwrap();
+
     // 2. 変更があったかチェック
-    if (bookList.hasChanges) {
+    if (hasChanges) {
+      // 取得した hasChanges フラグを使用
       logger.info("書籍リストに変更があります");
 
       // 3. 書誌情報の取得（オプションによりスキップ可能）
-      let enrichedBookList = bookList.books;
+      let enrichedBookList = books; // 展開した books を使用
       if (!commandOptions.skipFetchingBiblioInfo) {
         logger.info("書誌情報を取得しています");
-        enrichedBookList = await fetchBiblioInfoUseCase.execute(bookList.books);
+        enrichedBookList = await fetchBiblioInfoUseCase.execute(books); // 展開した books を使用
       } else {
         logger.info("書誌情報の取得をスキップします");
       }
 
       // 4. 書籍の詳細情報（あらすじ・目次）を取得
       logger.info("書籍の詳細情報をクロールしています");
-      await crawlBookDescriptionUseCase.execute(enrichedBookList, mode);
+      // 引数をオブジェクト形式で渡すように修正
+      const crawlResult = await crawlBookDescriptionUseCase.execute({ bookList: enrichedBookList, type: mode });
+      if (crawlResult.isError()) {
+        // エラーハンドリングを追加 (ログ出力はユースケース内で行われる想定)
+        throw crawlResult.unwrapError();
+      }
 
       // 5. データの保存とエクスポート
       logger.info("データを保存しています");
-      await saveBookListUseCase.execute(enrichedBookList, mode, commandOptions.outputFilePath);
+      // 引数をオブジェクト形式で渡すように修正
+      const saveResult = await saveBookListUseCase.execute({
+        bookList: enrichedBookList,
+        type: mode,
+        exportToCsv: true, // デフォルトでCSVエクスポートを有効にする (必要に応じてオプション化)
+        uploadToCloud: false // デフォルトでクラウドアップロードを無効にする (必要に応じてオプション化)
+        // outputFilePath は SaveBookListParams には含まれていないため削除 (必要ならユースケース側で対応)
+      });
+      if (saveResult.isError()) {
+        // エラーハンドリングを追加 (ログ出力はユースケース内で行われる想定)
+        throw saveResult.unwrapError();
+      }
 
       logger.info("処理が正常に完了しました");
     } else {

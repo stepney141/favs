@@ -1,9 +1,9 @@
-import { ok, err } from "../../domain/models/result";
-import { isIsbn10, isJapaneseBook } from "../../domain/services/isbnService";
+// 不要なインポートを削除
+// import { isIsbn10, isIsbn13, routeIsbn10, routeIsbn13 } from "../../domain/services/isbnService";
 
 import type { Book, BookList } from "../../domain/models/book";
 import type { AppError } from "../../domain/models/errors";
-import type { Result } from "../../domain/models/result";
+// Result は不要になったので削除
 import type { BiblioInfoProvider } from "../ports/output/biblioInfoProvider";
 import type { Logger } from "../ports/output/logger";
 
@@ -18,49 +18,40 @@ export interface FetchBiblioInfoParams {
 export function createFetchBiblioInfoUseCase(
   biblioInfoProviders: BiblioInfoProvider[],
   logger: Logger
-): { execute: (params: FetchBiblioInfoParams) => Promise<Result<AppError, BookList>> } {
-  /**
-   * 書籍に基づいてプロバイダの優先順位を決定
-   */
+): { execute: (bookList: BookList, signal?: AbortSignal) => Promise<BookList> } {
+  // シグネチャと戻り値の型を変更
+  // prioritizeProviders 関数は getPriority を使うように変更
   function prioritizeProviders(providers: BiblioInfoProvider[], book: Book): BiblioInfoProvider[] {
-    // 書籍のISBNから日本の書籍かを判定
-    const isJapanese =
-      typeof book.identifier === "string" && isIsbn10(book.identifier) && isJapaneseBook(book.identifier);
-
-    // 日本の書籍の場合の優先順位: OpenBD, NDL, ISBNdb, GoogleBooks
-    // 海外の書籍の場合の優先順位: ISBNdb, GoogleBooks, OpenBD, NDL
+    if (!book.identifier) {
+      // 識別子がない場合はデフォルトの順序
+      return providers;
+    }
     return [...providers].sort((a, b) => {
-      if (isJapanese) {
-        if (a.source === "OpenBD") return -1;
-        if (b.source === "OpenBD") return 1;
-        if (a.source === "NDL") return -1;
-        if (b.source === "NDL") return 1;
-      } else {
-        if (a.source === "ISBNdb") return -1;
-        if (b.source === "ISBNdb") return 1;
-        if (a.source === "GoogleBooks") return -1;
-        if (b.source === "GoogleBooks") return 1;
-      }
-      return 0;
+      // getPriority の値が大きいほど優先度が高い（降順ソート）
+      // 不要な ! を削除
+      return b.getPriority(book.identifier) - a.getPriority(book.identifier);
     });
   }
 
   /**
    * 実行
    */
-  async function execute(params: FetchBiblioInfoParams): Promise<Result<AppError, BookList>> {
-    const { bookList, signal } = params;
+  async function execute(bookList: BookList, signal?: AbortSignal): Promise<BookList> {
+    // 引数と戻り値の型を変更
+    // const { bookList, signal } = params; // 削除
 
     logger.info(`書誌情報の取得を開始します（${bookList.size}冊）`);
 
     try {
       // キャンセルチェック
       if (signal?.aborted) {
-        return err({
+        const error: AppError = {
+          // Error オブジェクトをスロー
           message: "処理がキャンセルされました",
           code: "CANCELLED",
           name: "AppError"
-        });
+        };
+        throw error;
       }
 
       const enhancedBooks = new Map<string, Book>();
@@ -69,11 +60,13 @@ export function createFetchBiblioInfoUseCase(
       for (const [url, book] of bookList.entries()) {
         // キャンセルチェック
         if (signal?.aborted) {
-          return err({
+          const error: AppError = {
+            // Error オブジェクトをスロー
             message: "処理がキャンセルされました",
             code: "CANCELLED",
             name: "AppError"
-          });
+          };
+          throw error;
         }
 
         logger.debug(`書籍を処理しています: ${book.title}`, {
@@ -84,29 +77,48 @@ export function createFetchBiblioInfoUseCase(
 
         let enhancedBook = book;
 
-        // 適用可能なプロバイダを取得
-        const applicableProviders = biblioInfoProviders.filter((provider) => provider.isApplicable(book));
+        // 適用可能なプロバイダを取得 (supportsIdentifier を使用)
+        const applicableProviders = book.identifier
+          ? // 不要な ! を削除
+            biblioInfoProviders.filter((provider) => provider.supportsIdentifier(book.identifier))
+          : []; // 識別子がない場合は適用不可
 
-        // 日本の書籍かどうかに基づいてプロバイダの優先順位を決定
+        // 優先順位を決定
         const prioritizedProviders = prioritizeProviders(applicableProviders, book);
 
         // 各プロバイダを順に試す
         for (const provider of prioritizedProviders) {
+          const providerName = provider.getSourceName(); // getSourceName を使用
           try {
-            // APIから情報取得
-            const result = await provider.fetchInfo(enhancedBook);
+            // APIから情報取得 (enhanceBook を使用)
+            const result = await provider.enhanceBook(enhancedBook);
 
             if (result.isSuccess()) {
               enhancedBook = result.unwrap();
-              logger.debug(`${provider.source}から書籍情報を取得しました`, {
+              logger.debug(`${providerName}から書籍情報を取得しました`, {
+                // providerName を使用
                 identifier: book.identifier,
                 title: enhancedBook.title
               });
-              break; // 成功したらループを抜ける
+              // 必須情報が埋まったかチェック (例: title, authors)
+              // if (enhancedBook.title && enhancedBook.authors && enhancedBook.authors.length > 0) {
+              //   break; // 必須情報が埋まったら抜ける (オプション)
+              // }
+              break; // 一旦成功したら抜ける
+            } else {
+              // Resultがエラーの場合もログに記録
+              const fetchError = result.unwrapError();
+              logger.warn(`${providerName}からの取得でエラー: ${fetchError.message}`, {
+                // providerName を使用
+                error: fetchError,
+                identifier: book.identifier
+              });
             }
           } catch (error) {
-            // エラーをログに記録して次のプロバイダに進む
-            logger.warn(`${provider.source}からの取得に失敗しました`, {
+            // enhanceBook が直接エラーを投げた場合
+            const message = error instanceof Error ? error.message : String(error);
+            logger.warn(`${providerName}からの取得中に予期しないエラー: ${message}`, {
+              // providerName を使用
               error,
               identifier: book.identifier
             });
@@ -114,11 +126,13 @@ export function createFetchBiblioInfoUseCase(
 
           // キャンセルチェック
           if (signal?.aborted) {
-            return err({
+            const error: AppError = {
+              // Error オブジェクトをスロー
               message: "処理がキャンセルされました",
               code: "CANCELLED",
               name: "AppError"
-            });
+            };
+            throw error;
           }
         }
 
@@ -127,27 +141,39 @@ export function createFetchBiblioInfoUseCase(
       }
 
       logger.info(`${bookList.size}冊の書誌情報取得が完了しました`);
-      return ok(enhancedBooks);
-    } catch (error) {
+      return enhancedBooks; // ok(...) の代わりに直接返す
+    } catch (thrownError) {
+      // 変数名を変更
       // キャンセルエラーの場合
       if (signal?.aborted) {
-        return err({
+        const error: AppError = {
+          // Error オブジェクトをスロー
           message: "処理がキャンセルされました",
           code: "CANCELLED",
           name: "AppError"
-        });
+        };
+        throw error;
       }
 
-      // その他のエラー
-      const message = error instanceof Error ? error.message : String(error);
-      logger.error(`書誌情報の取得中にエラーが発生しました: ${message}`, { error });
+      // AppErrorが投げられた場合
+      if (thrownError && typeof thrownError === "object" && "name" in thrownError && thrownError.name === "AppError") {
+        const appError = thrownError as AppError;
+        logger.error(`書誌情報の取得中にエラーが発生しました: ${appError.message}`, { error: appError });
+        throw appError; // そのまま再スロー
+      }
 
-      return err({
-        message: `書誌情報の取得中にエラーが発生しました: ${message}`,
+      // その他の予期せぬエラー
+      const message = thrownError instanceof Error ? thrownError.message : String(thrownError);
+      logger.error(`書誌情報の取得中に予期しないエラーが発生しました: ${message}`, { error: thrownError });
+
+      const error: AppError = {
+        // Error オブジェクトをスロー
+        message: `書誌情報の取得中に予期しないエラーが発生しました: ${message}`,
         code: "UNKNOWN",
         name: "AppError",
-        cause: error
-      });
+        cause: thrownError
+      };
+      throw error;
     }
   }
 

@@ -96,12 +96,17 @@ export class Container implements DIContainer {
 export function setupDependencies(): DIContainer {
   const container = new Container();
 
+  // データディレクトリパスを定義・登録
+  const dataDir = path.resolve(__dirname, "../../../data"); // presentation/di -> presentation -> bookmeter-refactored -> data
+  container.registerSingleton<string>(TYPES.DataDirectory, () => dataDir);
+
   // インフラストラクチャ層の実装を登録
   container.registerSingleton<Logger>(TYPES.Logger, () => new ConsoleLogger("App")); // prefix を追加
   container.registerSingleton<BookRepository>(TYPES.BookRepository, () => {
     const logger = container.get<Logger>(TYPES.Logger);
-    const dbPath = path.resolve(__dirname, "../../../bookmeter/books.sqlite"); // dbPath を追加
-    return new SqliteBookRepository(dbPath, logger); // 引数を渡す
+    const dataDir = container.get<string>(TYPES.DataDirectory);
+    const dbPath = path.join(dataDir, "books.sqlite"); // データディレクトリ内のパスを使用
+    return new SqliteBookRepository(dbPath, logger);
   });
   container.register<BookScraperService>(TYPES.BookScraperService, () => {
     const logger = container.get<Logger>(TYPES.Logger);
@@ -118,9 +123,11 @@ export function setupDependencies(): DIContainer {
   container.registerSingleton<StorageService>(TYPES.StorageService, () => {
     const logger = container.get<Logger>(TYPES.Logger);
     const bookRepository = container.get<BookRepository>(TYPES.BookRepository);
+    const dataDir = container.get<string>(TYPES.DataDirectory); // データディレクトリパスを取得
+    // CSVパスをデータディレクトリ内に変更
     const defaultCsvPath: Record<BookListType, string> = {
-      wish: path.resolve(__dirname, "../../../bookmeter/csv/bookmeter_wish_books.csv"),
-      stacked: path.resolve(__dirname, "../../../bookmeter/csv/bookmeter_stacked_books.csv")
+      wish: path.join(dataDir, "bookmeter_wish_books.csv"), // データディレクトリ内のパスを使用
+      stacked: path.join(dataDir, "bookmeter_stacked_books.csv") // データディレクトリ内のパスを使用
     };
     // TODO: firebaseConfigが必要な場合はここに追加
     return new FileStorageService(logger, bookRepository, { defaultCsvPath });

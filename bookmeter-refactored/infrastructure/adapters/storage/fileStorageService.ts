@@ -79,7 +79,7 @@ export class FileStorageService implements StorageService {
 
       this.logger.info(`CSVファイルを保存しました: ${filePath} (${books.size}冊)`, {
         size: books.size,
-        filePath
+        filePath: filePath // 正しいファイルパスを使用
       });
 
       return ok(filePath);
@@ -100,9 +100,10 @@ export class FileStorageService implements StorageService {
    * データベースに保存された書籍リストをCSVにエクスポート
    * @param type 書籍リストのタイプ
    * @param filePath 出力先ファイルパス
-   * @returns 成功時はvoid、失敗時はエラー
+   * @returns 成功時はファイルパス、失敗時はエラー
    */
-  async exportBookList(type: BookListType, filePath: string): Promise<Result<AppError, void>> {
+  async exportBookList(type: BookListType, filePath?: string): Promise<Result<AppError, string>> {
+    // filePathをオプショナルにし、戻り値をstringに変更
     const targetPath = filePath || this.defaultCsvPath[type];
 
     try {
@@ -124,7 +125,8 @@ export class FileStorageService implements StorageService {
         return err(exportResult.unwrapError());
       }
 
-      return ok(undefined);
+      // 成功時はエクスポートされたファイルパスを返す
+      return ok(targetPath);
     } catch (error) {
       const appError = new AppError(
         `書籍リストのエクスポートに失敗しました: ${error instanceof Error ? error.message : String(error)}`,

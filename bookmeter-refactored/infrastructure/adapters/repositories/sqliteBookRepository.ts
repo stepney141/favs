@@ -1,3 +1,6 @@
+import fs from "node:fs/promises"; // fs.promises をインポート
+import path from "node:path"; // path をインポート
+
 import { open } from "sqlite";
 import sqlite3 from "sqlite3";
 
@@ -49,13 +52,39 @@ export class SqliteBookRepository implements BookRepository {
    */
   private async getConnection(): Promise<DbConnection> {
     try {
+      // データベースファイルが置かれるディレクトリを取得
+      const dbDir = path.dirname(this.dbPath);
+      // ディレクトリが存在しない場合は作成 (recursive: true で親ディレクトリも作成)
+      try {
+        await fs.mkdir(dbDir, { recursive: true });
+        this.logger.debug(`データベースディレクトリを確認/作成しました: ${dbDir}`);
+      } catch (mkdirError) {
+        this.logger.error(`データベースディレクトリの作成に失敗しました: ${dbDir}`, { error: mkdirError });
+        // ディレクトリ作成失敗も接続エラーとして扱う
+        throw new DatabaseError(
+          `データベースディレクトリの作成に失敗しました: ${dbDir}`,
+          "connect",
+          undefined,
+          mkdirError
+        );
+      }
+
+      // データベース接続を開く
+      this.logger.debug(`データベースファイルを開きます: ${this.dbPath}`);
       return await open({
         filename: this.dbPath,
         driver: sqlite3.Database
       });
     } catch (error) {
-      this.logger.error("データベース接続に失敗しました", { error });
-      throw new DatabaseError("データベース接続に失敗しました", "connect", undefined, error);
+      // エラーが DatabaseError インスタンスでない場合（open 自体のエラーなど）
+      if (!(error instanceof DatabaseError)) {
+        this.logger.error(`データベースファイルを開けませんでした: ${this.dbPath}`, { error });
+        throw new DatabaseError(`データベースファイルを開けませんでした: ${this.dbPath}`, "connect", undefined, error);
+      } else {
+        // DatabaseError の場合（ディレクトリ作成失敗など）はそのまま再スロー
+        this.logger.error(`データベース接続処理中にエラーが発生しました`, { error });
+        throw error;
+      }
     }
   }
 
@@ -345,40 +374,70 @@ export class SqliteBookRepository implements BookRepository {
    * 指定した書籍のIDに説明が存在するかどうかを確認
    */
   async hasDescription(id: BookId): Promise<Result<DatabaseError, boolean>> {
-    // BookIdは現在のシステムではbookmeter_urlと同等のため、
-    // そのURLで書籍を検索
     const searchUrl = id.toString();
     let db: DbConnection | null = null;
 
     try {
       db = await this.getConnection();
+      let descriptionExists = false;
 
-      // wishテーブルを検索
-      const wishResult = await db.get<{ description: string }>(
-        'SELECT description FROM wish WHERE bookmeter_url = ? AND description IS NOT NULL AND description != ""',
-        searchUrl
-      );
-
-      if (wishResult) {
-        return ok(true);
+      // wishテーブルを検索 (テーブルが存在しない場合はスキップ)
+      try {
+        const wishResult = await db.get<{ description: string }>(
+          'SELECT description FROM wish WHERE bookmeter_url = ? AND description IS NOT NULL AND description != ""',
+          searchUrl
+        );
+        if (wishResult) {
+          descriptionExists = true;
+        }
+      } catch (error) {
+        if (error instanceof Error && error.message.includes("no such table: wish")) {
+          this.logger.debug("テーブル 'wish' が存在しないため、説明の確認をスキップします。", { id: searchUrl });
+        } else {
+          // その他のDBエラーは上位に投げる
+          throw new DatabaseError(`wishテーブルの説明確認中にエラーが発生しました`, "hasDescription", "wish", error);
+        }
       }
 
-      // wishになければstackedテーブルを検索
-      const stackedResult = await db.get<{ description: string }>(
-        'SELECT description FROM stacked WHERE bookmeter_url = ? AND description IS NOT NULL AND description != ""',
-        searchUrl
-      );
+      // stackedテーブルを検索 (テーブルが存在しない場合、またはwishで見つかっていない場合)
+      if (!descriptionExists) {
+        try {
+          const stackedResult = await db.get<{ description: string }>(
+            'SELECT description FROM stacked WHERE bookmeter_url = ? AND description IS NOT NULL AND description != ""',
+            searchUrl
+          );
+          if (stackedResult) {
+            descriptionExists = true;
+          }
+        } catch (error) {
+          if (error instanceof Error && error.message.includes("no such table: stacked")) {
+            this.logger.debug("テーブル 'stacked' が存在しないため、説明の確認をスキップします。", { id: searchUrl });
+          } else {
+            // その他のDBエラーは上位に投げる
+            throw new DatabaseError(
+              `stackedテーブルの説明確認中にエラーが発生しました`,
+              "hasDescription",
+              "stacked",
+              error
+            );
+          }
+        }
+      }
 
-      // 結果があり、説明が空でなければtrue
-      return ok(!!stackedResult);
+      return ok(descriptionExists);
     } catch (error) {
-      if (error instanceof DatabaseError) {
-        return err(error);
-      }
+      // ここに来るのは、テーブル存在チェック以外のDBエラー
+      const dbError =
+        error instanceof DatabaseError
+          ? error
+          : new DatabaseError(
+              `ID ${id} の説明確認中に予期せぬエラーが発生しました`,
+              "hasDescription",
+              "wish/stacked",
+              error
+            );
 
-      const dbError = new DatabaseError(`ID ${id} の説明確認に失敗しました`, "hasDescription", "wish/stacked", error);
-
-      this.logger.error(dbError.message, { error, id });
+      this.logger.error(dbError.message, { error, id: searchUrl });
       return err(dbError);
     } finally {
       if (db) await db.close();
@@ -428,6 +487,20 @@ export class SqliteBookRepository implements BookRepository {
         return err(error);
       }
 
+      // 元の SQLite エラーの詳細をログに出力
+      const originalErrorDetails: Record<string, unknown> = {
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined
+      };
+      if (error && typeof error === "object") {
+        if ("code" in error) originalErrorDetails.code = error.code;
+        if ("errno" in error) originalErrorDetails.errno = error.errno;
+      }
+      this.logger.error(`SQLiteエラーが発生しました (updateDescription)`, {
+        originalError: originalErrorDetails,
+        id: searchUrl
+      });
+
       const dbError = new DatabaseError(
         `ID ${id} の説明更新に失敗しました`,
         "updateDescription",
@@ -435,7 +508,8 @@ export class SqliteBookRepository implements BookRepository {
         error
       );
 
-      this.logger.error(dbError.message, { error, id });
+      // DatabaseError のログは維持するが、元のエラー情報は上記で出力済み
+      this.logger.error(dbError.message, { error: dbError, id: searchUrl });
       return err(dbError);
     } finally {
       if (db) await db.close();

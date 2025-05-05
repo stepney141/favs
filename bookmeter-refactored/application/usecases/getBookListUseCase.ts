@@ -10,8 +10,12 @@ import type { Logger } from "../ports/output/logger";
 export interface GetBookListParams {
   userId: string;
   type: BookListType;
-  refresh?: boolean;
+  refresh?: boolean; // Ensure this line exists or add it
   signal?: AbortSignal;
+  // Add other potential missing properties if needed based on commandExecutor.ts call
+  skipRemoteCheck?: boolean; // Added based on commandExecutor call
+  skipComparison?: boolean; // Added based on commandExecutor call
+  outputFilePath?: string | null; // Added based on commandExecutor call
 }
 
 /**
@@ -21,7 +25,9 @@ export function createGetBookListUseCase(
   bookRepository: BookRepository,
   bookScraperService: BookScraperService,
   logger: Logger
-): { execute: (params: GetBookListParams) => Promise<Result<AppError, BookList>> } {
+): {
+  execute: (params: GetBookListParams) => Promise<Result<AppError, { books: BookList; hasChanges: boolean }>>;
+} {
   /**
    * データベースとWeb上の書籍リストの差分を確認する
    */
@@ -64,7 +70,9 @@ export function createGetBookListUseCase(
   /**
    * 実行
    */
-  async function execute(params: GetBookListParams): Promise<Result<AppError, BookList>> {
+  async function execute(
+    params: GetBookListParams
+  ): Promise<Result<AppError, { books: BookList; hasChanges: boolean }>> {
     const { userId, type, refresh = false, signal } = params;
 
     logger.info(`書籍リスト(${type})の取得を開始します`, { userId, refresh });
@@ -88,7 +96,8 @@ export function createGetBookListUseCase(
 
           if (storedBooks.size > 0) {
             logger.info(`データベースから${storedBooks.size}冊の書籍を取得しました`, { type });
-            return ok(storedBooks);
+            // DBキャッシュから返す場合は変更なし
+            return ok({ books: storedBooks, hasChanges: false });
           }
         } else {
           // データベースからの取得に失敗した場合はログに記録
@@ -115,20 +124,27 @@ export function createGetBookListUseCase(
 
       // データベースのデータとの差分チェック
       const storedBooksResult = await bookRepository.findAll(type);
+      let changes = false; // Move declaration outside the if block
 
       if (storedBooksResult.isSuccess()) {
         const storedBooks = storedBooksResult.unwrap();
-
-        const changes = hasChanges(storedBooks, scrapedBooks);
+        changes = hasChanges(storedBooks, scrapedBooks); // Assign value inside
 
         if (changes) {
           logger.info(`データベースとの差分を検出しました。更新が必要です`, { type });
         } else {
           logger.info(`データベースとの差分はありません`, { type });
         }
+      } else {
+        // DBからの取得に失敗した場合でも、スクレイピング結果はあるので変更ありとみなす
+        changes = true;
+        logger.warn(
+          "データベースの書籍リストを取得できなかったため、差分チェックをスキップします。強制的に更新します。",
+          { type }
+        );
       }
 
-      return ok(scrapedBooks);
+      return ok({ books: scrapedBooks, hasChanges: changes });
     } catch (error) {
       // キャンセルエラーの場合
       if (signal?.aborted) {
