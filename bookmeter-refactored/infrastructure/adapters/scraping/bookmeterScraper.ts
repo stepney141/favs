@@ -3,18 +3,20 @@ import puppeteer from "puppeteer";
 import { $x, waitForXPath } from "../../../../.libs/pptr-utils";
 import { sleep } from "../../../../.libs/utils";
 
+import { KinokuniyaScraper } from "./kinokuniyaScraper";
+
 import type { BookScraperService } from "@/application/ports/output/bookScraperService";
 import type { Logger } from "@/application/ports/output/logger";
 import type { Book, BookList, BookListType } from "@/domain/models/book";
 import type { Result } from "@/domain/models/result";
-import type { BookIdentifier, ISBN10, LibraryTag } from "@/domain/models/valueObjects";
+import type { BookIdentifier, LibraryTag } from "@/domain/models/valueObjects";
 import type { Browser, Page } from "puppeteer";
 
 import { createBook, addBook } from "@/domain/models/book";
 import { ScrapingError } from "@/domain/models/errors";
 import { ok, err } from "@/domain/models/result";
 import { createBookId, createISBN10, createASIN } from "@/domain/models/valueObjects";
-import { convertISBN10To13, isAsin, isIsbn10 } from "@/domain/services/isbnService";
+import { isAsin, isIsbn10 } from "@/domain/services/isbnService";
 import { getNodeProperty } from "@/infrastructure/utils/puppeteerUtils";
 
 // BookmeterのURLフォーマット
@@ -58,11 +60,6 @@ const XPATH = {
     accountNameInput: '//*[@id="session_email_address"]',
     passwordInput: '//*[@id="session_password"]',
     loginButton: '//*[@id="js_sessions_new_form"]/form/div[4]/button'
-  },
-  kinokuniya: {
-    出版社内容情報: '//div[@class="career_box"]/h3[text()="出版社内容情報"]/following-sibling::p[1]',
-    内容説明: '//div[@class="career_box"]/h3[text()="内容説明"]/following-sibling::p[1]',
-    目次: '//div[@class="career_box"]/h3[text()="目次"]/following-sibling::p[1]'
   }
 };
 
@@ -78,6 +75,7 @@ export class BookmeterScraper implements BookScraperService {
     username: string;
     password: string;
   };
+  private readonly kinokuniyaScraper: KinokuniyaScraper;
 
   /**
    * コンストラクタ
@@ -93,6 +91,7 @@ export class BookmeterScraper implements BookScraperService {
   ) {
     this.logger = logger;
     this.credentials = credentials;
+    this.kinokuniyaScraper = new KinokuniyaScraper(logger);
   }
 
   /**
@@ -649,78 +648,6 @@ export class BookmeterScraper implements BookScraperService {
       );
 
       this.logger.error(scrapingError.message, { error, type, userId });
-      return err(scrapingError);
-    } finally {
-      await browser.close();
-    }
-  }
-
-  /**
-   * 紀伊國屋書店から書籍の説明を取得
-   */
-  async scrapeBookDescription(isbn: ISBN10): Promise<Result<ScrapingError, string>> {
-    const browser = await this.initializeBrowser();
-
-    try {
-      const page = await browser.newPage();
-
-      try {
-        // ISBN10をISBN13に変換
-        const isbn13 = convertISBN10To13(isbn);
-
-        // 日本の書籍かどうかでURLを分岐
-        const isJapaneseBook = isbn.toString().startsWith("4");
-        const kinokuniyaUrl = isJapaneseBook
-          ? `https://www.kinokuniya.co.jp/f/dsg-01-${isbn13}`
-          : `https://www.kinokuniya.co.jp/f/dsg-02-${isbn13}`;
-
-        this.logger.debug(`紀伊國屋書店から書籍説明を取得します: ${isbn} (${kinokuniyaUrl})`);
-
-        // 紀伊國屋書店のページにアクセス (タイムアウト延長、waitUntil変更)
-        await page.goto(kinokuniyaUrl, { waitUntil: "domcontentloaded", timeout: 120 * 1000 });
-
-        // しばらく待機（DOMが完全に読み込まれるのを待つ）
-        await sleep(1000);
-
-        let description = "";
-
-        // 「出版社内容情報」「内容説明」「目次」の3つの要素を取得して結合
-        for (const xpath of [XPATH.kinokuniya.出版社内容情報, XPATH.kinokuniya.内容説明, XPATH.kinokuniya.目次]) {
-          const elements = await $x(page, xpath);
-
-          if (elements.length > 0) {
-            try {
-              const text = await page.evaluate((el) => el.textContent, elements[0]);
-
-              if (text && text.trim()) {
-                description += `${text.trim()}\n\n`;
-              }
-            } catch (error) {
-              this.logger.warn(`要素のテキスト取得に失敗しました: ${xpath}`, { error });
-              // エラーが発生しても処理を続行
-            }
-          }
-        }
-
-        // 説明が取得できなかった場合
-        if (!description) {
-          this.logger.debug(`書籍説明が見つかりませんでした: ${isbn} (${kinokuniyaUrl})`);
-          return ok("");
-        }
-
-        this.logger.debug(`書籍説明を取得しました: ${isbn} (${description.length}文字)`);
-        return ok(description.trim());
-      } finally {
-        await page.close();
-      }
-    } catch (error) {
-      const scrapingError = new ScrapingError(
-        `書籍説明の取得中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`,
-        `https://www.kinokuniya.co.jp/f/dsg-01-${isbn}`,
-        error
-      );
-
-      this.logger.error(scrapingError.message, { error, isbn });
       return err(scrapingError);
     } finally {
       await browser.close();

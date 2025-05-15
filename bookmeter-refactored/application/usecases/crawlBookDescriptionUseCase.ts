@@ -1,5 +1,5 @@
+import type { BookContentScraperService } from "../ports/output/bookContentScraperService";
 import type { BookRepository } from "../ports/output/bookRepository";
-import type { BookScraperService } from "../ports/output/bookScraperService";
 import type { Logger } from "../ports/output/logger";
 import type { Book, BookList, BookListType } from "@/domain/models/book";
 import type { AppError } from "@/domain/models/errors";
@@ -21,7 +21,7 @@ export interface CrawlBookDescriptionParams {
  */
 export function createCrawlBookDescriptionUseCase(
   bookRepository: BookRepository,
-  bookScraperService: BookScraperService,
+  bookContentScraperService: BookContentScraperService,
   logger: Logger
 ): { execute: (params: CrawlBookDescriptionParams) => Promise<Result<AppError, void>> } {
   /**
@@ -124,7 +124,7 @@ export function createCrawlBookDescriptionUseCase(
         logger.debug(`書籍「${book.title}」の説明を取得します (ISBN: ${isbn})`);
 
         // 紀伊國屋書店から説明を取得
-        const descriptionResult = await bookScraperService.scrapeBookDescription(isbn);
+        const descriptionResult = await bookContentScraperService.scrapeBookDescription(isbn);
 
         if (descriptionResult.isError()) {
           const error = descriptionResult.unwrapError();

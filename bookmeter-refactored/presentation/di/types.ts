@@ -21,6 +21,7 @@ export const TYPES = {
   Logger: "Logger",
   BookRepository: "BookRepository",
   BookScraperService: "BookScraperService",
+  BookContentScraperService: "BookContentScraperService",
   BiblioInfoProvider: "BiblioInfoProvider",
   BiblioInfoManager: "BiblioInfoManager",
   APICredentials: "APICredentials",

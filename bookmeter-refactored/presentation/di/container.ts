@@ -4,6 +4,7 @@ import path from "node:path"; // path モジュールをインポート
 import { TYPES } from "./types";
 
 import type { APICredentials, DependencyKey } from "./types";
+import type { BookContentScraperService } from "@/application/ports/output/bookContentScraperService";
 import type { BookRepository } from "@/application/ports/output/bookRepository";
 import type { BookScraperService } from "@/application/ports/output/bookScraperService";
 import type { Logger } from "@/application/ports/output/logger";
@@ -19,6 +20,7 @@ import { createBiblioInfoManager } from "@/infrastructure/adapters/apis";
 import { ConsoleLogger } from "@/infrastructure/adapters/logging/consoleLogger";
 import { SqliteBookRepository } from "@/infrastructure/adapters/repositories/sqliteBookRepository";
 import { BookmeterScraper } from "@/infrastructure/adapters/scraping/bookmeterScraper";
+import { KinokuniyaScraper } from "@/infrastructure/adapters/scraping/kinokuniyaScraper";
 import { FileStorageService } from "@/infrastructure/adapters/storage/fileStorageService";
 
 /**
@@ -103,6 +105,12 @@ export function setupDependencies(): DIContainer {
 
   // インフラストラクチャ層の実装を登録
   container.registerSingleton<Logger>(TYPES.Logger, () => new ConsoleLogger("App")); // prefix を追加
+  
+  // KinokuniyaScraper を登録
+  container.registerSingleton<BookContentScraperService>(TYPES.BookContentScraperService, () => {
+    const logger = container.get<Logger>(TYPES.Logger);
+    return new KinokuniyaScraper(logger);
+  });
   container.registerSingleton<BookRepository>(TYPES.BookRepository, () => {
     const logger = container.get<Logger>(TYPES.Logger);
     const dataDir = container.get<string>(TYPES.DataDirectory);
@@ -184,7 +192,7 @@ export function setupDependencies(): DIContainer {
   container.register(TYPES.CrawlBookDescriptionUseCase, () => {
     return createCrawlBookDescriptionUseCase(
       container.get<BookRepository>(TYPES.BookRepository),
-      container.get<BookScraperService>(TYPES.BookScraperService),
+      container.get<BookContentScraperService>(TYPES.BookContentScraperService),
       container.get<Logger>(TYPES.Logger)
     );
   });
