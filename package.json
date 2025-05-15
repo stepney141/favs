@@ -30,8 +30,6 @@
     "@types/node-fetch": "^2.6.11",
     "@types/papaparse": "^5.3.14",
     "@typescript-eslint/typescript-estree": "^8.17.0",
-    "esbuild": "^0.19.11",
-    "esbuild-register": "^3.5.0",
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.3",
@@ -41,8 +39,8 @@
     "globals": "^15.13.0",
     "prettier": "^3.2.4",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.17.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1",
     "vitest": "^3.1.2"
   },
   "scripts": {

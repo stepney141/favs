@@ -23,23 +23,28 @@ export default [
   {
     ignores: ["**/node_modules"]
   },
-  ...tseslint.configs.recommended,
+
+  // 共通プラグインをここで一括宣言
+  {
+    plugins: {
+      import: fixupPluginRules(_import),
+      "unused-imports": unusedImports,
+      functional: functionalPlugin
+    }
+  },
+
   ...fixupConfigRules(
     compat.extends(
-      "eslint:recommended",
       "plugin:import/recommended",
       "plugin:import/errors",
       "plugin:import/warnings",
       "plugin:import/typescript"
     )
   ),
-  // Apply general rules (excluding typed rules) to all files first
+
+  // JS/TS 共通の非スタイル系ルール
   {
-    files: ["**/*.ts", "**/*.js", "**/*.mjs"], // Include .mjs for config file
-    plugins: {
-      import: fixupPluginRules(_import),
-      "unused-imports": unusedImports
-    },
+    files: ["**/*.{js,ts,tsx,mjs}"],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -49,21 +54,18 @@ export default [
       sourceType: "module"
     },
     settings: {
-      "import/parsers": {
-        "@typescript-eslint/parser": [".ts", ".tsx"]
-      },
       "import/resolver": {
         typescript: {
+          // プロジェクトのtsconfig.jsonを指定
+          project: ["./**/tsconfig.json", "./tsconfig.json"],
           alwaysTryTypes: true
-          // project setting removed from here
         }
       }
     },
     rules: {
-      // General rules (not requiring type info)
-      indent: ["error", 2],
-      "linebreak-style": ["error", "unix"],
-      semi: ["error", "always"],
+      indent: "off",
+      "linebreak-style": "off",
+      semi: "off",
       "no-path-concat": 0,
       "no-unused-vars": 0, // Use @typescript-eslint/no-unused-vars instead for TS files
       "eol-last": ["warn", "always"],
@@ -83,32 +85,24 @@ export default [
       "no-var": "warn",
       "no-eq-null": "error",
       "no-mixed-spaces-and-tabs": ["error"],
-      "unused-imports/no-unused-imports": "warn",
-      "@typescript-eslint/consistent-type-imports": [
-        "warn",
-        {
-          prefer: "type-imports"
-        }
-      ],
-      "@typescript-eslint/indent": "off" // Often handled by Prettier
-      // Functional rules moved to TS-specific block
+      "unused-imports/no-unused-imports": "warn"
     }
   },
-  // Apply recommended typed rules and functional rules to TS files
+
+  // Typed Lint
+  ...tseslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked.map((config) => ({
     ...config,
     files: ["**/*.ts"] // Ensure it only applies to TS files
   })),
-  // Add specific overrides for TS files in a separate object
   {
-    files: ["**/*.ts"],
-    plugins: {
-      // Add functional plugin here
-      functional: functionalPlugin
-    },
+    files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
       parserOptions: {
-        project: "./tsconfig.json"
+        // プロジェクトのtsconfig.jsonを指定
+        project: ["./**/tsconfig.json", "./tsconfig.json"],
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname
       }
     },
     rules: {
@@ -123,10 +117,14 @@ export default [
         }
       ],
       "@typescript-eslint/no-namespace": "warn",
-      "@typescript-eslint/no-unsafe-assignment": "warn", // Disable unsafe assignment rule
-      // Disable base 'no-unused-vars' to avoid conflict with TS version
-      "no-unused-vars": "off",
-      // Functional rules (warn level) - moved here
+      "@typescript-eslint/no-unsafe-assignment": "warn",
+      "@typescript-eslint/consistent-type-imports": [
+        "warn",
+        {
+          prefer: "type-imports"
+        }
+      ],
+      "@typescript-eslint/indent": "off",
       "functional/no-let": "warn",
       "functional/immutable-data": "warn",
       "functional/no-conditional-statements": "off",
@@ -134,5 +132,6 @@ export default [
       "functional/no-return-void": "off"
     }
   },
+
   eslintConfigPrettier
 ];
