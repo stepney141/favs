@@ -3,18 +3,19 @@ import path from "node:path"; // path モジュールをインポート
 
 import { TYPES } from "./types";
 
-import type { DependencyKey } from "./types";
-import type { BiblioInfoProvider } from "@/application/ports/output/biblioInfoProvider"; // BiblioInfoProvider をインポート
+import type { APICredentials, DependencyKey } from "./types";
 import type { BookRepository } from "@/application/ports/output/bookRepository";
 import type { BookScraperService } from "@/application/ports/output/bookScraperService";
 import type { Logger } from "@/application/ports/output/logger";
 import type { StorageService } from "@/application/ports/output/storageService";
 import type { BookListType } from "@/domain/models/book"; // BookListType をインポート
+import type { BiblioInfoManager } from "@/infrastructure/adapters/apis/biblioInfoManager";
 
 import { createCrawlBookDescriptionUseCase } from "@/application/usecases/crawlBookDescriptionUseCase";
 import { createFetchBiblioInfoUseCase } from "@/application/usecases/fetchBiblioInfoUseCase";
 import { createGetBookListUseCase } from "@/application/usecases/getBookListUseCase";
 import { createSaveBookListUseCase } from "@/application/usecases/saveBookListUseCase";
+import { createBiblioInfoManager } from "@/infrastructure/adapters/apis";
 import { ConsoleLogger } from "@/infrastructure/adapters/logging/consoleLogger";
 import { SqliteBookRepository } from "@/infrastructure/adapters/repositories/sqliteBookRepository";
 import { BookmeterScraper } from "@/infrastructure/adapters/scraping/bookmeterScraper";
@@ -133,8 +134,27 @@ export function setupDependencies(): DIContainer {
     return new FileStorageService(logger, bookRepository, { defaultCsvPath });
   });
 
-  // API連携のプロバイダー登録（ここでは簡略化のため省略）
-  // 必要に応じて各API用のプロバイダーを個別に登録する
+  // API認証情報を登録
+  container.registerSingleton<APICredentials>(TYPES.APICredentials, () => {
+    return {
+      isbndb: process.env.ISBNDB_API_KEY || "",
+      google: process.env.GOOGLE_BOOKS_API_KEY || "",
+      cinii: process.env.CINII_API_APPID || ""
+    };
+  });
+
+  // BiblioInfoManagerを登録
+  container.registerSingleton(TYPES.BiblioInfoManager, () => {
+    const logger = container.get<Logger>(TYPES.Logger);
+    const credentials = container.get<APICredentials>(TYPES.APICredentials);
+
+    // 認証情報のバリデーション
+    if (!credentials.isbndb || !credentials.google) {
+      throw new Error("API認証情報が環境変数に設定されていません (ISBNDB_API_KEY, GOOGLE_BOOKS_API_KEY)");
+    }
+
+    return createBiblioInfoManager(credentials, logger);
+  });
 
   // ファクトリ関数を使ってユースケースを登録
   // ユースケースは関数ベースで実装し、必要な依存を引数で受け取る
@@ -147,9 +167,10 @@ export function setupDependencies(): DIContainer {
   });
 
   container.register(TYPES.FetchBiblioInfoUseCase, () => {
-    // TODO: BiblioInfoProvider を実装して登録する
-    const biblioInfoProviders: BiblioInfoProvider[] = []; // 型注釈を追加
-    return createFetchBiblioInfoUseCase(biblioInfoProviders, container.get<Logger>(TYPES.Logger));
+    // BiblioInfoManagerに明示的な型指定を追加
+    const biblioInfoManager = container.get<BiblioInfoManager>(TYPES.BiblioInfoManager);
+    const logger = container.get<Logger>(TYPES.Logger);
+    return createFetchBiblioInfoUseCase(biblioInfoManager, logger);
   });
 
   container.register(TYPES.SaveBookListUseCase, () => {

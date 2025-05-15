@@ -5,6 +5,15 @@ import type { AppError } from "@/domain/models/errors"; // 追加
 import type { Result } from "@/domain/models/result"; // 追加
 
 /**
+ * API認証情報
+ */
+export interface APICredentials {
+  isbndb: string;
+  google: string;
+  cinii?: string;
+}
+
+/**
  * 依存性注入で使用するシンボル
  */
 export const TYPES = {
@@ -13,6 +22,8 @@ export const TYPES = {
   BookRepository: "BookRepository",
   BookScraperService: "BookScraperService",
   BiblioInfoProvider: "BiblioInfoProvider",
+  BiblioInfoManager: "BiblioInfoManager",
+  APICredentials: "APICredentials",
   StorageService: "StorageService",
   DataDirectory: "DataDirectory", // データディレクトリパス
 
