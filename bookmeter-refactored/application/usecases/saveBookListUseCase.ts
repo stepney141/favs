@@ -1,11 +1,12 @@
-import { ok, err } from "../../domain/models/result";
 
-import type { BookList, BookListType } from "../../domain/models/book";
-import type { AppError } from "../../domain/models/errors";
-import type { Result } from "../../domain/models/result";
 import type { BookRepository } from "../ports/output/bookRepository";
 import type { Logger } from "../ports/output/logger";
 import type { StorageService } from "../ports/output/storageService";
+import type { BookList, BookListType } from "@/domain/models/book";
+import type { AppError } from "@/domain/models/errors";
+import type { Result } from "@/domain/models/result";
+
+import { ok, err } from "@/domain/models/result";
 
 export interface SaveBookListParams {
   bookList: BookList;

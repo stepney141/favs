@@ -1,10 +1,9 @@
 import { TYPES } from "../di/types";
 // 不要なインポートを削除
-// import type { Result } from "../../domain/models/result";
-// import type { AppError } from "../../domain/models/errors";
-// import type { BookList } from "../../domain/models/book";
+// import type { Result } from "@/domain/models/result";
+// import type { AppError } from "@/domain/models/errors";
+// import type { BookList } from "@/domain/models/book";
 
-import type { Logger } from "../../application/ports/output/logger";
 import type { DIContainer } from "../di/container";
 import type {
   CrawlBookDescriptionUseCase,
@@ -12,6 +11,7 @@ import type {
   GetBookListUseCase,
   SaveBookListUseCase
 } from "../di/types";
+import type { Logger } from "@/application/ports/output/logger";
 
 /**
  * コマンド実行時のオプション

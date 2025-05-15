@@ -3,15 +3,15 @@ import path from "node:path";
 
 import { parse, unparse } from "papaparse";
 
-import { bookListToArray } from "../../../domain/models/book";
-import { AppError, FileError } from "../../../domain/models/errors";
-import { ok, err } from "../../../domain/models/result";
+import type { BookRepository } from "@/application/ports/output/bookRepository";
+import type { Logger } from "@/application/ports/output/logger";
+import type { StorageService } from "@/application/ports/output/storageService";
+import type { BookList, BookListType } from "@/domain/models/book";
+import type { Result } from "@/domain/models/result";
 
-import type { BookRepository } from "../../../application/ports/output/bookRepository";
-import type { Logger } from "../../../application/ports/output/logger";
-import type { StorageService } from "../../../application/ports/output/storageService";
-import type { BookList, BookListType } from "../../../domain/models/book";
-import type { Result } from "../../../domain/models/result";
+import { bookListToArray } from "@/domain/models/book";
+import { AppError, FileError } from "@/domain/models/errors";
+import { ok, err } from "@/domain/models/result";
 
 /**
  * ファイルストレージサービスの実装

@@ -2,18 +2,19 @@ import puppeteer from "puppeteer";
 
 import { getNodeProperty, $x, waitForXPath } from "../../../../.libs/pptr-utils";
 import { sleep } from "../../../../.libs/utils";
-import { createBook, addBook } from "../../../domain/models/book";
-import { ScrapingError } from "../../../domain/models/errors";
-import { ok, err } from "../../../domain/models/result";
-import { createBookId, createISBN10, createASIN } from "../../../domain/models/valueObjects";
-import { isAsin, isIsbn10, convertISBN10To13 } from "../../../domain/services/isbnService";
 
-import type { BookScraperService } from "../../../application/ports/output/bookScraperService";
-import type { Logger } from "../../../application/ports/output/logger";
-import type { Book, BookList, BookListType } from "../../../domain/models/book";
-import type { Result } from "../../../domain/models/result";
-import type { BookIdentifier, ISBN10, LibraryTag } from "../../../domain/models/valueObjects";
+import type { BookScraperService } from "@/application/ports/output/bookScraperService";
+import type { Logger } from "@/application/ports/output/logger";
+import type { Book, BookList, BookListType } from "@/domain/models/book";
+import type { Result } from "@/domain/models/result";
+import type { BookIdentifier, ISBN10, LibraryTag } from "@/domain/models/valueObjects";
 import type { Browser, Page } from "puppeteer";
+
+import { createBook, addBook } from "@/domain/models/book";
+import { ScrapingError } from "@/domain/models/errors";
+import { ok, err } from "@/domain/models/result";
+import { createBookId, createISBN10, createASIN } from "@/domain/models/valueObjects";
+import { isAsin, isIsbn10, convertISBN10To13 } from "@/domain/services/isbnService";
 
 // BookmeterのURLフォーマット
 const BOOKMETER_BASE_URI = "https://bookmeter.com";

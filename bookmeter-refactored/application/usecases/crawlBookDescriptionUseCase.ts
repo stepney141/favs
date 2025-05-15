@@ -1,13 +1,14 @@
-import { ok, err } from "../../domain/models/result";
-import { isIsbn10, isAsin } from "../../domain/services/isbnService";
 
-import type { Book, BookList, BookListType } from "../../domain/models/book";
-import type { AppError } from "../../domain/models/errors";
-import type { Result } from "../../domain/models/result";
-import type { ISBN10 } from "../../domain/models/valueObjects";
 import type { BookRepository } from "../ports/output/bookRepository";
 import type { BookScraperService } from "../ports/output/bookScraperService";
 import type { Logger } from "../ports/output/logger";
+import type { Book, BookList, BookListType } from "@/domain/models/book";
+import type { AppError } from "@/domain/models/errors";
+import type { Result } from "@/domain/models/result";
+import type { ISBN10 } from "@/domain/models/valueObjects";
+
+import { ok, err } from "@/domain/models/result";
+import { isIsbn10, isAsin } from "@/domain/services/isbnService";
 
 export interface CrawlBookDescriptionParams {
   bookList?: BookList;

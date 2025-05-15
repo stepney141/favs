@@ -1,6 +1,6 @@
-import type { BookList, BookListType } from "../../../domain/models/book";
-import type { AppError } from "../../../domain/models/errors";
-import type { Result } from "../../../domain/models/result";
+import type { BookList, BookListType } from "@/domain/models/book";
+import type { AppError } from "@/domain/models/errors";
+import type { Result } from "@/domain/models/result";
 
 /**
  * ストレージサービスのポート

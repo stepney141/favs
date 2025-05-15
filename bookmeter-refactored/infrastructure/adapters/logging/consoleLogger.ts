@@ -1,4 +1,4 @@
-import type { Logger } from "../../../application/ports/output/logger";
+import type { Logger } from "@/application/ports/output/logger";
 
 /**
  * コンソールロガーの実装

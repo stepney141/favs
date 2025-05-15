@@ -1,7 +1,7 @@
-import type { Book, BookList } from "../../../domain/models/book";
-import type { ScrapingError } from "../../../domain/models/errors";
-import type { Result } from "../../../domain/models/result";
-import type { ISBN10 } from "../../../domain/models/valueObjects";
+import type { Book, BookList } from "@/domain/models/book";
+import type { ScrapingError } from "@/domain/models/errors";
+import type { Result } from "@/domain/models/result";
+import type { ISBN10 } from "@/domain/models/valueObjects";
 
 /**
  * 書籍スクレイパーのポート

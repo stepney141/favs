@@ -1,7 +1,8 @@
-import type { CrawlBookDescriptionParams } from "../../application/usecases/crawlBookDescriptionUseCase"; // 追加
-import type { BookList, BookListType } from "../../domain/models/book";
-import type { AppError } from "../../domain/models/errors"; // 追加
-import type { Result } from "../../domain/models/result"; // 追加
+import type { CrawlBookDescriptionParams } from "@/application/usecases/crawlBookDescriptionUseCase"; // 追加
+import type { SaveBookListParams } from "@/application/usecases/saveBookListUseCase";
+import type { BookList, BookListType } from "@/domain/models/book";
+import type { AppError } from "@/domain/models/errors"; // 追加
+import type { Result } from "@/domain/models/result"; // 追加
 
 /**
  * 依存性注入で使用するシンボル
@@ -49,9 +50,6 @@ export interface FetchBiblioInfoUseCase {
   // シグネチャを実装に合わせる
   execute: (books: BookList, signal?: AbortSignal) => Promise<BookList>;
 }
-
-// SaveBookListParams をインポート
-import type { SaveBookListParams } from "../../application/usecases/saveBookListUseCase";
 
 export interface SaveBookListUseCase {
   // 引数と戻り値の型を実装に合わせる

@@ -1,11 +1,11 @@
 // 不要なインポートを削除
-// import { isIsbn10, isIsbn13, routeIsbn10, routeIsbn13 } from "../../domain/services/isbnService";
+// import { isIsbn10, isIsbn13, routeIsbn10, routeIsbn13 } from "@/domain/services/isbnService";
 
-import type { Book, BookList } from "../../domain/models/book";
-import type { AppError } from "../../domain/models/errors";
-// Result は不要になったので削除
 import type { BiblioInfoProvider } from "../ports/output/biblioInfoProvider";
 import type { Logger } from "../ports/output/logger";
+import type { Book, BookList } from "@/domain/models/book";
+import type { AppError } from "@/domain/models/errors";
+// Result は不要になったので削除
 
 export interface FetchBiblioInfoParams {
   bookList: BookList;

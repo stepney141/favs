@@ -1,24 +1,24 @@
 // インターフェース
 import path from "node:path"; // path モジュールをインポート
 
-import { createCrawlBookDescriptionUseCase } from "../../application/usecases/crawlBookDescriptionUseCase";
-import { createFetchBiblioInfoUseCase } from "../../application/usecases/fetchBiblioInfoUseCase";
-import { createGetBookListUseCase } from "../../application/usecases/getBookListUseCase";
-import { createSaveBookListUseCase } from "../../application/usecases/saveBookListUseCase";
-import { ConsoleLogger } from "../../infrastructure/adapters/logging/consoleLogger";
-import { SqliteBookRepository } from "../../infrastructure/adapters/repositories/sqliteBookRepository";
-import { BookmeterScraper } from "../../infrastructure/adapters/scraping/bookmeterScraper";
-import { FileStorageService } from "../../infrastructure/adapters/storage/fileStorageService";
-
 import { TYPES } from "./types";
 
 import type { DependencyKey } from "./types";
-import type { BiblioInfoProvider } from "../../application/ports/output/biblioInfoProvider"; // BiblioInfoProvider をインポート
-import type { BookRepository } from "../../application/ports/output/bookRepository";
-import type { BookScraperService } from "../../application/ports/output/bookScraperService";
-import type { Logger } from "../../application/ports/output/logger";
-import type { StorageService } from "../../application/ports/output/storageService";
-import type { BookListType } from "../../domain/models/book"; // BookListType をインポート
+import type { BiblioInfoProvider } from "@/application/ports/output/biblioInfoProvider"; // BiblioInfoProvider をインポート
+import type { BookRepository } from "@/application/ports/output/bookRepository";
+import type { BookScraperService } from "@/application/ports/output/bookScraperService";
+import type { Logger } from "@/application/ports/output/logger";
+import type { StorageService } from "@/application/ports/output/storageService";
+import type { BookListType } from "@/domain/models/book"; // BookListType をインポート
+
+import { createCrawlBookDescriptionUseCase } from "@/application/usecases/crawlBookDescriptionUseCase";
+import { createFetchBiblioInfoUseCase } from "@/application/usecases/fetchBiblioInfoUseCase";
+import { createGetBookListUseCase } from "@/application/usecases/getBookListUseCase";
+import { createSaveBookListUseCase } from "@/application/usecases/saveBookListUseCase";
+import { ConsoleLogger } from "@/infrastructure/adapters/logging/consoleLogger";
+import { SqliteBookRepository } from "@/infrastructure/adapters/repositories/sqliteBookRepository";
+import { BookmeterScraper } from "@/infrastructure/adapters/scraping/bookmeterScraper";
+import { FileStorageService } from "@/infrastructure/adapters/storage/fileStorageService";
 
 /**
  * DIコンテナのインターフェース

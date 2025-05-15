@@ -4,17 +4,17 @@ import path from "node:path"; // path をインポート
 import { open } from "sqlite";
 import sqlite3 from "sqlite3";
 
-import { createBook } from "../../../domain/models/book";
-import { DatabaseError } from "../../../domain/models/errors";
-import { ok, err } from "../../../domain/models/result";
-import { createBookId, createISBN10, createASIN } from "../../../domain/models/valueObjects";
-import { isAsin, isIsbn10 } from "../../../domain/services/isbnService";
+import type { BookRepository } from "@/application/ports/output/bookRepository";
+import type { Logger } from "@/application/ports/output/logger";
+import type { BookList, BookListType, Book } from "@/domain/models/book";
+import type { Result } from "@/domain/models/result";
+import type { BookId, BookIdentifier, LibraryTag } from "@/domain/models/valueObjects";
 
-import type { BookRepository } from "../../../application/ports/output/bookRepository";
-import type { Logger } from "../../../application/ports/output/logger";
-import type { BookList, BookListType, Book } from "../../../domain/models/book";
-import type { Result } from "../../../domain/models/result";
-import type { BookId, BookIdentifier, LibraryTag } from "../../../domain/models/valueObjects";
+import { createBook } from "@/domain/models/book";
+import { DatabaseError } from "@/domain/models/errors";
+import { ok, err } from "@/domain/models/result";
+import { createBookId, createISBN10, createASIN } from "@/domain/models/valueObjects";
+import { isAsin, isIsbn10 } from "@/domain/services/isbnService";
 
 // データベース接続の型定義
 type DbConnection = Awaited<ReturnType<typeof open>>;
