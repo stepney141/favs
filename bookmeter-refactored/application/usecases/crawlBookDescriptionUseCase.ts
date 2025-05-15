@@ -1,4 +1,3 @@
-
 import type { BookRepository } from "../ports/output/bookRepository";
 import type { BookScraperService } from "../ports/output/bookScraperService";
 import type { Logger } from "../ports/output/logger";
