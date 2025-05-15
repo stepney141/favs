@@ -102,12 +102,10 @@ export class DatabaseError extends AppError {
  */
 export class ScrapingError extends AppError {
   readonly url: string;
-  readonly selector?: string;
 
-  constructor(message: string, url: string, selector?: string, cause?: unknown) {
+  constructor(message: string, url: string, cause?: unknown) {
     super(message, "SCRAPING_ERROR", cause);
     this.url = url;
-    this.selector = selector;
   }
 }
 

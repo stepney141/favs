@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 
-import { getNodeProperty, $x, waitForXPath } from "../../../../.libs/pptr-utils";
+import { $x, waitForXPath } from "../../../../.libs/pptr-utils";
 import { sleep } from "../../../../.libs/utils";
 
 import type { BookScraperService } from "@/application/ports/output/bookScraperService";
@@ -14,7 +14,8 @@ import { createBook, addBook } from "@/domain/models/book";
 import { ScrapingError } from "@/domain/models/errors";
 import { ok, err } from "@/domain/models/result";
 import { createBookId, createISBN10, createASIN } from "@/domain/models/valueObjects";
-import { isAsin, isIsbn10, convertISBN10To13 } from "@/domain/services/isbnService";
+import { convertISBN10To13, isAsin, isIsbn10 } from "@/domain/services/isbnService";
+import { getNodeProperty } from "@/infrastructure/utils/puppeteerUtils";
 
 // BookmeterのURLフォーマット
 const BOOKMETER_BASE_URI = "https://bookmeter.com";
@@ -186,7 +187,6 @@ export class BookmeterScraper implements BookScraperService {
       const scrapingError = new ScrapingError(
         `ログイン処理中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`,
         `${BOOKMETER_BASE_URI}/login`,
-        "ログイン処理",
         error
       );
 
@@ -224,19 +224,19 @@ export class BookmeterScraper implements BookScraperService {
       }
 
       // 各要素からテキストを取得
-      const amazonUrl = await getNodeProperty(amazonLinkHandles[0], "href");
-      const author = String(await getNodeProperty(authorHandles[0], "textContent"));
-      const title = String(await getNodeProperty(titleHandles[0], "textContent"));
+      const amazonUrl = await getNodeProperty<string>(amazonLinkHandles[0], "href");
+      const author = await getNodeProperty<string>(authorHandles[0], "textContent");
+      const title = await getNodeProperty<string>(titleHandles[0], "textContent");
+
+      if (amazonUrl.isError() || author.isError() || title.isError()) {
+        return err(new ScrapingError("書籍詳細の要素からテキストを取得できませんでした", url));
+      }
 
       // AmazonのURLからISBN/ASINを抽出
-      const asinRaw = this.extractAsinFromAmazonUrl(String(amazonUrl));
+      const asinRaw = this.extractAsinFromAmazonUrl(amazonUrl.unwrap());
 
       if (!asinRaw) {
-        return err(
-          new ScrapingError("AmazonのURLからISBN/ASINを抽出できませんでした", url, "ISBN/ASIN抽出", {
-            amazonUrl: String(amazonUrl)
-          })
-        );
+        return err(new ScrapingError("AmazonのURLからISBN/ASINを抽出できませんでした", url));
       }
 
       // 識別子をISBN10かASINとして扱う
@@ -252,15 +252,14 @@ export class BookmeterScraper implements BookScraperService {
       }
 
       return ok({
-        title,
-        author,
+        title: title.unwrap(),
+        author: author.unwrap(),
         identifier
       });
     } catch (error) {
       const scrapingError = new ScrapingError(
         `書籍詳細の解析中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`,
         url,
-        "書籍詳細解析",
         error
       );
 
@@ -366,7 +365,6 @@ export class BookmeterScraper implements BookScraperService {
       const scrapingError = new ScrapingError(
         `書籍のスキャン中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`,
         bookUrl,
-        "書籍スキャン",
         error
       );
 
@@ -402,11 +400,7 @@ export class BookmeterScraper implements BookScraperService {
     // キャンセルチェック
     if (signal?.aborted) {
       return err(
-        new ScrapingError(
-          "処理がキャンセルされました",
-          `${BOOKMETER_BASE_URI}/users/${userId}/books/${type}`,
-          "キャンセル"
-        )
+        new ScrapingError("処理がキャンセルされました", `${BOOKMETER_BASE_URI}/users/${userId}/books/${type}`)
       );
     }
 
@@ -436,8 +430,7 @@ export class BookmeterScraper implements BookScraperService {
             return err(
               new ScrapingError(
                 "処理がキャンセルされました",
-                `${BOOKMETER_BASE_URI}/users/${userId}/books/${type}?page=${pageNum}`,
-                "キャンセル"
+                `${BOOKMETER_BASE_URI}/users/${userId}/books/${type}?page=${pageNum}`
               )
             );
           }
@@ -494,10 +487,18 @@ export class BookmeterScraper implements BookScraperService {
           // (重要: このループ内では page.goto を呼び出さない)
           for (let i = 0; i < booksUrlHandles.length; i++) {
             try {
-              const bookUrl = String(await getNodeProperty(booksUrlHandles[i], "href"));
+              const bookUrl = (await getNodeProperty<string>(booksUrlHandles[i], "href")).unwrap();
+              if (!bookUrl) {
+                this.logger.warn(`書籍URLが取得できませんでした (要素 ${i})。スキップします。`);
+                continue; // 次の要素へ
+              }
               let amazonUrl: string | undefined;
               if (type === "wish" && amazonLinkHandles.length > i) {
-                amazonUrl = String(await getNodeProperty(amazonLinkHandles[i], "href"));
+                amazonUrl = (await getNodeProperty<string>(amazonLinkHandles[i], "href")).unwrap();
+              }
+              if (!amazonUrl) {
+                this.logger.warn(`Amazonリンクが取得できませんでした (要素 ${i})。スキップします。`);
+                continue;
               }
               pageBookData.push({ bookUrl, amazonUrl });
             } catch (error) {
@@ -519,8 +520,7 @@ export class BookmeterScraper implements BookScraperService {
               return err(
                 new ScrapingError(
                   "処理がキャンセルされました",
-                  listPageUrl, // キャンセル時点のリストページURL
-                  "書籍データ処理中"
+                  listPageUrl // キャンセル時点のリストページURL
                 )
               );
             }
@@ -645,7 +645,6 @@ export class BookmeterScraper implements BookScraperService {
       const scrapingError = new ScrapingError(
         `「${type === "wish" ? "読みたい本" : "積読本"}」リストの取得中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`,
         `${BOOKMETER_BASE_URI}/users/${userId}/books/${type}`,
-        `${type}リスト取得`,
         error
       );
 
@@ -718,7 +717,6 @@ export class BookmeterScraper implements BookScraperService {
       const scrapingError = new ScrapingError(
         `書籍説明の取得中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`,
         `https://www.kinokuniya.co.jp/f/dsg-01-${isbn}`,
-        "書籍説明取得",
         error
       );
 
