@@ -1,50 +1,38 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
-import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
-import functionalPlugin from "eslint-plugin-functional";
-import _import from "eslint-plugin-import";
+import functional from "eslint-plugin-functional";
+import importPlugin from "eslint-plugin-import";
 import unusedImports from "eslint-plugin-unused-imports";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
-});
-
-export default [
+export default tseslint.config(
   {
     ignores: ["**/node_modules"]
   },
 
-  // 共通プラグインをここで一括宣言
+  js.configs.recommended,
+
+  // 共通プラグイン
   {
     plugins: {
-      import: fixupPluginRules(_import),
       "unused-imports": unusedImports,
-      functional: functionalPlugin
+      functional
     }
   },
 
-  ...fixupConfigRules(
-    compat.extends(
-      "plugin:import/recommended",
-      "plugin:import/errors",
-      "plugin:import/warnings",
-      "plugin:import/typescript"
-    )
-  ),
+  importPlugin.flatConfigs.recommended,
+  importPlugin.flatConfigs.typescript,
+  functional.configs.lite,
 
-  // JS/TS 共通の非スタイル系ルール
+  // 型依存ルールをJSで一括無効化
   {
-    files: ["**/*.{js,ts,tsx,mjs}"],
+    files: ["**/*.{js,mjs,cjs,jsx}"],
+    ...functional.configs.disableTypeChecked
+  },
+
+  {
+    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -66,8 +54,8 @@ export default [
       indent: "off",
       "linebreak-style": "off",
       semi: "off",
-      "no-path-concat": 0,
-      "no-unused-vars": 0, // Use @typescript-eslint/no-unused-vars instead for TS files
+      "no-path-concat": "off",
+      "no-unused-vars": "warn",
       "eol-last": ["warn", "always"],
       "import/no-unresolved": "warn",
       "import/order": [
@@ -89,24 +77,23 @@ export default [
     }
   },
 
-  // Typed Lint
-  ...tseslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked.map((config) => ({
+  tseslint.configs.recommended,
+  tseslint.configs.recommendedTypeChecked.map((config) => ({
     ...config,
-    files: ["**/*.ts"] // Ensure it only applies to TS files
+    files: ["**/*.{ts,tsx}"] // Ensure it only applies to TS files
   })),
+
   {
-    files: ["**/*.ts", "**/*.tsx"],
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       parserOptions: {
         // プロジェクトのtsconfig.jsonを指定
-        project: ["./**/tsconfig.json", "./tsconfig.json"],
+        project: ["./bookmeter-refactored/tsconfig.json", "./tsconfig.json"],
         projectService: true,
         tsconfigRootDir: import.meta.dirname
       }
     },
     rules: {
-      // Specific overrides and functional rules
       "@typescript-eslint/no-unused-vars": ["error"],
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/explicit-function-return-type": ["error", { allowExpressions: true }],
@@ -129,9 +116,13 @@ export default [
       "functional/immutable-data": "warn",
       "functional/no-conditional-statements": "off",
       "functional/no-expression-statements": "off",
-      "functional/no-return-void": "off"
+      "functional/no-return-void": "off",
+      "import/namespace": "off",
+      "import/named": "off",
+      "import/default": "off",
+      "import/no-named-as-default-member": "off"
     }
   },
 
   eslintConfigPrettier
-];
+);
