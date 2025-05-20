@@ -33,6 +33,11 @@ export async function executeCommand(
   mode: "wish" | "stacked",
   options: Record<string, unknown>
 ): Promise<void> {
+  // userIdのチェック: optionsオブジェクトから直接userIdを取得して検証
+  if (typeof options.userId !== "string" || options.userId.trim() === "") {
+    throw new Error("User ID is required and must be a non-empty string.");
+  }
+
   // 依存関係の解決
   const logger = container.get<Logger>(TYPES.Logger);
   const getBookListUseCase = container.get<GetBookListUseCase>(TYPES.GetBookListUseCase);
@@ -42,12 +47,12 @@ export async function executeCommand(
 
   // オプションのキャスト（型安全のため）
   const commandOptions: CommandOptions = {
-    userId: typeof options.userId === "string" ? options.userId : undefined,
+    userId: options.userId,
     noRemoteCheck: options.noRemoteCheck === true,
     skipBookListComparison: options.skipBookListComparison === true,
     skipFetchingBiblioInfo: options.skipFetchingBiblioInfo === true,
     outputFilePath: typeof options.outputFilePath === "string" ? options.outputFilePath : null,
-    refresh: options.refresh === true // 追加
+    refresh: options.refresh === true
   };
 
   // 処理の開始をログに記録
@@ -60,7 +65,7 @@ export async function executeCommand(
       // 変数名を変更
       type: mode,
       userId: commandOptions.userId,
-      refresh: commandOptions.refresh, // 追加
+      refresh: commandOptions.refresh,
       skipRemoteCheck: commandOptions.noRemoteCheck,
       skipComparison: commandOptions.skipBookListComparison,
       outputFilePath: commandOptions.outputFilePath

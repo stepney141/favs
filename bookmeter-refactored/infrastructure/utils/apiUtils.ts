@@ -6,7 +6,6 @@ import type { AxiosError } from "axios";
 
 import { ApiError } from "@/domain/models/errors";
 
-
 /**
  * エラーログの簡略化
  */

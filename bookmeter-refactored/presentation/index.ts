@@ -4,6 +4,7 @@ import { isAxiosError } from "axios";
 import { config } from "dotenv";
 
 import { executeCommand } from "./cli/commandExecutor";
+import { BOOKMETER_USER_ID } from "./cli/constants";
 import { setupDependencies } from "./di/container";
 
 import type { DIContainer } from "./di/container";
@@ -59,6 +60,10 @@ export async function main(argv: string[]): Promise<void> {
     const mode = parseMode(argv);
     const options = parseOptions(argv);
 
+    if (!options.userId) {
+      options.userId = BOOKMETER_USER_ID.stepney141;
+    }
+
     // 依存性注入コンテナのセットアップ
     const container: DIContainer = setupDependencies();
 
@@ -85,19 +90,6 @@ export async function main(argv: string[]): Promise<void> {
 
 // スクリプト直接実行時のエントリポイント
 if (require.main === module) {
-  // デバッグ用オプション
-  // main([
-  //   "npx",
-  //   "tsx",
-  //   "stacked",
-  //   "--no-remote-check",
-  //   "--skip-book-list-comparison",
-  //   "--skip-fetching-biblio-info"
-  // ]).catch((error) => {
-  //   console.error("予期しないエラーが発生しました:", error);
-  //   process.exit(1);
-  // });
-
   main(process.argv).catch((error) => {
     console.error("予期しないエラーが発生しました:", error);
     process.exit(1);

@@ -100,12 +100,12 @@ export function setupDependencies(): DIContainer {
   const container = new Container();
 
   // データディレクトリパスを定義・登録
-  const dataDir = path.resolve(__dirname, "../../../data"); // presentation/di -> presentation -> bookmeter-refactored -> data
+  const dataDir = path.resolve(__dirname, "../../data");
   container.registerSingleton<string>(TYPES.DataDirectory, () => dataDir);
 
   // インフラストラクチャ層の実装を登録
   container.registerSingleton<Logger>(TYPES.Logger, () => new ConsoleLogger("App")); // prefix を追加
-  
+
   // KinokuniyaScraper を登録
   container.registerSingleton<BookContentScraperService>(TYPES.BookContentScraperService, () => {
     const logger = container.get<Logger>(TYPES.Logger);
