@@ -10,10 +10,11 @@ export interface BookScraperService {
   /**
    * 「読みたい本」リストを取得
    * @param userId ユーザーID
+   * @param isSignedIn ログインするかどうか（trueの場合ログイン、falseの場合はログインなし）
    * @param signal AbortSignal（キャンセル用）
    * @returns 読みたい本のリスト
    */
-  getWishBooks(userId: string, signal?: AbortSignal): Promise<Result<ScrapingError, BookList>>;
+  getWishBooks(userId: string, isSignedIn?: boolean, signal?: AbortSignal): Promise<Result<ScrapingError, BookList>>;
 
   /**
    * 「積読本」リストを取得

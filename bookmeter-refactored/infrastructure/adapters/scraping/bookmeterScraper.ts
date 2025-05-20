@@ -7,7 +7,7 @@ import { KinokuniyaScraper } from "./kinokuniyaScraper";
 
 import type { BookScraperService } from "@/application/ports/output/bookScraperService";
 import type { Logger } from "@/application/ports/output/logger";
-import type { Book, BookList, BookListType } from "@/domain/models/book";
+import type { Book, BookList } from "@/domain/models/book";
 import type { Result } from "@/domain/models/result";
 import type { BookIdentifier, LibraryTag } from "@/domain/models/valueObjects";
 import type { Browser, Page } from "puppeteer";
@@ -376,30 +376,15 @@ export class BookmeterScraper implements BookScraperService {
 
   /**
    * 「読みたい本」リストを取得する
+   * @param userId ユーザーID
+   * @param isSignedIn ログイン状態の指定（デフォルトはログイン状態）
+   * @param signal キャンセル用のAbortSignal
    */
-  async getWishBooks(userId: string, signal?: AbortSignal): Promise<Result<ScrapingError, BookList>> {
-    return this.getBooks("wish", userId, signal);
-  }
-
-  /**
-   * 「積読本」リストを取得する
-   */
-  async getStackedBooks(userId: string, signal?: AbortSignal): Promise<Result<ScrapingError, BookList>> {
-    return this.getBooks("stacked", userId, signal);
-  }
-
-  /**
-   * 書籍リストを取得する共通処理
-   */
-  private async getBooks(
-    type: BookListType,
-    userId: string,
-    signal?: AbortSignal
-  ): Promise<Result<ScrapingError, BookList>> {
+  async getWishBooks(userId: string, isSignedIn: boolean = true, signal?: AbortSignal): Promise<Result<ScrapingError, BookList>> {
     // キャンセルチェック
     if (signal?.aborted) {
       return err(
-        new ScrapingError("処理がキャンセルされました", `${BOOKMETER_BASE_URI}/users/${userId}/books/${type}`)
+        new ScrapingError("処理がキャンセルされました", `${BOOKMETER_BASE_URI}/users/${userId}/books/wish`)
       );
     }
 
@@ -407,11 +392,12 @@ export class BookmeterScraper implements BookScraperService {
     const browser = await this.initializeBrowser();
 
     try {
-      // ログイン状態でスクレイピングするためにログイン処理を実行
-      const loginResult = await this.login(browser);
-
-      if (loginResult.isError()) {
-        return err(loginResult.unwrapError());
+      // ログインが必要な場合のみログイン処理を実行
+      if (isSignedIn) {
+        const loginResult = await this.login(browser);
+        if (loginResult.isError()) {
+          return err(loginResult.unwrapError());
+        }
       }
 
       const page = await browser.newPage();
@@ -421,6 +407,10 @@ export class BookmeterScraper implements BookScraperService {
         await this.setupImageBlocker(page);
 
         let pageNum = 1;
+        
+        // 未ログイン時のレート制限管理用変数
+        let scanCounter = 0;
+        let waitSeconds = 1.5;
 
         // ページネーションを処理しながらすべての書籍を取得
         while (true) {
@@ -429,14 +419,14 @@ export class BookmeterScraper implements BookScraperService {
             return err(
               new ScrapingError(
                 "処理がキャンセルされました",
-                `${BOOKMETER_BASE_URI}/users/${userId}/books/${type}?page=${pageNum}`
+                `${BOOKMETER_BASE_URI}/users/${userId}/books/wish?page=${pageNum}`
               )
             );
           }
 
-          // --- Step 1: Access the list page ---
-          const listPageUrl = `${BOOKMETER_BASE_URI}/users/${userId}/books/${type}?page=${pageNum}`;
-          this.logger.info(`書籍リストページにアクセスします: ${listPageUrl}`);
+          // --- Step 1: 書籍リストページにアクセス ---
+          const listPageUrl = `${BOOKMETER_BASE_URI}/users/${userId}/books/wish?page=${pageNum}`;
+          this.logger.info(`「読みたい本」リストページにアクセスします: ${listPageUrl}`);
 
           try {
             await page.goto(listPageUrl, {
@@ -455,18 +445,16 @@ export class BookmeterScraper implements BookScraperService {
           const currentUrl = page.url();
           this.logger.info(`現在のページURL: ${currentUrl}`);
 
-          // デバッグ: ページのHTMLをキャプチャ
-          const html = await page.content();
-          this.logger.debug(`ページのHTML (最初の500文字): ${html.substring(0, 500)}...`);
-
-          // --- Step 2: Extract all necessary data (URLs) from the current list page ---
+          // --- Step 2: 書籍URLとAmazonリンク（ログイン時のみ）を抽出 ---
           const pageBookData: { bookUrl: string; amazonUrl?: string }[] = [];
-          const booksUrlXPath = type === "wish" ? XPATH.wish.login.booksUrl : XPATH.stacked.booksUrl;
+          
+          // ログイン状態に応じたXPathを選択
+          const booksUrlXPath = isSignedIn ? XPATH.wish.login.booksUrl : XPATH.wish.guest.booksUrl;
           const amazonLinkXPath = XPATH.wish.login.amazonLink;
 
           this.logger.info(`使用するXPath (書籍URL): ${booksUrlXPath}`);
           const booksUrlHandles = await $x(page, booksUrlXPath);
-          this.logger.info(`XPath ${booksUrlXPath} で取得した要素数: ${booksUrlHandles.length}`);
+          this.logger.info(`書籍URL要素数: ${booksUrlHandles.length}`);
 
           // 書籍が見つからなければページネーション終了
           if (booksUrlHandles.length === 0) {
@@ -474,41 +462,45 @@ export class BookmeterScraper implements BookScraperService {
             break;
           }
 
-          const amazonLinkHandles = type === "wish" ? await $x(page, amazonLinkXPath) : [];
-          if (type === "wish") {
+          // Amazonリンクはログイン状態の場合のみ取得
+          const amazonLinkHandles = isSignedIn ? await $x(page, amazonLinkXPath) : [];
+          if (isSignedIn) {
             this.logger.info(`使用するXPath (Amazonリンク): ${amazonLinkXPath}`);
-            this.logger.info(`XPath ${amazonLinkXPath} で取得した要素数: ${amazonLinkHandles.length}`);
+            this.logger.info(`Amazonリンク要素数: ${amazonLinkHandles.length}`);
           }
 
-          this.logger.debug(`「${type === "wish" ? "読みたい本" : "積読本"}」ページ ${pageNum} のデータを抽出中`);
+          this.logger.debug(`「読みたい本」ページ ${pageNum} のデータを抽出中`);
 
           // 要素ハンドルからURLを抽出して配列に格納
-          // (重要: このループ内では page.goto を呼び出さない)
           for (let i = 0; i < booksUrlHandles.length; i++) {
             try {
               const bookUrl = (await getNodeProperty<string>(booksUrlHandles[i], "href")).unwrap();
               if (!bookUrl) {
                 this.logger.warn(`書籍URLが取得できませんでした (要素 ${i})。スキップします。`);
-                continue; // 次の要素へ
+                continue;
               }
+              
               let amazonUrl: string | undefined;
-              if (type === "wish" && amazonLinkHandles.length > i) {
+              // Amazonリンクはログイン状態の場合のみ取得を試みる
+              if (isSignedIn && amazonLinkHandles.length > i) {
                 amazonUrl = (await getNodeProperty<string>(amazonLinkHandles[i], "href")).unwrap();
               }
-              if (!amazonUrl) {
+              
+              // ログイン状態の場合のみAmazonリンクのチェック
+              if (isSignedIn && !amazonUrl) {
                 this.logger.warn(`Amazonリンクが取得できませんでした (要素 ${i})。スキップします。`);
                 continue;
               }
+              
               pageBookData.push({ bookUrl, amazonUrl });
             } catch (error) {
-              // 要素ハンドルが無効になっている場合などのエラーをキャッチ
               this.logger.warn(`リストページからのURL抽出中にエラーが発生しました (要素 ${i})。スキップします。`, {
                 error
               });
             }
           }
 
-          // --- Step 3: Process the extracted data for the current page ---
+          // --- Step 3: 抽出したデータを処理 ---
           this.logger.debug(`抽出した ${pageBookData.length} 件の書籍データを処理中`);
 
           for (const bookData of pageBookData) {
@@ -519,7 +511,7 @@ export class BookmeterScraper implements BookScraperService {
               return err(
                 new ScrapingError(
                   "処理がキャンセルされました",
-                  listPageUrl // キャンセル時点のリストページURL
+                  listPageUrl
                 )
               );
             }
@@ -530,8 +522,8 @@ export class BookmeterScraper implements BookScraperService {
             let author = "";
             let fetchDetails = false; // 詳細ページを取得する必要があるかどうかのフラグ
 
-            // 1. wishリストの場合、まずリストページのAmazonリンクから識別子取得を試みる
-            if (type === "wish" && amazonUrl) {
+            // ログイン状態ではAmazonリンクから識別子取得を試みる
+            if (isSignedIn && amazonUrl) {
               const asinRaw = this.extractAsinFromAmazonUrl(amazonUrl);
 
               if (asinRaw) {
@@ -540,32 +532,27 @@ export class BookmeterScraper implements BookScraperService {
                 } else if (isAsin(asinRaw)) {
                   identifier = createASIN(asinRaw);
                 } else {
-                  // 有効なISBN/ASINでない場合は fetchDetails を true にする
                   this.logger.debug(`リストページから有効な識別子を抽出できませんでした (無効な形式): ${bookUrl}`);
                   fetchDetails = true;
                 }
               } else {
-                // Amazonリンクから抽出失敗した場合も fetchDetails を true にする
                 this.logger.debug(`リストページのAmazonリンクから識別子を抽出できませんでした (抽出失敗): ${bookUrl}`);
                 fetchDetails = true;
               }
-            }
-            // 2. stackedリストの場合、またはwishリストで識別子を取得できなかった場合
-            else {
+            } else {
+              // 未ログイン状態では詳細ページを取得
               fetchDetails = true;
             }
 
-            // 3. 詳細ページを取得する必要がある場合
+            // 詳細ページを取得する必要がある場合
             if (fetchDetails) {
               this.logger.debug(`書籍詳細ページをスキャンします: ${bookUrl}`);
               try {
-                // 書籍詳細ページに遷移 (既存のpageオブジェクトを使用)
+                // 書籍詳細ページに遷移
                 await Promise.all([
-                  // waitForXPathは補助的な待機とし、失敗してもエラーにしない
                   waitForXPath(page, XPATH.book.amazonLink, { timeout: 30 * 1000 }).catch(() => {
                     this.logger.debug(`waitForXPath(amazonLink) タイムアウト (無視): ${bookUrl}`);
                   }),
-                  // タイムアウトを120秒に延長
                   page.goto(bookUrl, { waitUntil: "domcontentloaded", timeout: 120 * 1000 })
                 ]);
 
@@ -576,39 +563,52 @@ export class BookmeterScraper implements BookScraperService {
                   this.logger.warn(`書籍詳細の解析に失敗しました: ${bookUrl}`, {
                     error: detailsResult.unwrapError()
                   });
-                  // エラーが発生しても次の書籍へ
-                  continue; // ループの次の反復へ
+                  continue;
                 }
 
                 // 解析成功時：識別子、タイトル、著者を取得
                 const details = detailsResult.unwrap();
-                identifier = details.identifier; // 詳細ページから取得した識別子で上書き
+                identifier = details.identifier;
                 title = details.title;
                 author = details.author;
+                
+                // 未ログイン状態の場合はレート制限対策
+                if (!isSignedIn) {
+                  scanCounter++;
+                  
+                  // 元の実装のレート制限ロジックを再現
+                  if (scanCounter % 10 === 0) {
+                    if (waitSeconds < 5.5) {
+                      waitSeconds += 0.2;
+                      this.logger.debug(`待機時間を増加: ${waitSeconds}秒`);
+                    }
+                  }
+                  
+                  // 待機
+                  this.logger.debug(`レート制限対策: ${waitSeconds}秒待機`);
+                  await sleep(waitSeconds * 1000);
+                }
               } catch (error) {
-                // page.goto や parseBookDetails でのエラー
                 this.logger.warn(`書籍詳細ページのスキャン中にエラーが発生しました: ${bookUrl}`, { error });
-                // 念のため少し待機
                 await sleep(500);
-                // エラーが発生しても次の書籍へ
-                continue; // ループの次の反復へ
+                continue;
               }
             }
 
-            // 4. 識別子が最終的に取得できなかった場合はスキップ
+            // 識別子が取得できなかった場合はスキップ
             if (!identifier) {
               this.logger.warn(`書籍の識別子を取得できませんでした。スキップします: ${bookUrl}`);
               continue;
             }
 
-            // 5. Book オブジェクトを作成
+            // Book オブジェクトを作成
             const id = createBookId(bookUrl);
             const book = createBook({
               id,
               url: bookUrl,
-              identifier, // 取得した識別子
-              title, // 取得したタイトル (取得できなければ空文字)
-              author, // 取得した著者 (取得できなければ空文字)
+              identifier,
+              title,
+              author,
               publisher: "",
               publishedDate: "",
               description: "",
@@ -622,35 +622,239 @@ export class BookmeterScraper implements BookScraperService {
               }
             });
 
-            // BookList (ReadonlyMap) に対してaddBook関数を使用
+            // BookList に書籍を追加
             bookList = addBook(bookList, book);
 
             // アクセス間隔を設ける
-            await sleep(500); // 500ms待機
-          } // End of loop for pageBookData
+            await sleep(500);
+          }
 
           // 次のページへ
           pageNum++;
-        } // End of while(true) loop
+          
+          // 未ログイン状態の場合は、元の実装に合わせて40秒待機
+          if (!isSignedIn) {
+            this.logger.info("ページ間の待機: 40秒");
+            await sleep(40 * 1000);
+          }
+        }
 
-        this.logger.info(
-          `「${type === "wish" ? "読みたい本" : "積読本"}」リストの取得が完了しました (${bookList.size}冊)`
-        );
+        this.logger.info(`「読みたい本」リストの取得が完了しました (${bookList.size}冊)`);
         return ok(bookList);
       } finally {
         await page.close();
       }
     } catch (error) {
       const scrapingError = new ScrapingError(
-        `「${type === "wish" ? "読みたい本" : "積読本"}」リストの取得中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`,
-        `${BOOKMETER_BASE_URI}/users/${userId}/books/${type}`,
+        `「読みたい本」リストの取得中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`,
+        `${BOOKMETER_BASE_URI}/users/${userId}/books/wish`,
         error
       );
 
-      this.logger.error(scrapingError.message, { error, type, userId });
+      this.logger.error(scrapingError.message, { error, userId });
       return err(scrapingError);
     } finally {
       await browser.close();
     }
   }
+
+  /**
+   * 「積読本」リストを取得する
+   * @param userId ユーザーID
+   * @param signal キャンセル用のAbortSignal
+   */
+  async getStackedBooks(userId: string, signal?: AbortSignal): Promise<Result<ScrapingError, BookList>> {
+    // キャンセルチェック
+    if (signal?.aborted) {
+      return err(
+        new ScrapingError("処理がキャンセルされました", `${BOOKMETER_BASE_URI}/users/${userId}/books/stacked`)
+      );
+    }
+
+    let bookList: BookList = new Map();
+    const browser = await this.initializeBrowser();
+
+    try {
+      // 積読本リストの取得にはログインが必要
+      const loginResult = await this.login(browser);
+      if (loginResult.isError()) {
+        return err(loginResult.unwrapError());
+      }
+
+      const page = await browser.newPage();
+
+      try {
+        // 画像読み込みを無効化して高速化
+        await this.setupImageBlocker(page);
+
+        let pageNum = 1;
+        
+        // レート制限管理変数
+        let scanCounter = 0;
+        let waitSeconds = 1.5;
+
+        // ページネーションを処理しながらすべての書籍を取得
+        while (true) {
+          // キャンセルチェック
+          if (signal?.aborted) {
+            return err(
+              new ScrapingError(
+                "処理がキャンセルされました",
+                `${BOOKMETER_BASE_URI}/users/${userId}/books/stacked?page=${pageNum}`
+              )
+            );
+          }
+
+          // --- Step 1: 書籍リストページにアクセス ---
+          const listPageUrl = `${BOOKMETER_BASE_URI}/users/${userId}/books/stacked?page=${pageNum}`;
+          this.logger.info(`「積読本」リストページにアクセスします: ${listPageUrl}`);
+
+          try {
+            await page.goto(listPageUrl, {
+              waitUntil: "domcontentloaded",
+              timeout: 30000
+            });
+          } catch (error) {
+            if (error instanceof Error && error.name === "TimeoutError") {
+              this.logger.warn(`ページ ${pageNum} の読み込みでタイムアウトが発生しました。最後のページとみなします。`);
+              break;
+            }
+            throw error;
+          }
+
+          // --- Step 2: 書籍URLを抽出 ---
+          this.logger.info(`使用するXPath (書籍URL): ${XPATH.stacked.booksUrl}`);
+          const booksUrlHandles = await $x(page, XPATH.stacked.booksUrl);
+          this.logger.info(`書籍URL要素数: ${booksUrlHandles.length}`);
+
+          // 書籍が見つからなければページネーション終了
+          if (booksUrlHandles.length === 0) {
+            this.logger.info(`要素が見つかりませんでした。ページネーション終了と判断します。`);
+            break;
+          }
+
+          this.logger.debug(`「積読本」ページ ${pageNum} のデータを抽出中`);
+
+          // 書籍URLを抽出
+          const bookUrls: string[] = [];
+          for (const handle of booksUrlHandles) {
+            try {
+              const bookUrl = (await getNodeProperty<string>(handle, "href")).unwrap();
+              if (bookUrl) {
+                bookUrls.push(bookUrl);
+              } else {
+                this.logger.warn(`書籍URLが取得できませんでした。スキップします。`);
+              }
+            } catch (error) {
+              this.logger.warn(`リストページからのURL抽出中にエラーが発生しました。スキップします。`, { error });
+            }
+          }
+
+          // --- Step 3: 各書籍の詳細ページを処理 ---
+          for (const bookUrl of bookUrls) {
+            // キャンセルチェック
+            if (signal?.aborted) {
+              return err(
+                new ScrapingError("処理がキャンセルされました", listPageUrl)
+              );
+            }
+
+            this.logger.debug(`書籍詳細ページをスキャンします: ${bookUrl}`);
+            
+            try {
+              // 書籍詳細ページに遷移
+              await Promise.all([
+                waitForXPath(page, XPATH.book.amazonLink, { timeout: 30 * 1000 }).catch(() => {
+                  this.logger.debug(`waitForXPath(amazonLink) タイムアウト (無視): ${bookUrl}`);
+                }),
+                page.goto(bookUrl, { waitUntil: "domcontentloaded", timeout: 120 * 1000 })
+              ]);
+
+              // 書籍詳細を解析
+              const detailsResult = await this.parseBookDetails(page, bookUrl);
+
+              if (detailsResult.isError()) {
+                this.logger.warn(`書籍詳細の解析に失敗しました: ${bookUrl}`, {
+                  error: detailsResult.unwrapError()
+                });
+                continue;
+              }
+
+              // 解析成功時：識別子、タイトル、著者を取得
+              const details = detailsResult.unwrap();
+              const identifier = details.identifier;
+              const title = details.title;
+              const author = details.author;
+
+              // Book オブジェクトを作成
+              const id = createBookId(bookUrl);
+              const book = createBook({
+                id,
+                url: bookUrl,
+                identifier,
+                title,
+                author,
+                publisher: "",
+                publishedDate: "",
+                description: "",
+                libraryInfo: {
+                  existsIn: new Map<LibraryTag, boolean>([
+                    ["Sophia", false],
+                    ["UTokyo", false]
+                  ]),
+                  opacLinks: new Map<LibraryTag, string>(),
+                  mathLibOpacLink: ""
+                }
+              });
+
+              // BookList に書籍を追加
+              bookList = addBook(bookList, book);
+
+              // レート制限対策
+              scanCounter++;
+              if (scanCounter % 10 === 0) {
+                if (waitSeconds < 5.5) {
+                  waitSeconds += 0.2;
+                  this.logger.debug(`待機時間を増加: ${waitSeconds}秒`);
+                }
+              }
+              
+              // 待機
+              await sleep(waitSeconds * 1000);
+              
+            } catch (error) {
+              this.logger.warn(`書籍詳細ページのスキャン中にエラーが発生しました: ${bookUrl}`, { error });
+              await sleep(500);
+              continue;
+            }
+          }
+
+          // 次のページへ
+          pageNum++;
+          
+          // 元の実装に合わせて40秒待機
+          this.logger.info("ページ間の待機: 40秒");
+          await sleep(40 * 1000);
+        }
+
+        this.logger.info(`「積読本」リストの取得が完了しました (${bookList.size}冊)`);
+        return ok(bookList);
+      } finally {
+        await page.close();
+      }
+    } catch (error) {
+      const scrapingError = new ScrapingError(
+        `「積読本」リストの取得中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`,
+        `${BOOKMETER_BASE_URI}/users/${userId}/books/stacked`,
+        error
+      );
+
+      this.logger.error(scrapingError.message, { error, userId });
+      return err(scrapingError);
+    } finally {
+      await browser.close();
+    }
+  }
+
+  // getBooks メソッドは getWishBooks と getStackedBooks に分離されたため削除
 }

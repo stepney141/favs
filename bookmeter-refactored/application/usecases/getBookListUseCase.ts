@@ -1,4 +1,3 @@
-
 import type { BookRepository } from "../ports/output/bookRepository";
 import type { BookScraperService } from "../ports/output/bookScraperService";
 import type { Logger } from "@/application/ports/output/logger";
@@ -76,7 +75,7 @@ export function createGetBookListUseCase(
   ): Promise<Result<AppError, { books: BookList; hasChanges: boolean }>> {
     const { userId, type, refresh = false, signal } = params;
 
-    logger.info(`書籍リスト(${type})の取得を開始します`, { userId, refresh });
+    logger.info(`書籍リスト(${type})の取得を開始します`, { ...params });
 
     try {
       // キャンセルチェック
@@ -113,7 +112,7 @@ export function createGetBookListUseCase(
 
       const scrapeResult =
         type === "wish"
-          ? await bookScraperService.getWishBooks(userId, signal)
+          ? await bookScraperService.getWishBooks(userId, true, signal) // ログイン状態で取得（デフォルト）
           : await bookScraperService.getStackedBooks(userId, signal);
 
       if (scrapeResult.isError()) {
@@ -125,7 +124,7 @@ export function createGetBookListUseCase(
 
       // データベースのデータとの差分チェック
       const storedBooksResult = await bookRepository.findAll(type);
-      let changes = false; // Move declaration outside the if block
+      let changes = false;
 
       if (storedBooksResult.isSuccess()) {
         const storedBooks = storedBooksResult.unwrap();
