@@ -1,4 +1,9 @@
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+
 import { TYPES } from "../di/types";
+
+import { BOOKMETER_USER_ID } from "./constants";
 
 import type { DIContainer } from "../di/container";
 import type {
@@ -9,16 +14,96 @@ import type {
 } from "../di/types";
 import type { Logger } from "@/application/ports/output/logger";
 
+type Mode = "wish" | "stacked";
+interface CliOptions {
+  userId: string;
+  outputFilePath?: string;
+  source: "remote" | "local";
+  processing: "smart" | "force" | "skip";
+  "biblio-fetching": "enabled" | "disabled";
+  [key: string]: unknown; // yargsが他のプロパティを追加する可能性があるため
+}
+
 /**
  * コマンド実行時のオプション
  */
 export interface CommandOptions {
   userId?: string;
-  refresh?: boolean; // 追加
+  refresh?: boolean;
   noRemoteCheck?: boolean;
   skipBookListComparison?: boolean;
   skipFetchingBiblioInfo?: boolean;
   outputFilePath?: string | null;
+}
+
+/**
+ * コマンドライン引数を解析する
+ */
+export async function parseCliArguments(argv: string[]): Promise<{ mode: Mode; options: CliOptions }> {
+  const parsedArgs = await yargs(hideBin(argv))
+    .command<CliOptions>("$0 <mode>", "Bookmeterの書籍リストを取得・処理します。", (yargsInstance) => {
+      return yargsInstance.positional("mode", {
+        describe: "処理モード(積読/読みたい本)",
+        type: "string",
+        choices: ["wish", "stacked"] as const,
+        demandOption: true
+      });
+    })
+    .option("userId", {
+      alias: "u",
+      type: "string",
+      description: "BookmeterのユーザーID",
+      default: BOOKMETER_USER_ID.stepney141
+    })
+    .option("outputFilePath", {
+      alias: "o",
+      type: "string",
+      description: "出力ファイルのカスタムパス"
+    })
+    .option("source", {
+      type: "string",
+      description: "書籍リストの取得元(リモートbookmeter or ローカルDB)",
+      choices: ["remote", "local"] as const,
+      default: "remote"
+    })
+    .option("processing", {
+      type: "string",
+      description: [
+        "取得した書籍リストの処理戦略:",
+        "  smart: 前回のリストと比較し変更がある場合のみ処理",
+        "  force: 変更の有無に関わらず強制的に処理",
+        "  skip:  書籍リスト取得後、一切のデータ処理をスキップ"
+      ].join("\n"),
+      choices: ["smart", "force", "skip"] as const,
+      default: "smart"
+    })
+    .option("biblio-fetching", {
+      type: "string",
+      description: "書誌情報を外部APIから取得するかどうか",
+      choices: ["enabled", "disabled"] as const,
+      default: "enabled"
+    })
+    .help()
+    .alias("help", "h")
+    .strict()
+    .wrap(null).argv;
+
+  // parsedArgs.mode は yargs によって string | undefined と推論されることがあるため、
+  // 明示的に Mode 型にキャストする。 positional で demandOption: true としているので、
+  // 実際には undefined になることはない。
+  const mode = parsedArgs.mode as Mode;
+
+  // yargsが返すparsedArgsには、位置引数(mode)や特殊なプロパティ(_ や $0)も含まれるため、
+  // CliOptionsに定義されたプロパティのみを抽出する。
+  const options = {
+    userId: parsedArgs.userId,
+    outputFilePath: parsedArgs.outputFilePath,
+    source: parsedArgs.source as "remote" | "local",
+    processing: parsedArgs.processing as "smart" | "force" | "skip",
+    "biblio-fetching": parsedArgs["biblio-fetching"] as "enabled" | "disabled"
+  } satisfies CliOptions;
+
+  return { mode, options };
 }
 
 /**
