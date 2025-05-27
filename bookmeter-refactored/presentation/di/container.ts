@@ -104,7 +104,10 @@ export function setupDependencies(): DIContainer {
   container.registerSingleton<string>(TYPES.DataDirectory, () => dataDir);
 
   // インフラストラクチャ層の実装を登録
-  container.registerSingleton<Logger>(TYPES.Logger, () => new ConsoleLogger("App")); // prefix を追加
+  container.registerSingleton<Logger>(TYPES.Logger, () => {
+    const logLevel = (process.env.LOG_LEVEL as "debug" | "info" | "warn" | "error") || "info";
+    return new ConsoleLogger("App", logLevel);
+  });
 
   // KinokuniyaScraper を登録
   container.registerSingleton<BookContentScraperService>(TYPES.BookContentScraperService, () => {
