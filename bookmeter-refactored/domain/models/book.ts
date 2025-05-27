@@ -1,4 +1,4 @@
-import type { BookId, BookIdentifier, LibraryTag } from "./valueObjects";
+import type { BookId, BookIdentifier } from "./isbn";
 
 /**
  * 書籍リストのタイプ
@@ -6,6 +6,18 @@ import type { BookId, BookIdentifier, LibraryTag } from "./valueObjects";
  * - stacked: 積読本リスト
  */
 export type BookListType = "wish" | "stacked";
+
+/**
+ * 図書館タグ
+ * 図書館を識別するためのタグ
+ */
+export type LibraryTag = "UTokyo" | "Sophia";
+
+/**
+ * 書誌情報のソース
+ * 書誌情報を取得するソースを表す
+ */
+export type BiblioInfoSource = "OpenBD" | "ISBNdb" | "Amazon" | "NDL" | "GoogleBooks";
 
 /**
  * 図書館情報
@@ -44,17 +56,19 @@ export type BookList = ReadonlyMap<string, Book>;
  * @param params 書籍のパラメータ
  * @returns 新しい書籍オブジェクト
  */
-export function createBook(params: {
-  id: BookId;
-  identifier: BookIdentifier;
-  url: string;
-  title: string;
-  author: string;
-  publisher?: string;
-  publishedDate?: string;
-  description?: string;
-  libraryInfo?: Partial<LibraryInfo>;
-}): Book {
+export function createBook(
+  params: Readonly<{
+    id: BookId;
+    identifier: BookIdentifier;
+    url: string;
+    title: string;
+    author: string;
+    publisher?: string;
+    publishedDate?: string;
+    description?: string;
+    libraryInfo?: Partial<LibraryInfo>;
+  }>
+): Book {
   return {
     id: params.id,
     identifier: params.identifier,

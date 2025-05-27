@@ -16,7 +16,7 @@ import type { BulkProvider, SingleProvider } from "./types";
 import type { Logger } from "@/application/ports/output/logger";
 import type { Book } from "@/domain/models/book";
 import type { Result } from "@/domain/models/result";
-import type { BookIdentifier, BookId } from "@/domain/models/valueObjects";
+import type { BookIdentifier, BookId } from "@/domain/models/isbn";
 import type { AxiosResponse } from "axios";
 
 import { ApiError } from "@/domain/models/errors";

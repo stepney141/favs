@@ -7,15 +7,15 @@ import { KinokuniyaScraper } from "./kinokuniyaScraper";
 
 import type { BookScraperService } from "@/application/ports/output/bookScraperService";
 import type { Logger } from "@/application/ports/output/logger";
-import type { Book, BookList } from "@/domain/models/book";
+import type { Book, BookList, LibraryTag } from "@/domain/models/book";
+import type { BookIdentifier } from "@/domain/models/isbn";
 import type { Result } from "@/domain/models/result";
-import type { BookIdentifier, LibraryTag } from "@/domain/models/valueObjects";
 import type { Browser, Page } from "puppeteer";
 
 import { createBook, addBook } from "@/domain/models/book";
 import { ScrapingError } from "@/domain/models/errors";
+import { createBookId, createISBN10, createASIN } from "@/domain/models/isbn";
 import { ok, err } from "@/domain/models/result";
-import { createBookId, createISBN10, createASIN } from "@/domain/models/valueObjects";
 import { isAsin, isIsbn10 } from "@/domain/services/isbnService";
 import { getNodeProperty } from "@/infrastructure/utils/puppeteerUtils";
 

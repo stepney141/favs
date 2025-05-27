@@ -1,24 +1,23 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { eq, and, isNotNull, ne , sql } from 'drizzle-orm';
+import { eq, and, isNotNull, ne, sql } from "drizzle-orm";
 
 import type { BookRepository } from "@/application/ports/output/bookRepository";
 import type { Logger } from "@/application/ports/output/logger";
-import type { BookList, BookListType, Book } from "@/domain/models/book";
+import type { BookList, BookListType, Book, LibraryTag } from "@/domain/models/book";
+import type { BookId, BookIdentifier } from "@/domain/models/isbn";
 import type { Result } from "@/domain/models/result";
-import type { BookId, BookIdentifier, LibraryTag } from "@/domain/models/valueObjects";
 import type { DrizzleDatabase } from "@/infrastructure/database/connection";
 import type { BookTableRow } from "@/infrastructure/database/schema";
 
 import { createBook } from "@/domain/models/book";
 import { DatabaseError } from "@/domain/models/errors";
+import { createBookId, createISBN10, createASIN } from "@/domain/models/isbn";
 import { ok, err } from "@/domain/models/result";
-import { createBookId, createISBN10, createASIN } from "@/domain/models/valueObjects";
 import { isAsin, isIsbn10 } from "@/domain/services/isbnService";
 import { createDrizzleConnection, closeDrizzleConnection } from "@/infrastructure/database/connection";
 import { wishTable, stackedTable } from "@/infrastructure/database/schema";
-
 
 /**
  * Drizzle ORMを使用した書籍リポジトリの実装
@@ -180,10 +179,7 @@ export class DrizzleBookRepository implements BookRepository {
       db = await this.getConnection();
 
       // wishテーブルを検索（型安全！）
-      const wishRows = await db
-        .select()
-        .from(wishTable)
-        .where(eq(wishTable.bookmeterUrl, searchUrl));
+      const wishRows = await db.select().from(wishTable).where(eq(wishTable.bookmeterUrl, searchUrl));
 
       if (wishRows.length > 0) {
         const book = this.rowToBook(wishRows[0]);
@@ -193,10 +189,7 @@ export class DrizzleBookRepository implements BookRepository {
       }
 
       // stackedテーブルを検索
-      const stackedRows = await db
-        .select()
-        .from(stackedTable)
-        .where(eq(stackedTable.bookmeterUrl, searchUrl));
+      const stackedRows = await db.select().from(stackedTable).where(eq(stackedTable.bookmeterUrl, searchUrl));
 
       if (stackedRows.length > 0) {
         const book = this.rowToBook(stackedRows[0]);
@@ -236,11 +229,7 @@ export class DrizzleBookRepository implements BookRepository {
         .select({ description: wishTable.description })
         .from(wishTable)
         .where(
-          and(
-            eq(wishTable.bookmeterUrl, searchUrl),
-            isNotNull(wishTable.description),
-            ne(wishTable.description, "")
-          )
+          and(eq(wishTable.bookmeterUrl, searchUrl), isNotNull(wishTable.description), ne(wishTable.description, ""))
         );
 
       if (wishRows.length > 0) {
@@ -292,10 +281,8 @@ export class DrizzleBookRepository implements BookRepository {
       // トランザクション開始
       await db.transaction(async (tx) => {
         // 現在のURLのセットを取得
-        const existingRows = await tx
-          .select({ bookmeterUrl: table.bookmeterUrl })
-          .from(table);
-        
+        const existingRows = await tx.select({ bookmeterUrl: table.bookmeterUrl }).from(table);
+
         const existingUrls = new Set(existingRows.map((row) => row.bookmeterUrl));
 
         // 新しいURLのセット
@@ -334,13 +321,10 @@ export class DrizzleBookRepository implements BookRepository {
             description: book.description
           };
 
-          await tx
-            .insert(table)
-            .values(insertData)
-            .onConflictDoUpdate({
-              target: table.bookmeterUrl,
-              set: insertData
-            });
+          await tx.insert(table).values(insertData).onConflictDoUpdate({
+            target: table.bookmeterUrl,
+            set: insertData
+          });
         }
       });
 
@@ -368,10 +352,7 @@ export class DrizzleBookRepository implements BookRepository {
       db = await this.getConnection();
 
       // wishテーブルの更新を試みる（型安全！）
-      const wishResult = await db
-        .update(wishTable)
-        .set({ description })
-        .where(eq(wishTable.bookmeterUrl, searchUrl));
+      const wishResult = await db.update(wishTable).set({ description }).where(eq(wishTable.bookmeterUrl, searchUrl));
 
       // Drizzleでは更新された行数の確認方法が異なる場合があるため、確認のためのクエリを実行
       const wishExists = await db

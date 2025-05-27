@@ -1,4 +1,4 @@
-import type { ASIN, ISBN10, ISBN13, BookIdentifier } from "../models/valueObjects";
+import type { ASIN, ISBN10, ISBN13, BookIdentifier } from "../models/isbn";
 
 /**
  * ISBN10の形式を検証する

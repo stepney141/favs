@@ -1,7 +1,7 @@
 import type { Book } from "@/domain/models/book";
 import type { ApiError } from "@/domain/models/errors";
 import type { Result } from "@/domain/models/result";
-import type { BookIdentifier, BiblioInfoSource } from "@/domain/models/valueObjects";
+import type { BookIdentifier, BiblioInfoSource } from "@/domain/models/isbn";
 
 /**
  * 書誌情報プロバイダーのポート

@@ -10,22 +10,8 @@ export type Brand<T, B> = T & { readonly __brand: B };
  */
 export type BookId = Brand<string, "BookId">;
 
-/**
- * ISBN10
- * 10桁のISBN（国際標準図書番号）
- */
 export type ISBN10 = Brand<string, "ISBN10">;
-
-/**
- * ISBN13
- * 13桁のISBN（国際標準図書番号）
- */
 export type ISBN13 = Brand<string, "ISBN13">;
-
-/**
- * ASIN
- * Amazonの商品識別番号
- */
 export type ASIN = Brand<string, "ASIN">;
 
 /**
@@ -33,18 +19,6 @@ export type ASIN = Brand<string, "ASIN">;
  * ISBN10、ISBN13、ASINのいずれかで表される書籍の識別子
  */
 export type BookIdentifier = ISBN10 | ISBN13 | ASIN;
-
-/**
- * 図書館タグ
- * 図書館を識別するためのタグ
- */
-export type LibraryTag = "UTokyo" | "Sophia";
-
-/**
- * 書誌情報のソース
- * 書誌情報を取得するソースを表す
- */
-export type BiblioInfoSource = "OpenBD" | "ISBNdb" | "Amazon" | "NDL" | "GoogleBooks";
 
 /**
  * 書籍IDを生成する

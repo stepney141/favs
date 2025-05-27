@@ -6,7 +6,7 @@ import { createOpenBDProvider, createGoogleBooksProvider, createISBNdbProvider, 
 import type { APICredentials, BiblioInfoService, BookSearchResult, ProviderCollection } from "./types";
 import type { Logger } from "@/application/ports/output/logger";
 import type { Book, BookList } from "@/domain/models/book";
-import type { BookIdentifier } from "@/domain/models/valueObjects";
+import type { BookIdentifier } from "@/domain/models/isbn";
 
 /**
  * OpenBDで一括取得を行い、見つからなかった書籍の結果を返す

@@ -6,14 +6,14 @@ import sqlite3 from "sqlite3";
 
 import type { BookRepository } from "@/application/ports/output/bookRepository";
 import type { Logger } from "@/application/ports/output/logger";
-import type { BookList, BookListType, Book } from "@/domain/models/book";
+import type { BookList, BookListType, Book, LibraryTag } from "@/domain/models/book";
+import type { BookId, BookIdentifier } from "@/domain/models/isbn";
 import type { Result } from "@/domain/models/result";
-import type { BookId, BookIdentifier, LibraryTag } from "@/domain/models/valueObjects";
 
 import { createBook } from "@/domain/models/book";
 import { DatabaseError } from "@/domain/models/errors";
+import { createBookId, createISBN10, createASIN } from "@/domain/models/isbn";
 import { ok, err } from "@/domain/models/result";
-import { createBookId, createISBN10, createASIN } from "@/domain/models/valueObjects";
 import { isAsin, isIsbn10 } from "@/domain/services/isbnService";
 
 // データベース接続の型定義

@@ -6,7 +6,7 @@ import { sleep } from "../../../../.libs/utils";
 import type { BookContentScraperService } from "@/application/ports/output/bookContentScraperService";
 import type { Logger } from "@/application/ports/output/logger";
 import type { Result } from "@/domain/models/result";
-import type { ISBN10 } from "@/domain/models/valueObjects";
+import type { ISBN10 } from "@/domain/models/isbn";
 import type { Browser, Page } from "puppeteer";
 
 import { ScrapingError } from "@/domain/models/errors";
@@ -89,7 +89,7 @@ export class KinokuniyaScraper implements BookContentScraperService {
       try {
         // 画像読み込みを無効化して高速化
         await this.setupImageBlocker(page);
-        
+
         // ISBN10をISBN13に変換
         const isbn13 = convertISBN10To13(isbn);
 

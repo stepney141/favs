@@ -3,7 +3,7 @@ import { sleep, randomWait } from "../../utils/apiUtils";
 import type { BookSearchResult, SingleProvider } from "./types";
 import type { Logger } from "@/application/ports/output/logger";
 import type { Book, BookList } from "@/domain/models/book";
-import type { BookIdentifier } from "@/domain/models/valueObjects";
+import type { BookIdentifier } from "@/domain/models/isbn";
 
 import { isAsin, isIsbn10, isIsbn13, routeIsbn10 } from "@/domain/services/isbnService";
 
