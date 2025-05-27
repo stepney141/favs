@@ -13,7 +13,7 @@ export function logAxiosError(
   error: unknown,
   apiName: string,
   context?: string,
-  logger?: { error: (message: string, data?: object) => void }
+  logger?: { error: (message: string, context?: Record<string, unknown>) => void }
 ): void {
   const loggerFunction = logger?.error || console.error;
 

@@ -1,45 +1,36 @@
-// 各APIプロバイダのエクスポート
-export * from "./openBDProvider";
-export * from "./isbndbProvider";
-export * from "./ndlProvider";
-export * from "./googleBooksProvider";
-export * from "./biblioInfoManager";
+// 新しい関数型APIアダプターのエクスポート
+export * from "./types";
+export * from "./helpers";
+export * from "./providers";
+export * from "./biblioInfoService";
 
-// ProvidersをまとめてFactory関数で作成
-import { BiblioInfoManager } from "./biblioInfoManager";
-import { GoogleBooksProvider } from "./googleBooksProvider";
-import { ISBNdbProvider } from "./isbndbProvider";
-import { NdlProvider } from "./ndlProvider";
-import { OpenBDProvider } from "./openBDProvider";
+// 簡略化されたファクトリ関数
+import { createBiblioInfoService } from "./biblioInfoService";
 
-import type { BiblioInfoProvider } from "@/application/ports/output/biblioInfoProvider";
+import type { APICredentials, BiblioInfoService } from "./types";
 import type { Logger } from "@/application/ports/output/logger";
 
 /**
- * API認証情報
+ * 書誌情報マネージャを作成する（関数型版）
  */
-export interface APICredentials {
-  isbndb: string;
-  google: string;
-  cinii?: string;
+export function createBiblioInfoManager(credentials: APICredentials, logger?: Logger): BiblioInfoService {
+  return createBiblioInfoService(credentials, logger);
 }
 
 /**
- * 書誌情報プロバイダを作成する
+ * レガシーサポート用の型互換ラッパー
  */
-export function createBiblioInfoProviders(credentials: APICredentials, logger?: Logger): BiblioInfoProvider[] {
-  return [
-    new OpenBDProvider(logger),
-    new ISBNdbProvider(credentials.isbndb, logger),
-    new NdlProvider(logger),
-    new GoogleBooksProvider(credentials.google, logger)
-  ];
+export interface BiblioInfoManagerLegacy {
+  fetchBiblioInfo: BiblioInfoService["fetchBiblioInfo"];
 }
 
 /**
- * 書誌情報マネージャを作成する
+ * レガシーBiblioInfoManagerとの互換性を保つラッパー
  */
-export function createBiblioInfoManager(credentials: APICredentials, logger?: Logger): BiblioInfoManager {
-  const providers = createBiblioInfoProviders(credentials, logger);
-  return new BiblioInfoManager(providers, logger);
+export function createLegacyBiblioInfoManager(credentials: APICredentials, logger?: Logger): BiblioInfoManagerLegacy {
+  const service = createBiblioInfoService(credentials, logger);
+
+  return {
+    fetchBiblioInfo: service.fetchBiblioInfo
+  };
 }

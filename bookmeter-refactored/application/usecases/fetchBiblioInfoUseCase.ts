@@ -1,13 +1,13 @@
 import type { Logger } from "../ports/output/logger";
 import type { BookList } from "@/domain/models/book";
 import type { AppError } from "@/domain/models/errors";
-import type { BiblioInfoManager } from "@/infrastructure/adapters/apis/biblioInfoManager";
+import type { BiblioInfoService } from "@/infrastructure/adapters/apis/types";
 
 /**
  * 書誌情報を取得するユースケース
  */
 export function createFetchBiblioInfoUseCase(
-  biblioInfoManager: BiblioInfoManager,
+  biblioInfoService: BiblioInfoService,
   logger: Logger
 ): { execute: (bookList: BookList, signal?: AbortSignal) => Promise<BookList> } {
   /**
@@ -27,8 +27,8 @@ export function createFetchBiblioInfoUseCase(
         throw error;
       }
 
-      // BiblioInfoManagerを使用して書籍情報を一括取得
-      return await biblioInfoManager.fetchBiblioInfo(bookList, signal);
+      // BiblioInfoServiceを使用して書籍情報を一括取得
+      return await biblioInfoService.fetchBiblioInfo(bookList, signal);
     } catch (thrownError) {
       // キャンセルエラーの場合
       if (signal?.aborted) {

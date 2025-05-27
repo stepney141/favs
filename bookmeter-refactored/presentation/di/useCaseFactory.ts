@@ -7,7 +7,7 @@ import type {
   SaveBookListUseCase
 } from "./types";
 import type { BookScraperService } from "@/application/ports/output/bookScraperService";
-import type { BiblioInfoManager } from "@/infrastructure/adapters/apis/biblioInfoManager";
+import type { BiblioInfoService } from "@/infrastructure/adapters/apis/types";
 
 import { createCrawlBookDescriptionUseCase } from "@/application/usecases/crawlBookDescriptionUseCase";
 import { createFetchBiblioInfoUseCase } from "@/application/usecases/fetchBiblioInfoUseCase";
@@ -36,15 +36,15 @@ export function createUseCaseFactory(
   deps: CoreDependencies,
   config: AppConfig
 ): UseCaseFactory {
-  // BiblioInfoManagerは複数のAPIプロバイダーを管理するため、
+  // BiblioInfoServiceは複数のAPIプロバイダーを管理するため、
   // ファクトリー内で一度だけ作成してキャッシュする
-  let biblioInfoManager: BiblioInfoManager | null = null;
+  let biblioInfoService: BiblioInfoService | null = null;
 
-  const getBiblioInfoManager = (): BiblioInfoManager => {
-    if (!biblioInfoManager) {
-      biblioInfoManager = createBiblioInfoManager(config.apiCredentials, deps.logger);
+  const getBiblioInfoService = (): BiblioInfoService => {
+    if (!biblioInfoService) {
+      biblioInfoService = createBiblioInfoManager(config.apiCredentials, deps.logger);
     }
-    return biblioInfoManager;
+    return biblioInfoService;
   };
 
   return {
@@ -52,7 +52,7 @@ export function createUseCaseFactory(
       createGetBookListUseCase(deps.bookRepository, bookScraperService, deps.logger),
 
     createFetchBiblioInfoUseCase: () =>
-      createFetchBiblioInfoUseCase(getBiblioInfoManager(), deps.logger),
+      createFetchBiblioInfoUseCase(getBiblioInfoService(), deps.logger),
 
     createSaveBookListUseCase: () =>
       createSaveBookListUseCase(deps.bookRepository, deps.storageService, deps.logger),
