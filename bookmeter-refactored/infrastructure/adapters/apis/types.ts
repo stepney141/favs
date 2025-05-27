@@ -1,7 +1,7 @@
-import type { Book, BookList } from "@/domain/models/book";
+import type { BiblioInfoSource, Book, BookList } from "@/domain/models/book";
 import type { ApiError } from "@/domain/models/errors";
+import type { BookIdentifier } from "@/domain/models/isbn";
 import type { Result } from "@/domain/models/result";
-import type { BookIdentifier, BiblioInfoSource } from "@/domain/models/isbn";
 
 /**
  * 書籍情報取得関数の型
