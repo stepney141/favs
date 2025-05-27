@@ -1,11 +1,12 @@
 import { PromiseQueue, sleep, randomWait } from "../../utils/apiUtils";
 
+import { OpenBDProvider } from "./openBDProvider";
+
 import type { BiblioInfoProvider } from "@/application/ports/output/biblioInfoProvider";
 import type { Book, BookList } from "@/domain/models/book";
 import type { BookIdentifier } from "@/domain/models/valueObjects";
 
 import { isAsin, isIsbn10, routeIsbn10 } from "@/domain/services/isbnService";
-import { OpenBDProvider } from "./openBDProvider";
 
 /**
  * 書誌情報の検索状態を表す型

@@ -1,19 +1,13 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import { TYPES } from "../di/types";
-
 import { BOOKMETER_USER_ID } from "./constants";
 
-import type { DIContainer } from "../di/container";
-import type {
-  CrawlBookDescriptionUseCase,
-  FetchBiblioInfoUseCase,
-  GetBookListUseCase,
-  SaveBookListUseCase,
-  GetBookListParams
-} from "../di/types";
-import type { Logger } from "@/application/ports/output/logger";
+import type { AppContext } from "../di/container";
+import type { GetBookListParams } from "../di/types";
+import type { BookScraperService } from "@/application/ports/output/bookScraperService";
+
+import { BookmeterScraper } from "@/infrastructure/adapters/scraping/bookmeterScraper";
 
 type Mode = "wish" | "stacked";
 
@@ -100,12 +94,12 @@ export async function parseCliArguments(argv: string[]): Promise<{ mode: Mode; o
 
 /**
  * コマンドライン引数に基づいてコマンドを実行する
- * @param container 依存性注入コンテナ
+ * @param appContext アプリケーションコンテキスト
  * @param mode 実行モード（"wish" または "stacked"）
  * @param cliOptions yargsからパースされたコマンドオプション
  */
 export async function executeCommand(
-  container: DIContainer,
+  appContext: AppContext,
   mode: Mode,
   cliOptions: Readonly<CliOptions>
 ): Promise<void> {
@@ -114,12 +108,20 @@ export async function executeCommand(
     throw new Error("User ID is required and must be a non-empty string.");
   }
 
-  // 依存関係の解決
-  const logger = container.get<Logger>(TYPES.Logger);
-  const getBookListUseCase = container.get<GetBookListUseCase>(TYPES.GetBookListUseCase);
-  const fetchBiblioInfoUseCase = container.get<FetchBiblioInfoUseCase>(TYPES.FetchBiblioInfoUseCase);
-  const saveBookListUseCase = container.get<SaveBookListUseCase>(TYPES.SaveBookListUseCase);
-  const crawlBookDescriptionUseCase = container.get<CrawlBookDescriptionUseCase>(TYPES.CrawlBookDescriptionUseCase);
+  const { dependencies, useCases, config } = appContext;
+  const { logger } = dependencies;
+
+  // 実行時に必要な依存を作成（トランジェント）
+  const bookScraperService: BookScraperService = new BookmeterScraper(
+    logger,
+    config.bookmeterCredentials
+  );
+
+  // ユースケースを作成
+  const getBookListUseCase = useCases.createGetBookListUseCase(bookScraperService);
+  const fetchBiblioInfoUseCase = useCases.createFetchBiblioInfoUseCase();
+  const saveBookListUseCase = useCases.createSaveBookListUseCase();
+  const crawlBookDescriptionUseCase = useCases.createCrawlBookDescriptionUseCase();
 
   logger.info(`処理モード: ${mode}`);
   logger.info(`ユーザーID: ${cliOptions.userId}`);
@@ -137,7 +139,6 @@ export async function executeCommand(
     // 1. 書籍リストの取得
     logger.info("書籍リストを取得しています...");
     const getBookListParams: GetBookListParams = {
-      // インポートした型を使用
       type: mode,
       userId: cliOptions.userId,
       source: cliOptions.source,
@@ -145,7 +146,7 @@ export async function executeCommand(
       outputFilePath: cliOptions.outputFilePath
       // signal はここでは未指定。必要なら AbortController を使う
     };
-    logger.debug("GetBookListUseCase Params:", { ...getBookListParams }); // スプレッド構文で展開
+    logger.debug("GetBookListUseCase Params:", { ...getBookListParams });
     const bookListResult = await getBookListUseCase.execute(getBookListParams);
 
     if (bookListResult.isError()) {
