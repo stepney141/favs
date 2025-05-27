@@ -462,7 +462,7 @@ function searchSophiaMathLib(book: Book, dataSource: Set<string>): BookOwningSta
     return {
       book: {
         ...book,
-        exist_in_Sophia: "Yes",
+        exist_in_sophia: "Yes",
         sophia_mathlib_opac: mathlib_opac_link
       },
       isOwning: true

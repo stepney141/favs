@@ -17,8 +17,8 @@ export const CSV_EXPORT_COLUMNS = {
     "author",
     "publisher",
     "published_date",
-    "exist_in_Sophia",
-    "exist_in_UTokyo",
+    "exist_in_sophia",
+    "exist_in_uTokyo",
     "sophia_opac",
     "utokyo_opac",
     "sophia_mathlib_opac"
@@ -89,12 +89,12 @@ export const BIBLIOINFO_SOURCES = ["OpenBD", "ISBNdb", "Amazon", "NDL", "GoogleB
  */
 export const CINII_TARGETS: CiniiTarget[] = [
   {
-    tag: "UTokyo",
+    tag: "utokyo",
     cinii_kid: "KI000221",
     opac: "https://opac.dl.itc.u-tokyo.ac.jp"
   },
   {
-    tag: "Sophia",
+    tag: "sophia",
     cinii_kid: "KI00209X", //ref: https://ci.nii.ac.jp/library/FA005358
     opac: "https://www.lib.sophia.ac.jp"
   }
@@ -104,7 +104,7 @@ export const CINII_TARGETS: CiniiTarget[] = [
  * この配列の順番で図書館が検索される
  * opacリンクは配列後方のものが優先される
  */
-export const CINII_TARGET_TAGS = ["Sophia", "UTokyo"] as const;
+export const CINII_TARGET_TAGS = ["sophia", "utokyo"] as const;
 
 export const MATH_LIB_BOOKLIST = {
   //数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108

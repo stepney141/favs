@@ -45,8 +45,8 @@ export async function saveBookListToDatabase(bookList: BookList, tableName: stri
         published_date TEXT,
         sophia_opac TEXT,
         utokyo_opac TEXT,
-        exist_in_Sophia TEXT,
-        exist_in_UTokyo TEXT,
+        exist_in_sophia TEXT,
+        exist_in_utokyo TEXT,
         sophia_mathlib_opac TEXT,
         description TEXT
       );
@@ -99,8 +99,8 @@ export async function saveBookListToDatabase(bookList: BookList, tableName: stri
         published_date,
         sophia_opac,
         utokyo_opac,
-        exist_in_Sophia,
-        exist_in_UTokyo,
+        exist_in_sophia,
+        exist_in_utokyo,
         sophia_mathlib_opac,
         description
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -122,8 +122,8 @@ export async function saveBookListToDatabase(bookList: BookList, tableName: stri
         book.published_date,
         book.sophia_opac,
         book.utokyo_opac,
-        book.exist_in_Sophia,
-        book.exist_in_UTokyo,
+        book.exist_in_sophia,
+        book.exist_in_utokyo,
         book.sophia_mathlib_opac,
         descriptionToInsert
       ]);
@@ -182,8 +182,8 @@ export async function loadBookListFromDatabase(tableName: string): Promise<BookL
         published_date: row.published_date,
         sophia_opac: row.sophia_opac,
         utokyo_opac: row.utokyo_opac,
-        exist_in_Sophia: row.exist_in_Sophia,
-        exist_in_UTokyo: row.exist_in_UTokyo,
+        exist_in_sophia: row.exist_in_sophia,
+        exist_in_utokyo: row.exist_in_utokyo,
         sophia_mathlib_opac: row.sophia_mathlib_opac,
         description: row.description
       };
