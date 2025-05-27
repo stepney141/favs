@@ -8,6 +8,7 @@ import type { StorageService } from "@/application/ports/output/storageService";
 import type { BookListType } from "@/domain/models/book";
 
 import { ConsoleLogger } from "@/infrastructure/adapters/logging/consoleLogger";
+import { DrizzleBookRepository } from "@/infrastructure/adapters/repositories/drizzleBookRepository";
 import { SqliteBookRepository } from "@/infrastructure/adapters/repositories/sqliteBookRepository";
 import { KinokuniyaScraper } from "@/infrastructure/adapters/scraping/kinokuniyaScraper";
 import { FileStorageService } from "@/infrastructure/adapters/storage/fileStorageService";
@@ -33,10 +34,12 @@ export function createCoreDependencies(config: AppConfig): CoreDependencies {
   const logger = new ConsoleLogger("App", config.logLevel);
 
   // BookRepository: データベース接続の管理が必要
-  const bookRepository = new SqliteBookRepository(
-    path.join(config.dataDir, "books.sqlite"),
-    logger
-  );
+  const dbPath = path.join(config.dataDir, "books.sqlite");
+  const bookRepository: BookRepository = config.database.useDrizzle
+    ? new DrizzleBookRepository(dbPath, logger)
+    : new SqliteBookRepository(dbPath, logger);
+
+  logger.info(`BookRepository: ${config.database.useDrizzle ? 'Drizzle' : 'Sqlite'} implementation を使用します`);
 
   // StorageService: ファイルシステムリソースの管理が必要
   const defaultCsvPath: Record<BookListType, string> = {

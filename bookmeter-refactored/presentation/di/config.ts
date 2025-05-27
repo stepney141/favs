@@ -6,6 +6,9 @@ import path from "node:path";
 export interface AppConfig {
   readonly dataDir: string;
   readonly logLevel: "debug" | "info" | "warn" | "error";
+  readonly database: {
+    readonly useDrizzle: boolean;
+  };
   readonly bookmeterCredentials: {
     readonly username: string;
     readonly password: string;
@@ -25,6 +28,9 @@ export function loadConfig(): AppConfig {
   return {
     dataDir: path.resolve(__dirname, "../../data"),
     logLevel: (process.env.LOG_LEVEL as "debug" | "info" | "warn" | "error") || "info",
+    database: {
+      useDrizzle: process.env.USE_DRIZZLE === "true"
+    },
     bookmeterCredentials: {
       username: process.env.BOOKMETER_ACCOUNT || "",
       password: process.env.BOOKMETER_PASSWORD || ""
