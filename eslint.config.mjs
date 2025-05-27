@@ -31,6 +31,12 @@ export default tseslint.config(
     ...functional.configs.disableTypeChecked
   },
 
+  tseslint.configs.recommended,
+  tseslint.configs.recommendedTypeChecked.map((config) => ({
+    ...config,
+    files: ["**/*.{ts,tsx}"] // Ensure it only applies to TS files
+  })),
+
   {
     files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     languageOptions: {
@@ -73,15 +79,22 @@ export default tseslint.config(
       "no-var": "warn",
       "no-eq-null": "error",
       "no-mixed-spaces-and-tabs": ["error"],
-      "unused-imports/no-unused-imports": "warn"
+      "unused-imports/no-unused-imports": "warn",
+      "functional/no-let": [
+        "warn",
+        {
+          allowInForLoopInit: true,
+          allowInFunctions: false
+        }
+      ],
+      "functional/immutable-data": ["warn", { ignoreImmediateMutation: true, ignoreMapsAndSets: true }],
+      "functional/no-throw-statements": ["warn", { allowToRejectPromises: true }],
+      "functional/no-loop-statements": "off",
+      "functional/no-conditional-statements": "off",
+      "functional/no-expression-statements": "off",
+      "functional/no-return-void": "off"
     }
   },
-
-  tseslint.configs.recommended,
-  tseslint.configs.recommendedTypeChecked.map((config) => ({
-    ...config,
-    files: ["**/*.{ts,tsx}"] // Ensure it only applies to TS files
-  })),
 
   {
     files: ["**/*.{ts,tsx}"],
@@ -94,7 +107,8 @@ export default tseslint.config(
       }
     },
     rules: {
-      "@typescript-eslint/no-unused-vars": ["error"],
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/explicit-function-return-type": ["error", { allowExpressions: true }],
       "@typescript-eslint/no-floating-promises": [
@@ -112,11 +126,6 @@ export default tseslint.config(
         }
       ],
       "@typescript-eslint/indent": "off",
-      "functional/no-let": "warn",
-      "functional/immutable-data": "warn",
-      "functional/no-conditional-statements": "off",
-      "functional/no-expression-statements": "off",
-      "functional/no-return-void": "off",
       "import/namespace": "off",
       "import/named": "off",
       "import/default": "off",
