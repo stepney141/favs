@@ -10,34 +10,30 @@ import type {
   CrawlBookDescriptionUseCase,
   FetchBiblioInfoUseCase,
   GetBookListUseCase,
-  SaveBookListUseCase
+  SaveBookListUseCase,
+  GetBookListParams
 } from "../di/types";
 import type { Logger } from "@/application/ports/output/logger";
 
 type Mode = "wish" | "stacked";
-interface CliOptions {
-  userId: string;
-  outputFilePath?: string;
-  source: "remote" | "local";
-  processing: "smart" | "force" | "skip";
-  "biblio-fetching": "enabled" | "disabled";
-  [key: string]: unknown; // yargsが他のプロパティを追加する可能性があるため
-}
 
 /**
- * コマンド実行時のオプション
+ * yargsによってパースされたコマンドラインオプションの型。
+ * presentation/index.ts からも参照されるため、ここに定義を移設。
  */
-export interface CommandOptions {
-  userId?: string;
-  refresh?: boolean;
-  noRemoteCheck?: boolean;
-  skipBookListComparison?: boolean;
-  skipFetchingBiblioInfo?: boolean;
-  outputFilePath?: string | null;
+export interface CliOptions {
+  readonly userId: string;
+  readonly outputFilePath?: string;
+  readonly source: "remote" | "local";
+  readonly processing: "smart" | "force" | "skip";
+  readonly "biblio-fetching": "enabled" | "disabled";
 }
 
 /**
  * コマンドライン引数を解析する
+ * この関数は presentation/index.ts に配置されるべきだが、
+ * CliOptions の定義を共有するため、一時的にここに配置。
+ * TODO: CliOptions の定義を共有するより良い方法を検討し、この関数を index.ts に戻す。
  */
 export async function parseCliArguments(argv: string[]): Promise<{ mode: Mode; options: CliOptions }> {
   const parsedArgs = await yargs(hideBin(argv))
@@ -69,9 +65,9 @@ export async function parseCliArguments(argv: string[]): Promise<{ mode: Mode; o
     .option("processing", {
       type: "string",
       description: [
-        "取得した書籍リストの処理戦略:",
-        "  smart: 前回のリストと比較し変更がある場合のみ処理",
-        "  force: 変更の有無に関わらず強制的に処理",
+        "取得した書籍リストの後続処理方法:",
+        "  smart: 前回のリストと比較し変更がある場合のみ後続処理を実行 (デフォルト)",
+        "  force: 変更の有無に関わらず強制的に後続処理を実行",
         "  skip:  書籍リスト取得後、一切のデータ処理をスキップ"
       ].join("\n"),
       choices: ["smart", "force", "skip"] as const,
@@ -88,38 +84,33 @@ export async function parseCliArguments(argv: string[]): Promise<{ mode: Mode; o
     .strict()
     .wrap(null).argv;
 
-  // parsedArgs.mode は yargs によって string | undefined と推論されることがあるため、
-  // 明示的に Mode 型にキャストする。 positional で demandOption: true としているので、
-  // 実際には undefined になることはない。
-  const mode = parsedArgs.mode as Mode;
+  const mode = parsedArgs.mode as Mode; // demandOption: true なので undefined にはならない
 
-  // yargsが返すparsedArgsには、位置引数(mode)や特殊なプロパティ(_ や $0)も含まれるため、
-  // CliOptionsに定義されたプロパティのみを抽出する。
-  const options = {
+  // CliOptionsに定義されたプロパティのみを抽出し、型を明示する
+  const options: CliOptions = {
     userId: parsedArgs.userId,
     outputFilePath: parsedArgs.outputFilePath,
-    source: parsedArgs.source as "remote" | "local",
-    processing: parsedArgs.processing as "smart" | "force" | "skip",
-    "biblio-fetching": parsedArgs["biblio-fetching"] as "enabled" | "disabled"
-  } satisfies CliOptions;
+    source: parsedArgs.source as CliOptions["source"],
+    processing: parsedArgs.processing as CliOptions["processing"],
+    "biblio-fetching": parsedArgs["biblio-fetching"] as CliOptions["biblio-fetching"]
+  };
 
   return { mode, options };
 }
 
 /**
  * コマンドライン引数に基づいてコマンドを実行する
- *
  * @param container 依存性注入コンテナ
  * @param mode 実行モード（"wish" または "stacked"）
- * @param options コマンドオプション
+ * @param cliOptions yargsからパースされたコマンドオプション
  */
 export async function executeCommand(
   container: DIContainer,
-  mode: "wish" | "stacked",
-  options: Record<string, unknown>
+  mode: Mode,
+  cliOptions: Readonly<CliOptions>
 ): Promise<void> {
-  // userIdのチェック: optionsオブジェクトから直接userIdを取得して検証
-  if (typeof options.userId !== "string" || options.userId.trim() === "") {
+  // userIdのチェック
+  if (typeof cliOptions.userId !== "string" || cliOptions.userId.trim() === "") {
     throw new Error("User ID is required and must be a non-empty string.");
   }
 
@@ -130,84 +121,110 @@ export async function executeCommand(
   const saveBookListUseCase = container.get<SaveBookListUseCase>(TYPES.SaveBookListUseCase);
   const crawlBookDescriptionUseCase = container.get<CrawlBookDescriptionUseCase>(TYPES.CrawlBookDescriptionUseCase);
 
-  // オプションのキャスト（型安全のため）
-  const commandOptions: CommandOptions = {
-    userId: options.userId,
-    noRemoteCheck: options.noRemoteCheck === true,
-    skipBookListComparison: options.skipBookListComparison === true,
-    skipFetchingBiblioInfo: options.skipFetchingBiblioInfo === true,
-    outputFilePath: typeof options.outputFilePath === "string" ? options.outputFilePath : null,
-    refresh: options.refresh === true
-  };
+  logger.info(`処理モード: ${mode}`);
+  logger.info(`ユーザーID: ${cliOptions.userId}`);
+  logger.info(`データソース: ${cliOptions.source}`);
+  logger.info(`処理戦略: ${cliOptions.processing}`);
+  logger.info(`書誌情報取得: ${cliOptions["biblio-fetching"]}`);
+  if (cliOptions.outputFilePath) {
+    logger.info(`出力ファイルパス: ${cliOptions.outputFilePath}`);
+  }
 
   // 処理の開始をログに記録
   logger.info(`${mode === "wish" ? "読みたい本" : "積読本"}リストの処理を開始します`);
 
   try {
     // 1. 書籍リストの取得
-    logger.info("書籍リストを取得しています");
-    const bookListResult = await getBookListUseCase.execute({
-      // 変数名を変更
+    logger.info("書籍リストを取得しています...");
+    const getBookListParams: GetBookListParams = {
+      // インポートした型を使用
       type: mode,
-      userId: commandOptions.userId,
-      refresh: commandOptions.refresh,
-      skipRemoteCheck: commandOptions.noRemoteCheck,
-      skipComparison: commandOptions.skipBookListComparison,
-      outputFilePath: commandOptions.outputFilePath
-    });
+      userId: cliOptions.userId,
+      source: cliOptions.source,
+      processing: cliOptions.processing,
+      outputFilePath: cliOptions.outputFilePath
+      // signal はここでは未指定。必要なら AbortController を使う
+    };
+    logger.debug("GetBookListUseCase Params:", { ...getBookListParams }); // スプレッド構文で展開
+    const bookListResult = await getBookListUseCase.execute(getBookListParams);
 
-    // エラーチェック
     if (bookListResult.isError()) {
-      throw bookListResult.unwrapError(); // エラーがあれば再スロー
+      throw bookListResult.unwrapError();
     }
 
-    // 結果を展開
     const { books, hasChanges } = bookListResult.unwrap();
+    logger.info(`書籍リスト取得完了。${books.size}件の書籍が見つかりました。`);
+    logger.info(hasChanges ? "前回実行時から変更があります。" : "前回実行時から変更はありません。");
 
-    // 2. 変更があったかチェック
-    if (hasChanges) {
-      // 取得した hasChanges フラグを使用
-      logger.info("書籍リストに変更があります");
-
-      // 3. 書誌情報の取得（オプションによりスキップ可能）
-      let enrichedBookList = books; // 展開した books を使用
-      if (!commandOptions.skipFetchingBiblioInfo) {
-        logger.info("書誌情報を取得しています");
-        enrichedBookList = await fetchBiblioInfoUseCase.execute(books); // 展開した books を使用
-      } else {
-        logger.info("書誌情報の取得をスキップします");
-      }
-
-      // 4. 書籍の詳細情報（あらすじ・目次）を取得
-      logger.info("書籍の詳細情報をクロールしています");
-      // 引数をオブジェクト形式で渡すように修正
-      const crawlResult = await crawlBookDescriptionUseCase.execute({ bookList: enrichedBookList, type: mode });
-      if (crawlResult.isError()) {
-        // エラーハンドリングを追加 (ログ出力はユースケース内で行われる想定)
-        throw crawlResult.unwrapError();
-      }
-
-      // 5. データの保存とエクスポート
-      logger.info("データを保存しています");
-      // 引数をオブジェクト形式で渡すように修正
-      const saveResult = await saveBookListUseCase.execute({
-        bookList: enrichedBookList,
-        type: mode,
-        exportToCsv: true, // デフォルトでCSVエクスポートを有効にする (必要に応じてオプション化)
-        uploadToCloud: false // デフォルトでクラウドアップロードを無効にする (必要に応じてオプション化)
-        // outputFilePath は SaveBookListParams には含まれていないため削除 (必要ならユースケース側で対応)
-      });
-      if (saveResult.isError()) {
-        // エラーハンドリングを追加 (ログ出力はユースケース内で行われる想定)
-        throw saveResult.unwrapError();
-      }
-
-      logger.info("処理が正常に完了しました");
-    } else {
-      logger.info("書籍リストに変更はありません。処理を終了します");
+    // 'skip' モードの場合はここで処理を終了
+    if (cliOptions.processing === "skip") {
+      logger.info("処理戦略 'skip' のため、これ以上の処理を行わずに終了します。");
+      return;
     }
+
+    // 'smart' モードで変更がない場合も処理を終了
+    if (cliOptions.processing === "smart" && !hasChanges) {
+      logger.info("処理戦略 'smart' で書籍リストに変更がないため、処理を終了します。");
+      return;
+    }
+
+    // 'force' モード、または 'smart' モードで変更があった場合に後続処理を実行
+    logger.info(
+      cliOptions.processing === "force"
+        ? "処理戦略 'force' のため、強制的に後続処理を実行します。"
+        : "処理戦略 'smart' で変更があったため、後続処理を実行します。"
+    );
+
+    // 2. 書誌情報の取得（オプションによりスキップ可能）
+    let enrichedBookList = books;
+    if (cliOptions["biblio-fetching"] === "enabled") {
+      logger.info("書誌情報を取得しています...");
+      const fetchResult = await fetchBiblioInfoUseCase.execute(books);
+      // fetchBiblioInfoUseCase が Result 型を返すようになったと仮定 (エラー処理のため)
+      // if (fetchResult.isError()) throw fetchResult.unwrapError();
+      // enrichedBookList = fetchResult.unwrap();
+      // 現状はそのまま代入
+      enrichedBookList = fetchResult; // ユースケースが直接リストを返すと仮定
+      logger.info("書誌情報の取得が完了しました。");
+    } else {
+      logger.info("書誌情報の取得をスキップします (--biblio-fetching disabled)。");
+    }
+
+    // 3. 書籍の詳細情報（あらすじ・目次）を取得
+    logger.info("書籍の詳細情報（あらすじ・目次）をクロールしています...");
+    const crawlResult = await crawlBookDescriptionUseCase.execute({ bookList: enrichedBookList, type: mode });
+    if (crawlResult.isError()) {
+      const error = crawlResult.unwrapError();
+      logger.error("書籍詳細情報のクロール中にエラーが発生しました。", { error });
+      throw error;
+    }
+    logger.info("書籍詳細情報のクロールが完了しました。");
+
+    // 4. データの保存とエクスポート
+    logger.info("データを保存しています...");
+    const saveResult = await saveBookListUseCase.execute({
+      bookList: enrichedBookList,
+      type: mode,
+      exportToCsv: true, // TODO: オプション化を検討
+      uploadToCloud: false // TODO: オプション化を検討
+      // outputFilePath は saveBookListUseCase の責務ではないため、ここでは渡さない
+      // 必要であれば、FileStorageService 側でパスを解決する
+    });
+    if (saveResult.isError()) {
+      const error = saveResult.unwrapError();
+      logger.error("データ保存中にエラーが発生しました。", { error });
+      throw error;
+    }
+    logger.info("データの保存が完了しました。");
+
+    logger.info("全ての処理が正常に完了しました。");
   } catch (error) {
-    logger.error(`処理中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`);
-    throw error;
+    logger.error(`処理中に予期せぬエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`, {
+      error
+    });
+    if (error instanceof Error && error.stack) {
+      logger.debug(error.stack);
+    }
+    throw error; // エラーを再スローして呼び出し元で処理できるようにする
   }
 }

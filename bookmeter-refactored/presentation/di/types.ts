@@ -40,35 +40,32 @@ export type DependencyKey = (typeof TYPES)[keyof typeof TYPES];
 
 // 各ユースケースの型定義
 export interface GetBookListParams {
-  type: BookListType;
-  userId?: string;
-  refresh?: boolean; // 追加
-  skipRemoteCheck?: boolean;
-  skipComparison?: boolean;
-  outputFilePath?: string | null;
+  readonly userId: string;
+  readonly type: BookListType;
+  readonly source: "remote" | "local";
+  readonly processing: "smart" | "force" | "skip";
+  readonly outputFilePath?: string | null;
+  readonly signal?: AbortSignal; // ユースケース側の定義に合わせる
 }
 
 // 書籍リストの取得結果
 export interface BookListResult {
-  books: BookList;
-  hasChanges: boolean;
+  readonly books: BookList;
+  readonly hasChanges: boolean;
 }
 
 export interface GetBookListUseCase {
-  execute: (params: GetBookListParams) => Promise<Result<AppError, BookListResult>>; // 戻り値の型を変更
+  execute: (params: Readonly<GetBookListParams>) => Promise<Result<AppError, BookListResult>>; // 戻り値の型を変更
 }
 
 export interface FetchBiblioInfoUseCase {
-  // シグネチャを実装に合わせる
-  execute: (books: BookList, signal?: AbortSignal) => Promise<BookList>;
+  execute: (books: Readonly<BookList>, signal?: AbortSignal) => Promise<BookList>;
 }
 
 export interface SaveBookListUseCase {
-  // 引数と戻り値の型を実装に合わせる
-  execute: (params: SaveBookListParams) => Promise<Result<AppError, void>>;
+  execute: (params: Readonly<SaveBookListParams>) => Promise<Result<AppError, void>>;
 }
 
 export interface CrawlBookDescriptionUseCase {
-  // 引数と戻り値の型を実装に合わせる
-  execute: (params: CrawlBookDescriptionParams) => Promise<Result<AppError, void>>;
+  execute: (params: Readonly<CrawlBookDescriptionParams>) => Promise<Result<AppError, void>>;
 }

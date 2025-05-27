@@ -380,12 +380,14 @@ export class BookmeterScraper implements BookScraperService {
    * @param isSignedIn ログイン状態の指定（デフォルトはログイン状態）
    * @param signal キャンセル用のAbortSignal
    */
-  async getWishBooks(userId: string, isSignedIn: boolean = true, signal?: AbortSignal): Promise<Result<ScrapingError, BookList>> {
+  async getWishBooks(
+    userId: string,
+    isSignedIn: boolean = true,
+    signal?: AbortSignal
+  ): Promise<Result<ScrapingError, BookList>> {
     // キャンセルチェック
     if (signal?.aborted) {
-      return err(
-        new ScrapingError("処理がキャンセルされました", `${BOOKMETER_BASE_URI}/users/${userId}/books/wish`)
-      );
+      return err(new ScrapingError("処理がキャンセルされました", `${BOOKMETER_BASE_URI}/users/${userId}/books/wish`));
     }
 
     let bookList: BookList = new Map();
@@ -407,7 +409,7 @@ export class BookmeterScraper implements BookScraperService {
         await this.setupImageBlocker(page);
 
         let pageNum = 1;
-        
+
         // 未ログイン時のレート制限管理用変数
         let scanCounter = 0;
         let waitSeconds = 1.5;
@@ -447,7 +449,7 @@ export class BookmeterScraper implements BookScraperService {
 
           // --- Step 2: 書籍URLとAmazonリンク（ログイン時のみ）を抽出 ---
           const pageBookData: { bookUrl: string; amazonUrl?: string }[] = [];
-          
+
           // ログイン状態に応じたXPathを選択
           const booksUrlXPath = isSignedIn ? XPATH.wish.login.booksUrl : XPATH.wish.guest.booksUrl;
           const amazonLinkXPath = XPATH.wish.login.amazonLink;
@@ -479,19 +481,19 @@ export class BookmeterScraper implements BookScraperService {
                 this.logger.warn(`書籍URLが取得できませんでした (要素 ${i})。スキップします。`);
                 continue;
               }
-              
+
               let amazonUrl: string | undefined;
               // Amazonリンクはログイン状態の場合のみ取得を試みる
               if (isSignedIn && amazonLinkHandles.length > i) {
                 amazonUrl = (await getNodeProperty<string>(amazonLinkHandles[i], "href")).unwrap();
               }
-              
+
               // ログイン状態の場合のみAmazonリンクのチェック
               if (isSignedIn && !amazonUrl) {
                 this.logger.warn(`Amazonリンクが取得できませんでした (要素 ${i})。スキップします。`);
                 continue;
               }
-              
+
               pageBookData.push({ bookUrl, amazonUrl });
             } catch (error) {
               this.logger.warn(`リストページからのURL抽出中にエラーが発生しました (要素 ${i})。スキップします。`, {
@@ -508,12 +510,7 @@ export class BookmeterScraper implements BookScraperService {
 
             // キャンセルチェック
             if (signal?.aborted) {
-              return err(
-                new ScrapingError(
-                  "処理がキャンセルされました",
-                  listPageUrl
-                )
-              );
+              return err(new ScrapingError("処理がキャンセルされました", listPageUrl));
             }
 
             // 変数初期化
@@ -571,11 +568,11 @@ export class BookmeterScraper implements BookScraperService {
                 identifier = details.identifier;
                 title = details.title;
                 author = details.author;
-                
+
                 // 未ログイン状態の場合はレート制限対策
                 if (!isSignedIn) {
                   scanCounter++;
-                  
+
                   // 元の実装のレート制限ロジックを再現
                   if (scanCounter % 10 === 0) {
                     if (waitSeconds < 5.5) {
@@ -583,7 +580,7 @@ export class BookmeterScraper implements BookScraperService {
                       this.logger.debug(`待機時間を増加: ${waitSeconds}秒`);
                     }
                   }
-                  
+
                   // 待機
                   this.logger.debug(`レート制限対策: ${waitSeconds}秒待機`);
                   await sleep(waitSeconds * 1000);
@@ -631,7 +628,7 @@ export class BookmeterScraper implements BookScraperService {
 
           // 次のページへ
           pageNum++;
-          
+
           // 未ログイン状態の場合は、元の実装に合わせて40秒待機
           if (!isSignedIn) {
             this.logger.info("ページ間の待機: 40秒");
@@ -688,7 +685,7 @@ export class BookmeterScraper implements BookScraperService {
         await this.setupImageBlocker(page);
 
         let pageNum = 1;
-        
+
         // レート制限管理変数
         let scanCounter = 0;
         let waitSeconds = 1.5;
@@ -754,13 +751,11 @@ export class BookmeterScraper implements BookScraperService {
           for (const bookUrl of bookUrls) {
             // キャンセルチェック
             if (signal?.aborted) {
-              return err(
-                new ScrapingError("処理がキャンセルされました", listPageUrl)
-              );
+              return err(new ScrapingError("処理がキャンセルされました", listPageUrl));
             }
 
             this.logger.debug(`書籍詳細ページをスキャンします: ${bookUrl}`);
-            
+
             try {
               // 書籍詳細ページに遷移
               await Promise.all([
@@ -818,10 +813,9 @@ export class BookmeterScraper implements BookScraperService {
                   this.logger.debug(`待機時間を増加: ${waitSeconds}秒`);
                 }
               }
-              
+
               // 待機
               await sleep(waitSeconds * 1000);
-              
             } catch (error) {
               this.logger.warn(`書籍詳細ページのスキャン中にエラーが発生しました: ${bookUrl}`, { error });
               await sleep(500);
@@ -831,7 +825,7 @@ export class BookmeterScraper implements BookScraperService {
 
           // 次のページへ
           pageNum++;
-          
+
           // 元の実装に合わせて40秒待機
           this.logger.info("ページ間の待機: 40秒");
           await sleep(40 * 1000);
@@ -855,6 +849,4 @@ export class BookmeterScraper implements BookScraperService {
       await browser.close();
     }
   }
-
-  // getBooks メソッドは getWishBooks と getStackedBooks に分離されたため削除
 }

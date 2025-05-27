@@ -10,12 +10,10 @@ import { ok, err } from "@/domain/models/result";
 export interface GetBookListParams {
   userId: string;
   type: BookListType;
-  refresh?: boolean; // Ensure this line exists or add it
+  source: "remote" | "local";
+  processing: "smart" | "force" | "skip";
+  outputFilePath?: string | null;
   signal?: AbortSignal;
-  // Add other potential missing properties if needed based on commandExecutor.ts call
-  skipRemoteCheck?: boolean; // Added based on commandExecutor call
-  skipComparison?: boolean; // Added based on commandExecutor call
-  outputFilePath?: string | null; // Added based on commandExecutor call
 }
 
 /**
@@ -31,7 +29,7 @@ export function createGetBookListUseCase(
   /**
    * データベースとWeb上の書籍リストの差分を確認する
    */
-  function hasChanges(storedBooks: BookList, scrapedBooks: BookList): boolean {
+  function hasChanges(storedBooks: Readonly<BookList>, scrapedBooks: Readonly<BookList>): boolean {
     // サイズが異なれば変更あり
     if (storedBooks.size !== scrapedBooks.size) {
       return true;
@@ -71,11 +69,11 @@ export function createGetBookListUseCase(
    * 実行
    */
   async function execute(
-    params: GetBookListParams
+    params: Readonly<GetBookListParams>
   ): Promise<Result<AppError, { books: BookList; hasChanges: boolean }>> {
-    const { userId, type, refresh = false, signal } = params;
+    const { userId, type, source, processing, signal, outputFilePath } = params;
 
-    logger.info(`書籍リスト(${type})の取得を開始します`, { ...params });
+    logger.info(`書籍リスト(${type})の取得を開始します`, { userId, type, source, processing, outputFilePath });
 
     try {
       // キャンセルチェック
@@ -87,64 +85,83 @@ export function createGetBookListUseCase(
         });
       }
 
-      // リフレッシュが不要かつデータベースにデータがある場合は、データベースから取得
-      if (!refresh) {
+      // 1. データソースに基づいて書籍リストを取得
+      let currentBookList: BookList;
+      if (source === "local") {
+        logger.info(`ローカルデータベースから書籍リスト(${type})を取得します`);
         const storedBooksResult = await bookRepository.findAll(type);
-
-        if (storedBooksResult.isSuccess()) {
-          const storedBooks = storedBooksResult.unwrap();
-
-          if (storedBooks.size > 0) {
-            logger.info(`データベースから${storedBooks.size}冊の書籍を取得しました`, { type });
-            // DBキャッシュから返す場合は変更なし
-            return ok({ books: storedBooks, hasChanges: false });
-          }
-        } else {
-          // データベースからの取得に失敗した場合はログに記録
+        if (storedBooksResult.isError()) {
           const error = storedBooksResult.unwrapError();
-          logger.warn(`データベースからの取得に失敗しました: ${error.message}`, { error });
-          // エラーはログに記録するが処理は継続（Webから取得を試みる）
+          logger.error("ローカルデータベースからの書籍リスト取得に失敗しました。", { error });
+          return err(error);
         }
+        currentBookList = storedBooksResult.unwrap();
+        if (currentBookList.size === 0 && processing !== "force") {
+          // ローカル指定だがデータがない場合、かつforceでない場合は、
+          // リモートから取得するフォールバックも考えられるが、
+          // ここではCLIの指示通りローカル取得失敗として扱う。
+          // forceの場合は空のリストで後続処理に進む（比較で全件新規扱いになる）
+          logger.warn("ローカルデータベースに書籍データが存在しません。");
+          // processing === 'skip' の場合はこの後すぐにリターンするので問題ない
+        }
+        logger.info(`ローカルデータベースから${currentBookList.size}冊の書籍を取得しました`, { type });
+      } else {
+        // source === "remote"
+        logger.info(`Bookmeterから書籍リスト(${type})を取得します`, { userId });
+        const scrapeResult =
+          type === "wish"
+            ? await bookScraperService.getWishBooks(userId, true, signal)
+            : await bookScraperService.getStackedBooks(userId, signal);
+
+        if (scrapeResult.isError()) {
+          return err(scrapeResult.unwrapError());
+        }
+        currentBookList = scrapeResult.unwrap();
+        logger.info(`Bookmeterから${currentBookList.size}冊の書籍を取得しました`, { type });
       }
 
-      // ウェブからスクレイピングして取得
-      logger.info(`Bookmeterから書籍リスト(${type})を取得します`, { userId });
-
-      const scrapeResult =
-        type === "wish"
-          ? await bookScraperService.getWishBooks(userId, true, signal) // ログイン状態で取得（デフォルト）
-          : await bookScraperService.getStackedBooks(userId, signal);
-
-      if (scrapeResult.isError()) {
-        return err(scrapeResult.unwrapError());
+      // キャンセルチェック
+      if (signal?.aborted) {
+        return err({ message: "処理がキャンセルされました", code: "CANCELLED", name: "AppError" });
       }
 
-      const scrapedBooks = scrapeResult.unwrap();
-      logger.info(`Bookmeterから${scrapedBooks.size}冊の書籍を取得しました`, { type });
+      // 2. processing モードに基づいて hasChanges を決定
+      let determinedHasChanges: boolean;
 
-      // データベースのデータとの差分チェック
+      if (processing === "skip") {
+        logger.info("処理モード 'skip': 差分チェックを行わず、変更なしとして扱います。");
+        determinedHasChanges = false;
+        return ok({ books: currentBookList, hasChanges: determinedHasChanges });
+      }
+
+      if (processing === "force") {
+        logger.info("処理モード 'force': 差分チェックの結果に関わらず、変更ありとして扱います。");
+        determinedHasChanges = true;
+        // force の場合でも、比較自体はログやデバッグのために行うこともできるが、
+        // ここでは hasChanges を true に設定して返す
+        return ok({ books: currentBookList, hasChanges: determinedHasChanges });
+      }
+
+      // processing === "smart" の場合 (これがデフォルトの比較処理)
       const storedBooksResult = await bookRepository.findAll(type);
-      let changes = false;
-
-      if (storedBooksResult.isSuccess()) {
+      if (storedBooksResult.isError()) {
+        // DBからの取得に失敗した場合、比較対象がないため、
+        // リモートから取得したものは全て新規とみなし、変更ありとする
+        const error = storedBooksResult.unwrapError();
+        logger.warn("比較対象のローカル書籍リストの取得に失敗しました。リモート取得結果を全て新規として扱います。", {
+          error
+        });
+        determinedHasChanges = currentBookList.size > 0; // リモートに1件でもあれば変更あり
+      } else {
         const storedBooks = storedBooksResult.unwrap();
-        changes = hasChanges(storedBooks, scrapedBooks); // Assign value inside
-
-        if (changes) {
+        determinedHasChanges = hasChanges(storedBooks, currentBookList);
+        if (determinedHasChanges) {
           logger.info(`データベースとの差分を検出しました。更新が必要です`, { type });
         } else {
           logger.info(`データベースとの差分はありません`, { type });
         }
-      } else {
-        // DBからの取得に失敗した場合でも、スクレイピング結果はあるので変更ありとみなす
-        changes = true;
-        logger.warn(
-          "データベースの書籍リストを取得できなかったため、差分チェックをスキップします。強制的に更新します。",
-          { type }
-        );
       }
-
-      return ok({ books: scrapedBooks, hasChanges: changes });
+      return ok({ books: currentBookList, hasChanges: determinedHasChanges });
     } catch (error) {
       // キャンセルエラーの場合
       if (signal?.aborted) {
