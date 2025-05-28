@@ -5,8 +5,8 @@ import { sleep } from "../../../../.libs/utils";
 
 import type { BookContentScraperService } from "@/application/ports/output/bookContentScraperService";
 import type { Logger } from "@/application/ports/output/logger";
-import type { Result } from "@/domain/models/result";
 import type { ISBN10 } from "@/domain/models/isbn";
+import type { Result } from "@/domain/models/result";
 import type { Browser, Page } from "puppeteer";
 
 import { ScrapingError } from "@/domain/models/errors";

@@ -12,6 +12,7 @@ export interface SaveBookListParams {
   type: BookListType;
   exportToCsv?: boolean;
   uploadToCloud?: boolean;
+  csvColumns: readonly string[];
   signal?: AbortSignal;
 }
 
@@ -71,15 +72,17 @@ export function createSaveBookListUseCase(
         logger.info("CSVにエクスポートします...");
         // exportBookListの第二引数 filePath はオプショナルなので省略
         // 第三引数 "csv" は不要になったため削除
-        const exportResult = await storageService.exportBookList(type);
+        const exportResult = await storageService.exportBookList(type, undefined, {
+          columns: params.csvColumns ? [...params.csvColumns] : undefined
+        });
 
         if (exportResult.isError()) {
           const error = exportResult.unwrapError();
           logger.error(`CSVエクスポートに失敗しました: ${error.message}`, { error });
           // エクスポートの失敗はクリティカルではないため、エラーを記録して続行
         } else {
-          const exportPath = exportResult.unwrap(); // exportBookListはファイルパスを返すようになった
-          logger.info(`CSVエクスポートが完了しました: ${exportPath}`); // 正しいパスをログに出力
+          const exportPath = exportResult.unwrap();
+          logger.info(`CSVエクスポートが完了しました: ${exportPath}`);
         }
       }
 

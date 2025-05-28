@@ -7,6 +7,7 @@ import type { AppContext } from "../di/container";
 import type { GetBookListParams } from "../di/types";
 import type { BookScraperService } from "@/application/ports/output/bookScraperService";
 
+import { STACKED_CSV_COLUMNS, WISH_CSV_COLUMNS } from "@/domain/constants/csvColumns";
 import { BookmeterScraper } from "@/infrastructure/adapters/scraping/bookmeterScraper";
 
 type Mode = "wish" | "stacked";
@@ -112,10 +113,7 @@ export async function executeCommand(
   const { logger } = dependencies;
 
   // 実行時に必要な依存を作成（トランジェント）
-  const bookScraperService: BookScraperService = new BookmeterScraper(
-    logger,
-    config.bookmeterCredentials
-  );
+  const bookScraperService: BookScraperService = new BookmeterScraper(logger, config.bookmeterCredentials);
 
   // ユースケースを作成
   const getBookListUseCase = useCases.createGetBookListUseCase(bookScraperService);
@@ -132,7 +130,6 @@ export async function executeCommand(
     logger.info(`出力ファイルパス: ${cliOptions.outputFilePath}`);
   }
 
-  // 処理の開始をログに記録
   logger.info(`${mode === "wish" ? "読みたい本" : "積読本"}リストの処理を開始します`);
 
   try {
@@ -157,19 +154,16 @@ export async function executeCommand(
     logger.info(`書籍リスト取得完了。${books.size}件の書籍が見つかりました。`);
     logger.info(hasChanges ? "前回実行時から変更があります。" : "前回実行時から変更はありません。");
 
-    // 'skip' モードの場合はここで処理を終了
     if (cliOptions.processing === "skip") {
       logger.info("処理戦略 'skip' のため、これ以上の処理を行わずに終了します。");
       return;
     }
 
-    // 'smart' モードで変更がない場合も処理を終了
     if (cliOptions.processing === "smart" && !hasChanges) {
       logger.info("処理戦略 'smart' で書籍リストに変更がないため、処理を終了します。");
       return;
     }
 
-    // 'force' モード、または 'smart' モードで変更があった場合に後続処理を実行
     logger.info(
       cliOptions.processing === "force"
         ? "処理戦略 'force' のため、強制的に後続処理を実行します。"
@@ -181,33 +175,31 @@ export async function executeCommand(
     if (cliOptions["biblio-fetching"] === "enabled") {
       logger.info("書誌情報を取得しています...");
       const fetchResult = await fetchBiblioInfoUseCase.execute(books);
-      // fetchBiblioInfoUseCase が Result 型を返すようになったと仮定 (エラー処理のため)
-      // if (fetchResult.isError()) throw fetchResult.unwrapError();
-      // enrichedBookList = fetchResult.unwrap();
-      // 現状はそのまま代入
-      enrichedBookList = fetchResult; // ユースケースが直接リストを返すと仮定
+
+      enrichedBookList = fetchResult;
       logger.info("書誌情報の取得が完了しました。");
+
+      logger.info("書籍詳細情報をクロールしています...");
+      const crawlResult = await crawlBookDescriptionUseCase.execute({ bookList: enrichedBookList, type: mode });
+      if (crawlResult.isError()) {
+        const error = crawlResult.unwrapError();
+        logger.error("書籍詳細情報のクロール中にエラーが発生しました。", { error });
+        throw error;
+      }
+      logger.info("書籍詳細情報のクロールが完了しました。");
     } else {
       logger.info("書誌情報の取得をスキップします (--biblio-fetching disabled)。");
     }
 
-    // 3. 書籍の詳細情報（あらすじ・目次）を取得
-    logger.info("書籍の詳細情報（あらすじ・目次）をクロールしています...");
-    const crawlResult = await crawlBookDescriptionUseCase.execute({ bookList: enrichedBookList, type: mode });
-    if (crawlResult.isError()) {
-      const error = crawlResult.unwrapError();
-      logger.error("書籍詳細情報のクロール中にエラーが発生しました。", { error });
-      throw error;
-    }
-    logger.info("書籍詳細情報のクロールが完了しました。");
-
-    // 4. データの保存とエクスポート
+    // 3. データの保存とエクスポート
     logger.info("データを保存しています...");
+    const preferredCsvColumns = mode === "wish" ? WISH_CSV_COLUMNS : STACKED_CSV_COLUMNS;
     const saveResult = await saveBookListUseCase.execute({
       bookList: enrichedBookList,
       type: mode,
       exportToCsv: true, // TODO: オプション化を検討
-      uploadToCloud: false // TODO: オプション化を検討
+      uploadToCloud: false, // TODO: オプション化を検討
+      csvColumns: preferredCsvColumns
       // outputFilePath は saveBookListUseCase の責務ではないため、ここでは渡さない
       // 必要であれば、FileStorageService 側でパスを解決する
     });

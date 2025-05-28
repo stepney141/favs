@@ -11,22 +11,23 @@ export interface StorageService {
    * 書籍リストをCSVファイルにエクスポート
    * @param books 書籍リスト
    * @param filePath 出力先ファイルパス
+   * @param columns 出力するカラム名の配列（オプション）
    * @returns 成功時はファイルパス、失敗時はエラー
    */
-  exportToCsv(books: BookList, filePath: string): Promise<Result<AppError, string>>;
+  exportToCsv(books: BookList, filePath: string, columns?: readonly string[]): Promise<Result<AppError, string>>;
 
   /**
    * データベースに保存された書籍リストをCSVにエクスポート
    * @param type 書籍リストのタイプ（wish または stacked）
    * @param filePath 出力先ファイルパス
-   * @param options 追加のオプション
+   * @param options 追加のオプション（columns: 出力するカラム名の配列）
    * @returns 成功時はファイルパス、失敗時はエラー
    */
   exportBookList(
     type: BookListType,
-    filePath?: string, // filePathをオプショナルに変更
-    options?: Record<string, unknown>
-  ): Promise<Result<AppError, string>>; // 戻り値をstringに変更
+    filePath?: string,
+    options?: { columns?: string[] } & Record<string, unknown>
+  ): Promise<Result<AppError, string>>;
 
   /**
    * SQLiteデータベースファイルをクラウドストレージにアップロード

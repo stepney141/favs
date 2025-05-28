@@ -1,6 +1,6 @@
 import type { ScrapingError } from "@/domain/models/errors";
-import type { Result } from "@/domain/models/result";
 import type { ISBN10 } from "@/domain/models/isbn";
+import type { Result } from "@/domain/models/result";
 
 /**
  * 書籍内容スクレイパーのポート

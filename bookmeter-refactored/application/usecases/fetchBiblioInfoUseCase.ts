@@ -10,9 +10,6 @@ export function createFetchBiblioInfoUseCase(
   biblioInfoService: BiblioInfoService,
   logger: Logger
 ): { execute: (bookList: BookList, signal?: AbortSignal) => Promise<BookList> } {
-  /**
-   * 実行
-   */
   async function execute(bookList: BookList, signal?: AbortSignal): Promise<BookList> {
     logger.info(`書誌情報の取得を開始します（${bookList.size}冊）`);
 

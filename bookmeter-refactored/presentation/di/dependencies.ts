@@ -39,19 +39,15 @@ export function createCoreDependencies(config: AppConfig): CoreDependencies {
     ? new DrizzleBookRepository(dbPath, logger)
     : new SqliteBookRepository(dbPath, logger);
 
-  logger.info(`BookRepository: ${config.database.useDrizzle ? 'Drizzle' : 'Sqlite'} implementation を使用します`);
+  logger.info(`BookRepository: ${config.database.useDrizzle ? "Drizzle" : "Sqlite"} implementation を使用します`);
 
   // StorageService: ファイルシステムリソースの管理が必要
   const defaultCsvPath: Record<BookListType, string> = {
     wish: path.join(config.dataDir, "bookmeter_wish_books.csv"),
     stacked: path.join(config.dataDir, "bookmeter_stacked_books.csv")
   };
-  
-  const storageService = new FileStorageService(
-    logger,
-    bookRepository,
-    { defaultCsvPath }
-  );
+
+  const storageService = new FileStorageService(logger, bookRepository, { defaultCsvPath });
 
   // BookContentScraperService: puppeteerリソースの管理を考慮してシングルトン
   const bookContentScraperService = new KinokuniyaScraper(logger);

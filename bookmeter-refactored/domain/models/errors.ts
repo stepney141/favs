@@ -141,25 +141,3 @@ export class ConfigError extends AppError {
     this.key = key;
   }
 }
-
-/**
- * エラーをAppErrorに正規化する
- * 任意のエラーをアプリケーション固有のエラーに変換する
- * @param error 変換元のエラー
- * @param context コンテキスト情報
- * @returns 正規化されたAppError
- */
-export function normalizeError(error: unknown, context?: string): AppError {
-  // 既にAppErrorのサブクラスの場合はそのまま返す
-  if (error instanceof AppError) {
-    return error;
-  }
-
-  // Error型の場合
-  if (error instanceof Error) {
-    return new AppError(`${context ? `[${context}] ` : ""}${error.message}`, "UNKNOWN_ERROR", error);
-  }
-
-  // その他の値
-  return new AppError(`${context ? `[${context}] ` : ""}予期せぬエラー: ${String(error)}`, "UNKNOWN_ERROR", error);
-}

@@ -1,7 +1,7 @@
 import type { BookList, BookListType } from "@/domain/models/book";
 import type { DatabaseError } from "@/domain/models/errors";
-import type { Result } from "@/domain/models/result";
 import type { BookId } from "@/domain/models/isbn";
+import type { Result } from "@/domain/models/result";
 
 /**
  * 書籍リポジトリのポート

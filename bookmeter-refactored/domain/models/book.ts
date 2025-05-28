@@ -23,27 +23,27 @@ export type BiblioInfoSource = "OpenBD" | "ISBNdb" | "Amazon" | "NDL" | "GoogleB
  * 図書館情報
  * 書籍の図書館における所蔵状況と関連リンク
  */
-export interface LibraryInfo {
-  readonly existsIn: ReadonlyMap<LibraryTag, boolean>;
-  readonly opacLinks: ReadonlyMap<LibraryTag, string>;
-  readonly mathLibOpacLink?: string;
-}
+export type LibraryInfo = {
+  existsIn: ReadonlyMap<LibraryTag, boolean>;
+  opacLinks: ReadonlyMap<LibraryTag, string>;
+  mathLibOpacLink?: string;
+};
 
 /**
  * 書籍エンティティ
  * 書籍の基本情報を表す
  */
-export interface Book {
-  readonly id: BookId;
-  readonly identifier: BookIdentifier;
-  readonly url: string;
-  readonly title: string;
-  readonly author: string;
-  readonly publisher: string;
-  readonly publishedDate: string;
-  readonly description: string;
-  readonly libraryInfo: LibraryInfo;
-}
+export type Book = {
+  id: BookId;
+  identifier: BookIdentifier;
+  url: string;
+  title: string;
+  author: string;
+  publisher: string;
+  publishedDate: string;
+  description: string;
+  libraryInfo: LibraryInfo;
+};
 
 /**
  * 書籍リスト
@@ -92,7 +92,7 @@ export function createBook(
  * @param updates 更新するプロパティ
  * @returns 更新された新しい書籍オブジェクト
  */
-export function updateBook(book: Book, updates: Partial<Book>): Book {
+export function updateBook(book: Readonly<Book>, updates: Partial<Book>): Book {
   return {
     ...book,
     ...updates,
@@ -121,7 +121,7 @@ export function createBookList(books: Book[]): BookList {
  * @param book 追加する書籍
  * @returns 新しい書籍リスト
  */
-export function addBook(bookList: BookList, book: Book): BookList {
+export function addBook(bookList: BookList, book: Readonly<Book>): BookList {
   return new Map([...bookList.entries(), [book.url, book]]);
 }
 
@@ -152,6 +152,6 @@ export function bookListToArray(bookList: BookList): Book[] {
  * @param predicate フィルタ条件
  * @returns フィルタリングされた新しい書籍リスト
  */
-export function filterBooks(bookList: BookList, predicate: (book: Book) => boolean): BookList {
+export function filterBooks(bookList: BookList, predicate: (book: Readonly<Book>) => boolean): BookList {
   return new Map(Array.from(bookList.entries()).filter(([, book]) => predicate(book)));
 }

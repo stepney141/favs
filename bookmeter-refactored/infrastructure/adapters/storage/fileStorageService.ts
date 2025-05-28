@@ -6,6 +6,7 @@ import { parse, unparse } from "papaparse";
 import type { BookRepository } from "@/application/ports/output/bookRepository";
 import type { Logger } from "@/application/ports/output/logger";
 import type { StorageService } from "@/application/ports/output/storageService";
+import type { CsvColumnName } from "@/domain/constants/csvColumns";
 import type { BookList, BookListType } from "@/domain/models/book";
 import type { Result } from "@/domain/models/result";
 
@@ -32,10 +33,10 @@ export class FileStorageService implements StorageService {
   constructor(
     logger: Logger,
     bookRepository: BookRepository,
-    options: {
+    options: Readonly<{
       defaultCsvPath: Record<BookListType, string>;
       firebaseConfig?: Record<string, string>;
-    }
+    }>
   ) {
     this.logger = logger;
     this.bookRepository = bookRepository;
@@ -47,28 +48,62 @@ export class FileStorageService implements StorageService {
    * 書籍リストをCSVファイルにエクスポート
    * @param books 書籍リスト
    * @param filePath 出力先ファイルパス
+   * @param columns 出力するカラム名の配列（オプション）
    * @returns 成功時はファイルパス、失敗時はエラー
    */
-  async exportToCsv(books: BookList, filePath: string): Promise<Result<AppError, string>> {
+  async exportToCsv(
+    books: BookList,
+    filePath: string,
+    columns?: readonly CsvColumnName[]
+  ): Promise<Result<AppError, string>> {
     try {
-      // 書籍リストを配列に変換（BookオブジェクトからCSV用に変換）
+      // 書籍リストを配列に変換（BookオブジェクトからDBスキーマのカラム名に変換）
       const booksArray = bookListToArray(books).map((book) => {
-        // descriptionをCSVに含めない（サイズ軽減のため）
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { description, ...rest } = book;
-        return {
-          ...rest,
-          // Mapをフラット化
-          ...Object.fromEntries(book.libraryInfo.existsIn.entries()),
-          ...Object.fromEntries(book.libraryInfo.opacLinks.entries()),
-          mathlib_opac: book.libraryInfo.mathLibOpacLink
+        // BookオブジェクトをDBスキーマのカラム名に変換
+        const dbColumns = {
+          bookmeter_url: book.url,
+          isbn_or_asin: book.identifier,
+          book_title: book.title,
+          author: book.author,
+          publisher: book.publisher,
+          published_date: book.publishedDate,
+          description: book.description,
+          // 図書館存在情報
+          exists_in_utokyo: book.libraryInfo.existsIn.get("UTokyo") || false,
+          exists_in_sophia: book.libraryInfo.existsIn.get("Sophia") || false,
+          // OPACリンク
+          utokyo_opac: book.libraryInfo.opacLinks.get("UTokyo") || "",
+          sophia_opac: book.libraryInfo.opacLinks.get("Sophia") || "",
+          // 数学図書館OPACリンク
+          sophia_mathlib_opac: book.libraryInfo.mathLibOpacLink || ""
         };
+
+        // columnsが指定されている場合、指定されたカラムのみを指定順序で抽出
+        if (columns && columns.length > 0) {
+          const filteredBook: Record<string, unknown> = {};
+          // columns配列の順序通りにプロパティを設定することで、CSV出力時の順序を保証
+          for (const column of columns) {
+            if (column in dbColumns) {
+              filteredBook[column] = dbColumns[column];
+            } else {
+              // 存在しないカラムは空文字で埋める
+              filteredBook[column] = "";
+            }
+          }
+          return filteredBook;
+        }
+
+        // columnsが指定されていない場合、descriptionを除外（サイズ軽減のため）
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { description, ...rest } = dbColumns;
+        return rest;
       });
 
       // CSVデータを生成
       const csvData = unparse(booksArray, {
         header: true,
-        skipEmptyLines: true
+        skipEmptyLines: true,
+        columns: columns ? [...columns] : undefined
       });
 
       // 親ディレクトリの存在を確認し、必要に応じて作成
@@ -100,10 +135,14 @@ export class FileStorageService implements StorageService {
    * データベースに保存された書籍リストをCSVにエクスポート
    * @param type 書籍リストのタイプ
    * @param filePath 出力先ファイルパス
+   * @param options 追加のオプション（columns: 出力するカラム名の配列）
    * @returns 成功時はファイルパス、失敗時はエラー
    */
-  async exportBookList(type: BookListType, filePath?: string): Promise<Result<AppError, string>> {
-    // filePathをオプショナルにし、戻り値をstringに変更
+  async exportBookList(
+    type: BookListType,
+    filePath?: string,
+    options?: { columns?: CsvColumnName[] } & Record<string, unknown>
+  ): Promise<Result<AppError, string>> {
     const targetPath = filePath || this.defaultCsvPath[type];
 
     try {
@@ -118,8 +157,8 @@ export class FileStorageService implements StorageService {
       const books = booksResult.unwrap();
       this.logger.info(`${books.size}冊の書籍を取得しました`);
 
-      // CSVに書き出し
-      const exportResult = await this.exportToCsv(books, targetPath);
+      // CSVに書き出し（columnsオプションを渡す）
+      const exportResult = await this.exportToCsv(books, targetPath, options?.columns);
 
       if (exportResult.isError()) {
         return err(exportResult.unwrapError());

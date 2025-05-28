@@ -224,7 +224,6 @@ export class DrizzleBookRepository implements BookRepository {
     try {
       db = await this.getConnection();
 
-      // wishテーブルを検索（型安全！）
       const wishRows = await db
         .select({ description: wishTable.description })
         .from(wishTable)
@@ -236,7 +235,6 @@ export class DrizzleBookRepository implements BookRepository {
         return ok(true);
       }
 
-      // stackedテーブルを検索
       const stackedRows = await db
         .select({ description: stackedTable.description })
         .from(stackedTable)
