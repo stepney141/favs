@@ -81,7 +81,7 @@ export default tseslint.config(
       "no-mixed-spaces-and-tabs": ["error"],
       "unused-imports/no-unused-imports": "warn",
       "functional/no-let": [
-        "warn",
+        "off",
         {
           allowInForLoopInit: true,
           allowInFunctions: false
@@ -89,6 +89,7 @@ export default tseslint.config(
       ],
       "functional/immutable-data": ["warn", { ignoreImmediateMutation: true, ignoreMapsAndSets: true }],
       "functional/no-throw-statements": ["warn", { allowToRejectPromises: true }],
+      "functional/no-class-inheritance": ["warn", { ignoreIdentifierPattern: "Error" }],
       "functional/no-loop-statements": "off",
       "functional/no-conditional-statements": "off",
       "functional/no-expression-statements": "off",
