@@ -1,6 +1,6 @@
 import type { ElementHandle, JSHandle, Page, WaitForSelectorOptions } from "puppeteer";
 
-export const getNodeProperty = async <T>(eh: ElementHandle<Node>, prop: string): Promise<T> => {
+export const getNodeProperty = async <T = string>(eh: ElementHandle<Node>, prop: string): Promise<T> => {
   const handle = (await eh.getProperty(prop)) as JSHandle<T>;
   const value = await handle.jsonValue();
 

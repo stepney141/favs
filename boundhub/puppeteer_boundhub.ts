@@ -67,22 +67,21 @@ class BoundHub {
 
   async login() {
     const page = await this.#browser.newPage();
-    await page.goto(`${baseURI}/?login`, {
-      waitUntil: "load"
-    });
+    await page.goto(`${baseURI}/?login`, { waitUntil: "networkidle2" });
+    console.log(`${JOB_NAME}: Logging in...`);
 
-    const useridInput_Handle = $x(page, XPATH.useridInput);
-    const passwordInput_Handle = $x(page, XPATH.passwordInput);
-    const loginButton_Handle = $x(page, XPATH.loginButton);
+    const useridInput_Handle = await $x(page, XPATH.useridInput);
+    const passwordInput_Handle = await $x(page, XPATH.passwordInput);
+    const loginButton_Handle = await $x(page, XPATH.loginButton);
 
-    await (await useridInput_Handle)[0].type(user_name);
-    await (await passwordInput_Handle)[0].type(password);
+    await useridInput_Handle[0].type(user_name);
+    await passwordInput_Handle[0].type(password);
     await Promise.all([
       page.waitForNavigation({
         timeout: 60000,
         waitUntil: "networkidle2"
       }),
-      (await loginButton_Handle)[0].click()
+      loginButton_Handle[0].click()
     ]);
 
     console.log(`${JOB_NAME}: Logged in!`);
@@ -94,15 +93,18 @@ class BoundHub {
     await page.goto(`${baseURI}/tags/`, {
       waitUntil: "networkidle2"
     });
+    console.log(`${JOB_NAME}: Fetching tags...`);
 
     const tagHrefs_Handle = await $x(page, XPATH.tagHrefs);
     const tags: Tag[] = [];
 
     for (const tagNode of tagHrefs_Handle) {
-      tags.push({
+      const tagInfo = {
         name: await getNodeProperty(tagNode, "textContent"),
         url: await getNodeProperty(tagNode, "href")
-      });
+      };
+      tags.push(tagInfo);
+      // console.log(`Found tag "${tagInfo.name}" at ${tagInfo.url}`);
     }
     tags.sort((a, b) => {
       const nameA = a.name.toUpperCase(); // 大文字小文字を無視
