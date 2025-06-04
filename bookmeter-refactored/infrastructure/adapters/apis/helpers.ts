@@ -104,7 +104,7 @@ export const mergeResults = (bulkResults: BookSearchResult[], individualResults:
  * 個別書籍検索を実行（プロバイダーを順番に試す）
  */
 export const searchBookWithProviders = async (
-  book: Book,
+  book: Readonly<Book>,
   providers: SingleProvider[],
   signal?: AbortSignal,
   logger?: Logger

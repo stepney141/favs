@@ -23,11 +23,11 @@ export function createSaveBookListUseCase(
   bookRepository: BookRepository,
   storageService: StorageService,
   logger: Logger
-): { execute: (params: SaveBookListParams) => Promise<Result<AppError, void>> } {
+): { execute: (params: SaveBookListParams) => Promise<Result<void, AppError>> } {
   /**
    * 実行
    */
-  async function execute(params: SaveBookListParams): Promise<Result<AppError, void>> {
+  async function execute(params: SaveBookListParams): Promise<Result<void, AppError>> {
     const { bookList, type, exportToCsv = true, uploadToCloud = false, signal } = params;
 
     logger.info(`書籍リスト(${type})の保存を開始します。${bookList.size}冊`, {

@@ -23,11 +23,11 @@ export function createCrawlBookDescriptionUseCase(
   bookRepository: BookRepository,
   bookContentScraperService: BookContentScraperService,
   logger: Logger
-): { execute: (params: CrawlBookDescriptionParams) => Promise<Result<AppError, void>> } {
+): { execute: (params: CrawlBookDescriptionParams) => Promise<Result<void, AppError>> } {
   /**
    * 実行
    */
-  async function execute(params: CrawlBookDescriptionParams): Promise<Result<AppError, void>> {
+  async function execute(params: CrawlBookDescriptionParams): Promise<Result<void, AppError>> {
     const { bookList, type, signal } = params;
 
     logger.info(`書籍説明の取得を開始します (${type})`, {

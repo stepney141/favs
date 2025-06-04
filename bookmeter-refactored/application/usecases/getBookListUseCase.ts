@@ -17,6 +17,45 @@ export interface GetBookListParams {
 }
 
 /**
+ * データベースとWeb上の書籍リストの差分を確認する
+ */
+function hasChanges(storedBooks: Readonly<BookList>, scrapedBooks: Readonly<BookList>): boolean {
+  // サイズが異なれば変更あり
+  if (storedBooks.size !== scrapedBooks.size) {
+    return true;
+  }
+
+  // URLの一致チェック
+  const storedUrls = new Set(storedBooks.keys());
+  const scrapedUrls = new Set(scrapedBooks.keys());
+
+  // 同じURLセットかチェック
+  const urlDiff = new Set(
+    [...storedUrls]
+      .filter((url) => !scrapedUrls.has(url))
+      .concat([...scrapedUrls].filter((url) => !storedUrls.has(url)))
+  );
+
+  // URLセットが異なれば変更あり
+  if (urlDiff.size > 0) {
+    return true;
+  }
+
+  // 同じURLでも内容が変わっている可能性があるのでチェック
+  for (const [url, scrapedBook] of scrapedBooks.entries()) {
+    const storedBook = storedBooks.get(url);
+    if (!storedBook) continue; // ここには到達しないはずだが、型安全のため
+
+    // ISBNが変わっていたら変更あり
+    if (storedBook.identifier !== scrapedBook.identifier) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
  * 書籍リスト（読みたい本・積読本）を取得するユースケース
  */
 export function createGetBookListUseCase(
@@ -24,53 +63,14 @@ export function createGetBookListUseCase(
   bookScraperService: BookScraperService,
   logger: Logger
 ): {
-  execute: (params: GetBookListParams) => Promise<Result<AppError, { books: BookList; hasChanges: boolean }>>;
+  execute: (params: GetBookListParams) => Promise<Result<{ books: BookList; hasChanges: boolean }, AppError>>;
 } {
-  /**
-   * データベースとWeb上の書籍リストの差分を確認する
-   */
-  function hasChanges(storedBooks: Readonly<BookList>, scrapedBooks: Readonly<BookList>): boolean {
-    // サイズが異なれば変更あり
-    if (storedBooks.size !== scrapedBooks.size) {
-      return true;
-    }
-
-    // URLの一致チェック
-    const storedUrls = new Set(storedBooks.keys());
-    const scrapedUrls = new Set(scrapedBooks.keys());
-
-    // 同じURLセットかチェック
-    const urlDiff = new Set(
-      [...storedUrls]
-        .filter((url) => !scrapedUrls.has(url))
-        .concat([...scrapedUrls].filter((url) => !storedUrls.has(url)))
-    );
-
-    // URLセットが異なれば変更あり
-    if (urlDiff.size > 0) {
-      return true;
-    }
-
-    // 同じURLでも内容が変わっている可能性があるのでチェック
-    for (const [url, scrapedBook] of scrapedBooks.entries()) {
-      const storedBook = storedBooks.get(url);
-      if (!storedBook) continue; // ここには到達しないはずだが、型安全のため
-
-      // ISBNが変わっていたら変更あり
-      if (storedBook.identifier !== scrapedBook.identifier) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   /**
    * 実行
    */
   async function execute(
     params: Readonly<GetBookListParams>
-  ): Promise<Result<AppError, { books: BookList; hasChanges: boolean }>> {
+  ): Promise<Result<{ books: BookList; hasChanges: boolean }, AppError>> {
     const { userId, type, source, processing, signal, outputFilePath } = params;
 
     logger.info(`書籍リスト(${type})の取得を開始します`, { userId, type, source, processing, outputFilePath });

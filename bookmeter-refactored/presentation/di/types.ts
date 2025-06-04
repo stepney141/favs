@@ -21,7 +21,7 @@ export interface BookListResult {
 }
 
 export interface GetBookListUseCase {
-  execute: (params: Readonly<GetBookListParams>) => Promise<Result<AppError, BookListResult>>;
+  execute: (params: Readonly<GetBookListParams>) => Promise<Result<BookListResult, AppError>>;
 }
 
 export interface FetchBiblioInfoUseCase {
@@ -29,9 +29,9 @@ export interface FetchBiblioInfoUseCase {
 }
 
 export interface SaveBookListUseCase {
-  execute: (params: Readonly<SaveBookListParams>) => Promise<Result<AppError, void>>;
+  execute: (params: Readonly<SaveBookListParams>) => Promise<Result<void, AppError>>;
 }
 
 export interface CrawlBookDescriptionUseCase {
-  execute: (params: Readonly<CrawlBookDescriptionParams>) => Promise<Result<AppError, void>>;
+  execute: (params: Readonly<CrawlBookDescriptionParams>) => Promise<Result<void, AppError>>;
 }

@@ -6,12 +6,12 @@ import type { Result } from "@/domain/models/result";
 /**
  * 書籍情報取得関数の型
  */
-export type BookInfoFetcher = (identifier: BookIdentifier) => Promise<Result<ApiError, Book>>;
+export type BookInfoFetcher = (identifier: BookIdentifier) => Promise<Result<Book, ApiError>>;
 
 /**
  * 一括書籍情報取得関数の型
  */
-export type BulkBookInfoFetcher = (identifiers: BookIdentifier[]) => Promise<Result<ApiError, Map<string, Book>>>;
+export type BulkBookInfoFetcher = (identifiers: BookIdentifier[]) => Promise<Result<Map<string, Book>, ApiError>>;
 
 /**
  * プロバイダー設定

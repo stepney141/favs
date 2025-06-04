@@ -55,7 +55,7 @@ export class FileStorageService implements StorageService {
     books: BookList,
     filePath: string,
     columns?: readonly CsvColumnName[]
-  ): Promise<Result<AppError, string>> {
+  ): Promise<Result<string, AppError>> {
     try {
       // 書籍リストを配列に変換（BookオブジェクトからDBスキーマのカラム名に変換）
       const booksArray = bookListToArray(books).map((book) => {
@@ -142,7 +142,7 @@ export class FileStorageService implements StorageService {
     type: BookListType,
     filePath?: string,
     options?: { columns?: CsvColumnName[] } & Record<string, unknown>
-  ): Promise<Result<AppError, string>> {
+  ): Promise<Result<string, AppError>> {
     const targetPath = filePath || this.defaultCsvPath[type];
 
     try {
@@ -183,7 +183,7 @@ export class FileStorageService implements StorageService {
    * @param options アップロードオプション
    * @returns 成功時はvoid、失敗時はエラー
    */
-  async uploadDatabaseToCloud(options?: { dbFilePath?: string; targetPath?: string }): Promise<Result<AppError, void>> {
+  async uploadDatabaseToCloud(options?: { dbFilePath?: string; targetPath?: string }): Promise<Result<void, AppError>> {
     // Firebaseの設定がなければエラーを返す
     if (!this.firebaseConfig) {
       return err(new AppError("Firebaseの設定が見つかりません", "FIREBASE_CONFIG_NOT_FOUND"));
@@ -227,7 +227,7 @@ export class FileStorageService implements StorageService {
    * @param filePath CSVファイルのパス
    * @returns 書籍リスト
    */
-  async importFromCsv(filePath: string): Promise<Result<AppError, BookList>> {
+  async importFromCsv(filePath: string): Promise<Result<BookList, AppError>> {
     try {
       // ファイルの存在チェック
       try {
@@ -277,7 +277,7 @@ export class FileStorageService implements StorageService {
    * @param filePath ファイルパス
    * @returns ファイルが存在するかどうか
    */
-  async fileExists(filePath: string): Promise<Result<AppError, boolean>> {
+  async fileExists(filePath: string): Promise<Result<boolean, AppError>> {
     try {
       await fs.access(filePath, fs.constants.F_OK);
       return ok(true);
@@ -305,7 +305,7 @@ export class FileStorageService implements StorageService {
    * @param filePath ファイルパス
    * @returns URL文字列の配列
    */
-  async readUrlList(filePath: string): Promise<Result<AppError, string[]>> {
+  async readUrlList(filePath: string): Promise<Result<string[], AppError>> {
     try {
       // ファイルの存在チェック
       try {

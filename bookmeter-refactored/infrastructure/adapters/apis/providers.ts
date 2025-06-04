@@ -51,7 +51,7 @@ const convertOpenBDToBook = (identifier: BookIdentifier, bookInfo: Readonly<Open
 /**
  * OpenBD API から単一書籍情報を取得
  */
-const fetchSingleFromOpenBD = async (identifier: BookIdentifier, logger?: Logger): Promise<Result<ApiError, Book>> => {
+const fetchSingleFromOpenBD = async (identifier: BookIdentifier, logger?: Logger): Promise<Result<Book, ApiError>> => {
   const endpoint = "https://api.openbd.jp/v1/get";
 
   if (!isIsbnIdentifier(identifier)) {
@@ -84,7 +84,7 @@ const fetchSingleFromOpenBD = async (identifier: BookIdentifier, logger?: Logger
 const fetchBulkFromOpenBD = async (
   identifiers: BookIdentifier[],
   logger?: Logger
-): Promise<Result<ApiError, Map<string, Book>>> => {
+): Promise<Result<Map<string, Book, ApiError>>> => {
   const endpoint = "https://api.openbd.jp/v1/get";
 
   if (identifiers.length === 0) {

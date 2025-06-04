@@ -178,7 +178,7 @@ export class SqliteBookRepository implements BookRepository {
   /**
    * 指定したタイプの書籍リストをすべて取得
    */
-  async findAll(type: BookListType): Promise<Result<DatabaseError, BookList>> {
+  async findAll(type: BookListType): Promise<Result<BookList, DatabaseError>> {
     const tableName = this.getTableName(type);
     let db: DbConnection | null = null;
 
@@ -220,7 +220,7 @@ export class SqliteBookRepository implements BookRepository {
   /**
    * 指定したIDの書籍を取得
    */
-  async findById(id: BookId): Promise<Result<DatabaseError, BookList | null>> {
+  async findById(id: BookId): Promise<Result<BookList | null, DatabaseError>> {
     // BookIdは現在のシステムではbookmeter_urlと同等のため、
     // そのURLで書籍を検索
     const searchUrl = id.toString();
@@ -272,7 +272,7 @@ export class SqliteBookRepository implements BookRepository {
   /**
    * 書籍リストを保存
    */
-  async save(books: BookList, type: BookListType): Promise<Result<DatabaseError, void>> {
+  async save(books: BookList, type: BookListType): Promise<Result<void, DatabaseError>> {
     const tableName = this.getTableName(type);
     let db: DbConnection | null = null;
 
@@ -373,7 +373,7 @@ export class SqliteBookRepository implements BookRepository {
   /**
    * 指定した書籍のIDに説明が存在するかどうかを確認
    */
-  async hasDescription(id: BookId): Promise<Result<DatabaseError, boolean>> {
+  async hasDescription(id: BookId): Promise<Result<boolean, DatabaseError>> {
     const searchUrl = id.toString();
     let db: DbConnection | null = null;
 
@@ -447,7 +447,7 @@ export class SqliteBookRepository implements BookRepository {
   /**
    * 指定した書籍の説明を更新
    */
-  async updateDescription(id: BookId, description: string): Promise<Result<DatabaseError, void>> {
+  async updateDescription(id: BookId, description: string): Promise<Result<void, DatabaseError>> {
     // BookIdは現在のシステムではbookmeter_urlと同等のため、
     // そのURLで書籍を検索
     const searchUrl = id.toString();

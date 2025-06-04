@@ -134,7 +134,7 @@ export class BookmeterScraper implements BookScraperService {
   /**
    * Bookmeterにログインする
    */
-  private async login(browser: Browser): Promise<Result<ScrapingError, void>> {
+  private async login(browser: Browser): Promise<Result<void, ScrapingError>> {
     this.logger.info("Bookmeterにログインします...");
 
     const page = await browser.newPage();
@@ -204,12 +204,12 @@ export class BookmeterScraper implements BookScraperService {
     url: string
   ): Promise<
     Result<
-      ScrapingError,
       {
         title: string;
         author: string;
         identifier: BookIdentifier;
-      }
+      },
+      ScrapingError
     >
   > {
     try {
@@ -277,7 +277,7 @@ export class BookmeterScraper implements BookScraperService {
         mode: "wish" | "stacked";
       };
     }
-  ): Promise<Result<ScrapingError, Book>> {
+  ): Promise<Result<Book, ScrapingError>> {
     const browser = await this.initializeBrowser();
 
     try {
@@ -384,7 +384,7 @@ export class BookmeterScraper implements BookScraperService {
     userId: string,
     isSignedIn: boolean = true,
     signal?: AbortSignal
-  ): Promise<Result<ScrapingError, BookList>> {
+  ): Promise<Result<BookList, ScrapingError>> {
     // キャンセルチェック
     if (signal?.aborted) {
       return err(new ScrapingError("処理がキャンセルされました", `${BOOKMETER_BASE_URI}/users/${userId}/books/wish`));
@@ -454,7 +454,7 @@ export class BookmeterScraper implements BookScraperService {
           const booksUrlXPath = isSignedIn ? XPATH.wish.login.booksUrl : XPATH.wish.guest.booksUrl;
           const amazonLinkXPath = XPATH.wish.login.amazonLink;
 
-          this.logger.info(`使用するXPath (書籍URL): ${booksUrlXPath}`);
+          this.logger.debug(`使用するXPath (書籍URL): ${booksUrlXPath}`);
           const booksUrlHandles = await $x(page, booksUrlXPath);
           this.logger.info(`書籍URL要素数: ${booksUrlHandles.length}`);
 
@@ -467,7 +467,7 @@ export class BookmeterScraper implements BookScraperService {
           // Amazonリンクはログイン状態の場合のみ取得
           const amazonLinkHandles = isSignedIn ? await $x(page, amazonLinkXPath) : [];
           if (isSignedIn) {
-            this.logger.info(`使用するXPath (Amazonリンク): ${amazonLinkXPath}`);
+            this.logger.debug(`使用するXPath (Amazonリンク): ${amazonLinkXPath}`);
             this.logger.info(`Amazonリンク要素数: ${amazonLinkHandles.length}`);
           }
 
@@ -660,7 +660,7 @@ export class BookmeterScraper implements BookScraperService {
    * @param userId ユーザーID
    * @param signal キャンセル用のAbortSignal
    */
-  async getStackedBooks(userId: string, signal?: AbortSignal): Promise<Result<ScrapingError, BookList>> {
+  async getStackedBooks(userId: string, signal?: AbortSignal): Promise<Result<BookList, ScrapingError>> {
     // キャンセルチェック
     if (signal?.aborted) {
       return err(

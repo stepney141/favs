@@ -14,7 +14,7 @@ export interface StorageService {
    * @param columns 出力するカラム名の配列（オプション）
    * @returns 成功時はファイルパス、失敗時はエラー
    */
-  exportToCsv(books: BookList, filePath: string, columns?: readonly string[]): Promise<Result<AppError, string>>;
+  exportToCsv(books: BookList, filePath: string, columns?: readonly string[]): Promise<Result<string, AppError>>;
 
   /**
    * データベースに保存された書籍リストをCSVにエクスポート
@@ -27,33 +27,33 @@ export interface StorageService {
     type: BookListType,
     filePath?: string,
     options?: { columns?: string[] } & Record<string, unknown>
-  ): Promise<Result<AppError, string>>;
+  ): Promise<Result<string, AppError>>;
 
   /**
    * SQLiteデータベースファイルをクラウドストレージにアップロード
    * @param options アップロードオプション
    * @returns 成功時はvoid、失敗時はエラー
    */
-  uploadDatabaseToCloud(options?: { dbFilePath?: string; targetPath?: string }): Promise<Result<AppError, void>>;
+  uploadDatabaseToCloud(options?: { dbFilePath?: string; targetPath?: string }): Promise<Result<void, AppError>>;
 
   /**
    * CSVファイルを読み込んで書籍リストを取得
    * @param filePath CSVファイルのパス
    * @returns 書籍リスト
    */
-  importFromCsv(filePath: string): Promise<Result<AppError, BookList>>;
+  importFromCsv(filePath: string): Promise<Result<BookList, AppError>>;
 
   /**
    * ファイルが存在するかどうかを確認
    * @param filePath ファイルパス
    * @returns ファイルが存在するかどうか
    */
-  fileExists(filePath: string): Promise<Result<AppError, boolean>>;
+  fileExists(filePath: string): Promise<Result<boolean, AppError>>;
 
   /**
    * テキストファイルのURL一覧を読み込む
    * @param filePath ファイルパス
    * @returns URL文字列の配列
    */
-  readUrlList(filePath: string): Promise<Result<AppError, string[]>>;
+  readUrlList(filePath: string): Promise<Result<string[], AppError>>;
 }

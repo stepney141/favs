@@ -14,7 +14,7 @@ export interface BookScraperService {
    * @param signal AbortSignal（キャンセル用）
    * @returns 読みたい本のリスト
    */
-  getWishBooks(userId: string, isSignedIn?: boolean, signal?: AbortSignal): Promise<Result<ScrapingError, BookList>>;
+  getWishBooks(userId: string, isSignedIn?: boolean, signal?: AbortSignal): Promise<Result<BookList, ScrapingError>>;
 
   /**
    * 「積読本」リストを取得
@@ -22,7 +22,7 @@ export interface BookScraperService {
    * @param signal AbortSignal（キャンセル用）
    * @returns 積読本のリスト
    */
-  getStackedBooks(userId: string, signal?: AbortSignal): Promise<Result<ScrapingError, BookList>>;
+  getStackedBooks(userId: string, signal?: AbortSignal): Promise<Result<BookList, ScrapingError>>;
 
   /**
    * 書籍をログイン状態でスキャンし、詳細情報を取得
@@ -37,5 +37,5 @@ export interface BookScraperService {
         mode: "wish" | "stacked";
       };
     }
-  ): Promise<Result<ScrapingError, Book>>;
+  ): Promise<Result<Book, ScrapingError>>;
 }

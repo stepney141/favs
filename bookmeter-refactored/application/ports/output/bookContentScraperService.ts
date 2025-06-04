@@ -12,5 +12,5 @@ export interface BookContentScraperService {
    * @param isbn 書籍のISBN10
    * @returns 書籍の説明文
    */
-  scrapeBookDescription(isbn: ISBN10): Promise<Result<ScrapingError, string>>;
+  scrapeBookDescription(isbn: ISBN10): Promise<Result<string, ScrapingError>>;
 }

@@ -80,7 +80,7 @@ export class KinokuniyaScraper implements BookContentScraperService {
   /**
    * 紀伊國屋書店から書籍の説明を取得
    */
-  async scrapeBookDescription(isbn: ISBN10): Promise<Result<ScrapingError, string>> {
+  async scrapeBookDescription(isbn: ISBN10): Promise<Result<string, ScrapingError>> {
     const browser = await this.initializeBrowser();
 
     try {

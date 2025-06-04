@@ -13,14 +13,14 @@ export interface BookRepository {
    * @param type 書籍リストのタイプ（wish または stacked）
    * @returns 書籍リスト
    */
-  findAll(type: BookListType): Promise<Result<DatabaseError, BookList>>;
+  findAll(type: BookListType): Promise<Result<BookList, DatabaseError>>;
 
   /**
    * 指定したIDの書籍を取得
    * @param id 書籍ID
    * @returns 書籍（存在しない場合はnull）
    */
-  findById(id: BookId): Promise<Result<DatabaseError, BookList | null>>;
+  findById(id: BookId): Promise<Result<BookList | null, DatabaseError>>;
 
   /**
    * 書籍リストを保存
@@ -28,14 +28,14 @@ export interface BookRepository {
    * @param type 書籍リストのタイプ（wish または stacked）
    * @returns 成功時はvoid、失敗時はDatabaseError
    */
-  save(books: BookList, type: BookListType): Promise<Result<DatabaseError, void>>;
+  save(books: BookList, type: BookListType): Promise<Result<void, DatabaseError>>;
 
   /**
    * 指定した書籍の説明が存在するかどうかを確認
    * @param id 書籍ID
    * @returns 説明が存在するかどうか
    */
-  hasDescription(id: BookId): Promise<Result<DatabaseError, boolean>>;
+  hasDescription(id: BookId): Promise<Result<boolean, DatabaseError>>;
 
   /**
    * 指定した書籍の説明を更新
@@ -43,5 +43,5 @@ export interface BookRepository {
    * @param description 説明文
    * @returns 成功時はvoid、失敗時はDatabaseError
    */
-  updateDescription(id: BookId, description: string): Promise<Result<DatabaseError, void>>;
+  updateDescription(id: BookId, description: string): Promise<Result<void, DatabaseError>>;
 }

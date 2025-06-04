@@ -34,12 +34,12 @@ export interface Failure<E> {
 /**
  * 成功か失敗のいずれかの結果
  */
-export type Result<E, T> = Success<T> | Failure<E>;
+export type Result<T, E> = Success<T> | Failure<E>;
 
 /**
  * 成功の結果を作成
  */
-export function ok<E, T>(value: T): Result<E, T> {
+export function ok<E, T>(value: T): Result<T, E> {
   return {
     tag: "success",
     value,
@@ -65,7 +65,7 @@ export function ok<E, T>(value: T): Result<E, T> {
 /**
  * 失敗の結果を作成
  */
-export function err<E, T>(error: E): Result<E, T> {
+export function err<E, T>(error: E): Result<T, E> {
   return {
     tag: "failure",
     error,
@@ -91,21 +91,21 @@ export function err<E, T>(error: E): Result<E, T> {
 /**
  * 結果が成功かどうかを判定（関数版）
  */
-export function isSuccess<E, T>(result: Result<E, T>): result is Success<T> {
+export function isSuccess<E, T>(result: Result<T, E>): result is Success<T> {
   return result.tag === "success";
 }
 
 /**
  * 結果が失敗かどうかを判定（関数版）
  */
-export function isError<E, T>(result: Result<E, T>): result is Failure<E> {
+export function isError<E, T>(result: Result<T, E>): result is Failure<E> {
   return result.tag === "failure";
 }
 
 /**
  * 成功なら値を返し、失敗ならエラーを投げる（関数版）
  */
-export function unwrap<E, T>(result: Result<E, T>): T {
+export function unwrap<E, T>(result: Result<T, E>): T {
   if (isSuccess(result)) {
     return result.value;
   }
@@ -115,7 +115,7 @@ export function unwrap<E, T>(result: Result<E, T>): T {
 /**
  * 失敗ならエラーを返し、成功なら例外を投げる（関数版）
  */
-export function unwrapError<E, T>(result: Result<E, T>): E {
+export function unwrapError<E, T>(result: Result<T, E>): E {
   if (isError(result)) {
     return result.error;
   }
@@ -125,7 +125,7 @@ export function unwrapError<E, T>(result: Result<E, T>): E {
 /**
  * 成功なら onSuccess を、失敗なら onError を実行
  */
-export function match<E, T, U>(result: Result<E, T>, onSuccess: (value: T) => U, onError: (error: E) => U): U {
+export function match<E, T, U>(result: Result<T, E>, onSuccess: (value: T) => U, onError: (error: E) => U): U {
   if (isSuccess(result)) {
     return onSuccess(result.value);
   }
@@ -135,7 +135,7 @@ export function match<E, T, U>(result: Result<E, T>, onSuccess: (value: T) => U,
 /**
  * 成功なら値変換し、失敗ならそのまま
  */
-export function map<E, T, U>(result: Result<E, T>, f: (value: T) => U): Result<E, U> {
+export function map<E, T, U>(result: Result<T, E>, f: (value: T) => U): Result<U, E> {
   if (isSuccess(result)) {
     return ok(f(result.value));
   }
@@ -145,7 +145,7 @@ export function map<E, T, U>(result: Result<E, T>, f: (value: T) => U): Result<E
 /**
  * 失敗ならエラー変換し、成功ならそのまま
  */
-export function mapError<E, F, T>(result: Result<E, T>, f: (error: E) => F): Result<F, T> {
+export function mapError<E, F, T>(result: Result<T, E>, f: (error: E) => F): Result<T, F> {
   if (isError(result)) {
     return err(f(result.error));
   }
@@ -155,7 +155,7 @@ export function mapError<E, F, T>(result: Result<E, T>, f: (error: E) => F): Res
 /**
  * 値を取得、失敗ならデフォルト値を返す
  */
-export function getOrElse<E, T>(result: Result<E, T>, defaultValue: T): T {
+export function getOrElse<E, T>(result: Result<T, E>, defaultValue: T): T {
   if (isSuccess(result)) {
     return result.value;
   }
@@ -165,7 +165,7 @@ export function getOrElse<E, T>(result: Result<E, T>, defaultValue: T): T {
 /**
  * 成功なら副作用を実行し結果はそのまま返す
  */
-export function tap<E, T>(result: Result<E, T>, f: (value: T) => void): Result<E, T> {
+export function tap<E, T>(result: Result<T, E>, f: (value: T) => void): Result<T, E> {
   if (isSuccess(result)) {
     f(result.value);
   }
@@ -175,7 +175,7 @@ export function tap<E, T>(result: Result<E, T>, f: (value: T) => void): Result<E
 /**
  * すべての結果が成功なら値の配列を返し、一つでも失敗なら最初の失敗を返す
  */
-export function all<E, T>(results: Array<Result<E, T>>): Result<E, T[]> {
+export function all<E, T>(results: Array<Result<T, E>>): Result<T[], E> {
   const values: T[] = [];
 
   for (const result of results) {
