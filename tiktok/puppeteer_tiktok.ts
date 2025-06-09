@@ -39,8 +39,16 @@ const PASSWORD = process.env.TIKTOK_PASSWORD!.toString();
 
 type Movie = {
   url: string;
+  type: 'video' | 'photo';
 };
 type MovieList = Movie[];
+
+/**
+ * URLからコンテンツタイプ（video/photo）を判別する
+ */
+const determineContentType = (url: string): 'video' | 'photo' => {
+  return url.includes('/video/') ? 'video' : 'photo';
+};
 
 /**
  * lazy loading workaround
@@ -109,7 +117,7 @@ class TikToker {
     return this;
   }
 
-  async explore() {
+  async explore(): Promise<MovieList> {
     const page = await this.#browser.newPage();
 
     await page.setBypassCSP(true);
@@ -132,7 +140,8 @@ class TikToker {
       const hrefText: string = await getNodeProperty(href, "href");
       console.log(hrefText);
       this.#articleList.push({
-        url: hrefText
+        url: hrefText,
+        type: determineContentType(hrefText)
       });
     }
 
