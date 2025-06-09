@@ -9,7 +9,7 @@ import { CHROME_ARGS } from "../.libs/constants";
 import { getNodeProperty, waitForXPath, $x } from "../.libs/pptr-utils";
 import { exportFile, sleep } from "../.libs/utils";
 
-import type { Browser } from "puppeteer";
+import type { Browser, Page } from "puppeteer";
 
 const stealthPlugin = StealthPlugin();
 /* ref:
@@ -29,9 +29,8 @@ const XPATH = {
   loginUsernameInput: '//*[@id="loginContainer"]/div[1]/form/div[1]/input',
   loginPasswordInput: '//*[@id="loginContainer"]/div[1]/form/div[2]/div/input',
   loginButtonEnabled: '//*[@id="loginContainer"]/div[1]/form/button',
-  infoBox: '//button[contains(text(), "閉じる")]',
-  ToSavedMovies: '//*[@id="main-content-others_homepage"]/div/div[2]/div/p[2]/span',
-  savedMoviesHref: '//*[@id="main-content-others_homepage"]/div/div[2]/div[2]/div/div[*]/div[1]/div/div/a'
+  ToSavedMovies: '//span[contains(text(), "セーブ済み")]',
+  savedMoviesHref: '//div[contains(@data-e2e,"favorites-item")]/div/div/a'
 };
 
 config({ path: path.join(__dirname, "../.env") });
@@ -42,6 +41,30 @@ type Movie = {
   url: string;
 };
 type MovieList = Movie[];
+
+/**
+ * lazy loading workaround
+ * https://www.mrskiro.dev/posts/playwright-for-lazy-loading
+ */
+const scrollToBottom = async (page: Page): Promise<void> => {
+  await page.evaluate(async () => {
+    // ugly hack to avoid esbuild bug...
+    // ref: https://github.com/evanw/esbuild/issues/2605
+    (window as any).__name = (func: Function) => func;
+
+    const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
+    // scroll to bottom
+    for (let i = 0; i < document.body.scrollHeight; i += 100) {
+      window.scrollTo(0, i);
+      await delay(50);
+    }
+    // scroll to top
+    for (let i = document.body.scrollHeight; i > 0; i -= 100) {
+      window.scrollTo(0, i);
+      await delay(50);
+    }
+  });
+};
 
 class TikToker {
   #browser: Browser;
@@ -70,13 +93,13 @@ class TikToker {
     await passwordInputEH[0].type(PASSWORD);
 
     await sleep(1000);
-
     const loginButtonEH = await $x(page, XPATH.loginButtonEnabled);
+    console.log(`${JOB_NAME}: Logging in...`);
 
     await Promise.all([
       page.waitForResponse((response) => {
         return (
-          response.url().includes(`https://webcast.tiktok.com/webcast/wallet_api/diamond_buy/permission_v2/`) ===
+          response.url().includes(`https://webcast.tiktok.com/webcast/wallet_api/fs/diamond_buy/permission_v2`) ===
             true && response.status() === 200
         );
       }),
@@ -92,22 +115,19 @@ class TikToker {
     await page.setBypassCSP(true);
     await page.setExtraHTTPHeaders({ "accept-language": "ja-JP" });
 
-    await Promise.all([waitForXPath(page, XPATH.infoBox), page.goto(`${baseURI}/@${USERNAME}`)]);
+    console.log(`${JOB_NAME}: Exploring...`);
 
-    const infoBoxEH = await $x(page, XPATH.infoBox);
-    if (infoBoxEH.length > 0) {
-      await infoBoxEH[0].click();
-    }
-
-    await sleep(1000);
+    await Promise.all([waitForXPath(page, XPATH.ToSavedMovies), page.goto(`${baseURI}/@${USERNAME}`)]);
 
     const toSavedMoviesEH = await $x(page, XPATH.ToSavedMovies);
-    await Promise.all([waitForXPath(page, XPATH.savedMoviesHref), toSavedMoviesEH[0].click()]);
-
+    if (toSavedMoviesEH.length > 0) {
+      await Promise.all([waitForXPath(page, XPATH.savedMoviesHref), toSavedMoviesEH[0].click()]);
+    }
     await sleep(1000);
 
+    // リンク取得
+    await scrollToBottom(page);
     const savedMoviesHrefEH = await $x(page, XPATH.savedMoviesHref);
-
     for (const href of savedMoviesHrefEH) {
       const hrefText: string = await getNodeProperty(href, "href");
       console.log(hrefText);
@@ -157,5 +177,6 @@ class TikToker {
     await browser.close();
   } catch (e) {
     console.log(e);
+    process.exit(1);
   }
 })();

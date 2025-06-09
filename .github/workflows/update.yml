@@ -130,6 +130,11 @@ jobs:
       #   working-directory: ./nicoseiga
       #   run: npx tsx ./puppeteer_nicoseiga.ts && bash ./get_url_list.sh
 
+      - name: Tiktok Favorites
+        shell: bash
+        working-directory: ./tiktok
+        run: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' npx tsx ./puppeteer_tiktok.ts && bash ./get_url_list.sh
+
       - name: Togetter Favorites
         shell: bash
         working-directory: ./togetter
