@@ -39,15 +39,15 @@ const PASSWORD = process.env.TIKTOK_PASSWORD!.toString();
 
 type Movie = {
   url: string;
-  type: 'video' | 'photo';
+  type: "video" | "photo";
 };
 type MovieList = Movie[];
 
 /**
  * URLからコンテンツタイプ（video/photo）を判別する
  */
-const determineContentType = (url: string): 'video' | 'photo' => {
-  return url.includes('/video/') ? 'video' : 'photo';
+const determineContentType = (url: string): "video" | "photo" => {
+  return url.includes("/video/") ? "video" : "photo";
 };
 
 /**
@@ -55,6 +55,7 @@ const determineContentType = (url: string): 'video' | 'photo' => {
  * https://www.mrskiro.dev/posts/playwright-for-lazy-loading
  */
 const scrollToBottom = async (page: Page): Promise<void> => {
+  console.log(`${JOB_NAME}: Scrolling to bottom...`);
   await page.evaluate(async () => {
     // ugly hack to avoid esbuild bug...
     // ref: https://github.com/evanw/esbuild/issues/2605
@@ -64,13 +65,15 @@ const scrollToBottom = async (page: Page): Promise<void> => {
     // scroll to bottom
     for (let i = 0; i < document.body.scrollHeight; i += 100) {
       window.scrollTo(0, i);
-      await delay(50);
+      await delay(500);
     }
+    await delay(3000);
     // scroll to top
     for (let i = document.body.scrollHeight; i > 0; i -= 100) {
       window.scrollTo(0, i);
-      await delay(50);
+      await delay(500);
     }
+    await delay(3000);
   });
 };
 
@@ -127,6 +130,7 @@ class TikToker {
 
     await Promise.all([waitForXPath(page, XPATH.ToSavedMovies), page.goto(`${baseURI}/@${USERNAME}`)]);
 
+    // お気に入り一覧へ遷移
     const toSavedMoviesEH = await $x(page, XPATH.ToSavedMovies);
     if (toSavedMoviesEH.length > 0) {
       await Promise.all([waitForXPath(page, XPATH.savedMoviesHref), toSavedMoviesEH[0].click()]);
@@ -135,8 +139,8 @@ class TikToker {
 
     // リンク取得
     await scrollToBottom(page);
-    const savedMoviesHrefEH = await $x(page, XPATH.savedMoviesHref);
-    for (const href of savedMoviesHrefEH) {
+    const savedMoviesHrefEH = $x(page, XPATH.savedMoviesHref);
+    for (const href of await savedMoviesHrefEH) {
       const hrefText: string = await getNodeProperty(href, "href");
       console.log(hrefText);
       this.#articleList.push({
