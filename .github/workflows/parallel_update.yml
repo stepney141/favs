@@ -132,10 +132,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4 # 生成ファイルを取得
-        with:
-          path: ${{ github.workspace }}
-          merge-multiple: true
+      - name: Restore artifacts into original dirs
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }} # gh run download に必要
+        # 1) 実行中のワークフローに紐づく artifact 名を JSON で取得
+        # 2) 末尾 "-outputs" を取り除くと元ディレクトリ名
+        run: |
+          set -e
+          for art in $(gh run view ${{ github.run_id }} --json artifacts --jq '.artifacts[].name'); do
+            dir="${art%-outputs}"
+            echo "▶︎ Downloading $art → $dir/"
+            mkdir -p "$dir"
+            gh run download ${{ github.run_id }} -n "$art" -D "$dir"
+          done
       - name: Set the current datetime
         env:
           TZ: "Asia/Tokyo"
