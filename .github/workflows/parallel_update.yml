@@ -122,7 +122,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.task }}-outputs
-          path: ${{ matrix.dir }}/**/*
+          path: ${{ matrix.dir }}
+          if-no-files-found: ignore
 
   # 成果物をまとめてコミット
   commit:
@@ -133,7 +134,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4 # 生成ファイルを取得
         with:
-          path: .
+          path: ${{ github.workspace }}
           merge-multiple: true
       - name: Set the current datetime
         env:
