@@ -1,0 +1,148 @@
+name: Favorites Updater (Parallel)
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 15 * * SAT"
+  #   - cron: "0 3 * * WED" # JST: 土 0:00 / 水 12:00
+
+env:
+  LANG: "ja_JP.UTF-8"
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # どれか失敗しても他ジョブ続行
+      matrix:
+        include:
+          - task: bookmeter_wish
+            dir: ./bookmeter
+            cmd: npx tsx ./index.ts wish && bash ./is_in_my_lib.sh
+          - task: github_stars
+            dir: ./github_stars
+            cmd: npx tsx ./index.ts
+          - task: qiita_lgtm
+            dir: ./qiita_lgtm
+            cmd: npx tsx ./puppeteer_qiita.ts
+          - task: boundhub_favs
+            dir: ./boundhub
+            cmd: npx tsx ./puppeteer_boundhub.ts && bash ./get_url_list.sh
+          - task: note_favs
+            dir: ./note_favs
+            cmd: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' npx tsx ./puppeteer_note.ts
+          - task: wikipedia_watchlist
+            dir: ./wikipedia_watchlist
+            cmd: npx tsx ./index.ts
+          - task: tiktok_favs
+            dir: ./tiktok
+            cmd: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' npx tsx ./puppeteer_tiktok.ts && bash ./get_url_list.sh
+          - task: togetter_favs
+            dir: ./togetter
+            cmd: npx tsx ./puppeteer_togetter.ts
+          - task: bookmeter_stacked
+            dir: ./bookmeter
+            cmd: npx tsx ./index.ts stacked
+
+    env:
+      CHROME_DEVEL_SANDBOX: "/opt/google/chrome/chrome-sandbox"
+      BOOKMETER_ACCOUNT: ${{ secrets.BOOKMETER_ACCOUNT }}
+      BOOKMETER_PASSWORD: ${{ secrets.BOOKMETER_PASSWORD }}
+      CINII_API_APPID: ${{ secrets.CINII_API_APPID }}
+      BOUNDHUB_ACCOUNT: ${{ secrets.BOUNDHUB_ACCOUNT }}
+      BOUNDHUB_PASSWORD: ${{ secrets.BOUNDHUB_PASSWORD }}
+      NOTE_ACCOUNT: ${{ secrets.NOTE_ACCOUNT }}
+      NOTE_PASSWORD: ${{ secrets.NOTE_PASSWORD }}
+      TERATAIL_API_TOKEN: ${{ secrets.TERATAIL_API_TOKEN }}
+      ZENN_GOOGLE_ACCOUNT: ${{ secrets.ZENN_GOOGLE_ACCOUNT }}
+      ZENN_GOOGLE_PASSWORD: ${{ secrets.ZENN_GOOGLE_PASSWORD }}
+      TWITTER_ACCOUNT: ${{ secrets.TWITTER_ACCOUNT }}
+      TWITTER_PASSWORD: ${{ secrets.TWITTER_PASSWORD }}
+      WIKIPEDIA_USERNAME: ${{ secrets.WIKIPEDIA_USERNAME }}
+      WIKIPEDIA_PASSWORD: ${{ secrets.WIKIPEDIA_PASSWORD }}
+      OAUTH_TOKEN_OF_GITHUB: ${{ secrets.OAUTH_TOKEN_OF_GITHUB }}
+      NICONICO_ACCOUNT: ${{ secrets.NICONICO_ACCOUNT }}
+      NICONICO_PASSWORD: ${{ secrets.NICONICO_PASSWORD }}
+      FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+      FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+      FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+      FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+      FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+      FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+      GOOGLE_BOOKS_API_KEY: ${{ secrets.GOOGLE_BOOKS_API_KEY }}
+      ISBNDB_API_KEY: ${{ secrets.ISBNDB_API_KEY }}
+      TIKTOK_USERNAME: ${{ secrets.TIKTOK_USERNAME }}
+      TIKTOK_PASSWORD: ${{ secrets.TIKTOK_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4 # 1
+      - name: Use Node.js 22.x # 2
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm" # npm キャッシュ
+      - name: Install dependencies # 3
+        run: npm ci
+      - name: Install Japanese fonts & xvfb & q # 4
+        run: sudo apt-get update && sudo apt-get install -y fonts-noto xvfb python3-q-text-as-data
+      - name: Create dotenv file # 5
+        shell: bash
+        run: |
+          cat > .env <<'EOF'
+          BOOKMETER_ACCOUNT=${{ secrets.BOOKMETER_ACCOUNT }}
+          BOOKMETER_PASSWORD=${{ secrets.BOOKMETER_PASSWORD }}
+          CINII_API_APPID=${{ secrets.CINII_API_APPID }}
+          BOUNDHUB_ACCOUNT=${{ secrets.BOUNDHUB_ACCOUNT }}
+          BOUNDHUB_PASSWORD=${{ secrets.BOUNDHUB_PASSWORD }}
+          NOTE_ACCOUNT=${{ secrets.NOTE_ACCOUNT }}
+          NOTE_PASSWORD=${{ secrets.NOTE_PASSWORD }}
+          TERATAIL_API_TOKEN=${{ secrets.TERATAIL_API_TOKEN }}
+          ZENN_GOOGLE_ACCOUNT=${{ secrets.ZENN_GOOGLE_ACCOUNT }}
+          ZENN_GOOGLE_PASSWORD=${{ secrets.ZENN_GOOGLE_PASSWORD }}
+          TWITTER_ACCOUNT=${{ secrets.TWITTER_ACCOUNT }}
+          TWITTER_PASSWORD=${{ secrets.TWITTER_PASSWORD }}
+          WIKIPEDIA_USERNAME=${{ secrets.WIKIPEDIA_USERNAME }}
+          WIKIPEDIA_PASSWORD=${{ secrets.WIKIPEDIA_PASSWORD }}
+          OAUTH_TOKEN_OF_GITHUB=${{ secrets.OAUTH_TOKEN_OF_GITHUB }}
+          NICONICO_ACCOUNT=${{ secrets.NICONICO_ACCOUNT }}
+          NICONICO_PASSWORD=${{ secrets.NICONICO_PASSWORD }}
+          ISBNDB_API_KEY=${{ secrets.ISBNDB_API_KEY }}
+          TIKTOK_USERNAME=${{ secrets.TIKTOK_USERNAME }}
+          TIKTOK_PASSWORD=${{ secrets.TIKTOK_PASSWORD }}
+          EOF
+      - name: Environment variables # 6
+        shell: bash
+        run: echo $CHROME_DEVEL_SANDBOX >> ~/.bashrc
+      - name: Run ${{ matrix.task }} # 7
+        shell: bash
+        working-directory: ${{ matrix.dir }}
+        run: ${{ matrix.cmd }}
+      - name: Upload artifacts for ${{ matrix.task }} # 8
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.task }}-outputs
+          path: ${{ matrix.dir }}/*
+
+  # 成果物をまとめてコミット
+  commit:
+    needs: scrape
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4 # 生成ファイルを取得
+        with:
+          path: ./_artifacts
+      - name: Copy artifacts into repo
+        run: |
+          shopt -s globstar nullglob
+          cp -r _artifacts/** . || true
+      - name: Set the current datetime
+        env:
+          TZ: "Asia/Tokyo"
+        run: echo "CURRENT_DATETIME=$(date --iso-8601=minutes)" >> $GITHUB_ENV
+      - name: Git Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v4 # 変更があるときだけ commit
+        with:
+          commit_message: "auto-updated: ${{ env.CURRENT_DATETIME }}"
