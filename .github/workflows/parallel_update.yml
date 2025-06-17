@@ -122,7 +122,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.task }}-outputs
-          path: ${{ matrix.dir }}/*
+          path: ${{ matrix.dir }}/**/*
 
   # 成果物をまとめてコミット
   commit:
@@ -135,10 +135,6 @@ jobs:
         with:
           path: .
           merge-multiple: true
-      - name: Copy artifacts into repo
-        run: |
-          shopt -s globstar nullglob
-          cp -r _artifacts/** . || true
       - name: Set the current datetime
         env:
           TZ: "Asia/Tokyo"
