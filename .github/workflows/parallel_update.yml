@@ -16,33 +16,33 @@ jobs:
       fail-fast: false # どれか失敗しても他ジョブ続行
       matrix:
         include:
-          - task: bookmeter_wish
-            dir: ./bookmeter
-            cmd: npx tsx ./index.ts wish && bash ./is_in_my_lib.sh
           - task: github_stars
             dir: ./github_stars
             cmd: npx tsx ./index.ts
-          - task: qiita_lgtm
-            dir: ./qiita_lgtm
-            cmd: npx tsx ./puppeteer_qiita.ts
-          - task: boundhub_favs
-            dir: ./boundhub
-            cmd: npx tsx ./puppeteer_boundhub.ts && bash ./get_url_list.sh
-          - task: note_favs
-            dir: ./note_favs
-            cmd: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' npx tsx ./puppeteer_note.ts
           - task: wikipedia_watchlist
             dir: ./wikipedia_watchlist
             cmd: npx tsx ./index.ts
-          - task: tiktok_favs
-            dir: ./tiktok
-            cmd: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' npx tsx ./puppeteer_tiktok.ts && bash ./get_url_list.sh
-          - task: togetter_favs
-            dir: ./togetter
-            cmd: npx tsx ./puppeteer_togetter.ts
-          - task: bookmeter_stacked
-            dir: ./bookmeter
-            cmd: npx tsx ./index.ts stacked
+          # - task: bookmeter_wish
+          #   dir: ./bookmeter
+          #   cmd: npx tsx ./index.ts wish && bash ./is_in_my_lib.sh
+          # - task: qiita_lgtm
+          #   dir: ./qiita_lgtm
+          #   cmd: npx tsx ./puppeteer_qiita.ts
+          # - task: boundhub_favs
+          #   dir: ./boundhub
+          #   cmd: npx tsx ./puppeteer_boundhub.ts && bash ./get_url_list.sh
+          # - task: note_favs
+          #   dir: ./note_favs
+          #   cmd: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' npx tsx ./puppeteer_note.ts
+          # - task: tiktok_favs
+          #   dir: ./tiktok
+          #   cmd: xvfb-run --auto-servernum --server-args='-screen 0, 1600x900x24' npx tsx ./puppeteer_tiktok.ts && bash ./get_url_list.sh
+          # - task: togetter_favs
+          #   dir: ./togetter
+          #   cmd: npx tsx ./puppeteer_togetter.ts
+          # - task: bookmeter_stacked
+          #   dir: ./bookmeter
+          #   cmd: npx tsx ./index.ts stacked
 
     env:
       CHROME_DEVEL_SANDBOX: "/opt/google/chrome/chrome-sandbox"
@@ -133,7 +133,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4 # 生成ファイルを取得
         with:
-          path: ./_artifacts
+          path: .
+          merge-multiple: true
       - name: Copy artifacts into repo
         run: |
           shopt -s globstar nullglob

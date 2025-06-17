@@ -169,7 +169,7 @@ class TikToker {
         "--no-zygote"
         // '--single-process'
       ],
-      slowMo: 50,
+      slowMo: 100,
       headless: false //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
     });
 
