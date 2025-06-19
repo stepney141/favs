@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail          # エラー即終了 & 未定義変数検出  :contentReference[oaicite:5]{index=5}
+shopt -s lastpipe
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "$ROOT"
+
+TASK_FILE="tasks.json"
+FAILED_FILE=".failed_tasks"
+LOG_DIR="$ROOT/.logs"; mkdir -p "$LOG_DIR"
+
+# options --------------------------------------------------------------------
+ONLY_FAILED=0; PARALLEL=""
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --only-failed) ONLY_FAILED=1 ;;
+    --max-jobs) PARALLEL=$2; shift ;;
+  esac; shift
+done
+
+# ---------------------------------------------------------------------------
+# 1) 読み込むタスクリスト
+list_tasks() {
+  local filter='.tasks[]'
+  (( ONLY_FAILED )) && filter=".tasks[] | select(.name as $n | (input_filename==\"${FAILED_FILE}\" and (.tasks[]|.name==$n)))"
+  jq -cr "$filter | @base64" "$TASK_FILE"
+}
+
+# 2) ベース64デコード→実行
+run_job() {
+  local encoded=$1
+  local json ; json=$(echo "$encoded" | base64 -d)
+  local name dir cmd
+  name=$(jq -r '.name' <<<"$json")
+  dir=$( jq -r '.dir'  <<<"$json")
+  cmd=$( jq -r '.cmd'  <<<"$json")
+
+  echo "[`date +%F' '%T`] start  $name"
+  ( cd "$dir" && eval "$cmd" ) &> "$LOG_DIR/$name.log"
+  if [[ $? -ne 0 ]]; then
+     echo "$name" >> "$FAILED_FILE"
+     return 1
+  fi
+  echo "[`date +%F' '%T`] done   $name"
+}
+
+export -f run_job
+export LOG_DIR FAILED_FILE
+
+: > "$FAILED_FILE"               # 失敗記録を初期化
+
+MAX_PARALLEL=$(jq -r '.max_parallel // 4' "$TASK_FILE")
+[[ -n "$PARALLEL" ]] && MAX_PARALLEL=$PARALLEL
+
+# 3) 並列実行 (xargs -P)  :contentReference[oaicite:6]{index=6}
+list_tasks | xargs -I{} -P "$MAX_PARALLEL" bash -c 'run_job "$@"' _ {}
+
+EXIT=$?
+
+# ---------------------------------------------------------------------------
+# 4) Discord 通知 (失敗時のみ) :contentReference[oaicite:7]{index=7}
+if [[ -s "$FAILED_FILE" ]]; then
+  echo "Some tasks failed:"
+  cat "$FAILED_FILE"
+  if [[ -n "${DISCORD_WEBHOOK_URL:-}" ]]; then
+    fail_list=$(paste -sd "," "$FAILED_FILE")
+    curl -s -X POST -H "Content-Type: application/json" \
+      -d "{\"content\":\"Favorites Updater ‼️ Failed task(s): ${fail_list}\"}" \
+      "$DISCORD_WEBHOOK_URL" >/dev/null
+  fi
+  exit 1
+fi
+
+# --- 自動コミット ---
+CURRENT_DATETIME=$(TZ=Asia/Tokyo date --iso-8601=minutes)
+git add -A
+git commit -m "auto-updated: $CURRENT_DATETIME" || true
+
+echo "All tasks completed successfully."
+exit 0
+
