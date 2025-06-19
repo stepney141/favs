@@ -42,7 +42,8 @@ const getLoginToken = async (baseURI: TargetUrls): Promise<[string, string[]]> =
       format: "json"
     }),
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded",
+      "User-Agent": "Stepney141 Favs Bot"
     }
   })
     .then((res) => Ok(res))
@@ -76,6 +77,7 @@ const postClientLogin = async (
     }),
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
+      "User-Agent": "Stepney141 Favs Bot",
       Cookie: cookies
     }
   })
@@ -94,6 +96,7 @@ const postClientLogin = async (
 const login = async (baseURI: TargetUrls, login_token: string, cookies: string[]): Promise<[LoginStatus, string[]]> => {
   const [login_response_json, client_cookies] = await postClientLogin(baseURI, login_token, cookies);
   const login_status = login_response_json?.status;
+  console.log(login_response_json)
   console.log("status:", login_status);
 
   if (login_status === "PASS") {
