@@ -7,33 +7,51 @@ import { mapToArray, exportFile, zip } from "../.libs/utils";
 import type { Browser } from "puppeteer";
 
 const JOB_NAME = "Togetter Favorites";
-const CSV_FILENAME = "togetter_favorites.csv";
-
-const TARGET_USER_ID = "stepney141";
-const TARGET_URL = `https://togetter.com/id/${TARGET_USER_ID}/favorite`;
-
-const XPATH = {
-  allFavorites: '//*[@id="document"]/main/div/div[4]/ul/li[*]/div',
-  allUrls: '//span[@class="title"]/a[h3[@title]]',
-  allTitles: "//a/h3[@title]",
-  allDatesPublished: '//time[@itemprop="datePublished"]',
-  linkTolastPage: '//div[@class="pagenation"]/a[3]',
-  linkToNextPage: '//div[@class="pagenation"]/a[contains(text(), "次へ")]'
+const CSV_FILENAME = {
+  togetter: "togetter_favorites.csv",
+  posfie: "posfie_favorites.csv"
 };
 
+const TARGET_USER_ID = "stepney141";
+const TARGET_URL = {
+  togetter: `https://togetter.com/id/${TARGET_USER_ID}/favorite`,
+  posfie: `https://posfie.com/@${TARGET_USER_ID}/favorite`
+};
+
+const XPATH = {
+  togetter: {
+    allUrls: '//div[@class="topics_box"]/ul[@class="simple_list"]/li[*]//span[@class="title"]/a',
+    allTitles: '//div[@class="topics_box"]/ul[@class="simple_list"]/li[*]//span[@class="title"]//h3',
+    allDatesPublished: '//time[@itemprop="datePublished"]',
+    linkTolastPage: '//div[@class="pagenation"]/a[3]',
+    linkToNextPage: '//div[@class="pagenation"]/a[contains(text(), "次へ")]'
+  },
+  posfie: {
+    allUrls: '//div[@class="user_show_posts_box"]/section[*]/div/span/a',
+    allTitles: '//div[@class="user_show_posts_box"]/section[*]/div/span/a/h3',
+    allDatesPublished: '//time[@itemprop="datePublished"]',
+    linkTolastPage: '//div[@class="pagenation"]/a[3]',
+    linkToNextPage: '//div[@class="pagenation"]/a[contains(text(), "次へ")]'
+  }
+};
+
+type Target = "togetter" | "posfie";
 type Matome = { url: string; title: string; published_date: string };
-type MatomeList = Map<string, Matome>;
+type MatomeMap = Map<string, Matome>;
 
 class Togetter {
   #browser: Browser;
-  #matomes: MatomeList;
+  #matomeList: { togetter: MatomeMap; posfie: MatomeMap };
 
   constructor(browser: Browser) {
     this.#browser = browser;
-    this.#matomes = new Map();
+    this.#matomeList = {
+      togetter: new Map(),
+      posfie: new Map()
+    };
   }
 
-  async explore() {
+  async explore(type: Target): Promise<MatomeMap> {
     const page = await this.#browser.newPage();
 
     await page.setExtraHTTPHeaders({
@@ -51,36 +69,39 @@ class Togetter {
       })();
     });
 
-    await page.goto(TARGET_URL, {
+    const url = type === "togetter" ? TARGET_URL.togetter : TARGET_URL.posfie;
+    await page.goto(url, {
       waitUntil: ["domcontentloaded"]
     });
 
-    const linkTolastPage = await $x(page, XPATH.linkTolastPage);
+    console.log(`${JOB_NAME}: exploring ${url}`);
+
+    const linkTolastPage = await $x(page, XPATH[type].linkTolastPage);
     const pageLength = Number(await getNodeProperty(linkTolastPage[0], "innerText"));
 
     console.log(`${JOB_NAME}: ${pageLength} pages found`);
 
     for (let i = 1; i <= pageLength; i++) {
-      console.log(`${JOB_NAME}: Exploring page No${i}...`);
-      const allUrls = await $x(page, XPATH.allUrls);
-      const allTitles = await $x(page, XPATH.allTitles);
-      const allDatesPublished = await $x(page, XPATH.allDatesPublished);
+      console.log(`Exploring page No ${i}...`);
+      const allUrls = await $x(page, XPATH[type].allUrls);
+      const allTitles = await $x(page, XPATH[type].allTitles);
+      const allDatesPublished = await $x(page, XPATH[type].allDatesPublished);
 
       for (const [urlElem, titleElem, publishedDateElem] of zip(allUrls, allTitles, allDatesPublished)) {
         const url: string = await getNodeProperty(urlElem, "href");
-        const title: string = await getNodeProperty(titleElem, "title");
+        const title: string = await getNodeProperty(titleElem, "textContent");
         const published_date: string = await getNodeProperty(publishedDateElem, "dateTime");
-        this.#matomes.set(url, { url, title, published_date });
+        this.#matomeList[type].set(url, { url, title, published_date });
       }
 
       if (i < pageLength) {
-        const linkToNextPage = await $x(page, XPATH.linkToNextPage);
+        const linkToNextPage = await $x(page, XPATH[type].linkToNextPage);
         await Promise.all([page.waitForNavigation({ waitUntil: "domcontentloaded" }), linkToNextPage[0].click()]);
       }
     }
 
-    console.log(`${JOB_NAME}: Finished exploring ${TARGET_URL}`);
-    return this.#matomes;
+    console.log(`${JOB_NAME}: Finished exploring ${url}`);
+    return this.#matomeList[type];
   }
 }
 
@@ -93,20 +114,23 @@ class Togetter {
       headless: true,
       args: CHROME_ARGS,
       // devtools: true,
-      slowMo: 80
+      slowMo: 50
     });
 
     const togetter = new Togetter(browser);
-    const matomelist: MatomeList = await togetter.explore();
 
-    await exportFile({
-      fileName: CSV_FILENAME,
-      payload: mapToArray(matomelist),
-      targetType: "csv",
-      mode: "overwrite"
-    }).then(() => {
-      console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME}`);
-    });
+    for (const type of ["togetter", "posfie"] satisfies Target[]) {
+      const matomeList = await togetter.explore(type);
+
+      await exportFile({
+        fileName: CSV_FILENAME[type],
+        payload: mapToArray(matomeList),
+        targetType: "csv",
+        mode: "overwrite"
+      }).then(() => {
+        console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME[type]}`);
+      });
+    }
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 
