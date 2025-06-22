@@ -75,6 +75,7 @@ fi
 CURRENT_DATETIME=$(TZ=Asia/Tokyo date --iso-8601=minutes)
 git add -A
 git commit -m "auto-updated: $CURRENT_DATETIME" || true
+git push
 
 echo "All tasks completed successfully."
 exit 0
