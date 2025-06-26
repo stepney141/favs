@@ -9,7 +9,7 @@ TASK_FILE="tasks.json"
 FAILED_FILE=".failed_tasks"
 LOG_DIR="$ROOT/.logs"; mkdir -p "$LOG_DIR"
 
-# options --------------------------------------------------------------------
+# options
 ONLY_FAILED=0; PARALLEL=""
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -18,7 +18,7 @@ while [[ $# -gt 0 ]]; do
   esac; shift
 done
 
-# --- 自動コミット ---
+# --- 自動コミット ---
 commit_and_push() {
    exit_status=$?
 
@@ -32,7 +32,6 @@ commit_and_push() {
 }
 trap commit_and_push EXIT
 
-# ---------------------------------------------------------------------------
 # 1) 読み込むタスクリスト
 list_tasks() {
   local filter='.tasks[]'
@@ -71,16 +70,14 @@ list_tasks | xargs -I{} -P "$MAX_PARALLEL" bash -c 'run_job "$@"' _ {}
 
 EXIT=$?
 
-# ---------------------------------------------------------------------------
 # 4) Discord 通知 (失敗時のみ)
 if [[ -s "$FAILED_FILE" ]]; then
   echo "Some tasks failed:"
   cat "$FAILED_FILE"
   if [[ -n "${DISCORD_WEBHOOK_URL:-}" ]]; then
-    fail_list=$(paste -sd "," "$FAILED_FILE")
-    curl -s -X POST -H "Content-Type: application/json" \
-      -d "{\"content\":\"Favorites Updater ‼️ Failed task(s): ${fail_list}\"}" \
-      "$DISCORD_WEBHOOK_URL" >/dev/null
+    fail_list=$(paste -sd "," "$FAILED_FILE" | jq -Rsa .)
+    payload=$(jq -n --arg content "Favorites Updater ‼️ Failed task(s): ${fail_list:1:-1}" '{content: $content}')
+    curl -fSL -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"
   fi
   exit 1
 fi
