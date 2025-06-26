@@ -2,9 +2,9 @@
   "max_parallel": 4,
   "tasks": [
     {
-      "name": "wikipedia_watchlist",
-      "dir": "wikipedia_watchlist",
-      "cmd": "npx tsx ./index.ts"
+        "name": "boundhub",
+      "dir": "boundhub",
+      "cmd": "npx tsx ./puppeteer_boundhub.ts && ./get_url_list.sh"
     },
     {
       "name": "github_stars",

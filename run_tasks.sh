@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -Euo pipefail          # エラー即終了 & 未定義変数検出  :contentReference[oaicite:5]{index=5}
+set -Euo pipefail          # エラー即終了 & 未定義変数検出
 shopt -s lastpipe
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
@@ -17,6 +17,20 @@ while [[ $# -gt 0 ]]; do
     --max-jobs) PARALLEL=$2; shift ;;
   esac; shift
 done
+
+# --- 自動コミット ---
+commit_and_push() {
+   exit_status=$?
+
+   set +e
+   CURRENT_DATETIME=$(TZ=Asia/Tokyo date --iso-8601=minutes)
+   git add -A
+   git commit -m "auto-updated: $CURRENT_DATETIME" 2>/dev/null || true
+   git push || true
+
+   exit $exit_status
+}
+trap commit_and_push EXIT
 
 # ---------------------------------------------------------------------------
 # 1) 読み込むタスクリスト
@@ -52,13 +66,13 @@ export LOG_DIR FAILED_FILE
 MAX_PARALLEL=$(jq -r '.max_parallel // 4' "$TASK_FILE")
 [[ -n "$PARALLEL" ]] && MAX_PARALLEL=$PARALLEL
 
-# 3) 並列実行 (xargs -P)  :contentReference[oaicite:6]{index=6}
+# 3) 並列実行 (xargs -P)
 list_tasks | xargs -I{} -P "$MAX_PARALLEL" bash -c 'run_job "$@"' _ {}
 
 EXIT=$?
 
 # ---------------------------------------------------------------------------
-# 4) Discord 通知 (失敗時のみ) :contentReference[oaicite:7]{index=7}
+# 4) Discord 通知 (失敗時のみ)
 if [[ -s "$FAILED_FILE" ]]; then
   echo "Some tasks failed:"
   cat "$FAILED_FILE"
@@ -70,13 +84,4 @@ if [[ -s "$FAILED_FILE" ]]; then
   fi
   exit 1
 fi
-
-# --- 自動コミット ---
-CURRENT_DATETIME=$(TZ=Asia/Tokyo date --iso-8601=minutes)
-git add -A
-git commit -m "auto-updated: $CURRENT_DATETIME" || true
-git push
-
-echo "All tasks completed successfully."
-exit 0
 
