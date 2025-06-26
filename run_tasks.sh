@@ -19,8 +19,18 @@ while [[ $# -gt 0 ]]; do
 done
 
 # --- 自動コミット ---
-commit_and_push() {
+discord_and_commit_and_push() {
    exit_status=$?
+
+   # Discord 通知 (失敗時のみ)
+   if [[ -s "$FAILED_FILE" ]]; then
+     echo "Some tasks failed:"
+     cat "$FAILED_FILE"
+     if [[ -n "${DISCORD_WEBHOOK_URL:-}" ]]; then
+       fail_list=$(paste -sd "," "$FAILED_FILE")
+       jq -n --arg content "Favorites Updater ‼️ Failed task(s): $fail_list" '{content:$content}' | curl -fSL -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK_URL"
+     fi
+   fi
 
    set +e
    CURRENT_DATETIME=$(TZ=Asia/Tokyo date --iso-8601=minutes)
@@ -30,7 +40,7 @@ commit_and_push() {
 
    exit $exit_status
 }
-trap commit_and_push EXIT
+trap discord_and_commit_and_push EXIT
 
 # 1) 読み込むタスクリスト
 list_tasks() {
@@ -67,16 +77,5 @@ MAX_PARALLEL=$(jq -r '.max_parallel // 4' "$TASK_FILE")
 
 # 3) 並列実行 (xargs -P)
 list_tasks | xargs -I{} -P "$MAX_PARALLEL" bash -c 'run_job "$@"' _ {}
-
 EXIT=$?
-
-# 4) Discord 通知 (失敗時のみ)
-if [[ -s "$FAILED_FILE" ]]; then
-  echo "Some tasks failed:"
-  cat "$FAILED_FILE"
-  if [[ -n "${DISCORD_WEBHOOK_URL:-}" ]]; then
-    fail_list=$(paste -sd "," "$FAILED_FILE")
-    jq -n --arg content "Favorites Updater ‼️ Failed task(s): $fail_list" '{content:$content}' | curl -fSL -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK_URL"
-  fi
-fi
 
