@@ -79,6 +79,5 @@ if [[ -s "$FAILED_FILE" ]]; then
     payload=$(jq -n --arg content "Favorites Updater ‼️ Failed task(s): ${fail_list:1:-1}" '{content: $content}')
     curl -fSL -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"
   fi
-  exit 1
 fi
 
