@@ -218,7 +218,7 @@ Mathpix/mpx-cli,https://github.com/Mathpix/mpx-cli,"CLI for document conversion 
 ushitora-anqou/qash,https://github.com/ushitora-anqou/qash,"A programming language for double-entry accounting, inspired by Beancount.",17
 yuanqing/vdx,https://github.com/yuanqing/vdx,":film_strip: An intuitive CLI for processing video, powered by FFmpeg",1661
 google/typograms,https://github.com/google/typograms,,1305
-fa0311/twitter_openapi_python,https://github.com/fa0311/twitter_openapi_python,Implementation of Twitter internal API (Twitter graphql API) in Python with data validation by pydantic,74
+fa0311/twitter_openapi_python,https://github.com/fa0311/twitter_openapi_python,Implementation of Twitter internal API (Twitter graphql API) in Python with data validation by pydantic,75
 kha-white/manga-ocr,https://github.com/kha-white/manga-ocr,"Optical character recognition for Japanese text, with the main focus being Japanese manga",2167
 davidkeipert/tikfav,https://github.com/davidkeipert/tikfav,Download your Tiktok favorite videos using the user data download files from TikTok,35
 dinoosauro/tiktok-to-ytdlp,https://github.com/dinoosauro/tiktok-to-ytdlp,"Fetch all the liked videos, videos from an user, videos with a specific sound etc. from TikTok, and creates a script to download them with yt-dlp",281
@@ -304,7 +304,7 @@ itsfrank/MinecraftHDL,https://github.com/itsfrank/MinecraftHDL,A Verilog synthes
 janosh/awesome-normalizing-flows,https://github.com/janosh/awesome-normalizing-flows,Awesome resources on normalizing flows.,1538
 dustinkirkland/hollywood,https://github.com/dustinkirkland/hollywood,,2978
 insin/control-panel-for-twitter,https://github.com/insin/control-panel-for-twitter,Browser extension which gives you more control over your Twitter timeline and adds missing features and UI improvements - for desktop and mobile,2150
-cslarsen/jp2a,https://github.com/cslarsen/jp2a,Converts jpg images to ASCII,888
+cslarsen/jp2a,https://github.com/cslarsen/jp2a,Converts jpg images to ASCII,887
 maekawatoshiki/dotfiles,https://github.com/maekawatoshiki/dotfiles,my dotfiles,8
 maekawatoshiki/maekawatoshiki,https://github.com/maekawatoshiki/maekawatoshiki,,7
 google-research/tuning_playbook,https://github.com/google-research/tuning_playbook,A playbook for systematically maximizing the performance of deep learning models.,28851
@@ -442,7 +442,7 @@ hi-ogawa/Stockfish,https://github.com/hi-ogawa/Stockfish,stockfish-nnue.wasm,106
 lowlighter/metrics,https://github.com/lowlighter/metrics,"📊 An infographics generator with 30+ plugins and 300+ options to display stats about your GitHub account and render them as SVG, Markdown, PDF or JSON!",14967
 PenguinCabinet/mama-katu-DM-corpus,https://github.com/PenguinCabinet/mama-katu-DM-corpus,The corpus of Japanese spam messages of invitation Mama Katu.,42
 ikuwow/bookmeter_exporter,https://github.com/ikuwow/bookmeter_exporter,読書メーター bookmeter.com の自分の読んだ本をCSV形式でエクスポートするくん,5
-donnemartin/system-design-primer,https://github.com/donnemartin/system-design-primer,Learn how to design large-scale systems. Prep for the system design interview.  Includes Anki flashcards.,308326
+donnemartin/system-design-primer,https://github.com/donnemartin/system-design-primer,Learn how to design large-scale systems. Prep for the system design interview.  Includes Anki flashcards.,308330
 swillner/highlight-pointer,https://github.com/swillner/highlight-pointer,"Highlight mouse pointer/cursor using a dot - useful for presentations, screen sharing, ...",155
 rougier/scientific-visualization-book,https://github.com/rougier/scientific-visualization-book,An open access book on scientific visualization using python and matplotlib,10958
 mm0202/push-to-hatenablog,https://github.com/mm0202/push-to-hatenablog,GitHubとはてなブログの連携用環境。GitHubに記事の編集内容をプッシュするとはてなブログの記事も更新されます。,26
@@ -496,7 +496,7 @@ kay-is/awesome-tagged-templates,https://github.com/kay-is/awesome-tagged-templat
 arkedge/hubhook,https://github.com/arkedge/hubhook,"GitHub notification manager ",23
 mikaelbr/awesome-es2015-proxy,https://github.com/mikaelbr/awesome-es2015-proxy,"For learning how to use JavaScript Proxy, or just to see what is possible",612
 gbtami/pychess-variants,https://github.com/gbtami/pychess-variants,"Chess variants server ",263
-gurugio/lowlevelprogramming-university,https://github.com/gurugio/lowlevelprogramming-university,How to be low-level programmer,12068
+gurugio/lowlevelprogramming-university,https://github.com/gurugio/lowlevelprogramming-university,How to be low-level programmer,12069
 akamhy/waybackpy,https://github.com/akamhy/waybackpy,Wayback Machine API interface & a command-line tool,534
 sakura-cooking/takoyaki,https://github.com/sakura-cooking/takoyaki," さくらインターネット秘伝のたこ焼きレシピ",1202
 mgechev/javascript-algorithms,https://github.com/mgechev/javascript-algorithms,💻 JavaScript implementations of computer science algorithms,7852
@@ -550,7 +550,7 @@ Iku/Google-Forms-to-Discord,https://github.com/Iku/Google-Forms-to-Discord,A qui
 roogle-rs/roogle,https://github.com/roogle-rs/roogle,A Rust API search engine,412
 NaturalIntelligence/fast-xml-parser,https://github.com/NaturalIntelligence/fast-xml-parser,"Validate XML, Parse XML and Build XML rapidly without C/C++ based libraries and no callback.",2816
 apprenticeharper/DeDRM_tools,https://github.com/apprenticeharper/DeDRM_tools,DeDRM tools for ebooks,14851
-yt-dlp/yt-dlp,https://github.com/yt-dlp/yt-dlp,A feature-rich command-line audio/video downloader,116485
+yt-dlp/yt-dlp,https://github.com/yt-dlp/yt-dlp,A feature-rich command-line audio/video downloader,116486
 type-challenges/type-challenges,https://github.com/type-challenges/type-challenges,Collection of TypeScript type challenges with online judge,45780
 CyberShadow/aconfmgr,https://github.com/CyberShadow/aconfmgr,A configuration manager for Arch Linux,1362
 manga-download/hakuneko,https://github.com/manga-download/hakuneko,"Manga & Anime Downloader for Linux, Windows & MacOS",5296
@@ -604,7 +604,7 @@ Manawyrm/fxIP,https://github.com/Manawyrm/fxIP,"TCP/IP for Casio fx-9860 graphic
 joey00072/Baji-Marathi-Programing-Language,https://github.com/joey00072/Baji-Marathi-Programing-Language,"बाजी (baji) high-level,dynamically typed, interpreted first Marathi programing language.",67
 mithrandie/csvq,https://github.com/mithrandie/csvq,SQL-like query language for csv,1575
 serenity-rs/serenity,https://github.com/serenity-rs/serenity,A Rust library for the Discord API.,5145
-public-apis/public-apis,https://github.com/public-apis/public-apis,A collective list of free APIs,353276
+public-apis/public-apis,https://github.com/public-apis/public-apis,A collective list of free APIs,353281
 Tritama/portfolio,https://github.com/Tritama/portfolio,,4
 mebiusbox/docs,https://github.com/mebiusbox/docs,,232
 eggplants/dojinvoice_db,https://github.com/eggplants/dojinvoice_db,Make DB of Dojinvoice (DLsite),11
@@ -615,7 +615,7 @@ alexzorin/authy,https://github.com/alexzorin/authy,Go library and program to acc
 sorrycc/awesome-javascript,https://github.com/sorrycc/awesome-javascript,"🐢 A collection of awesome browser-side  JavaScript libraries, resources and shiny things.",34338
 gcanti/fp-ts,https://github.com/gcanti/fp-ts,Functional programming in TypeScript,11187
 EzoeRyou/posix-commands,https://github.com/EzoeRyou/posix-commands,POSIXコマンドについてのコラム,166
-getify/You-Dont-Know-JS,https://github.com/getify/You-Dont-Know-JS,A book series (2 published editions) on the JS language.,182454
+getify/You-Dont-Know-JS,https://github.com/getify/You-Dont-Know-JS,A book series (2 published editions) on the JS language.,182455
 mijumall/multipleRegression,https://github.com/mijumall/multipleRegression,Simple Multiple Regression model with t-test functionality,1
 apsdehal/qunit-migrate,https://github.com/apsdehal/qunit-migrate,Migrate old QUnit tests to 2.x. Uses regex and ASTs to convert old QUnit code.,17
 aemkei/jsfuck,https://github.com/aemkei/jsfuck,Write any JavaScript with 6 Characters: []()!+,8403
@@ -638,7 +638,7 @@ jhlywa/chess.js,https://github.com/jhlywa/chess.js,"A TypeScript chess library f
 pleco-rs/Pleco,https://github.com/pleco-rs/Pleco,A Rust-based re-write of the Stockfish Chess Engine,407
 imfly/js2uml,https://github.com/imfly/js2uml,Convert JS to UML class diagrams,123
 xharaken/john-law-coin,https://github.com/xharaken/john-law-coin,JohnLawCoin,81
-sverweij/dependency-cruiser,https://github.com/sverweij/dependency-cruiser,"Validate and visualize dependencies. Your rules. JavaScript, TypeScript, CoffeeScript. ES6, CommonJS, AMD.",5852
+sverweij/dependency-cruiser,https://github.com/sverweij/dependency-cruiser,"Validate and visualize dependencies. Your rules. JavaScript, TypeScript, CoffeeScript. ES6, CommonJS, AMD.",5853
 Himenon/code-dependency,https://github.com/Himenon/code-dependency," A work efficiency tool for visualizing code dependencies on a browser.",88
 krymtkts/qunit-trial,https://github.com/krymtkts/qunit-trial,sandbox to enhance legacy QUnit test.,1
 pipeseroni/pipes.sh,https://github.com/pipeseroni/pipes.sh,Animated pipes terminal screensaver,2706
@@ -682,7 +682,7 @@ conwnet/github1s,https://github.com/conwnet/github1s,One second to read GitHub c
 trueToastedCode/NdlessSDK-automated-installer,https://github.com/trueToastedCode/NdlessSDK-automated-installer,An automated NdlessSDK installer for linux.,6
 lights0123/ndless-rs,https://github.com/lights0123/ndless-rs,Rust library for interacting with Ndless for the TI-Nspire,34
 adobe-fonts/source-han-sans,https://github.com/adobe-fonts/source-han-sans,Source Han Sans | 思源黑体 | 思源黑體 | 思源黑體 香港 | 源ノ角ゴシック | 본고딕,15318
-codecrafters-io/build-your-own-x,https://github.com/codecrafters-io/build-your-own-x,Master programming by recreating your favorite technologies from scratch.,390725
+codecrafters-io/build-your-own-x,https://github.com/codecrafters-io/build-your-own-x,Master programming by recreating your favorite technologies from scratch.,390728
 PyYoshi/TweetNowBrowsing,https://github.com/PyYoshi/TweetNowBrowsing,Chrome Extension,12
 eggplants/wbsv-cli,https://github.com/eggplants/wbsv-cli,CLI for archiving pages and its all links to Wayback Machine,14
 alphasp/pixiv-api-client,https://github.com/alphasp/pixiv-api-client,Promise based Pixiv API client for node.js and react native,151
@@ -741,7 +741,7 @@ LipersInSlums/LipersInSlums.github.io,https://github.com/LipersInSlums/LipersInS
 p-ranav/awesome-hpp,https://github.com/p-ranav/awesome-hpp,A curated list of awesome header-only C++ libraries,3836
 azu/awesome-commit-english,https://github.com/azu/awesome-commit-english,コミット英語についての記事まとめ,852
 sindresorhus/github-markdown-css,https://github.com/sindresorhus/github-markdown-css,The minimal amount of CSS to replicate the GitHub Markdown style,8388
-AlDanial/cloc,https://github.com/AlDanial/cloc,"cloc counts blank lines, comment lines, and physical lines of source code in many programming languages.",21135
+AlDanial/cloc,https://github.com/AlDanial/cloc,"cloc counts blank lines, comment lines, and physical lines of source code in many programming languages.",21136
 emilk/hobogo,https://github.com/emilk/hobogo,Rust + WASM experiment,34
 emilk/egui,https://github.com/emilk/egui,egui: an easy-to-use immediate mode GUI in Rust that runs on both web and native,25260
 niklasf/python-chess,https://github.com/niklasf/python-chess,"A chess library for Python, with move generation and validation, PGN parsing and writing, Polyglot opening book reading, Gaviota tablebase probing, Syzygy tablebase probing, and UCI/XBoard engine communication",2600
@@ -750,7 +750,7 @@ edsu/itstimeihadsometimealone,https://github.com/edsu/itstimeihadsometimealone,S
 moebooru/moebooru,https://github.com/moebooru/moebooru,"Moebooru, a fork of danbooru1 that has been heavily modified",557
 sozysozbot/cerke,https://github.com/sozysozbot/cerke,パイグ将棋/机戦/cerke/cetkaik/cet2 kaik,5
 cetkaik/cerke_modeling,https://github.com/cetkaik/cerke_modeling,,1
-sindresorhus/awesome,https://github.com/sindresorhus/awesome,😎 Awesome lists about all kinds of interesting topics,373705
+sindresorhus/awesome,https://github.com/sindresorhus/awesome,😎 Awesome lists about all kinds of interesting topics,373710
 Bogdan-Lyashenko/codecrumbs,https://github.com/Bogdan-Lyashenko/codecrumbs,"Learn, design or document codebase by putting breadcrumbs in source code. Live updates, multi-language support and more.",2718
 Gedevan-Aleksizde/20190703_ML_ECON,https://github.com/Gedevan-Aleksizde/20190703_ML_ECON,"Tokyo.R #80 計量経済学と機械学習の関係 –AI はさだめ, さだめは反事実 ",8
 QwerbyKing/VC-US,https://github.com/QwerbyKing/VC-US,Visual Chess: Undercarriage Syndicate is a chess framework designed with compatibility with Betza Notation,1
@@ -774,7 +774,7 @@ ymgaq/AQ,https://github.com/ymgaq/AQ,A Go game engine. Download here: http://git
 ymgaq/Pyaq,https://github.com/ymgaq/Pyaq,PyaqはPythonのみで実装された囲碁プログラムです。深層学習を学ぶための教育目的のコードです。,121
 boardgameio/boardgame.io,https://github.com/boardgameio/boardgame.io,State Management and Multiplayer Networking for Turn-Based Games,11962
 ddugovic/Stockfish,https://github.com/ddugovic/Stockfish,Retired multi-variant fork of popular UCI chess engine; please use Fairy-Stockfish instead,133
-fairy-stockfish/Fairy-Stockfish,https://github.com/fairy-stockfish/Fairy-Stockfish,"chess variant engine supporting Xiangqi, Shogi, Janggi, Makruk, S-Chess, Crazyhouse, Bughouse, and many more",696
+fairy-stockfish/Fairy-Stockfish,https://github.com/fairy-stockfish/Fairy-Stockfish,"chess variant engine supporting Xiangqi, Shogi, Janggi, Makruk, S-Chess, Crazyhouse, Bughouse, and many more",697
 j6k1/USIAgent,https://github.com/j6k1/USIAgent,USIプロトコルに対応した将棋AIを開発するためのフレームワーク,7
 tsoftwareinc/libshogi,https://github.com/tsoftwareinc/libshogi,,13
 Omega-Numworks/Omega,https://github.com/Omega-Numworks/Omega,"Omega 2.0, the next evolution of Epsilon! Now available for your Numworks calculator!",337
@@ -906,7 +906,7 @@ heilingbrunner/vscode-hp42s-free42,https://github.com/heilingbrunner/vscode-hp42
 torobomath/benchmark,https://github.com/torobomath/benchmark,,7
 rockdaboot/wget2,https://github.com/rockdaboot/wget2,The successor of GNU Wget. Contributions preferred at https://gitlab.com/gnuwget/wget2. But accepted here as well 😍,624
 taba256/nicoseiga-download,https://github.com/taba256/nicoseiga-download,ニコニコ静画(マンガ)の作品を、zipファイルに圧縮してダウンロードできます。,12
-internetarchive/heritrix3,https://github.com/internetarchive/heritrix3,"Heritrix is the Internet Archive's open-source, extensible, web-scale, archival-quality web crawler project.  ",2993
+internetarchive/heritrix3,https://github.com/internetarchive/heritrix3,"Heritrix is the Internet Archive's open-source, extensible, web-scale, archival-quality web crawler project.  ",2994
 iipc/awesome-web-archiving,https://github.com/iipc/awesome-web-archiving,An Awesome List for getting started with web archiving,2292
 EbookFoundation/free-programming-books,https://github.com/EbookFoundation/free-programming-books,:books: Freely available programming books,360901
 netdata/netdata,https://github.com/netdata/netdata,"The fastest path to AI-powered full stack observability, even for lean teams.",74887

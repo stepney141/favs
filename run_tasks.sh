@@ -10,6 +10,8 @@ TASK_FILE="tasks.json"
 FAILED_FILE=".failed_tasks"
 LOG_DIR="$ROOT/.logs"; mkdir -p "$LOG_DIR"
 
+DISCORD_MENTION_STRING="<@!${DISCORD_USER_ID_TO_MENTION}>"
+
 # options
 ONLY_FAILED=0; PARALLEL=""
 while [[ $# -gt 0 ]]; do
@@ -29,7 +31,7 @@ discord_and_commit_and_push() {
      cat "$FAILED_FILE"
      if [[ -n "${DISCORD_WEBHOOK_URL:-}" ]]; then
        fail_list=$(paste -sd "," "$FAILED_FILE")
-       jq -n --arg content "@stepney141 Favorites Updater ‼️ Failed task(s): $fail_list" '{content:$content}' | curl -fSL -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK_URL"
+       jq -n --arg content "${DISCORD_MENTION_STRING} Favorites Updater ‼️ Failed task(s): $fail_list" '{content:$content}' | curl -fSL -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK_URL"
      fi
    fi
 
