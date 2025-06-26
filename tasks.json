@@ -2,7 +2,7 @@
   "max_parallel": 4,
   "tasks": [
     {
-        "name": "boundhub",
+      "name": "boundhub",
       "dir": "boundhub",
       "cmd": "npx tsx ./puppeteer_boundhub.ts && ./get_url_list.sh"
     },

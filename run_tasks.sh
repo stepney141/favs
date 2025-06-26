@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -Euo pipefail          # エラー即終了 & 未定義変数検出
 shopt -s lastpipe
+source .env
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT"
