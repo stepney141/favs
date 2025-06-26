@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -Eeuo pipefail          # エラー即終了 & 未定義変数検出  :contentReference[oaicite:5]{index=5}
+set -Euo pipefail          # エラー即終了 & 未定義変数検出  :contentReference[oaicite:5]{index=5}
 shopt -s lastpipe
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
