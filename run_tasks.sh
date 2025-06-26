@@ -75,9 +75,9 @@ if [[ -s "$FAILED_FILE" ]]; then
   echo "Some tasks failed:"
   cat "$FAILED_FILE"
   if [[ -n "${DISCORD_WEBHOOK_URL:-}" ]]; then
-    fail_list=$(paste -sd "," "$FAILED_FILE" | jq -Rsa .)
-    payload=$(jq -n --arg content "Favorites Updater ‼️ Failed task(s): ${fail_list:1:-1}" '{content: $content}')
-    curl -fSL -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"
+    fail_raw=$(sed 's/$/\\n/' "$FAILED_FILE" | tr -d '\n')
+    payload=$(jq -n --arg content "Favorites Updater ‼️ Failed task(s):" --arg fails "$fail_raw" '{content: ($content + "\n```" + $fails + "```")}')
+    curl -sSf -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"
   fi
 fi
 
