@@ -29,7 +29,7 @@ discord_and_commit_and_push() {
      cat "$FAILED_FILE"
      if [[ -n "${DISCORD_WEBHOOK_URL:-}" ]]; then
        fail_list=$(paste -sd "," "$FAILED_FILE")
-       jq -n --arg content "Favorites Updater ‼️ Failed task(s): $fail_list" '{content:$content}' | curl -fSL -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK_URL"
+       jq -n --arg content "@stepney141 Favorites Updater ‼️ Failed task(s): $fail_list" '{content:$content}' | curl -fSL -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK_URL"
      fi
    fi
 
