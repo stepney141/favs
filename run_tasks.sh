@@ -75,9 +75,10 @@ if [[ -s "$FAILED_FILE" ]]; then
   echo "Some tasks failed:"
   cat "$FAILED_FILE"
   if [[ -n "${DISCORD_WEBHOOK_URL:-}" ]]; then
-    fail_raw=$(sed 's/$/\\n/' "$FAILED_FILE" | tr -d '\n')
-    payload=$(jq -n --arg content "Favorites Updater ‼️ Failed task(s):" --arg fails "$fail_raw" '{content: ($content + "\n```" + $fails + "```")}')
-    curl -sSf -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"
+    fail_list=$(paste -sd "," "$FAILED_FILE")
+    jq -n --arg content "Favorites Updater ‼️ Failed task(s): $fail_list" '{content:$content}' \
+      | curl -fSL -H "Content-Type: application/jsoon" -d @- "$DISCORD_WEBHOOK_URL" \
+      || echo "⚠️  Discord 通知に失敗しました"
   fi
 fi
 
