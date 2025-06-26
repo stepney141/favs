@@ -75,10 +75,12 @@ class Seiga {
     const response = await axios.get(cookieUrl); // cookieをダウンロード
     fs.writeFileSync(COOKIE_PATH, JSON.stringify(response.data));
 
+    // cookieがあれば読み込む
     if (fs.existsSync(COOKIE_PATH)) {
-      //cookieがあれば読み込む
-      const savedCookies: CookieData = JSON.parse(fs.readFileSync(COOKIE_PATH, "utf-8")) as unknown as CookieData;
-      await this.#browser.setCookie(savedCookies);
+      const savedCookies = JSON.parse(fs.readFileSync(COOKIE_PATH, "utf-8")) as CookieData[];
+      for (const cookie of savedCookies) {
+        await this.#browser.setCookie(cookie);
+      }
       console.log(`${JOB_NAME}: loaded existing cookies`);
     }
 
@@ -91,7 +93,7 @@ class Seiga {
     if (await isNotLoggedInSeiga(page)) {
       console.log(`${JOB_NAME}: Revoking cookies...`);
       await page.goto(LOGIN_URL, {
-        waitUntil: "networkidle2"
+        waitUntil: "load"
       });
 
       const useridInput_Handle = await $x(page, XPATH.useridInput);
@@ -104,13 +106,13 @@ class Seiga {
       await Promise.all([
         page.waitForNavigation({
           timeout: 2 * 60 * 1000,
-          waitUntil: ["networkidle0", "domcontentloaded", "load"]
+          waitUntil: ["domcontentloaded", "load"]
         }),
         loginButton_Handle[0].click()
       ]);
     }
 
-    const afterCookies = await page.cookies(); //cookie更新
+    const afterCookies = await this.#browser.cookies(); //cookie更新
     const afterCookiesBlob = new Blob([JSON.stringify(afterCookies)], { type: "application/json" });
     // ref: https://medium.com/@dorathedev/uploading-json-objects-as-json-files-to-firebase-storage-without-having-or-creating-a-json-file-38ad323af3c4
     await uploadBytes(pathReference, afterCookiesBlob); //cookieをアップロード
@@ -183,8 +185,8 @@ class Seiga {
       defaultViewport: { width: 1000, height: 1000 },
       headless: true, // i3wmにてヘッドフルモードで実行する場合、ブラウザのウィンドウが常に最前面に表示されていないとページ読み込みが発火しない？(未確認)
       // devtools: true,
-      args: CHROME_ARGS,
-      slowMo: 30
+      args: CHROME_ARGS, // single-processを有効にすると, cookie無効によるパスワードログイン時に不具合が発生する場合あり
+      slowMo: 10
     });
 
     const seiga = new Seiga(browser);
