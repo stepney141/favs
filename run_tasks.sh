@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-ssh -o ServerAliveInterval=30 -f -N -D 55555 stepney141@vultr-seattle
+#ssh -o ServerAliveInterval=30 -f -N -D 55555 stepney141@vultr-seattle
 
 set -Euo pipefail          # エラー即終了 & 未定義変数検出
 shopt -s lastpipe
