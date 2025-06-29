@@ -177,7 +177,10 @@ class BoundHub {
     const browser = await puppeteer.launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: true,
-      args: [...CHROME_ARGS, '--proxy-server=socks5://localhost:55555'],
+      args: [
+        ...CHROME_ARGS
+        // '--proxy-server=socks5://localhost:55555' // Cloudflare GeoBlock回避用
+      ],
       // devtools: true,
       slowMo: 20
     });
