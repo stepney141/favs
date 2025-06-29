@@ -70,3 +70,33 @@ export function createCookieManager(
     }
   };
 }
+
+/**
+ * Ensure authentication by validating existing cookies or performing login
+ */
+export async function ensureAuthentication(
+  cookieManager: CookieManager,
+  validateCookies: (cookies: CookieData[]) => Promise<boolean>,
+  performLogin: () => Promise<CookieData[]>
+): Promise<CookieData[]> {
+  // Try to load existing cookies from Firebase
+  const existingCookies = await cookieManager.loadFromFirebase();
+
+  // Validate existing cookies
+  if (await validateCookies(existingCookies)) {
+    return existingCookies;
+  }
+
+  // If cookies are invalid, perform login and save new cookies locally
+  const newCookies = await performLogin();
+
+  cookieManager.saveToLocal(newCookies);
+  return newCookies;
+}
+
+/**
+ * Convert Puppeteer cookies to axios cookie string format
+ */
+export function cookiesToString(cookies: CookieData[]): string {
+  return cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join("; ");
+}

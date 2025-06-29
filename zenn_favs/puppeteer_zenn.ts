@@ -10,13 +10,12 @@ import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import * as setCookieParser from "set-cookie-parser";
 
-import { createCookieManager } from "../.libs/cookie";
+import { cookiesToString, createCookieManager, ensureAuthentication } from "../.libs/cookie";
 import { $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile, sleep } from "../.libs/utils";
 
 import { CHROME_ARGS, USER_AGENT } from "./../.libs/constants";
 
-import type { CookieManager } from "../.libs/cookie";
 import type { CookieData } from "puppeteer";
 
 const stealthPlugin = StealthPlugin();
@@ -105,13 +104,6 @@ async function promptForPinCode(): Promise<string> {
   } finally {
     rl.close();
   }
-}
-
-/**
- * Convert Puppeteer cookies to axios cookie string format
- */
-function cookiesToString(cookies: CookieData[]): string {
-  return cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join("; ");
 }
 
 /**
@@ -259,25 +251,6 @@ async function performLogin(): Promise<CookieData[]> {
 }
 
 /**
- * Ensure authentication by validating existing cookies or performing login
- */
-async function ensureAuthentication(cookieManager: CookieManager): Promise<CookieData[]> {
-  // Try to load existing cookies from Firebase
-  const existingCookies = await cookieManager.loadFromFirebase();
-
-  // Validate existing cookies
-  if (await validateCookies(existingCookies)) {
-    return existingCookies;
-  }
-
-  // If cookies are invalid, perform login and save new cookies locally
-  const newCookies = await performLogin();
-
-  cookieManager.saveToLocal(newCookies);
-  return newCookies;
-}
-
-/**
  * Convert API response items to ZennFaved format
  */
 function convertApiItemsToArticles(items: ZennApiItem[]): Map<number, ZennFaved> {
@@ -395,7 +368,7 @@ async function fetchZennLikes(cookies: CookieData[], page: number): Promise<Fetc
     const cookieManager = createCookieManager(pathReference, JOB_NAME, COOKIE_PATH);
 
     // Ensure authentication (load existing cookies or login)
-    const cookies = await ensureAuthentication(cookieManager);
+    const cookies = await ensureAuthentication(cookieManager, validateCookies, performLogin);
 
     // Fetch all articles
     const result = await getAllPages(cookies);
@@ -403,9 +376,6 @@ async function fetchZennLikes(cookies: CookieData[], page: number): Promise<Fetc
     // Save final cookies to Firebase and cleanup local files
     await cookieManager.saveToFirebase(result.finalCookies);
     cookieManager.cleanupLocal();
-
-    console.log(cookies, "cookies loaded from Firebase");
-    console.log(result.finalCookies, "final cookies saved to Firebase");
 
     await exportFile({
       fileName: CSV_FILENAME,
