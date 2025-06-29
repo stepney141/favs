@@ -282,9 +282,6 @@ class TikToker {
     await cookieManager.saveToFirebase(updatedCookies);
     cookieManager.cleanupLocal();
 
-    console.log(cookies, "cookies loaded from Firebase");
-    console.log(updatedCookies, "final cookies saved to Firebase");
-
     await exportFile({
       fileName: CSV_FILENAME,
       payload: urls,
