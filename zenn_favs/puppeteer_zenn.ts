@@ -1,21 +1,22 @@
-import fs from "node:fs";
 import path from "path";
 import { createInterface } from "readline/promises";
 
 import axios from "axios";
 import { config } from "dotenv";
 import { initializeApp } from "firebase/app";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref } from "firebase/storage";
 import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import * as setCookieParser from "set-cookie-parser";
 
+import { createCookieManager } from "../.libs/cookie";
 import { $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile, sleep } from "../.libs/utils";
 
 import { CHROME_ARGS, USER_AGENT } from "./../.libs/constants";
 
-import type { StorageReference } from "firebase/storage";
+import type { CookieManager } from "../.libs/cookie";
 import type { CookieData } from "puppeteer";
 
 const stealthPlugin = StealthPlugin();
@@ -84,11 +85,9 @@ type ZennApiEntry = {
   next_page: number | null;
 };
 
-type CookieManager = {
-  loadFromFirebase: () => Promise<CookieData[]>;
-  saveToFirebase: (cookies: CookieData[]) => Promise<void>;
-  saveToLocal: (cookies: CookieData[]) => void;
-  cleanupLocal: () => void;
+type FetchResult = {
+  data: ZennApiEntry;
+  updatedCookies?: CookieData[];
 };
 
 /**
@@ -116,63 +115,49 @@ function cookiesToString(cookies: CookieData[]): string {
 }
 
 /**
- * Cookie management utilities for Firebase and local storage
+ * Merge existing cookies with new cookies from set-cookie header
+ * New cookies will overwrite existing ones with the same name
+ * Uses set-cookie-parser to properly parse all cookie attributes
  */
-function createCookieManager(pathReference: StorageReference): CookieManager {
-  return {
-    /**
-     * Load cookies from Firebase Storage
-     */
-    async loadFromFirebase(): Promise<CookieData[]> {
-      try {
-        const cookieUrl = await getDownloadURL(pathReference);
-        const response = await axios.get(cookieUrl);
-        fs.writeFileSync(COOKIE_PATH, JSON.stringify(response.data));
-        console.log(`${JOB_NAME}: Loaded cookies from Firebase`);
-        return response.data as CookieData[];
-      } catch (error) {
-        console.log(`${JOB_NAME}: No existing cookies found in Firebase`);
-        return [];
-      }
-    },
+function mergeCookies(existingCookies: CookieData[], setCookieHeaders: string[]): CookieData[] {
+  const cookieMap = new Map<string, CookieData>();
 
-    /**
-     * Save cookies to Firebase Storage
-     */
-    async saveToFirebase(cookies: CookieData[]): Promise<void> {
-      try {
-        const cookiesBlob = new Blob([JSON.stringify(cookies)], { type: "application/json" });
-        await uploadBytes(pathReference, cookiesBlob);
-        console.log(`${JOB_NAME}: Cookies saved to Firebase`);
-      } catch (error) {
-        console.error(`${JOB_NAME}: Failed to save cookies to Firebase:`, error);
-        throw error;
-      }
-    },
+  // Add existing cookies to map
+  for (const cookie of existingCookies) {
+    cookieMap.set(cookie.name, cookie);
+  }
 
-    /**
-     * Save cookies to local file temporarily
-     */
-    saveToLocal(cookies: CookieData[]): void {
-      fs.writeFileSync(COOKIE_PATH, JSON.stringify(cookies));
-    },
+  // Parse set-cookie headers using set-cookie-parser to get all attributes
+  const parsedCookies = setCookieParser.parse(setCookieHeaders);
 
-    /**
-     * Clean up local cookie file
-     */
-    cleanupLocal(): void {
-      if (fs.existsSync(COOKIE_PATH)) {
-        fs.unlinkSync(COOKIE_PATH);
-        console.log(`${JOB_NAME}: Cleaned up local cookie file`);
-      }
-    }
-  };
+  for (const parsed of parsedCookies) {
+    // Create new cookie preserving all server-provided attributes
+    const newCookie: CookieData = {
+      name: parsed.name,
+      value: parsed.value,
+      domain: parsed.domain || ".zenn.dev",
+      path: parsed.path || "/",
+      expires: parsed.expires
+        ? parsed.expires.getTime() / 1000
+        : parsed.maxAge
+          ? Date.now() / 1000 + parsed.maxAge
+          : -1,
+      httpOnly: parsed.httpOnly || false,
+      secure: parsed.secure || false,
+      sameSite: (parsed.sameSite as "Strict" | "Lax" | "None") || "Lax"
+    };
+
+    cookieMap.set(parsed.name, newCookie);
+  }
+
+  return Array.from(cookieMap.values());
 }
 
 /**
  * Test if cookies are valid by making a test API call
  */
 async function validateCookies(cookies: CookieData[]): Promise<boolean> {
+  // return false;
   if (cookies.length === 0) {
     return false;
   }
@@ -324,28 +309,37 @@ function convertApiItemsToArticles(items: ZennApiItem[]): Map<number, ZennFaved>
 /**
  * Fetch all liked articles using pagination
  */
-async function fetchAllArticles(cookies: CookieData[]): Promise<Map<number, ZennFaved>> {
+async function getAllPages(
+  initialCookies: CookieData[]
+): Promise<{ articles: Map<number, ZennFaved>; finalCookies: CookieData[] }> {
   console.log(`${JOB_NAME}: Starting to fetch liked articles...`);
 
   const allArticles = new Map<number, ZennFaved>();
+  let currentCookies = initialCookies;
   let page = 1;
   let hasNextPage = true;
 
   while (hasNextPage) {
     try {
       console.log(`${JOB_NAME}: Fetching page ${page}...`);
-      const apiResponse = await fetchZennLikes(cookies, page);
+      const fetchResult = await fetchZennLikes(currentCookies, page);
 
       // Convert and merge articles
-      const pageArticles = convertApiItemsToArticles(apiResponse.items);
+      const pageArticles = convertApiItemsToArticles(fetchResult.data.items);
       for (const [key, article] of pageArticles) {
         allArticles.set(key, article);
       }
 
+      // Update cookies if server provided new ones
+      if (fetchResult.updatedCookies) {
+        console.log(`${JOB_NAME}: Updating cookies with server response`);
+        currentCookies = fetchResult.updatedCookies;
+      }
+
       // Check if there's a next page
-      hasNextPage = apiResponse.next_page !== null;
+      hasNextPage = fetchResult.data.next_page !== null;
       if (hasNextPage) {
-        page = apiResponse.next_page!;
+        page = fetchResult.data.next_page!;
         await sleep(1000); // Rate limiting
       }
     } catch (error) {
@@ -355,13 +349,13 @@ async function fetchAllArticles(cookies: CookieData[]): Promise<Map<number, Zenn
   }
 
   console.log(`${JOB_NAME}: Scraping completed! Found ${allArticles.size} articles`);
-  return allArticles;
+  return { articles: allArticles, finalCookies: currentCookies };
 }
 
 /**
  * Fetch Zenn likes data using cookies
  */
-async function fetchZennLikes(cookies: CookieData[], page: number): Promise<ZennApiEntry> {
+async function fetchZennLikes(cookies: CookieData[], page: number): Promise<FetchResult> {
   const cookieString = cookiesToString(cookies);
 
   const response = await axios.get(`${baseURI}/api/me/library/likes?page=${page}`, {
@@ -374,7 +368,20 @@ async function fetchZennLikes(cookies: CookieData[], page: number): Promise<Zenn
     timeout: 30000
   });
 
-  return response.data as ZennApiEntry;
+  // Check if response contains updated cookies
+  const setCookieHeader = response.headers["set-cookie"];
+  let updatedCookies: CookieData[] | undefined;
+
+  if (setCookieHeader && setCookieHeader.length > 0) {
+    // Merge existing cookies with new ones from set-cookie headers
+    updatedCookies = mergeCookies(cookies, setCookieHeader);
+    console.log(`${JOB_NAME}: Updated cookies received from server`);
+  }
+
+  return {
+    data: response.data as ZennApiEntry,
+    updatedCookies
+  };
 }
 
 (async () => {
@@ -385,21 +392,24 @@ async function fetchZennLikes(cookies: CookieData[], page: number): Promise<Zenn
     const app = initializeApp(firebaseConfig);
     const storage = getStorage(app);
     const pathReference = ref(storage, COOKIE_PATH);
-    const cookieManager = createCookieManager(pathReference);
+    const cookieManager = createCookieManager(pathReference, JOB_NAME, COOKIE_PATH);
 
     // Ensure authentication (load existing cookies or login)
     const cookies = await ensureAuthentication(cookieManager);
 
     // Fetch all articles
-    const articles = await fetchAllArticles(cookies);
+    const result = await getAllPages(cookies);
 
-    // Save cookies to Firebase and cleanup local files
-    await cookieManager.saveToFirebase(cookies);
+    // Save final cookies to Firebase and cleanup local files
+    await cookieManager.saveToFirebase(result.finalCookies);
     cookieManager.cleanupLocal();
+
+    console.log(cookies, "cookies loaded from Firebase");
+    console.log(result.finalCookies, "final cookies saved to Firebase");
 
     await exportFile({
       fileName: CSV_FILENAME,
-      payload: mapToArray(articles),
+      payload: mapToArray(result.articles),
       targetType: "csv",
       mode: "overwrite"
     }).then(() => {
