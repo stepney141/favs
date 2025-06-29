@@ -1,7 +1,6 @@
 import path from "path";
 
 import { config } from "dotenv";
-import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
@@ -108,12 +107,15 @@ class TikToker {
     console.log(`${JOB_NAME}: Logging in...`);
 
     await Promise.all([
-      page.waitForResponse((response) => {
-        return (
-          response.url().includes(`https://webcast.tiktok.com/webcast/wallet_api/fs/diamond_buy/permission_v2`) ===
-            true && response.status() === 200
-        );
-      }),
+      page.waitForResponse(
+        (response) => {
+          return (
+            response.url().includes(`https://webcast.tiktok.com/webcast/wallet_api/fs/diamond_buy/permission_v2`) ===
+              true && response.status() === 200
+          );
+        },
+        { timeout: 60 * 1000 }
+      ),
       loginButtonEH[0].click()
     ]);
 
@@ -158,19 +160,13 @@ class TikToker {
     const startTime = Date.now();
 
     const browser = await puppeteer.launch({
-      executablePath: executablePath(),
       defaultViewport: { width: 1000, height: 1000 },
       args: [
         ...CHROME_ARGS,
-        // '--disable-gpu',
-        "--disable-blink-features=AutomationControlled" /* https://github.com/berstend/puppeteer-extra/issues/822 */,
-        "--disable-dev-shm-usage",
-        "--no-first-run",
-        "--no-zygote"
-        // '--single-process'
-      ],
+        "--disable-blink-features=AutomationControlled" /* https://github.com/berstend/puppeteer-extra/issues/822 */
+      ].filter((arg) => !arg.includes("single-process")),
       slowMo: 100,
-      headless: false //セキュリティコード使わずに2段階認証する時はheadfullの方が楽
+      headless: false
     });
 
     const tiktok = new TikToker(browser);
