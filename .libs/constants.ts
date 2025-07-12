@@ -7,6 +7,6 @@ export const CHROME_ARGS = [
   "--disable-setuid-sandbox",
   "--no-first-run",
   "--no-zygote",
-  "--single-process", // NOTE: 有効にすると不具合が発生する場合あり https://github.com/puppeteer/puppeteer/issues/11515
+  //"--single-process", // NOTE: 有効にすると不具合が発生する場合あり https://github.com/puppeteer/puppeteer/issues/11515
   "--no-sandbox"
 ];
