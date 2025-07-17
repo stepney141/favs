@@ -4,7 +4,7 @@ import { CHROME_ARGS } from "../.libs/constants";
 import { getNodeProperty, $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile, zip } from "../.libs/utils";
 
-import type { Browser } from "puppeteer";
+import type { Browser, Page } from "puppeteer";
 
 const JOB_NAME = "Togetter Favorites";
 const CSV_FILENAME = {
@@ -51,9 +51,7 @@ class Togetter {
     };
   }
 
-  async explore(type: Target): Promise<MatomeMap> {
-    const page = await this.#browser.newPage();
-
+  async explore(type: Target, page: Page): Promise<MatomeMap> {
     await page.setExtraHTTPHeaders({
       "accept-language": "ja-JP"
     });
@@ -96,10 +94,7 @@ class Togetter {
 
       if (i < pageLength) {
         const linkToNextPage = await $x(page, XPATH[type].linkToNextPage);
-        await Promise.all([
-          page.waitForNavigation({ waitUntil: ["domcontentloaded"] }),
-          linkToNextPage[0].click()
-        ]);
+        await Promise.all([page.waitForNavigation({ waitUntil: ["domcontentloaded"] }), linkToNextPage[0].click()]);
       }
     }
 
@@ -109,21 +104,21 @@ class Togetter {
 }
 
 (async () => {
+  const startTime = Date.now();
+  const browser = await launch({
+    defaultViewport: { width: 1000, height: 1000 },
+    headless: false,
+    args: CHROME_ARGS.filter((arg) => !arg.includes("single-process")),
+    // devtools: true,
+    slowMo: 20
+  });
+
+  const togetter = new Togetter(browser);
+  const page = await browser.newPage();
+
   try {
-    const startTime = Date.now();
-
-    const browser = await launch({
-      defaultViewport: { width: 1000, height: 1000 },
-      headless: false,
-      args: CHROME_ARGS.filter((arg) => !arg.includes("single-process")),
-      // devtools: true,
-      slowMo: 20
-    });
-
-    const togetter = new Togetter(browser);
-
     for (const type of ["togetter", "posfie"] satisfies Target[]) {
-      const matomeList = await togetter.explore(type);
+      const matomeList = await togetter.explore(type, page);
 
       await exportFile({
         fileName: CSV_FILENAME[type],
@@ -134,12 +129,13 @@ class Togetter {
         console.log(`${JOB_NAME}: Finished writing ${CSV_FILENAME[type]}`);
       });
     }
-
-    console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
-
-    await browser.close();
   } catch (e) {
     console.log(e);
+    await page.screenshot({ path: "test.png", fullPage: true });
     process.exit(1);
+  } finally {
+    await browser.close();
+    console.log(`${JOB_NAME}: Browser closed`);
+    console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
   }
 })();
