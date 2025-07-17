@@ -71,7 +71,7 @@ class Togetter {
 
     const url = type === "togetter" ? TARGET_URL.togetter : TARGET_URL.posfie;
     await page.goto(url, {
-      waitUntil: ["domcontentloaded", "networkidle2"]
+      waitUntil: ["domcontentloaded"]
     });
 
     console.log(`${JOB_NAME}: exploring ${url}`);
@@ -97,7 +97,7 @@ class Togetter {
       if (i < pageLength) {
         const linkToNextPage = await $x(page, XPATH[type].linkToNextPage);
         await Promise.all([
-          page.waitForNavigation({ waitUntil: ["domcontentloaded", "networkidle2"] }),
+          page.waitForNavigation({ waitUntil: ["domcontentloaded"] }),
           linkToNextPage[0].click()
         ]);
       }
@@ -114,10 +114,10 @@ class Togetter {
 
     const browser = await launch({
       defaultViewport: { width: 1000, height: 1000 },
-      headless: true,
+      headless: false,
       args: CHROME_ARGS.filter((arg) => !arg.includes("single-process")),
       // devtools: true,
-      slowMo: 50
+      slowMo: 20
     });
 
     const togetter = new Togetter(browser);
