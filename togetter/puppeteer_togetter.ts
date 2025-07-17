@@ -55,17 +55,6 @@ class Togetter {
     await page.setExtraHTTPHeaders({
       "accept-language": "ja-JP"
     });
-    await page.setRequestInterception(true);
-    page.on("request", (interceptedRequest) => {
-      const url = interceptedRequest.url();
-      (async () => {
-        if (url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpg:thumb")) {
-          await interceptedRequest.abort();
-        } else {
-          await interceptedRequest.continue();
-        }
-      })();
-    });
 
     const url = type === "togetter" ? TARGET_URL.togetter : TARGET_URL.posfie;
     await page.goto(url, {
@@ -94,7 +83,24 @@ class Togetter {
 
       if (i < pageLength) {
         const linkToNextPage = await $x(page, XPATH[type].linkToNextPage);
-        await Promise.all([page.waitForNavigation({ waitUntil: ["domcontentloaded"] }), linkToNextPage[0].click()]);
+        if (linkToNextPage.length > 0) {
+          try {
+            await Promise.all([
+              page.waitForNavigation({
+                waitUntil: ["domcontentloaded"],
+                timeout: 60000
+              }),
+              linkToNextPage[0].click()
+            ]);
+          } catch (navError) {
+            console.log(`Navigation error on page ${i}:`, navError);
+            await page.reload({ waitUntil: ["domcontentloaded"] });
+            throw new Error(`Failed to navigate to next page`);
+          }
+        } else {
+          console.log(`No next page link found on page ${i}`);
+          break;
+        }
       }
     }
 
@@ -107,7 +113,7 @@ class Togetter {
   const startTime = Date.now();
   const browser = await launch({
     defaultViewport: { width: 1000, height: 1000 },
-    headless: false,
+    headless: true,
     args: CHROME_ARGS.filter((arg) => !arg.includes("single-process")),
     // devtools: true,
     slowMo: 20
@@ -117,7 +123,7 @@ class Togetter {
   const page = await browser.newPage();
 
   try {
-    for (const type of ["togetter", "posfie"] satisfies Target[]) {
+    for (const type of ["posfie", "togetter"] satisfies Target[]) {
       const matomeList = await togetter.explore(type, page);
 
       await exportFile({
@@ -132,10 +138,15 @@ class Togetter {
   } catch (e) {
     console.log(e);
     await page.screenshot({ path: "test.png", fullPage: true });
+    try {
+      await page.close();
+      await browser.close();
+    } catch (closeError) {
+      console.log("Error during cleanup:", closeError);
+    }
     process.exit(1);
-  } finally {
-    await browser.close();
-    console.log(`${JOB_NAME}: Browser closed`);
-    console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
   }
+
+  await browser.close();
+  console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
 })();
