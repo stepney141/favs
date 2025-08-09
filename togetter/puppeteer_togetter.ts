@@ -120,9 +120,9 @@ class Togetter {
   });
 
   const togetter = new Togetter(browser);
-  const page = await browser.newPage();
 
   try {
+    const page = await browser.newPage();
     for (const type of ["posfie", "togetter"] satisfies Target[]) {
       const matomeList = await togetter.explore(type, page);
 
@@ -137,13 +137,6 @@ class Togetter {
     }
   } catch (e) {
     console.log(e);
-    await page.screenshot({ path: "test.png", fullPage: true });
-    try {
-      await page.close();
-      await browser.close();
-    } catch (closeError) {
-      console.log("Error during cleanup:", closeError);
-    }
     process.exit(1);
   }
 
