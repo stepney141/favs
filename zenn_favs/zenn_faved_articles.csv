@@ -1,9 +1,10 @@
 title,url,username,published_at,liked_count
-Nixとuvで磨くPython開発環境の再現性,https://zenn.dev/shundeveloper/articles/36307d821d40f7,しゅんそく,2025-08-09T20:47:54.916+09:00,61
+C++マルチスレッド一巡り,https://zenn.dev/yohhoy/books/cpp-stdlib-multithreading,yohhoy,2021-04-03T19:55:47.946+09:00,159
+Nixとuvで磨くPython開発環境の再現性,https://zenn.dev/shundeveloper/articles/36307d821d40f7,しゅんそく,2025-08-09T20:47:54.916+09:00,63
 Obsidian Self-Hosted LiveSyncの構築,https://zenn.dev/hyouhyan/articles/178652c594fe17,ひょうひゃん,2024-05-27T15:12:43.438+09:00,31
 ナメやがってこの型ァ!!超イラつくぜぇ～～～～～ッ!!,https://zenn.dev/yamadadayo123/articles/bf24f86d806528,penpen,2023-11-09T12:30:01.806+09:00,945
 おっさんのためのModern C++入門ガイド,https://zenn.dev/dec9ue/books/8c59757478a547,dec9ue,2021-12-18T14:55:27.592+09:00,157
-技術イベントのメモはOpenAI WhisperとGemini CLIに任せる,https://zenn.dev/r4ynode/articles/audio-transcription-using-openai-whisper,Ray,2025-07-21T09:00:01.555+09:00,118
+技術イベントのメモはOpenAI WhisperとGemini CLIに任せる,https://zenn.dev/r4ynode/articles/audio-transcription-using-openai-whisper,Ray,2025-07-21T09:00:01.555+09:00,119
 AIの書いた文章がつまらないのを何とかしたい,https://zenn.dev/takada_at/articles/b2973bd5fef26d,takada-at,2025-07-21T00:15:19.683+09:00,30
 OSSを公開するとメールアドレスがバレる,https://zenn.dev/st43/articles/deaf291f860ca8,蔀,2025-07-22T22:42:08.667+09:00,149
 メールアドレス認証2FAはパスワードだけで突破できるからやめておけ,https://zenn.dev/grandchildrice/articles/a007075c0ec99c,gohan,2025-07-19T21:33:30.755+09:00,78
@@ -11,7 +12,7 @@ Pythonの環境をuvへ移行する方法,https://zenn.dev/karaage0703/articles/
 Linux MintでUSB2BTplusを使って有線キーボードを無線化する,https://zenn.dev/ukiyocreate_dev/articles/use_usb2btplus_on_linux,motty93,2024-03-18T13:38:28.809+09:00,5
 JavaScript の using と DisposableStack#defer で Go の defer 風,https://zenn.dev/sosukesuzuki/articles/697b059563a782,Sosuke Suzuki,2025-07-11T22:57:02.888+09:00,53
 ArchLinuxインストール奮闘録,https://zenn.dev/htsulfuric/articles/9ac7ad16aa3be7,HTsulfuric,2024-09-24T16:45:35.327+09:00,4
-実務未経験が約１週間で情報処理安全確保支援士試験に合格しました #情報処理安全確保支援士,https://zenn.dev/tatesoto/articles/7671b6226daffa,たてそと,2025-07-08T12:33:09.478+09:00,35
+実務未経験が約１週間で情報処理安全確保支援士試験に合格しました #情報処理安全確保支援士,https://zenn.dev/tatesoto/articles/7671b6226daffa,たてそと,2025-07-08T12:33:09.478+09:00,36
 ターミナルを使う人は、とりあえず「mise」を入れておく時代。　　・・・を夢見て。,https://zenn.dev/dress_code/articles/a99ff13634bbe6,ぽんこつエンジニア,2025-06-27T00:00:01.576+09:00,730
 「情報処理安全確保支援士」合格体験記(三度目の正直),https://zenn.dev/yourstand_blog/articles/5ce2caea9f2104,よしだ,2025-07-04T09:00:05.189+09:00,32
 野生のモデルを飼い慣らす,https://zenn.dev/bilzard/articles/tame-the-wild-models,bilzard,2025-07-05T09:18:28.215+09:00,46
@@ -115,7 +116,7 @@ TypeScript でプログラマブルに動く日本語組版処理システムの
 ベクトル埋め込みを使って「小説家になろう」を検索して、更に多様化する (情報検索・検索技術 Advent Calendar 2022),https://zenn.dev/takilog/articles/459a05b2e043c9,たきろぐ,2022-12-08T00:02:13.357+09:00,15
 【自然言語処理】形態素解析のためのトークナイザー（関数）を作る,https://zenn.dev/robes/articles/95a284323eba9b,osn_Lofi,2022-09-02T21:48:57.470+09:00,6
 あなたのPythonを100倍高速にする技術 / Codon入門,https://zenn.dev/turing_motors/articles/e23973714c3ecf,ymg_aq,2023-03-22T18:00:00.701+09:00,306
-【2024年版】Dockerfileのベストプラクティスを整理しながらNode.jsで実践する,https://zenn.dev/mutex_inc/articles/nodejs-ts-docker-best-practice,Yuto Yoshihara,2024-11-11T11:50:00.632+09:00,359
+【2024年版】Dockerfileのベストプラクティスを整理しながらNode.jsで実践する,https://zenn.dev/mutex_inc/articles/nodejs-ts-docker-best-practice,Yuto Yoshihara,2024-11-11T11:50:00.632+09:00,360
 開発用適当ツールは Rust で作るのもオススメ,https://zenn.dev/codemountains/articles/0d3831c10c46b8,山とコード,2024-10-16T21:10:59.270+09:00,316
 実践: await using でリソース開放,https://zenn.dev/mizchi/articles/practical-await-using,mizchi,2024-11-06T00:48:09.130+09:00,205
 線形回帰において「多重共線性があると推定が不安定になる」とは？〜図と理論で理解する〜,https://zenn.dev/tatamiya/articles/eeb97aae490f3ee8f0e9,畳屋民也,2023-12-16T00:02:20.211+09:00,72
@@ -205,7 +206,7 @@ Rust のスマートポインタまとめ,https://zenn.dev/suzuki_hoge/articles/
 【Extism】名状し難いユニバーサル・プラグインシステム,https://zenn.dev/k41531/articles/3e935bd04968d6,kaisei,2022-12-04T07:00:01.065+09:00,12
 おうちKubernetes2024実況,https://zenn.dev/matoruru/scraps/97ad8c96a50c81,matoruru,2024-01-20T11:07:14.945+09:00,41
 Rust入門,https://zenn.dev/mebiusbox/books/22d4c1ed9b0003,mebiusbox,2021-03-08T00:03:45.715+09:00,3010
-Nix入門,https://zenn.dev/asa1984/books/nix-introduction,asa1984,2024-04-01T13:04:02.090+09:00,381
+Nix入門,https://zenn.dev/asa1984/books/nix-introduction,asa1984,2024-04-01T13:04:02.090+09:00,383
 GitHub Pages から別のサイトに移行するときのリダイレクト設定,https://zenn.dev/anozon/articles/gh-pages-redirect,anozon,2021-09-18T22:57:53.075+09:00,7
 Raspberry PiのディスクをSD cardからスティックSSDに換える,https://zenn.dev/matoruru/scraps/237d403171dc0d,matoruru,2024-03-22T22:31:08.112+09:00,1
 R/Python の線形回帰では完全な多重共線性のある入力データにどう対処しているか？,https://zenn.dev/tatamiya/articles/b8bfc215b6c914,畳屋民也,2024-03-20T22:10:33.067+09:00,21
@@ -217,7 +218,7 @@ TypeScriptの代数的部分型模型,https://zenn.dev/estra/books/algebraic-sub
 一般構築魔法(Nix)のVimへの応用について,https://zenn.dev/natsukium/articles/b4899d7b1e6a9a,natsukium,2024-02-23T00:10:34.565+09:00,97
 UTF-8のバリデーションとモノイドと半群,https://zenn.dev/mod_poppo/articles/utf8-validation-semigroup,だめぽ,2024-02-24T18:38:22.663+09:00,19
 32bit intと32bit floatの情報量は同じか？,https://zenn.dev/c0a29d92/articles/92af9649e29464,パサカタ,2024-02-16T17:36:36.640+09:00,17
-駆け出し時代の自分に読ませたかった技術書18選　遠回りをしまくった自分に送りたい,https://zenn.dev/mesi/articles/671a08cabb4dfe,MESI,2024-02-02T20:48:52.231+09:00,703
+駆け出し時代の自分に読ませたかった技術書18選　遠回りをしまくった自分に送りたい,https://zenn.dev/mesi/articles/671a08cabb4dfe,MESI,2024-02-02T20:48:52.231+09:00,704
 オセロのひっくり返すべき石判定システムとしての正規表現,https://zenn.dev/gaqwest/articles/b80f3cc57df112,gaqwest,2021-05-02T01:49:22.635+09:00,46
 大学図書館システムを解析して自動化した話(技術メイン),https://zenn.dev/calloc134/articles/9b9d8f883be0dd,calloc134,2024-02-06T12:50:16.073+09:00,96
 Bluesky&Twitterの同時投稿サービスを作り、公開した。,https://zenn.dev/nkte8/articles/2024-02-03-r01,ねこの,2024-02-04T03:58:41.485+09:00,136
@@ -287,7 +288,7 @@ esbuild で Node.js を TypeScript 化する,https://zenn.dev/okmttdhr/articles/
 GitHub Actions のベストプラクティス,https://zenn.dev/snowcait/scraps/9d9c47dc4d0414,雪猫,2021-02-02T21:05:13.209+09:00,253
 GitHub ActionsにおけるStep/Job/Workflow設計論,https://zenn.dev/hsaki/articles/github-actions-component,さき(H.Saki),2022-05-17T21:30:10.390+09:00,525
 Gitの歴史上から特定のファイルを削除したい,https://zenn.dev/flyingbarbarian/articles/aaf59c07b71a34,flyingbarbarian,2022-01-28T18:06:46.762+09:00,69
-TypeScript 4.6で起こるタグ付きユニオンのさらなる進化,https://zenn.dev/uhyo/articles/ts-4-6-destructing-unions,uhyo,2021-10-12T23:18:28.550+09:00,227
+TypeScript 4.6で起こるタグ付きユニオンのさらなる進化,https://zenn.dev/uhyo/articles/ts-4-6-destructing-unions,uhyo,2021-10-12T23:18:28.550+09:00,228
 ECMAScript Annex B と型定義、ついでに ES2022 __proto__,https://zenn.dev/pixiv/articles/a211183011cd58,petamoriken,2021-09-20T01:45:17.550+09:00,29
 Monorepoって何なのか？と関連アーキテクチャとの関係をまとめてみた,https://zenn.dev/burizae/articles/c811cae767965a,iwaseshi,2022-03-08T23:07:35.187+09:00,171
 Typescriptのディレクトリ構成メモ,https://zenn.dev/osa9/scraps/b8d56de7857d9a,ないん,2022-07-30T07:34:25.504+09:00,2
@@ -325,7 +326,7 @@ Rustを中心に世界は回る ~Rustで実装したモジュールを異なる�
 Ajaxから始まった一つの時代の終わり,https://zenn.dev/monicle/articles/the-end-of-the-ajax-heyday,Nkzn,2023-07-11T20:59:38.934+09:00,492
 Next.jsから学ぶWebレンダリング ~React誕生以前からApp Router with RSCまでの流れ~,https://zenn.dev/suzu_4/articles/2e6dbb25c12ee5,osuzu,2023-05-16T16:23:51.179+09:00,423
 LightDM Greeter on Arch Linux のテーマ設定,https://zenn.dev/23prime/articles/99e8866a75b325,おっけー,2022-08-28T21:40:39.685+09:00,5
-NixOSで最強のLinuxデスクトップを作ろう,https://zenn.dev/asa1984/articles/nixos-is-the-best,asa1984,2023-07-09T17:26:07.881+09:00,458
+NixOSで最強のLinuxデスクトップを作ろう,https://zenn.dev/asa1984/articles/nixos-is-the-best,asa1984,2023-07-09T17:26:07.881+09:00,460
 令和5年度春期 情報処理安全確保支援士試験に合格しました,https://zenn.dev/facengineer/articles/48c6b35cc166ca,kngnr,2023-06-29T23:15:49.410+09:00,23
 Reactでオーディオプラグインを作れる時代になったという話,https://zenn.dev/yuichkun/articles/63701c14976890,yuichkun,2021-04-29T03:02:02.334+09:00,140
 文化祭のIT化に取り組んだ話,https://zenn.dev/eno1220/articles/cfa73151086ad9,eno1220,2023-06-24T18:34:22.609+09:00,149
@@ -362,7 +363,7 @@ dotfiles自慢大会を開催しました,https://zenn.dev/team_soda/articles/1a
 3DCGにつきものの座標系の違い 46種+α まとめ,https://zenn.dev/it_ks/articles/cbe27860548ea1,ks,2021-10-16T21:18:17.934+09:00,44
 Rust の文字列の種類と変換トレイトについて,https://zenn.dev/suzuki_hoge/books/2023-03-rust-strings-8868f207b3ed18,ほげさん,2023-03-01T09:28:07.269+09:00,121
 【TypeScript】Result型を定義してエラーハンドリングを楽にする,https://zenn.dev/koudai/articles/ff415ca6755054,めし,2022-12-19T02:48:28.156+09:00,34
-30分で完全理解するTransformerの世界,https://zenn.dev/zenkigen_tech/articles/2023-01-shimizu,はまなすなぎさ,2023-02-14T12:01:28.774+09:00,837
+30分で完全理解するTransformerの世界,https://zenn.dev/zenkigen_tech/articles/2023-01-shimizu,はまなすなぎさ,2023-02-14T12:01:28.774+09:00,838
 乱数と1ピクセルで写真を撮る方法（ゴーストイメージングへの招待）,https://zenn.dev/torataro/articles/2023-01-29-ghost_imaging,寅太郎,2023-02-19T14:57:52.099+09:00,58
 Linuxの識者がよく使うstrace(1)やopen(2)の数字の意味は？,https://zenn.dev/tetsu_koba/articles/7e049b98aee465,tetsu_koba,2023-02-19T14:17:34.933+09:00,58
 フロントエンドテストにおける知見の宝庫を発見！「javascript-testing-best-practices」,https://zenn.dev/hrbrain/articles/18d4dbc2ac8e4f,ytaisei（たいせー）,2023-02-15T08:09:19.502+09:00,319
