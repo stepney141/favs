@@ -1,5 +1,5 @@
 {
-  "max_parallel": 3,
+  "max_parallel": 2,
   "tasks": [
     {
       "name": "bookmeter_wish",
