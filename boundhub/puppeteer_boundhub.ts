@@ -28,7 +28,7 @@ const CSV_FILENAME = "boundhub_faved_movies.csv";
 const XPATH = {
   useridInput: '//*[@id="login_username"]',
   passwordInput: '//*[@id="login_pass"]',
-  loginButton: "/html/body/div[4]/div/div/div/div/div/form/div[2]/div[4]/input[3]",
+  loginButton: '//*[@type="submit"]',
 
   linkToPlaylist: `//a[contains(text(), "${PLAYLIST_NAME}")]`,
   playListHeader: '//h2[contains(text(), "My Playlist")]',
@@ -81,7 +81,7 @@ class BoundHub {
         timeout: 60000,
         waitUntil: "networkidle2"
       }),
-      loginButton_Handle[0].click()
+      loginButton_Handle[0]?.click()
     ]);
 
     console.log(`${JOB_NAME}: Logged in!`);
@@ -176,13 +176,13 @@ class BoundHub {
 
     const browser = await puppeteer.launch({
       defaultViewport: { width: 1000, height: 1000 },
-      headless: true,
+      // headless: true,
       args: [
         ...CHROME_ARGS
         // '--proxy-server=socks5://localhost:55555' // Cloudflare GeoBlock回避用
       ],
-      // devtools: true,
-      slowMo: 20
+      devtools: true,
+      slowMo: 50
     });
 
     const bd = new BoundHub(browser);
