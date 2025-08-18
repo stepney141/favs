@@ -26,6 +26,8 @@ const PLAYLIST_NAME = "playlist01";
 const CSV_FILENAME = "boundhub_faved_movies.csv";
 
 const XPATH = {
+  termsAgreeButton: '//button[@class="warningButton continue"]',
+
   useridInput: '//*[@id="login_username"]',
   passwordInput: '//*[@id="login_pass"]',
   loginButton: '//*[@type="submit"]',
@@ -69,6 +71,14 @@ class BoundHub {
     const page = await this.#browser.newPage();
     await page.goto(`${baseURI}/?login`, { waitUntil: "networkidle2" });
     console.log(`${JOB_NAME}: Logging in...`);
+
+    //利用規約ポップアップの確認
+    const termsAgreeButton_Handle = await $x(page, XPATH.termsAgreeButton);
+    if (termsAgreeButton_Handle.length > 0) {
+      await termsAgreeButton_Handle[0].click();
+    }
+
+    await sleep(1000);
 
     const useridInput_Handle = await $x(page, XPATH.useridInput);
     const passwordInput_Handle = await $x(page, XPATH.passwordInput);
@@ -177,11 +187,11 @@ class BoundHub {
     const browser = await puppeteer.launch({
       defaultViewport: { width: 1000, height: 1000 },
       headless: true,
+      // devtools: true,
       args: [
         ...CHROME_ARGS
         // '--proxy-server=socks5://localhost:55555' // Cloudflare GeoBlock回避用
       ],
-      // devtools: true,
       slowMo: 50
     });
 
