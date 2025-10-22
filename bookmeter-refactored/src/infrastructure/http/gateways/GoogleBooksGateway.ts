@@ -1,11 +1,14 @@
-import type { Book } from "@/domain/entities/Book";
+
+import type { SingleBookGateway } from "@/application/services/BiblioInfoAggregator";
+import type { Book, BookMode } from "@/domain/entities/Book";
 import type { HttpClient } from "@/infrastructure/http/HttpClient";
 
-export class GoogleBooksGateway {
+export class GoogleBooksGateway implements SingleBookGateway {
   constructor(private readonly http: HttpClient, private readonly apiKey: string) {}
 
-  async searchByIsbn(book: Book): Promise<Book> {
+  async enrich(book: Book, _mode: BookMode): Promise<Book> {
     void book;
+    void this.http;
     void this.apiKey;
     // TODO: call Google Books API.
     return book;

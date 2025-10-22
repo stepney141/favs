@@ -1,12 +1,14 @@
-import type { BookCollection } from "@/domain/entities/Book";
+
+import type { BulkBookGateway } from "@/application/services/BiblioInfoAggregator";
+import type { BookCollection, BookMode } from "@/domain/entities/Book";
 import type { HttpClient } from "@/infrastructure/http/HttpClient";
 
-export class OpenBDGateway {
+export class OpenBDGateway implements BulkBookGateway {
   constructor(private readonly http: HttpClient) {}
 
-  async fetchBulk(books: BookCollection): Promise<BookCollection> {
-    void books;
+  async enrich(collection: BookCollection, _mode: BookMode): Promise<BookCollection> {
+    void this.http;
     // TODO: call OpenBD bulk API and merge results.
-    return books;
+    return collection;
   }
 }
