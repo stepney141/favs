@@ -2,6 +2,7 @@ import { DefaultBiblioInfoAggregator } from "@/application/services/BiblioInfoAg
 import { SyncBookmeterUseCase } from "@/application/usecases/SyncBookmeterUseCase";
 import { BookListDiffService } from "@/domain/services/BookListDiffService";
 import { FileCsvExporter as CsvExporter } from "@/infrastructure/export/CsvExporter";
+import { FallbackCsvExporter } from "@/infrastructure/export/FallbackCsvExporter";
 import { AxiosHttpClient } from "@/infrastructure/http/HttpClient";
 import { CiNiiGateway } from "@/infrastructure/http/gateways/CiNiiGateway";
 import { GoogleBooksGateway } from "@/infrastructure/http/gateways/GoogleBooksGateway";
@@ -9,6 +10,7 @@ import { ISBNdbGateway } from "@/infrastructure/http/gateways/ISBNdbGateway";
 import { MathLibCatalogGateway } from "@/infrastructure/http/gateways/MathLibCatalog";
 import { NDLGateway } from "@/infrastructure/http/gateways/NDLGateway";
 import { OpenBDGateway } from "@/infrastructure/http/gateways/OpenBDGateway";
+import { FirebaseUploader } from "@/infrastructure/messaging/FirebaseUploader";
 import { SqliteBookRepository } from "@/infrastructure/persistence/SqliteBookRepository";
 import { BookmeterScraper } from "@/infrastructure/scraping/BookmeterScraper";
 import { KinokuniyaScraper } from "@/infrastructure/scraping/KinokuniyaScraper";
@@ -79,12 +81,17 @@ export async function runCli(argv: string[]): Promise<number> {
     concurrency: 5
   });
 
+  const fallbackExporter = new FallbackCsvExporter((mode) => `./csv/${mode}-fallback.csv`);
+  const firebaseUploader = new FirebaseUploader(config.api.firebase, config.storage, logger);
+
   const useCase = new SyncBookmeterUseCase({
     scrapingService,
     repository,
     csvExporter,
+    fallbackExporter,
     diffService,
     aggregator,
+    firebaseUploader,
     logger,
     clock
   });

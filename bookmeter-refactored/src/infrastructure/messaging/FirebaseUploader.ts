@@ -7,9 +7,15 @@ import type { ApiCredentials, StorageConfig } from "@/shared/config/Config";
 import type { Logger } from "@/shared/logging/Logger";
 
 export class FirebaseUploader {
-  constructor(private readonly credentials: ApiCredentials["firebase"], private readonly storage: StorageConfig, private readonly logger: Logger) {}
+  constructor(
+    private readonly credentials: ApiCredentials["firebase"],
+    private readonly storageConfig: StorageConfig,
+    private readonly logger: Logger
+  ) {}
 
   async uploadSqliteSnapshot(): Promise<void> {
+    const fileBuffer = await readFile(this.storageConfig.sqlitePath);
+
     const app = initializeApp({
       apiKey: this.credentials.apiKey,
       authDomain: this.credentials.authDomain,
@@ -20,9 +26,9 @@ export class FirebaseUploader {
     });
 
     const storage = getStorage(app);
-    const buffer = await readFile(this.storage.sqlitePath);
-    const refHandle = ref(storage, this.storage.firebaseDatabasePath);
-    await uploadBytes(refHandle, buffer);
-    this.logger.info(`Uploaded SQLite snapshot to ${this.storage.firebaseDatabasePath}`);
+    const dbRef = ref(storage, this.storageConfig.firebaseDatabasePath);
+
+    await uploadBytes(dbRef, fileBuffer);
+    this.logger.info(`Uploaded SQLite DB to ${this.storageConfig.firebaseDatabasePath}`);
   }
 }

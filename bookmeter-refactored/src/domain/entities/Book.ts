@@ -7,8 +7,8 @@ export interface Book {
   author: string;
   publisher: string;
   publishedDate: string;
-  existInSophia: "Yes" | "No" | "Error";
-  existInUTokyo: "Yes" | "No" | "Error";
+  existInSophia: "Yes" | "No" | "Error" | "Unknown";
+  existInUTokyo: "Yes" | "No" | "Error" | "Unknown";
   sophiaOpac: string;
   utokyoOpac: string;
   sophiaMathlibOpac: string;
