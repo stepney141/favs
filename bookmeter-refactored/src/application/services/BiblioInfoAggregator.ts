@@ -55,9 +55,7 @@ export class DefaultBiblioInfoAggregator implements BiblioInfoAggregator {
         queue.enqueue(async () => {
           let current = book;
           for (const gateway of this.deps.singleGateways) {
-            logger.debug?.(
-              `Applying single gateway ${gateway.constructor.name} for ${current.bookmeterUrl}`
-            );
+            logger.debug?.(`Applying single gateway ${gateway.constructor.name} for ${current.bookmeterUrl}`);
             current = await gateway.enrich(current, mode);
           }
           results.upsert(current);

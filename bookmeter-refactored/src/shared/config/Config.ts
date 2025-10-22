@@ -28,6 +28,8 @@ export interface BookmeterConfig {
   jobName: string;
   defaultUserId: string;
   baseUri: string;
+  account: string;
+  password: string;
 }
 
 export interface RuntimeConfig {

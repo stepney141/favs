@@ -62,7 +62,9 @@ export class EnvConfig implements RuntimeConfig {
     this.bookmeter = {
       jobName: "Bookmeter Wished Books",
       defaultUserId: "1003258",
-      baseUri: "https://bookmeter.com"
+      baseUri: "https://bookmeter.com",
+      account: process.env.BOOKMETER_ACCOUNT!,
+      password: process.env.BOOKMETER_PASSWORD!
     };
   }
 }
