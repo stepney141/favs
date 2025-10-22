@@ -26,6 +26,10 @@ export class BookCollection {
     return this.books.entries();
   }
 
+  values(): IterableIterator<Book> {
+    return this.books.values();
+  }
+
   toMap(): Map<string, Book> {
     return new Map(this.books);
   }

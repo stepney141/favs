@@ -43,9 +43,9 @@ export async function runCli(argv: string[]): Promise<number> {
   const diffService = new BookListDiffService();
 
   const httpClient = new AxiosHttpClient();
-  const openbdGateway = new OpenBDGateway(httpClient);
-  const isbnDbGateway = new ISBNdbGateway(httpClient, config.api.isbnDbApiKey);
-  const ndlGateway = new NDLGateway(httpClient);
+  const openbdGateway = new OpenBDGateway(httpClient, logger);
+  const isbnDbGateway = new ISBNdbGateway(httpClient, config.api.isbnDbApiKey, logger);
+  const ndlGateway = new NDLGateway(httpClient, logger);
   const googleBooksGateway = new GoogleBooksGateway(httpClient, config.api.googleBooksApiKey);
   const ciNiiGateway = new CiNiiGateway(httpClient, config.api.ciniiAppId);
   const mathLibGateway = new MathLibCatalogGateway(httpClient);
