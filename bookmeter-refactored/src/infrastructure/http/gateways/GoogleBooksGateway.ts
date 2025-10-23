@@ -23,7 +23,11 @@ type GoogleBooksResponse = {
 };
 
 export class GoogleBooksGateway implements SingleBookGateway {
-  constructor(private readonly http: HttpClient, private readonly apiKey: string, private readonly logger: Logger) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly apiKey: string,
+    private readonly logger: Logger
+  ) {}
 
   async enrich(book: Book, _mode: BookMode): Promise<Book> {
     const identifier = book.isbnOrAsin;

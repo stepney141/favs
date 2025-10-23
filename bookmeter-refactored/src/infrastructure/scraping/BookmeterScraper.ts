@@ -3,11 +3,9 @@ import type { Book, BookMode } from "@/domain/entities/Book";
 import type { Logger } from "@/shared/logging/Logger";
 import type { Browser, Page } from "puppeteer";
 
-
 import { BOOKMETER_XPATH } from "@/domain/constants/BookmeterSelectors";
 import { BookCollection } from "@/domain/entities/Book";
 import { matchAsin } from "@/domain/services/IsbnService";
-
 
 export interface BookmeterCredentials {
   account: string;

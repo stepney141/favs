@@ -33,7 +33,11 @@ type CiniiResponse = {
 };
 
 export class CiNiiGateway implements SingleBookGateway {
-  constructor(private readonly http: HttpClient, private readonly appId: string, private readonly logger: Logger) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly appId: string,
+    private readonly logger: Logger
+  ) {}
 
   async enrich(book: Book, _mode: BookMode): Promise<Book> {
     const identifier = book.isbnOrAsin;

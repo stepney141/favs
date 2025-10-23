@@ -14,12 +14,5 @@ export const CSV_EXPORT_COLUMNS: Record<BookMode, readonly string[]> = {
     "utokyo_opac",
     "sophia_mathlib_opac"
   ],
-  stacked: [
-    "bookmeter_url",
-    "isbn_or_asin",
-    "book_title",
-    "author",
-    "publisher",
-    "published_date"
-  ]
+  stacked: ["bookmeter_url", "isbn_or_asin", "book_title", "author", "publisher", "published_date"]
 };

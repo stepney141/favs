@@ -11,7 +11,10 @@ import { extractTextFromPDF } from "@/shared/utils/Pdf";
 export class MathLibCatalogGateway implements CollectionGateway {
   private isbnSet: Set<string> | null = null;
 
-  constructor(private readonly http: HttpClient, private readonly logger: Logger) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly logger: Logger
+  ) {}
 
   async enrich(collection: BookCollection, _mode: BookMode): Promise<BookCollection> {
     await this.ensureCatalogLoaded();

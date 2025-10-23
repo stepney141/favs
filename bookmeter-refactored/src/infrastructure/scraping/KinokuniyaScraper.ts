@@ -3,7 +3,6 @@ import type { BookMode } from "@/domain/entities/Book";
 import type { Logger } from "@/shared/logging/Logger";
 import type { Browser, Page } from "puppeteer";
 
-
 import { BookCollection } from "@/domain/entities/Book";
 import { convertIsbn10To13, isAsin, isIsbn10, routeIsbn10 } from "@/domain/services/IsbnService";
 import { sleep } from "@/shared/utils/Delay";
@@ -15,7 +14,10 @@ const KINOKUNIYA_XPATH = {
 } as const;
 
 export class KinokuniyaScraper implements CollectionGateway {
-  constructor(private readonly browserFactory: () => Promise<Browser>, private readonly logger: Logger) {}
+  constructor(
+    private readonly browserFactory: () => Promise<Browser>,
+    private readonly logger: Logger
+  ) {}
 
   async enrich(collection: BookCollection, _mode: BookMode): Promise<BookCollection> {
     const targets = Array.from(collection.values()).filter((book) => {

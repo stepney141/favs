@@ -3,7 +3,11 @@ export type QueueTask<T> = () => Promise<T>;
 export class PromiseQueue {
   private readonly concurrency: number;
   private activeCount = 0;
-  private readonly queue: Array<{ task: QueueTask<any>; resolve: (value: any) => void; reject: (reason?: unknown) => void }> = [];
+  private readonly queue: Array<{
+    task: QueueTask<any>;
+    resolve: (value: any) => void;
+    reject: (reason?: unknown) => void;
+  }> = [];
 
   constructor(concurrency: number) {
     if (concurrency < 1) throw new Error("Concurrency must be >= 1");
