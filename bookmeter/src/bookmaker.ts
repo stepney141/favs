@@ -2,8 +2,8 @@ import path from "path";
 
 import { config } from "dotenv";
 
-import { getNodeProperty, $x, waitForXPath } from "../.libs/pptr-utils";
-import { sleep } from "../.libs/utils";
+import { getNodeProperty, $x, waitForXPath } from "../../.libs/pptr-utils";
+import { sleep } from "../../.libs/utils";
 
 import { JOB_NAME, XPATH, BOOKMETER_BASE_URI, BOOKMETER_DEFAULT_USER_ID } from "./constants";
 import { matchASIN } from "./utils";
@@ -11,7 +11,7 @@ import { matchASIN } from "./utils";
 import type { ASIN, Book, BookList, ISBN10 } from "./types";
 import type { Browser, Page } from "puppeteer";
 
-config({ path: path.join(__dirname, "../.env") });
+config({ path: path.join(__dirname, "../../.env") });
 const bookmeter_username = process.env.BOOKMETER_ACCOUNT!.toString();
 const bookmeter_password = process.env.BOOKMETER_PASSWORD!.toString();
 

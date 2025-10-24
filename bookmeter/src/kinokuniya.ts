@@ -3,9 +3,9 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { open } from "sqlite";
 import { Database } from "sqlite3";
 
-import { CHROME_ARGS } from "../.libs/constants";
-import { $x } from "../.libs/pptr-utils";
-import { sleep } from "../.libs/utils";
+import { CHROME_ARGS } from "../../.libs/constants";
+import { $x } from "../../.libs/pptr-utils";
+import { sleep } from "../../.libs/utils";
 
 import { DEFAULT_CSV_FILENAME, JOB_NAME } from "./constants";
 import { routeIsbn10 } from "./fetchers";

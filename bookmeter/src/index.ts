@@ -5,8 +5,8 @@ import { config } from "dotenv";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import { CHROME_ARGS } from "../.libs/constants";
-import { exportFile } from "../.libs/utils"; // mapToArray is no longer needed here
+import { CHROME_ARGS } from "../../.libs/constants";
+import { exportFile } from "../../.libs/utils"; // mapToArray is no longer needed here
 
 import { Bookmaker } from "./bookmaker";
 import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID, CSV_EXPORT_COLUMNS } from "./constants"; // Import CSV_EXPORT_COLUMNS
@@ -18,7 +18,7 @@ import { buildCsvFileName, getPrevBookList, isBookListDifferent } from "./utils"
 
 import type { BookList, MainFuncOption } from "./types";
 
-config({ path: path.join(__dirname, "../.env") });
+config({ path: path.join(__dirname, "../../.env") });
 const cinii_appid = process.env.CINII_API_APPID!.toString();
 const google_books_api_key = process.env.GOOGLE_BOOKS_API_KEY!.toString();
 const isbnDb_api_key = process.env.ISBNDB_API_KEY!.toString();

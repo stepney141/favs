@@ -1,6 +1,6 @@
 import { type BIBLIOINFO_SOURCES, type CINII_TARGET_TAGS } from "./constants";
 
-import type { Brand } from "../.libs/lib";
+import type { Brand } from "../../.libs/lib";
 
 export type MainFuncOption = {
   mode: "wish" | "stacked";

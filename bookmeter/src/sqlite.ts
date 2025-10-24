@@ -3,7 +3,7 @@ import fs from "node:fs";
 import { open, type Database as SqliteDb } from "sqlite"; // Import Database type
 import { Database } from "sqlite3";
 
-import { exportFile } from "../.libs/utils"; // mapToArray is no longer needed here
+import { exportFile } from "../../.libs/utils"; // mapToArray is no longer needed here
 
 import { JOB_NAME } from "./constants";
 

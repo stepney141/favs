@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import axios, { isAxiosError } from "axios";
 import { XMLParser } from "fast-xml-parser";
 
-import { extractTextFromPDF, PromiseQueue, randomWait, sleep, zip } from "../.libs/utils";
+import { extractTextFromPDF, PromiseQueue, randomWait, sleep, zip } from "../../.libs/utils";
 
 import { CINII_TARGET_TAGS, CINII_TARGETS, JOB_NAME, MATH_LIB_BOOKLIST, REGEX } from "./constants";
 import { convertISBN10To13, getRedirectedUrl, isAsin, isIsbn10 } from "./utils";
