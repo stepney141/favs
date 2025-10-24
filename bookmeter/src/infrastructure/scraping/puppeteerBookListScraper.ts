@@ -5,7 +5,7 @@ import { matchASIN } from "../../domain/valueObjects";
 
 import type { BookListMode, BookListScraper, ScrapeOptions } from "../../application/ports";
 import type { ASIN, Book, BookList, ISBN10 } from "../../domain/types";
-import type { Browser } from "puppeteer";
+import type { Browser, HTTPRequest, Page } from "puppeteer";
 
 type BookmeterCredentials = {
   username: string;
@@ -19,59 +19,58 @@ type Dependencies = {
   credentials?: BookmeterCredentials;
 };
 
-class PuppeteerBookmaker {
-  #browser: Browser;
-  #userId: string;
-  #baseUri: string;
-  #credentials?: BookmeterCredentials;
+type PageRunner = <T>(context: string, task: (page: Page) => Promise<T>) => Promise<T>;
 
-  constructor({ browser, userId, baseUri = BOOKMETER_BASE_URI, credentials }: Dependencies) {
-    this.#browser = browser;
-    this.#userId = userId;
-    this.#baseUri = baseUri;
-    this.#credentials = credentials;
-  }
+type Authenticator = (credentials: BookmeterCredentials) => Promise<void>;
 
-  async scrape(mode: BookListMode, options: ScrapeOptions): Promise<BookList> {
-    const { requireLogin } = options;
+type BookScanner = (bookmeterUrl: string) => Promise<Book>;
 
-    if (requireLogin) {
-      if (!this.#credentials) {
-        throw new Error("Bookmeter credentials are required to perform an authenticated scrape.");
-      }
-      await this.login(this.#credentials);
-    }
+type WishBookListFetcher = (isSignedIn: boolean) => Promise<BookList>;
 
-    if (mode === "wish") {
-      return await this.fetchWishBooks(requireLogin);
-    }
+type StackedBookListFetcher = () => Promise<BookList>;
 
-    if (mode === "stacked") {
-      return await this.fetchStackedBooks();
-    }
+type ScrapeExecutor = (mode: BookListMode, options: ScrapeOptions) => Promise<BookList>;
 
-    const exhaustiveCheck: never = mode;
-    throw new Error(`Unsupported mode supplied to PuppeteerBookmaker: ${exhaustiveCheck satisfies never}`);
-  }
-
-  private async login({ username, password }: BookmeterCredentials): Promise<void> {
-    const page = await this.#browser.newPage();
+const createPageRunner = (browser: Browser): PageRunner => {
+  return async (context, task) => {
+    const page = await browser.newPage();
 
     try {
-      await page.setRequestInterception(true);
-      page.on("request", (interceptedRequest) => {
-        (async () => {
-          if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
-            await interceptedRequest.abort();
-          } else {
-            await interceptedRequest.continue();
-          }
-        })().catch((error) => {
-          console.error("Failed to continue intercepted request during login:", error);
-        });
-      });
+      await configureNetworkInterception(page, context);
+      return await task(page);
+    } finally {
+      await page.close();
+    }
+  };
+};
 
-      await page.goto(`${this.#baseUri}/login`, { waitUntil: "domcontentloaded" });
+const configureNetworkInterception = async (page: Page, context: string): Promise<void> => {
+  await page.setRequestInterception(true);
+  page.on("request", createRequestHandler(context));
+};
+
+const createRequestHandler = (context: string) => {
+  return (interceptedRequest: HTTPRequest) => {
+    (async () => {
+      const url = interceptedRequest.url();
+      const isImage = url.endsWith(".png") || url.endsWith(".jpg");
+
+      if (isImage) {
+        await interceptedRequest.abort();
+        return;
+      }
+
+      await interceptedRequest.continue();
+    })().catch((error) => {
+      console.error(`Failed to continue intercepted request ${context}:`, error);
+    });
+  };
+};
+
+const createAuthenticator = (runWithPage: PageRunner, baseUri: string): Authenticator => {
+  return async ({ username, password }) => {
+    await runWithPage("during login", async (page) => {
+      await page.goto(`${baseUri}/login`, { waitUntil: "domcontentloaded" });
 
       const accountNameInputHandle = await $x(page, XPATH.login.accountNameInput);
       const passwordInputHandle = await $x(page, XPATH.login.passwordInput);
@@ -87,155 +86,13 @@ class PuppeteerBookmaker {
         }),
         loginButtonHandle[0].click()
       ]);
-    } finally {
-      await page.close();
-    }
-  }
+    });
+  };
+};
 
-  private async fetchWishBooks(isSignedIn: boolean): Promise<BookList> {
-    const page = await this.#browser.newPage();
-    const wishBookList: BookList = new Map();
-
-    try {
-      await page.setRequestInterception(true);
-      page.on("request", (interceptedRequest) => {
-        (async () => {
-          if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
-            await interceptedRequest.abort();
-          } else {
-            await interceptedRequest.continue();
-          }
-        })().catch((error) => {
-          console.error("Failed to continue intercepted request while fetching wish books:", error);
-        });
-      });
-
-      if (isSignedIn) {
-        let pageNum = 1;
-        // Authenticated users can read Amazon links directly from the list view.
-        for (;;) {
-          await page.goto(`${this.#baseUri}/users/${this.#userId}/books/wish?page=${pageNum}`, {
-            waitUntil: ["domcontentloaded"]
-          });
-
-          const booksUrlHandle = await $x(page, XPATH.wish.login.booksUrl);
-          const amazonLinkHandle = await $x(page, XPATH.wish.login.amazonLink);
-          const isBookExistHandle = await $x(page, XPATH.wish.login.isBookExist);
-
-          for (let i = 0; i < booksUrlHandle.length; i++) {
-            const bookmeterUrl = String(await getNodeProperty(booksUrlHandle[i], "href"));
-            const amazonUrl = String(await getNodeProperty(amazonLinkHandle[i], "href"));
-            const asin = matchASIN(amazonUrl) as ISBN10 | ASIN;
-
-            wishBookList.set(bookmeterUrl, this.createEmptyBook(bookmeterUrl, asin));
-          }
-
-          if (isBookExistHandle.length === 0) {
-            break;
-          }
-
-          pageNum++;
-        }
-      } else {
-        // Visitors need to open each book page to resolve the Amazon link.
-        let pageNum = 1;
-        let processedCount = 0;
-        let waitSeconds = 1.5;
-
-        for (;;) {
-          await page.goto(`${this.#baseUri}/users/${this.#userId}/books/wish?page=${pageNum}`, {
-            waitUntil: ["domcontentloaded"]
-          });
-
-          const booksUrlHandle = await $x(page, XPATH.wish.guest.booksUrl);
-          if (booksUrlHandle.length === 0) {
-            break;
-          }
-          pageNum++;
-
-          for (const node of booksUrlHandle) {
-            const bookmeterUrl = String(await getNodeProperty(node, "href"));
-            const book = await this.scanEachBook(bookmeterUrl);
-            wishBookList.set(bookmeterUrl, book);
-
-            processedCount++;
-            await sleep(waitSeconds * 1000);
-
-            if (BigInt(processedCount) % 10n === 0n && waitSeconds < 5.5) {
-              waitSeconds += 0.2;
-            }
-          }
-
-          await sleep(40 * 1000);
-        }
-      }
-    } finally {
-      await page.close();
-    }
-
-    return wishBookList;
-  }
-
-  private async fetchStackedBooks(): Promise<BookList> {
-    const page = await this.#browser.newPage();
-    const stackedBookList: BookList = new Map();
-
-    try {
-      await page.setRequestInterception(true);
-      page.on("request", (interceptedRequest) => {
-        (async () => {
-          if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
-            await interceptedRequest.abort();
-          } else {
-            await interceptedRequest.continue();
-          }
-        })().catch((error) => {
-          console.error("Failed to continue intercepted request while fetching stacked books:", error);
-        });
-      });
-
-      let pageNum = 1;
-      for (;;) {
-        await page.goto(`${this.#baseUri}/users/${this.#userId}/books/stacked?page=${pageNum}`, {
-          waitUntil: ["domcontentloaded"]
-        });
-
-        const booksUrlHandle = await $x(page, XPATH.stacked.booksUrl);
-        if (booksUrlHandle.length === 0) {
-          break;
-        }
-        pageNum++;
-
-        for (const node of booksUrlHandle) {
-          const bookmeterUrl = String(await getNodeProperty(node, "href"));
-          const book = await this.scanEachBook(bookmeterUrl);
-          stackedBookList.set(bookmeterUrl, book);
-        }
-      }
-    } finally {
-      await page.close();
-    }
-
-    return stackedBookList;
-  }
-
-  private async scanEachBook(bookmeterUrl: string): Promise<Book> {
-    const page = await this.#browser.newPage();
-
-    try {
-      await page.setRequestInterception(true);
-      page.on("request", (interceptedRequest) => {
-        (async () => {
-          if (interceptedRequest.url().endsWith(".png") || interceptedRequest.url().endsWith(".jpg")) {
-            await interceptedRequest.abort();
-          } else {
-            await interceptedRequest.continue();
-          }
-        })().catch((error) => {
-          console.error("Failed to continue intercepted request while scanning book:", error);
-        });
-      });
-
+const createBookScanner = (runWithPage: PageRunner): BookScanner => {
+  return async (bookmeterUrl) => {
+    return await runWithPage("while scanning book", async (page) => {
       await Promise.all([
         waitForXPath(page, XPATH.book.amazonLink, {
           timeout: 2 * 60 * 1000
@@ -266,35 +123,215 @@ class PuppeteerBookmaker {
         sophia_mathlib_opac: "",
         description: ""
       };
-    } finally {
-      await page.close();
+    });
+  };
+};
+
+const createWishBookListFetcher = ({
+  runWithPage,
+  baseUri,
+  userId,
+  scanBook
+}: {
+  runWithPage: PageRunner;
+  baseUri: string;
+  userId: string;
+  scanBook: BookScanner;
+}): WishBookListFetcher => {
+  return async (isSignedIn) => {
+    if (isSignedIn) {
+      return await runWithPage("while fetching wish books as a signed-in user", async (page) => {
+        const wishBookList: BookList = new Map();
+        let pageNum = 1;
+
+        for (;;) {
+          await page.goto(`${baseUri}/users/${userId}/books/wish?page=${pageNum}`, {
+            waitUntil: ["domcontentloaded"]
+          });
+
+          const booksUrlHandle = await $x(page, XPATH.wish.login.booksUrl);
+          const amazonLinkHandle = await $x(page, XPATH.wish.login.amazonLink);
+          const isBookExistHandle = await $x(page, XPATH.wish.login.isBookExist);
+
+          for (let i = 0; i < booksUrlHandle.length; i++) {
+            const bookmeterUrl = String(await getNodeProperty(booksUrlHandle[i], "href"));
+            const amazonUrl = String(await getNodeProperty(amazonLinkHandle[i], "href"));
+            const asin = matchASIN(amazonUrl) as ISBN10 | ASIN;
+
+            wishBookList.set(bookmeterUrl, createEmptyBook(bookmeterUrl, asin));
+          }
+
+          if (isBookExistHandle.length === 0) {
+            break;
+          }
+
+          pageNum++;
+        }
+
+        return wishBookList;
+      });
     }
-  }
 
-  private createEmptyBook(bookmeterUrl: string, isbnOrAsin: ISBN10 | ASIN): Book {
-    return {
-      bookmeter_url: bookmeterUrl,
-      isbn_or_asin: isbnOrAsin,
-      book_title: "",
-      author: "",
-      publisher: "",
-      published_date: "",
-      exist_in_sophia: "No",
-      exist_in_utokyo: "No",
-      sophia_opac: "",
-      utokyo_opac: "",
-      sophia_mathlib_opac: "",
-      description: ""
-    };
-  }
-}
+    return await runWithPage("while fetching wish books as a guest", async (page) => {
+      const wishBookList: BookList = new Map();
+      let pageNum = 1;
+      let processedCount = 0;
+      let waitSeconds = 1.5;
 
-export function createPuppeteerBookListScraper(dependencies: Dependencies): BookListScraper {
-  const scraper = new PuppeteerBookmaker(dependencies);
+      for (;;) {
+        await page.goto(`${baseUri}/users/${userId}/books/wish?page=${pageNum}`, {
+          waitUntil: ["domcontentloaded"]
+        });
+
+        const booksUrlHandle = await $x(page, XPATH.wish.guest.booksUrl);
+        if (booksUrlHandle.length === 0) {
+          break;
+        }
+        pageNum++;
+
+        for (const node of booksUrlHandle) {
+          const bookmeterUrl = String(await getNodeProperty(node, "href"));
+          const book = await scanBook(bookmeterUrl);
+          wishBookList.set(bookmeterUrl, book);
+
+          processedCount++;
+          await sleep(waitSeconds * 1000);
+
+          if (BigInt(processedCount) % 10n === 0n && waitSeconds < 5.5) {
+            waitSeconds += 0.2;
+          }
+        }
+
+        await sleep(40 * 1000);
+      }
+
+      return wishBookList;
+    });
+  };
+};
+
+const createStackedBooksFetcher = ({
+  runWithPage,
+  baseUri,
+  userId,
+  scanBook
+}: {
+  runWithPage: PageRunner;
+  baseUri: string;
+  userId: string;
+  scanBook: BookScanner;
+}): StackedBookListFetcher => {
+  return async () => {
+    return await runWithPage("while fetching stacked books", async (page) => {
+      const stackedBookList: BookList = new Map();
+      let pageNum = 1;
+
+      for (;;) {
+        await page.goto(`${baseUri}/users/${userId}/books/stacked?page=${pageNum}`, {
+          waitUntil: ["domcontentloaded"]
+        });
+
+        const booksUrlHandle = await $x(page, XPATH.stacked.booksUrl);
+        if (booksUrlHandle.length === 0) {
+          break;
+        }
+        pageNum++;
+
+        for (const node of booksUrlHandle) {
+          const bookmeterUrl = String(await getNodeProperty(node, "href"));
+          const book = await scanBook(bookmeterUrl);
+          stackedBookList.set(bookmeterUrl, book);
+        }
+      }
+
+      return stackedBookList;
+    });
+  };
+};
+
+const createScrapeExecutor = ({
+  login,
+  fetchWishBooks,
+  fetchStackedBooks,
+  credentials
+}: {
+  login: Authenticator;
+  fetchWishBooks: WishBookListFetcher;
+  fetchStackedBooks: StackedBookListFetcher;
+  credentials?: BookmeterCredentials;
+}): ScrapeExecutor => {
+  return async (mode, options) => {
+    const { requireLogin } = options;
+
+    if (requireLogin) {
+      if (!credentials) {
+        throw new Error("Bookmeter credentials are required to perform an authenticated scrape.");
+      }
+
+      await login(credentials);
+    }
+
+    if (mode === "wish") {
+      return await fetchWishBooks(requireLogin);
+    }
+
+    if (mode === "stacked") {
+      return await fetchStackedBooks();
+    }
+
+    const exhaustiveCheck: never = mode;
+    throw new Error(`Unsupported mode supplied to createPuppeteerBookListScraper: ${exhaustiveCheck satisfies never}`);
+  };
+};
+
+const createEmptyBook = (bookmeterUrl: string, isbnOrAsin: ISBN10 | ASIN): Book => {
+  return {
+    bookmeter_url: bookmeterUrl,
+    isbn_or_asin: isbnOrAsin,
+    book_title: "",
+    author: "",
+    publisher: "",
+    published_date: "",
+    exist_in_sophia: "No",
+    exist_in_utokyo: "No",
+    sophia_opac: "",
+    utokyo_opac: "",
+    sophia_mathlib_opac: "",
+    description: ""
+  };
+};
+
+export function createPuppeteerBookListScraper({
+  browser,
+  userId,
+  baseUri = BOOKMETER_BASE_URI,
+  credentials
+}: Dependencies): BookListScraper {
+  const runWithPage = createPageRunner(browser);
+  const login = createAuthenticator(runWithPage, baseUri);
+  const scanBook = createBookScanner(runWithPage);
+  const fetchWishBooks = createWishBookListFetcher({
+    runWithPage,
+    baseUri,
+    userId,
+    scanBook
+  });
+  const fetchStackedBooks = createStackedBooksFetcher({
+    runWithPage,
+    baseUri,
+    userId,
+    scanBook
+  });
+  const scrape = createScrapeExecutor({
+    login,
+    fetchWishBooks,
+    fetchStackedBooks,
+    credentials
+  });
 
   return {
     scrape: async (mode: BookListMode, options: ScrapeOptions) => {
-      return await scraper.scrape(mode, options);
+      return await scrape(mode, options);
     }
   };
 }
