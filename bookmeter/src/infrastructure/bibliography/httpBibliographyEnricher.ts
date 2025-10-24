@@ -3,11 +3,12 @@ import fs from "node:fs/promises";
 import axios, { isAxiosError } from "axios";
 import { XMLParser } from "fast-xml-parser";
 
-import { extractTextFromPDF, PromiseQueue, randomWait, sleep, zip } from "../../.libs/utils";
+import { extractTextFromPDF, PromiseQueue, randomWait, sleep, zip } from "../../../../.libs/utils";
+import { CINII_TARGET_TAGS, CINII_TARGETS, JOB_NAME, MATH_LIB_BOOKLIST } from "../../constants";
+import { convertISBN10To13, isAsin, isIsbn10, PATTERNS } from "../../domain/valueObjects";
+import { getRedirectedUrl } from "../../utils";
 
-import { CINII_TARGET_TAGS, CINII_TARGETS, JOB_NAME, MATH_LIB_BOOKLIST, REGEX } from "./constants";
-import { convertISBN10To13, getRedirectedUrl, isAsin, isIsbn10 } from "./utils";
-
+import type { BibliographyEnricher } from "../../application/ports";
 import type {
   BookList,
   BookSearchState,
@@ -21,10 +22,16 @@ import type {
   ISBN10,
   IsbnDb,
   CiniiTarget
-} from "./types";
+} from "../../domain/types";
 import type { AxiosResponse, AxiosError } from "axios";
 
 const fxp = new XMLParser();
+
+export type BibliographyClientConfig = {
+  ciniiAppId: string;
+  googleBooksApiKey: string;
+  isbnDbApiKey: string;
+};
 
 /**
  * エラーログの簡略化
@@ -369,7 +376,7 @@ async function isBookAvailableInCinii(
       //検索結果が1件以上
 
       const ncidUrl = graph.items[0]["@id"];
-      const ncid = ncidUrl.match(REGEX.ncid_in_cinii_url)?.[0]; //ciniiのURLからncidだけを抽出
+      const ncid = ncidUrl.match(PATTERNS.ncidInCiniiUrl)?.[0]; //ciniiのURLからncidだけを抽出
 
       const infoToUpdate = {
         book_title: graph.items[0]["dc:title"],
@@ -496,7 +503,7 @@ async function configMathlibBookList(listtype: keyof typeof MATH_LIB_BOOKLIST): 
       console.log(`${JOB_NAME}: Completed fetching the list of ${listtype} books in Sophia Univ. Math Lib`);
 
       for await (const page of parsedPdf) {
-        const matchedIsbn = page.matchAll(REGEX.isbn);
+        const matchedIsbn = page.matchAll(PATTERNS.isbn);
         for (const match of matchedIsbn) {
           mathlibIsbnList.add(match[0]);
           await filehandle.appendFile(`${match[0]}\n`);
@@ -518,7 +525,7 @@ export const routeIsbn10 = (isbn10: ISBN10): "Japan" | "Others" => (isbn10[0] ==
 
 async function fetchSingleRequestAPIs(
   searchState: BookSearchState,
-  credential: { cinii: string; google: string; isbnDb: string },
+  credentials: BibliographyClientConfig,
   mathLibIsbnList: Set<string>
 ): Promise<{ bookmeterUrl: string; updatedBook: Book }> {
   const isbn = searchState.book["isbn_or_asin"];
@@ -541,12 +548,12 @@ async function fetchSingleRequestAPIs(
 
       // ISBNdb検索
       if (!updatedSearchState.isFound) {
-        updatedSearchState = await fetchISBNdb(updatedSearchState.book, credential.isbnDb);
+        updatedSearchState = await fetchISBNdb(updatedSearchState.book, credentials.isbnDbApiKey);
       }
     } else {
       // ISBNdb検索
       if (!updatedSearchState.isFound) {
-        updatedSearchState = await fetchISBNdb(updatedSearchState.book, credential.isbnDb);
+        updatedSearchState = await fetchISBNdb(updatedSearchState.book, credentials.isbnDbApiKey);
       }
 
       // NDL検索
@@ -559,7 +566,7 @@ async function fetchSingleRequestAPIs(
 
     // GoogleBooks検索
     if (!updatedSearchState.isFound) {
-      updatedSearchState = await fetchGoogleBooks(updatedSearchState.book, credential.google);
+      updatedSearchState = await fetchGoogleBooks(updatedSearchState.book, credentials.googleBooksApiKey);
     }
 
     await sleep(randomWait(1500, 0.8, 1.2));
@@ -567,7 +574,7 @@ async function fetchSingleRequestAPIs(
     // CiNii所蔵検索
     for (const tag of CINII_TARGET_TAGS) {
       const library = CINII_TARGETS.find((library) => library.tag === tag)!;
-      const ciniiStatus = await isBookAvailableInCinii(updatedSearchState, library, credential.cinii);
+      const ciniiStatus = await isBookAvailableInCinii(updatedSearchState, library, credentials.ciniiAppId);
       if (ciniiStatus.isOwning) {
         updatedSearchState.book = ciniiStatus.book;
       }
@@ -588,31 +595,35 @@ async function fetchSingleRequestAPIs(
   };
 }
 
-export async function fetchBiblioInfo(
-  booklist: BookList,
-  credential: { cinii: string; google: string; isbnDb: string }
-): Promise<BookList> {
+async function enrichBookList(baseList: BookList, credentials: BibliographyClientConfig): Promise<BookList> {
   try {
+    const workingList = new Map(baseList);
     const mathLibIsbnList = await configMathlibBookList("ja");
 
     // OpenBD検索
-    const bookInfoList = await bulkFetchOpenBD(booklist);
+    const bookInfoList = await bulkFetchOpenBD(workingList);
 
     const ps = PromiseQueue();
     for (const bookInfo of bookInfoList) {
-      ps.add(fetchSingleRequestAPIs(bookInfo, credential, mathLibIsbnList));
+      ps.add(fetchSingleRequestAPIs(bookInfo, credentials, mathLibIsbnList));
       const value = (await ps.wait(5)) as false | { bookmeterUrl: string; updatedBook: Book }; // 引数の指定量だけ並列実行
-      if (value !== false) booklist.set(value.bookmeterUrl, value.updatedBook);
+      if (value !== false) workingList.set(value.bookmeterUrl, value.updatedBook);
     }
     ((await ps.all()) as { bookmeterUrl: string; updatedBook: Book }[]).forEach((v) => {
-      booklist.set(v.bookmeterUrl, v.updatedBook);
+      workingList.set(v.bookmeterUrl, v.updatedBook);
     }); // 端数分の処理の待ち合わせ
 
     console.log(`${JOB_NAME}: Searching Completed`);
-    return new Map(booklist);
+    return workingList;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error(`${JOB_NAME}: 書誌情報の取得中にエラーが発生しました: ${errorMessage}`);
-    return booklist; // エラー時は元のbooklistを返す
+    return new Map(baseList); // エラー時は元のbooklistを返す
   }
+}
+
+export function createHttpBibliographyEnricher(config: BibliographyClientConfig): BibliographyEnricher {
+  return {
+    enrich: async (list: BookList) => await enrichBookList(list, config)
+  };
 }

@@ -1,16 +1,6 @@
-import { type BIBLIOINFO_SOURCES, type CINII_TARGET_TAGS } from "./constants";
+import { type BIBLIOINFO_SOURCES, type CINII_TARGET_TAGS } from "../constants";
 
-import type { Brand } from "../../.libs/lib";
-
-export type MainFuncOption = {
-  mode: "wish" | "stacked";
-  userId?: string;
-  doLogin?: boolean;
-  outputFilePath?: OutputFilePath | null;
-  noRemoteCheck?: boolean;
-  skipBookListComparison?: boolean;
-  skipFetchingBiblioInfo?: boolean;
-};
+export type Brand<K, T> = K & { __brand: T };
 
 export type Book = {
   bookmeter_url: string;

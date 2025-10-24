@@ -3,11 +3,11 @@ import fs from "node:fs";
 import { open, type Database as SqliteDb } from "sqlite"; // Import Database type
 import { Database } from "sqlite3";
 
-import { exportFile } from "../../.libs/utils"; // mapToArray is no longer needed here
+import { exportFile } from "../../../../.libs/utils"; // mapToArray is no longer needed here
+import { JOB_NAME } from "../../constants";
 
-import { JOB_NAME } from "./constants";
-
-import type { Book, BookList } from "./types"; // CsvBookList is no longer needed here
+import type { BookListMode, BookListSnapshotStore, CsvExporter } from "../../application/ports";
+import type { Book, BookList } from "../../domain/types"; // CsvBookList is no longer needed here
 
 const DB_FILE = "./books.sqlite";
 
@@ -345,22 +345,31 @@ export async function checkBookDescriptionExists(tableName: string, isbnOrAsin: 
   }
 }
 
-/*
-// Example usages
-(async () => {
-  const wishList = await getPrevBookList("./csv/bookmeter_wish_books.csv");
-  const stackedList = await getPrevBookList("./csv/bookmeter_stacked_books.csv");
-  if (wishList === null || stackedList === null) {
-    console.log("The booklist is not found.");
-    process.exit(1);
-  }
+export function createSqliteBookListSnapshotStore(): BookListSnapshotStore {
+  return {
+    loadPrevious: async (mode: BookListMode) => {
+      try {
+        return await loadBookListFromDatabase(mode);
+      } catch (error) {
+        if (error instanceof Error && error.message.includes("does not exist")) {
+          return null;
+        }
+        throw error;
+      }
+    },
+    save: async (mode: BookListMode, list: BookList) => {
+      await saveBookListToDatabase(list, mode);
+    }
+  };
+}
 
-  try {
-    await saveBookListToDatabase(wishList, "wish");
-    await saveBookListToDatabase(stackedList, "stacked");
-  } catch (error) {
-    console.error(`Error saving book list to database:`, error);
-    process.exit(1);
-  }
-})();
-*/
+export function createSqliteCsvExporter(
+  resolveFilePath: (mode: BookListMode) => string,
+  columns: Record<BookListMode, readonly string[]>
+): CsvExporter {
+  return {
+    export: async (mode: BookListMode, _list: BookList) => {
+      await exportDatabaseTableToCsv(mode, resolveFilePath(mode), columns[mode]);
+    }
+  };
+}

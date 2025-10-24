@@ -8,20 +8,32 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { CHROME_ARGS } from "../../.libs/constants";
 import { exportFile } from "../../.libs/utils"; // mapToArray is no longer needed here
 
-import { Bookmaker } from "./bookmaker";
+import { compareBookLists } from "./application/services/bookListComparison";
 import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID, CSV_EXPORT_COLUMNS } from "./constants"; // Import CSV_EXPORT_COLUMNS
-import { fetchBiblioInfo } from "./fetchers";
-import { uploadDatabaseToFirebase } from "./firebase";
-import { crawlKinokuniya } from "./kinokuniya";
-import { exportDatabaseTableToCsv, saveBookListToDatabase } from "./sqlite";
-import { buildCsvFileName, getPrevBookList, isBookListDifferent } from "./utils";
+import { createHttpBibliographyEnricher } from "./infrastructure/bibliography/httpBibliographyEnricher";
+import { createKinokuniyaDescriptionEnricher } from "./infrastructure/description/kinokuniyaDescriptionEnricher";
+import { createSqliteBookListSnapshotStore, createSqliteCsvExporter } from "./infrastructure/persistence/sqliteGateway";
+import { createPuppeteerBookListScraper } from "./infrastructure/scraping/puppeteerBookListScraper";
+import { createFirebaseStoragePublisher } from "./infrastructure/storage/firebaseStoragePublisher";
+import { buildCsvFileName, getPrevBookList } from "./utils";
 
-import type { BookList, MainFuncOption } from "./types";
+import type { MainFuncOption } from "./application/options";
+import type { BookList } from "./domain/types";
 
 config({ path: path.join(__dirname, "../../.env") });
 const cinii_appid = process.env.CINII_API_APPID!.toString();
 const google_books_api_key = process.env.GOOGLE_BOOKS_API_KEY!.toString();
 const isbnDb_api_key = process.env.ISBNDB_API_KEY!.toString();
+const bookmeterAccount = process.env.BOOKMETER_ACCOUNT ?? null;
+const bookmeterPassword = process.env.BOOKMETER_PASSWORD ?? null;
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY ?? "",
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN ?? "",
+  projectId: process.env.FIREBASE_PROJECT_ID ?? "",
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET ?? "",
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID ?? "",
+  appId: process.env.FIREBASE_APP_ID ?? ""
+};
 
 const stealthPlugin = StealthPlugin();
 /* ref:
@@ -54,8 +66,18 @@ export async function main({
   try {
     const startTime = Date.now();
     const csvFileName = buildCsvFileName(userId, outputFilePath);
+    const csvExporter = createSqliteCsvExporter((currentMode) => csvFileName[currentMode], CSV_EXPORT_COLUMNS);
+    const snapshotStore = createSqliteBookListSnapshotStore();
+    const bibliographyEnricher = createHttpBibliographyEnricher({
+      ciniiAppId: cinii_appid,
+      googleBooksApiKey: google_books_api_key,
+      isbnDbApiKey: isbnDb_api_key
+    });
+    const descriptionEnricher = createKinokuniyaDescriptionEnricher();
+    const backupPublisher = createFirebaseStoragePublisher(firebaseConfig);
+
     if (noRemoteCheck) {
-      console.log(`${JOB_NAME}: To check the remote is disabled`);
+      console.log(`${JOB_NAME}: Remote scraping is disabled; using the previous dataset.`);
     }
 
     const browser = await puppeteer.launch({
@@ -65,86 +87,97 @@ export async function main({
       slowMo: 15
     });
 
-    const prevBookList = await getPrevBookList(csvFileName[mode]);
-    if (prevBookList === null) {
-      console.log(`${JOB_NAME}: The previous result is not found. Path: ${csvFileName[mode]}`);
-      if (noRemoteCheck) throw new Error("前回データが存在しないのにリモートチェックをオフにすることは出来ません");
-    }
+    try {
+      const scraper = createPuppeteerBookListScraper({
+        browser,
+        userId,
+        credentials:
+          bookmeterAccount && bookmeterPassword
+            ? { username: bookmeterAccount, password: bookmeterPassword }
+            : undefined
+      });
 
-    const book = new Bookmaker(browser, userId);
-    const latestBookList = noRemoteCheck
-      ? (prevBookList as BookList)
-      : doLogin
-        ? await book.login().then((book) => book.explore(mode, doLogin))
-        : await book.explore(mode, doLogin);
-    await browser.close();
+      const prevBookList = await getPrevBookList(csvFileName[mode]);
+      if (prevBookList === null) {
+        console.log(`${JOB_NAME}: The previous result is not found. Path: ${csvFileName[mode]}`);
+        if (noRemoteCheck) throw new Error("前回データが存在しないのにリモートチェックをオフにすることは出来ません");
+      }
 
-    const hasDifferences = isBookListDifferent(prevBookList, latestBookList, skipBookListComparison);
-    book.setHasChanges(hasDifferences);
+      const latestBookList = noRemoteCheck
+        ? (prevBookList as BookList)
+        : await scraper.scrape(mode, { requireLogin: doLogin });
 
-    if (hasDifferences) {
-      let updatedBooklist = latestBookList; // Initialize
+      const comparison = compareBookLists(prevBookList, latestBookList, { skipComparison: skipBookListComparison });
+      if (!comparison.hasChanges) {
+        console.log(
+          `${JOB_NAME}: Cannot find any differences between the local and remote. The process will be aborted...`
+        );
+        console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+        return;
+      }
 
+      switch (comparison.reason) {
+        case "SKIPPED":
+          console.log(`${JOB_NAME}: Skipping book list comparison by request; continuing with synchronization.`);
+          break;
+        case "NO_PREVIOUS":
+          console.log(`${JOB_NAME}: The previous result is not found. Path: ${csvFileName[mode]}`);
+          break;
+        case "DIFFERENT":
+          console.log(`${JOB_NAME}: Detected some diffs between the local and remote.`);
+          break;
+      }
+
+      let enrichedBookList = latestBookList;
       if (!skipFetchingBiblioInfo) {
-        // Check the flag
         try {
           console.log(`${JOB_NAME}: Fetching bibliographic information`);
-          updatedBooklist = await fetchBiblioInfo(latestBookList, {
-            // Update if fetched
-            cinii: cinii_appid,
-            google: google_books_api_key,
-            isbnDb: isbnDb_api_key
-          }); //書誌情報取得
+          enrichedBookList = await bibliographyEnricher.enrich(latestBookList);
         } catch (error) {
           console.error(`${JOB_NAME}: Error fetching bibliographic information:`, error);
-          // If fetching fails, updatedBooklist remains latestBookList (as initialized)
         }
       } else {
-        console.log(`${JOB_NAME}: Skipping bibliographic information fetch.`); // Optional: Add a log message
+        console.log(`${JOB_NAME}: Skipping bibliographic information fetch.`);
       }
 
-      // まずSQLiteに保存
-      if (book.hasChanges) {
+      let describedBookList = enrichedBookList;
+      try {
+        console.log(`${JOB_NAME}: Crawling Kinokuniya for book descriptions`);
+        describedBookList = await descriptionEnricher.enrich(mode, enrichedBookList);
+
+        console.log(`${JOB_NAME}: Saving data to SQLite database`);
+        await snapshotStore.save(mode, describedBookList);
+
+        console.log(`${JOB_NAME}: Generating CSV from SQLite database`);
+        await csvExporter.export(mode, describedBookList);
+        console.log(`${JOB_NAME}: Finished writing ${csvFileName[mode]}`);
+
+        console.log(`${JOB_NAME}: Uploading SQLite database to Firebase Storage`);
+        await backupPublisher.publish();
+      } catch (error) {
+        console.error(`${JOB_NAME}: Error during data processing or export:`, error);
+
         try {
-          console.log(`${JOB_NAME}: Crawling Kinokuniya for book descriptions`);
-          // Pass the in-memory BookList directly to crawlKinokuniya instead of loading from CSV
-          await crawlKinokuniya(updatedBooklist, mode);
-
-          console.log(`${JOB_NAME}: Saving data to SQLite database`);
-          await saveBookListToDatabase(updatedBooklist, mode);
-
-          // SQLiteデータベースからCSVを生成 (カラムを指定)
-          console.log(`${JOB_NAME}: Generating CSV from SQLite database`);
-          await exportDatabaseTableToCsv(mode, csvFileName[mode], CSV_EXPORT_COLUMNS[mode]); // Pass columns
-          console.log(`${JOB_NAME}: Finished writing ${csvFileName[mode]}`);
-
-          // SQLiteデータベースをFirebase Storageにアップロード
-          await uploadDatabaseToFirebase();
-        } catch (error) {
-          console.error(`${JOB_NAME}: Error during data processing or export:`, error);
-
-          // エラー発生時はフォールバックとして直接CSVに保存
-          try {
-            console.log(
-              `${JOB_NAME}: Error occurred, falling back to direct CSV export (using all columns except description)`
-            );
-            // フォールバック時は description を除いた全カラムを出力する
-            const fallbackPayload = Array.from(updatedBooklist.values()).map((book) => {
-              const { description, ...rest } = book;
-              return rest;
-            });
-            await exportFile({
-              fileName: csvFileName[mode],
-              payload: fallbackPayload, // Use the modified payload
-              targetType: "csv",
-              mode: "overwrite"
-            });
-            console.log(`${JOB_NAME}: Finished fallback writing to ${csvFileName[mode]}`);
-          } catch (csvError) {
-            console.error(`${JOB_NAME}: Error in fallback CSV export:`, csvError);
-          }
+          console.log(
+            `${JOB_NAME}: Error occurred, falling back to direct CSV export (using all columns except description)`
+          );
+          const fallbackPayload = Array.from(describedBookList.values()).map((book) => {
+            const { description, ...rest } = book;
+            return rest;
+          });
+          await exportFile({
+            fileName: csvFileName[mode],
+            payload: fallbackPayload,
+            targetType: "csv",
+            mode: "overwrite"
+          });
+          console.log(`${JOB_NAME}: Finished fallback writing to ${csvFileName[mode]}`);
+        } catch (csvError) {
+          console.error(`${JOB_NAME}: Error in fallback CSV export:`, csvError);
         }
       }
+    } finally {
+      await browser.close();
     }
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
