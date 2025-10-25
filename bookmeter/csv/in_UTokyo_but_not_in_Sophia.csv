@@ -1,5 +1,4 @@
 isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
-4867930903,奪われた集中力,ヨハン・ハリ／著 福井昌子／翻訳,作品社,20250604,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD12062044
 4297151006,先輩データサイエンティストからの指南書 -実務で生き抜くためのエンジニアリングスキル,浅野純季 木村真也 田中冬馬 武藤克大 栁泉穂,技術評論社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD13063814
 4797396806,インフラ/ネットワークエンジニアのためのネットワーク技術&設計入門 : サーバシステムを支えるネットワークはこうしてできている,"みやた,ひろし",SBクリエイティブ,201906,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB2843445X
 4863136641,"博士が愛した論文 : 研究者19人が語る""偏愛論文""アンソロジー","橋本, 幸士,橋本幸士 [ほか] 著",[object Object],"Wed, 15 Oct 2025 18:53:59 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD13451879
@@ -8,6 +7,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4833422344,哲学用語図鑑 = THE VISUAL DICTIONARY OF PHILOSOPHY 続,"田中,正人,1970- 斎藤,哲也,1971-",プレジデント社,201706,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB18312795
 4833421194,哲学用語図鑑 = THE VISUAL DICTIONARY OF PHILOSOPHY,"田中,正人,1970- 斎藤,哲也,1971-",プレジデント社,201503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB18312795
 4416520379,図解心理学用語大全 = THE VISUAL DICTIONARY OF PSYCHOLOGY : 人物と用語でたどる心の学問,"田中,正人,1970- 斉藤,勇,1943- 玉井,麻由子",誠文堂新光社,202005,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB30569735
+4320115910,不等式七景,原岡喜重,共立出版,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?isbn=4320115910
 4535790108,目で視る曲線と曲面 : 初等微分幾何学入門 (数学セミナーライブラリー),藤森祥一,日本評論社,,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BD13225202
 4774143073,Web開発者のための大規模サービス技術入門 : データ構造、メモリ、OS、DB、サーバ/インフラ (Web+DB press plusシリーズ),"伊藤,直也,1977- 田中,慎司",技術評論社,201008,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB02534164
 4883198979,留学生のための近代文語文入門 = An Introduction to Early Modern Literary Texts : 現代の日本と日本語を知るために,"庵,功雄,1967-",スリーエーネットワーク,202112,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BC11697961
@@ -133,12 +133,7 @@ isbn_or_asin,book_title,author,publisher,published_date,utokyo_opac
 4791769015,キャラの思考法 : 現代文化論のアップグレード,"さやわか,1974-",青土社,201512,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB20350990
 4480092781,魔術的リアリズム : メランコリーの芸術 / ちくま学芸文庫 ; タ4-2,"種村, 季弘, 1933-2004,種村季弘 著",筑摩書房,"Sat, 10 Apr 2010 00:46:19 +0900",https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB01202362
 4167174057,うつくしい子ども (文春文庫),"石田,衣良,1960-",文藝春秋,200112,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA54785181
-4314000430,幻想芸術,"Brion,Marcel 坂崎,乙郎",紀伊國屋書店,196805,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN04841271
-4480093133,グレン・グールドは語る,グレン・グールド／著 ジョナサン・コット／著 宮澤淳一／翻訳,筑摩書房,20101001,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB03476507
 4774176435,あなたの知らない超絶技巧プログラミングの世界,"遠藤,侑介",技術評論社,201510,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB19571008
 4622015994,攻撃 : 悪の自然誌,"Lorenz,Konrad,1903-1989 日高,敏隆,1930-2009 久保,和彦,1928-1989",みすず書房,198504,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BN0041886X
 4873117518,Make:Analog Synthesizers (Make : PROJECTS),"Wilson,Ray,-2016 斉田,一樹,1981- 小池,実,1968- 高橋,達也,1982-",オーム社,201703,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB23352915
 4479750479,魔女論 : なぜ空を飛び、人を喰うか,"大和,岩雄,1928-",大和書房,201110,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB06978410
-4891004568,コードコンプリート : 完全なプログラミングを目指して : マイクロソフト公式 下,"McConnell,Steve クイープ",日経BP出版センター,200503,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA7176045X
-4062922177,醒睡笑 : 全訳注 2217 (講談社学術文庫),"安楽庵,策伝,1554-1642 宮尾,与男,1948-",講談社,201402,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BB14787393
-4434133632,Let Over Lambda : Edition 1.0,"Hoyte,Doug タイムインターメディア",星雲社,200907,https://opac.dl.itc.u-tokyo.ac.jp/opac/opac_openurl?ncid=BA9115019X
