@@ -1,4 +1,9 @@
-import type { ASIN, ISBN10, ISBN13 } from "./types";
+export type Brand<K, T> = K & { __brand: T };
+
+export type ISBN10 = Brand<string, "ISBN10">;
+export type ISBN13 = Brand<string, "ISBN13">;
+export type ASIN = Brand<string, "ASIN">;
+export type BookmeterUrl = Brand<string, "BookmeterUrl">;
 
 // ref: http://absg.hatenablog.com/entry/2016/03/17/190831
 // ref: https://regexr.com/3gk2s
@@ -32,9 +37,15 @@ export const isIsbn13 = (value: ISBN10 | ISBN13 | ASIN): boolean => {
 };
 
 /**
+ * ISBNから出版国を判定
+ */
+export const routeIsbn10 = (isbn10: ISBN10): "Japan" | "Others" => (isbn10[0] === "4" ? "Japan" : "Others");
+export const isJapaneseBook = (isbn: ISBN10): boolean => routeIsbn10(isbn) === "Japan";
+
+/**
  * @link https://qiita.com/iz-j/items/27b9656ebed1a4516ee1
  */
-export const convertISBN10To13 = (isbn10: ISBN10): ISBN13 => {
+export const convertIsbn10To13 = (isbn10: ISBN10): ISBN13 => {
   // 1. 先頭に`978`を足して、末尾の1桁を除く
   const src = `978${isbn10.slice(0, 9)}`;
 
@@ -61,7 +72,7 @@ export const isAsin = (value: ISBN10 | ASIN): boolean => {
   return PATTERNS.amazonAsin.test(value);
 };
 
-export const matchASIN = (url: string): string | null => {
+export const matchAsin = (url: string): string | null => {
   const matched = url.match(PATTERNS.amazonAsin);
   return matched?.[0] ?? null;
 };
