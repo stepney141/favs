@@ -93,7 +93,8 @@ export default tseslint.config(
       "functional/no-loop-statements": "off",
       "functional/no-conditional-statements": "off",
       "functional/no-expression-statements": "off",
-      "functional/no-return-void": "off"
+      "functional/no-return-void": "off",
+      "functional/prefer-immutable-types": "off"
     }
   },
 
