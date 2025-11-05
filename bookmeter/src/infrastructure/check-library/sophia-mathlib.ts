@@ -2,12 +2,12 @@ import fs from "node:fs/promises";
 
 import { extractTextFromPDF } from "../../../../.libs/utils";
 
-import type { HttpClient } from "../../application/interfaces/http-client";
 import type {
   LibraryHoldingsLookupCommand,
   LibraryHoldingsLookupper,
   LibraryLookupStatus
 } from "@/application/check-library";
+import type { HttpClient } from "@/application/interfaces/http-client";
 import type { ISBN10 } from "@/domain/book-id";
 import type { CiniiTargetOrgs } from "@/domain/book-sources";
 import type { AppError, Result } from "@/domain/error";
@@ -25,7 +25,7 @@ const MATH_LIB_BOOKLIST = {
   ],
   en_with_isbn: "https://mathlib-sophia.opac.jp/opac/file/view/1965-2023_F_1.pdf"
 };
-type MathLibBooklistType = keyof typeof MATH_LIB_BOOKLIST;
+export type MathLibBooklistType = keyof typeof MATH_LIB_BOOKLIST;
 
 const updateLookupStatus = (
   status: LibraryLookupStatus,
@@ -72,7 +72,7 @@ export const searchSophiaMathLib: LibraryHoldingsLookupper = (command: LibraryHo
   });
 };
 
-async function configMathlibBookList(
+export async function loadMathlibBookList(
   httpClient: HttpClient,
   listType: MathLibBooklistType
 ): Promise<Result<Set<string>, AppError>> {
@@ -82,7 +82,8 @@ async function configMathlibBookList(
   const filename = `mathlib_${listType}.txt`;
   const filehandle = await fs.open(filename, "w");
 
-  for (const url of pdfUrl) {
+  const urls = Array.isArray(pdfUrl) ? pdfUrl : [pdfUrl];
+  for (const url of urls) {
     const response = await httpClient.get<Uint8Array>(url, {
       responseType: "arraybuffer",
       headers: {
