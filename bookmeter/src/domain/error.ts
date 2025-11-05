@@ -28,7 +28,7 @@ export function Err<E extends Error>(err: E): Err<E> {
   return { ok: false, value: null, err };
 }
 
-export function unwrapResult<T, E extends Error>(result: Result<T, E>): T {
+export function unwrap<T, E extends Error>(result: Result<T, E>): T {
   const { value, ok } = result;
   if (ok === true) {
     return value;
@@ -37,7 +37,7 @@ export function unwrapResult<T, E extends Error>(result: Result<T, E>): T {
   }
 }
 
-export type AppError = ApiError | BookNotFoundError | InvalidIsbnError;
+export type AppError = ApiError | BookNotFoundError | InvalidIsbnError | ConfigError | HttpError;
 
 export class BaseError extends Error {
   constructor(message: string) {
@@ -67,5 +67,17 @@ export class InvalidIsbnError extends BaseError {
 export class ConfigError extends BaseError {
   constructor(message: string) {
     super(`Configuration Error: ${message}`);
+  }
+}
+
+export type HttpErrorContext = {
+  readonly message: string;
+  readonly url: string;
+  readonly status: number;
+};
+
+export class HttpError extends BaseError {
+  constructor(context: HttpErrorContext) {
+    super(`HTTP Error: ${context.message} (Status: ${context.status}) for ${context.url}`);
   }
 }

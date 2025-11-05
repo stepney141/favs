@@ -5,12 +5,11 @@ export type ISBN13 = Brand<string, "ISBN13">;
 export type ASIN = Brand<string, "ASIN">;
 export type BookmeterUrl = Brand<string, "BookmeterUrl">;
 
-// ref: http://absg.hatenablog.com/entry/2016/03/17/190831
 // ref: https://regexr.com/3gk2s
-// ref: https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11143609671
 // ref: https://stackoverflow.com/questions/2123131/determine-if-10-digit-string-is-valid-amazon-asin
 const AMAZON_ASIN_PATTERN = /[A-Z0-9]{10}|[0-9-]{9,16}[0-9X]/;
 
+// ref: https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11143609671
 // ref: https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
 const ISBN_PATTERN =
   /(?=[0-9X]{10}|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}|97[89][0-9]{10}|(?=(?:[0-9]+[- ]){4})[- 0-9]{17})(?:97[89])?[0-9]{1,5}[0-9]+[0-9]+[0-9X]/g;
@@ -18,6 +17,8 @@ const ISBN10_PATTERN =
   /^(?:ISBN(?:-10)?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$)[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/;
 const ISBN13_PATTERN =
   /^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$/;
+
+// ref: http://absg.hatenablog.com/entry/2016/03/17/190831
 const NCID_IN_CINII_URL_PATTERN = /(?<=https:\/\/ci.nii.ac.jp\/ncid\/).*/;
 
 export const PATTERNS = {
@@ -27,6 +28,18 @@ export const PATTERNS = {
   isbn13: ISBN13_PATTERN,
   ncidInCiniiUrl: NCID_IN_CINII_URL_PATTERN
 } as const;
+
+export const isAsin = (value: ISBN10 | ISBN13 | ASIN): boolean => {
+  if (isIsbn10(value) || isIsbn13(value)) {
+    return false;
+  }
+  return PATTERNS.amazonAsin.test(value);
+};
+
+export const matchAsin = (url: string): string | null => {
+  const matched = url.match(PATTERNS.amazonAsin);
+  return matched?.[0] ?? null;
+};
 
 export const isIsbn10 = (value: ISBN10 | ISBN13 | ASIN): boolean => {
   return PATTERNS.isbn10.test(value);
@@ -63,16 +76,4 @@ export const convertIsbn10To13 = (isbn10: ISBN10): ISBN13 => {
 
   // 1.の末尾に3.の値を添えて出来上がり
   return result as ISBN13;
-};
-
-export const isAsin = (value: ISBN10 | ASIN): boolean => {
-  if (isIsbn10(value)) {
-    return false;
-  }
-  return PATTERNS.amazonAsin.test(value);
-};
-
-export const matchAsin = (url: string): string | null => {
-  const matched = url.match(PATTERNS.amazonAsin);
-  return matched?.[0] ?? null;
 };
