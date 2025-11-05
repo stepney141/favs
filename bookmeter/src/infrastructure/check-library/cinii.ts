@@ -125,6 +125,10 @@ export const isBookAvailableInCinii: AsyncLibraryHoldingsLookupper = async (
     dependencies: { httpClient }
   } = command;
 
+  if (!credentials?.ciniiAppId) {
+    return Err(new Error("CiNii API credentials are missing"));
+  }
+
   const identifier = book.isbnOrAsin;
   const encodedTitle = encodeURIComponent(book.title);
   const encodedAuthor = encodeURIComponent(book.author);
