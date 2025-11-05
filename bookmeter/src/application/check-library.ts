@@ -1,4 +1,4 @@
-import type { HttpClient } from "./ports/http-client";
+import type { HttpClient } from "./interfaces/http-client";
 import type { Book } from "../domain/entities/book";
 import type { ApiCredentials } from "@/config/config";
 import type { CiniiTarget, CiniiTargetOrgs } from "@/domain/book-sources";

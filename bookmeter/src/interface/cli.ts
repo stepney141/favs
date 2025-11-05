@@ -9,7 +9,7 @@ import { CHROME_ARGS } from "../../../.libs/constants";
 import { exportFile } from "../../../.libs/utils"; // mapToArray is no longer needed here
 import { createHttpBibliographyEnricher } from "../application/usecases/enrich-bibliography";
 import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID, CSV_EXPORT_COLUMNS } from "../domain/constants"; // Import CSV_EXPORT_COLUMNS
-import { createAxiosHttpClient } from "../infrastructure/ports/axios-http-client";
+import { createAxiosHttpClient } from "../infrastructure/adapters/axios-http-client";
 import { buildCsvFileName, getPrevBookList } from "../infrastructure/utils";
 
 import { compareBookLists } from "./domain/services/bookListComparison";

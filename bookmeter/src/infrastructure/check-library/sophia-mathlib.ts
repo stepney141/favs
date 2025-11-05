@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 
 import { extractTextFromPDF } from "../../../../.libs/utils";
 
-import type { HttpClient } from "./../../application/ports/http-client";
+import type { HttpClient } from "../../application/interfaces/http-client";
 import type {
   LibraryHoldingsLookupCommand,
   LibraryHoldingsLookupper,

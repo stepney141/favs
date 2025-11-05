@@ -2,7 +2,7 @@ import axios, { isAxiosError } from "axios";
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
-import { type HttpClient, type HttpRequestConfig, type HttpResponse } from "@/application/ports/http-client";
+import { type HttpClient, type HttpRequestConfig, type HttpResponse } from "@/application/interfaces/http-client";
 import { Err, HttpError, Ok } from "@/domain/error";
 
 /**

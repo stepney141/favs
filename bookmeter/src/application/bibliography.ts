@@ -1,6 +1,6 @@
 import { createNewBook, type Book } from "../domain/entities/book";
 
-import type { HttpClient } from "./ports/http-client";
+import type { HttpClient } from "./interfaces/http-client";
 import type { ApiCredentials } from "@/config/config";
 import type { AppError, Result } from "@/domain/error";
 
