@@ -5,20 +5,21 @@ import { config } from "dotenv";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import { CHROME_ARGS } from "../../.libs/constants";
-import { exportFile } from "../../.libs/utils"; // mapToArray is no longer needed here
+import { CHROME_ARGS } from "../../../.libs/constants";
+import { exportFile } from "../../../.libs/utils"; // mapToArray is no longer needed here
+import { createHttpBibliographyEnricher } from "../application/usecases/enrich-bibliography";
+import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID, CSV_EXPORT_COLUMNS } from "../domain/constants"; // Import CSV_EXPORT_COLUMNS
+import { createAxiosHttpClient } from "../infrastructure/ports/axios-http-client";
+import { buildCsvFileName, getPrevBookList } from "../infrastructure/utils";
 
-import { compareBookLists } from "./application/services/bookListComparison";
-import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID, CSV_EXPORT_COLUMNS } from "./constants"; // Import CSV_EXPORT_COLUMNS
-import { createHttpBibliographyEnricher } from "./infrastructure/bibliography/httpBibliographyEnricher";
+import { compareBookLists } from "./domain/services/bookListComparison";
 import { createKinokuniyaDescriptionEnricher } from "./infrastructure/description/kinokuniyaDescriptionEnricher";
 import { createSqliteBookListSnapshotStore, createSqliteCsvExporter } from "./infrastructure/persistence/sqliteGateway";
 import { createPuppeteerBookListScraper } from "./infrastructure/scraping/puppeteerBookListScraper";
 import { createFirebaseStoragePublisher } from "./infrastructure/storage/firebaseStoragePublisher";
-import { buildCsvFileName, getPrevBookList } from "./utils";
 
-import type { MainFuncOption } from "./application/options";
-import type { BookList } from "./domain/types";
+import type { MainFuncOption } from "./options";
+import type { BookList } from "../domain/types";
 
 config({ path: path.join(__dirname, "../../.env") });
 const cinii_appid = process.env.CINII_API_APPID!.toString();
@@ -68,11 +69,15 @@ export async function main({
     const csvFileName = buildCsvFileName(userId, outputFilePath);
     const csvExporter = createSqliteCsvExporter((currentMode) => csvFileName[currentMode], CSV_EXPORT_COLUMNS);
     const snapshotStore = createSqliteBookListSnapshotStore();
-    const bibliographyEnricher = createHttpBibliographyEnricher({
-      ciniiAppId: cinii_appid,
-      googleBooksApiKey: google_books_api_key,
-      isbnDbApiKey: isbnDb_api_key
-    });
+    const httpClient = createAxiosHttpClient();
+    const bibliographyEnricher = createHttpBibliographyEnricher(
+      {
+        ciniiAppId: cinii_appid,
+        googleBooksApiKey: google_books_api_key,
+        isbnDbApiKey: isbnDb_api_key
+      },
+      { httpClient }
+    );
     const descriptionEnricher = createKinokuniyaDescriptionEnricher();
     const backupPublisher = createFirebaseStoragePublisher(firebaseConfig);
 

@@ -3,9 +3,9 @@ import fs from "node:fs";
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 
-import { JOB_NAME } from "../../constants";
+import { JOB_NAME } from "../domain/constants";
 
-import type { BackupPublisher } from "../../application/ports";
+import type { BackupPublisher } from "../application/ports";
 
 const DEFAULT_DB_FILE = "./books.sqlite";
 const DEFAULT_DB_STORAGE_PATH = "bookmeter/books.sqlite";

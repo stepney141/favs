@@ -4,10 +4,10 @@ import { open, type Database as SqliteDb } from "sqlite"; // Import Database typ
 import { Database } from "sqlite3";
 
 import { exportFile } from "../../../../.libs/utils"; // mapToArray is no longer needed here
-import { JOB_NAME } from "../../constants";
+import { JOB_NAME } from "../../domain/constants";
 
-import type { BookListMode, BookListSnapshotStore, CsvExporter } from "../../application/ports";
 import type { Book, BookList } from "../../domain/types"; // CsvBookList is no longer needed here
+import type { BookListMode, BookListSnapshotStore, CsvExporter } from "../../interface/ports";
 
 const DB_FILE = "./books.sqlite";
 

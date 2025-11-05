@@ -28,4 +28,4 @@ export type CiniiTarget = {
 };
 
 export const BIBLIOINFO_SOURCES = ["OpenBD", "ISBNdb", "NDL", "GoogleBooks"] as const;
-export type BiblioinfoSource = (typeof BIBLIOINFO_SOURCES)[number];
+export type BiblioInfoSource = (typeof BIBLIOINFO_SOURCES)[number];

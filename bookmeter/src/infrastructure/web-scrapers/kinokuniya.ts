@@ -3,16 +3,17 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { open } from "sqlite";
 import { Database } from "sqlite3";
 
-import { CHROME_ARGS } from "../../../../.libs/constants";
-import { $x } from "../../../../.libs/pptr-utils";
-import { sleep } from "../../../../.libs/utils";
-import { JOB_NAME } from "../../constants";
-import { convertISBN10To13, isAsin, isIsbn10 } from "../../domain/valueObjects";
-import { routeIsbn10 } from "../bibliography/httpBibliographyEnricher";
-import { checkBookDescriptionExists, updateDescription } from "../persistence/sqliteGateway";
+import { CHROME_ARGS } from "../../../.libs/constants";
+import { $x } from "../../../.libs/pptr-utils";
+import { sleep } from "../../../.libs/utils";
+import { convertISBN10To13, isAsin, isIsbn10 } from "../../domain/book-id";
+import { JOB_NAME } from "../domain/constants";
 
-import type { DescriptionEnricher, BookListMode } from "../../application/ports";
-import type { BookList, ISBN10 } from "../../domain/types";
+import { routeIsbn10 } from "./httpBibliographyEnricher";
+import { checkBookDescriptionExists, updateDescription } from "./sqliteGateway";
+
+import type { DescriptionEnricher, BookListMode } from "../application/ports";
+import type { BookList, ISBN10 } from "../domain/types";
 import type { Browser, Page } from "puppeteer";
 
 const stealthPlugin = StealthPlugin();
@@ -20,12 +21,6 @@ stealthPlugin.enabledEvasions.delete("iframe.contentWindow");
 stealthPlugin.enabledEvasions.delete("navigator.plugins");
 stealthPlugin.enabledEvasions.delete("media.codecs");
 puppeteer.use(stealthPlugin);
-
-const KINOKUNIYA_XPATH = {
-  出版社内容情報: '//div[@class="career_box"]/h3[text()="出版社内容情報"]/following-sibling::p[1]',
-  内容説明: '//div[@class="career_box"]/h3[text()="内容説明"]/following-sibling::p[1]',
-  目次: '//div[@class="career_box"]/h3[text()="目次"]/following-sibling::p[1]'
-};
 
 type KinokuniyaEnricherDependencies = {
   browserFactory?: () => Promise<Browser>;

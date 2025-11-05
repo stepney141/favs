@@ -1,13 +1,9 @@
 import * as fsSync from "node:fs";
 import fs from "node:fs/promises";
 
-import { parse } from "papaparse";
+import { FetchError } from "node-fetch";
 
-import { BOOKMETER_DEFAULT_USER_ID, DEFAULT_CSV_FILENAME, JOB_NAME } from "./constants";
-import { loadBookListFromDatabase } from "./infrastructure/persistence/sqliteGateway";
-
-import type { Book, BookList, OutputFilePath } from "./domain/types";
-import type { ParseResult } from "papaparse";
+import { Err, HttpError, Ok, type Result } from "@/domain/error";
 
 /**
  * OPACのリダイレクトURLを取得
@@ -17,50 +13,30 @@ import type { ParseResult } from "papaparse";
  input: https://www.lib.sophia.ac.jp/opac/opac_openurl/?isbn=4326000481 //valid
  => https://www.lib.sophia.ac.jp/opac/opac_details/?lang=0&opkey=B170611882191096&srvce=0&amode=11&bibid=1003102195
  */
-export const getRedirectedUrl = async (targetUrl: string): Promise<string | undefined> => {
+export const getRedirectedUrl = async (targetUrl: string): Promise<Result<string, HttpError>> => {
   try {
     const response = await fetch(targetUrl, {
       redirect: "follow"
     });
-    return response.url;
+    return Ok(response.url);
   } catch (error) {
-    console.log(error);
-    return undefined;
+    if (error instanceof FetchError) {
+      return Err(
+        new HttpError({
+          message: error.message,
+          status: error.code === undefined ? 0 : Number(error.code),
+          url: targetUrl
+        })
+      );
+    }
+    return Err(
+      new HttpError({
+        message: "Unknown error occurred during getRedirectedUrl",
+        status: 0,
+        url: targetUrl
+      })
+    );
   }
-};
-
-export const buildCsvFileName = (userId: string, filePath: OutputFilePath | null = null): OutputFilePath => {
-  if (filePath === null) {
-    if (userId === BOOKMETER_DEFAULT_USER_ID) return DEFAULT_CSV_FILENAME;
-    return {
-      wish: `./csv/${userId}_bookmeter_wish_books.csv`,
-      stacked: `./csv/${userId}_bookmeter_stacked_books.csv`
-    };
-  } else {
-    return filePath;
-  }
-};
-
-export const readBookListCSV = async (filename: string) => {
-  /* ref: 
-  - https://garafu.blogspot.com/2017/06/nodejs-exists-directory.html
-  - https://nodejs.org/docs/latest/api/fs.html#fs_fs_access_path_mode_callback
-  >> Do not use fs.access() to check for the accessibility of a file before calling fs.open(), fs.readFile(), or fs.writeFile().
-  >> Doing so introduces a race condition, since other processes may change the file's state between the two calls.
-  >> Instead, user code should open/read/write the file directly and handle the error raised if the file is not accessible.
-  */
-  try {
-    await fs.access(filename);
-  } catch {
-    return null;
-  }
-
-  const data = await fs.readFile(filename, "utf-8");
-  const parsedObj = parse(data, {
-    header: true,
-    complete: (results: ParseResult<Book>) => results
-  });
-  return parsedObj.data;
 };
 
 /**
@@ -118,20 +94,4 @@ export const getPrevBookList = async (filename: string): Promise<BookList | null
     console.error(`${JOB_NAME}: Error in getPrevBookList:`, error);
     return null;
   }
-};
-
-/**
- * 前回の書籍リストをCSVから読み出し、Mapにデシリアライズする
- * 後方互換性のために保持
- */
-export const getPrevBookListFromCsv = async (filename: string): Promise<BookList | null> => {
-  const csv = await readBookListCSV(filename);
-  if (csv === null) return null;
-
-  const prevList: BookList = new Map();
-  for (const obj of csv) {
-    if (obj["bookmeter_url"] === "") continue;
-    prevList.set(obj["bookmeter_url"], { ...obj });
-  }
-  return prevList;
 };
