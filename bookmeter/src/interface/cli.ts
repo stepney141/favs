@@ -8,8 +8,15 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { CHROME_ARGS } from "../../../.libs/constants";
 import { exportFile } from "../../../.libs/utils"; // mapToArray is no longer needed here
 import { createHttpBibliographyEnricher } from "../application/usecases/enrich-bibliography";
+import { CINII_TARGETS } from "../domain/book-sources";
 import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID, CSV_EXPORT_COLUMNS } from "../domain/constants"; // Import CSV_EXPORT_COLUMNS
 import { createAxiosHttpClient } from "../infrastructure/adapters/axios-http-client";
+import { fetchGoogleBooks } from "../infrastructure/bibliography/google-books";
+import { createIsbnDbFetcher } from "../infrastructure/bibliography/isbn-db";
+import { fetchNDL } from "../infrastructure/bibliography/ndl";
+import { bulkFetchOpenBD } from "../infrastructure/bibliography/openbd";
+import { isBookAvailableInCinii } from "../infrastructure/check-library/cinii";
+import { loadMathlibBookList, searchSophiaMathLib } from "../infrastructure/check-library/sophia-mathlib";
 import { buildCsvFileName, getPrevBookList } from "../infrastructure/utils";
 
 import { compareBookLists } from "./domain/services/bookListComparison";
@@ -70,14 +77,30 @@ export async function main({
     const csvExporter = createSqliteCsvExporter((currentMode) => csvFileName[currentMode], CSV_EXPORT_COLUMNS);
     const snapshotStore = createSqliteBookListSnapshotStore();
     const httpClient = createAxiosHttpClient();
-    const bibliographyEnricher = createHttpBibliographyEnricher(
-      {
+    const bibliographyEnricher = createHttpBibliographyEnricher({
+      httpClient,
+      openBd: bulkFetchOpenBD,
+      sequentialFetchers: [
+        { target: "NDL", enrich: fetchNDL },
+        { target: "ISBNdb", enrich: createIsbnDbFetcher },
+        { target: "GoogleBooks", enrich: fetchGoogleBooks }
+      ],
+      libraryLookups: CINII_TARGETS.map((target) => ({
+        target,
+        lookupper: isBookAvailableInCinii
+      })),
+      mathLibrary: {
+        target: CINII_TARGETS.find((library) => library.tag === "sophia"),
+        lookupper: searchSophiaMathLib,
+        catalogProvider: () => loadMathlibBookList(httpClient, "ja")
+      },
+      credentials: {
         ciniiAppId: cinii_appid,
         googleBooksApiKey: google_books_api_key,
-        isbnDbApiKey: isbnDb_api_key
-      },
-      { httpClient }
-    );
+        isbnDbApiKey: isbnDb_api_key,
+        firebase: firebaseConfig
+      }
+    });
     const descriptionEnricher = createKinokuniyaDescriptionEnricher();
     const backupPublisher = createFirebaseStoragePublisher(firebaseConfig);
 

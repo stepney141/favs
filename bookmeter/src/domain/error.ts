@@ -37,7 +37,15 @@ export function unwrap<T, E extends Error>(result: Result<T, E>): T {
   }
 }
 
-export type AppError = ApiError | BookNotFoundError | InvalidIsbnError | ConfigError | HttpError;
+export type AppError =
+  | ApiError
+  | BookNotFoundError
+  | InvalidIsbnError
+  | ConfigError
+  | HttpError
+  | ScrapeError
+  | LoginError
+  | NetworkError;
 
 export class BaseError extends Error {
   constructor(message: string) {
@@ -79,5 +87,32 @@ export type HttpErrorContext = {
 export class HttpError extends BaseError {
   constructor(context: HttpErrorContext) {
     super(`HTTP Error: ${context.message} (Status: ${context.status}) for ${context.url}`);
+  }
+}
+
+export class ScrapeError extends BaseError {
+  constructor(
+    message: string,
+    public readonly url?: string
+  ) {
+    super(`Scraping Error: ${message}${url ? ` (URL: ${url})` : ""}`);
+  }
+}
+
+export class LoginError extends BaseError {
+  constructor(message: string) {
+    super(`Login Error: ${message}`);
+  }
+}
+
+export class NetworkError extends BaseError {
+  constructor(
+    message: string,
+    public readonly cause?: Error
+  ) {
+    super(`Network Error: ${message}`);
+    if (cause) {
+      this.stack = `${this.stack}\nCaused by: ${cause.stack}`;
+    }
   }
 }
