@@ -53,7 +53,6 @@ export const isIsbn13 = (value: ISBN10 | ISBN13 | ASIN): boolean => {
  * ISBNから出版国を判定
  */
 export const routeIsbn10 = (isbn10: ISBN10): "Japan" | "Others" => (isbn10[0] === "4" ? "Japan" : "Others");
-export const isJapaneseBook = (isbn: ISBN10): boolean => routeIsbn10(isbn) === "Japan";
 
 /**
  * @link https://qiita.com/iz-j/items/27b9656ebed1a4516ee1

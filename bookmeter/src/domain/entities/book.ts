@@ -19,28 +19,3 @@ export type Book = {
 
 export type ExistIn = `exist_in_${CiniiTargetOrgs}`;
 export type OpacLink = `${Lowercase<CiniiTargetOrgs>}_opac`;
-
-export interface CreateBookParams {
-  bookmeterUrl: BookmeterUrl;
-  isbnOrAsin: ISBN10 | ASIN;
-  title?: string;
-  author?: string;
-  publisher?: string;
-  publishedDate?: string;
-}
-
-export function createNewBook(params: CreateBookParams): Book {
-  return {
-    ...params,
-    title: params.title ?? "",
-    author: params.author ?? "",
-    publisher: "",
-    publishedDate: "",
-    exist_in_sophia: "No",
-    exist_in_utokyo: "No",
-    sophia_opac: "",
-    utokyo_opac: "",
-    sophiaMathlibOpac: "",
-    description: ""
-  };
-}

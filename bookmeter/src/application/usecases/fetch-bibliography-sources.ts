@@ -12,9 +12,9 @@ import type { ApiCredentials } from "@/config/config";
 import type { Book } from "@/domain/entities/book";
 import type { BookList } from "@/domain/types";
 
-import { isAsin, isIsbn10, routeIsbn10, type ISBN10 } from "@/domain/book-id";
 import { BIBLIOINFO_SOURCES, type BiblioInfoSource } from "@/domain/book-sources";
 import { isErr } from "@/domain/error";
+import { isJapaneseIsbn, calculateFetcherPriority } from "@/domain/services/isbn-routing-service";
 
 const OPENBD_SOURCE = "OpenBD" as const;
 // Matches the legacy 1.5s ±20% back-off that kept public APIs happy.
@@ -180,42 +180,7 @@ function orderSequentialFetchers(fetchers: readonly SequentialFetcher[], book: B
     return fetchers;
   }
   const isJapan = isJapaneseIsbn(book.isbnOrAsin);
-  return [...fetchers].sort((a, b) => fetcherPriority(a, isJapan) - fetcherPriority(b, isJapan));
-}
-
-/**
- * Calculates the priority of a fetcher based on ISBN origin.
- * Lower numbers = higher priority.
- *
- * @param fetcher - The fetcher to calculate priority for
- * @param isJapan - Whether the ISBN is Japanese
- * @returns Priority value (0 = highest, 2 = lowest)
- */
-function fetcherPriority(fetcher: SequentialFetcher, isJapan: boolean): number {
-  if (fetcher.target === "NDL") {
-    return isJapan ? 0 : 1;
-  }
-  if (fetcher.target === "ISBNdb") {
-    return isJapan ? 1 : 0;
-  }
-  return 2;
-}
-
-/**
- * Determines if an identifier represents a Japanese ISBN.
- * Uses ISBN-10 group identifier routing to detect Japanese ISBNs (group 4).
- *
- * @param identifier - The ISBN or ASIN to check
- * @returns true if this is a Japanese ISBN-10
- */
-function isJapaneseIsbn(identifier: Book["isbnOrAsin"]): boolean {
-  if (identifier === null || identifier === undefined) {
-    return false;
-  }
-  if (isAsin(identifier) || !isIsbn10(identifier)) {
-    return false;
-  }
-  return routeIsbn10(identifier as ISBN10) === "Japan";
+  return [...fetchers].sort((a, b) => calculateFetcherPriority(a.target, isJapan) - calculateFetcherPriority(b.target, isJapan));
 }
 
 /**

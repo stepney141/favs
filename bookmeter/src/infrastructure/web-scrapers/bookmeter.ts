@@ -5,13 +5,14 @@ import { createBookRepository } from "../repositories/in-memory-book-repository"
 import { bookmeterXPath } from "./selector";
 
 import type { BookCollectionScraper, ScrapeOptions } from "../../interface/ports";
+import type { Book } from "@/domain/entities/book";
 import type { BookCollectionMode, BookRepository } from "@/domain/repositories/bookRepository";
 import type { BookmeterUrl } from "@/domain/types";
 import type { Browser, HTTPRequest, Page } from "puppeteer";
 
 import { matchAsin, type ISBN10, type ASIN } from "@/domain/book-id";
-import { createNewBook, type Book } from "@/domain/entities/book";
 import { Ok, Err, type Result, type AppError, ScrapeError, LoginError, NetworkError, isErr } from "@/domain/error";
+import { createNewBook } from "@/domain/factories/book-factory";
 
 const BOOKMETER_BASE_URI = "https://bookmeter.com";
 

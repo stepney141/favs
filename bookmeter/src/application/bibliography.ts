@@ -1,6 +1,7 @@
-import { createNewBook, type Book } from "../domain/entities/book";
+import { createNewBook } from "../domain/factories/book-factory";
 
 import type { HttpClient } from "./interfaces/http-client";
+import type { Book } from "../domain/entities/book";
 import type { ApiCredentials } from "@/config/config";
 import type { AppError, Result } from "@/domain/error";
 
