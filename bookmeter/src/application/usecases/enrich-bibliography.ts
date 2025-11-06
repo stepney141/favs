@@ -1,11 +1,5 @@
 import { PromiseQueue } from "../../../../.libs/utils";
-import type { BibliographyLookupResult, BulkBibliographyEnricher } from "../bibliography";
-import type { ApiCredentials } from "@/config/config";
-import type { Book } from "@/domain/entities/book";
-import type { AppError, Result } from "@/domain/error";
-import type { BookList, BookmeterUrl } from "@/domain/types";
-import { Err, Ok, isErr } from "@/domain/error";
-import { HttpClient } from "../interfaces/http-client";
+
 import { type SequentialFetcher, buildOpenBdCommand, runSequentialFetchers } from "./fetch-bibliography-sources";
 import {
   type LibraryLookupDependency,
@@ -13,6 +7,15 @@ import {
   resolveMathLibraryCatalog,
   runLibraryLookups
 } from "./library-holdings-lookup";
+
+import type { BibliographyLookupResult, BulkBibliographyEnricher } from "../bibliography";
+import type { HttpClient } from "../interfaces/http-client";
+import type { ApiCredentials } from "@/config/config";
+import type { Book } from "@/domain/entities/book";
+import type { AppError, Result } from "@/domain/error";
+import type { BookList, BookmeterUrl } from "@/domain/types";
+
+import { Err, Ok, isErr } from "@/domain/error";
 
 const DEFAULT_CONCURRENCY = 5;
 

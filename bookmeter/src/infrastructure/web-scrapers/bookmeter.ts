@@ -1,5 +1,6 @@
 import { getNodeProperty, $x, waitForXPath } from "../../../../.libs/pptr-utils";
 import { sleep } from "../../../../.libs/utils";
+import { createBookRepository } from "../repositories/in-memory-book-repository";
 
 import { bookmeterXPath } from "./selector";
 
@@ -10,8 +11,7 @@ import type { Browser, HTTPRequest, Page } from "puppeteer";
 
 import { matchAsin, type ISBN10, type ASIN } from "@/domain/book-id";
 import { createNewBook, type Book } from "@/domain/entities/book";
-import { Ok, Err, type Result, type AppError, ScrapeError, LoginError, NetworkError } from "@/domain/error";
-import { wishedBookCollection, stackedBookCollection } from "@/domain/repositories/bookRepository";
+import { Ok, Err, type Result, type AppError, ScrapeError, LoginError, NetworkError, isErr } from "@/domain/error";
 
 const BOOKMETER_BASE_URI = "https://bookmeter.com";
 
@@ -31,7 +31,7 @@ type Dependencies = {
  * ネットワークインターセプションを設定する
  * Pageの内部状態を変更するだけで、新しいPageは返さない
  */
-const configureNetworkInterception = async (page: Page): Promise<Result<void, NetworkError>> => {
+async function configureNetworkInterception(page: Page): Promise<Result<void, NetworkError>> {
   try {
     await page.setRequestInterception(true);
     page.on("request", (interceptedRequest: HTTPRequest) => {
@@ -55,16 +55,16 @@ const configureNetworkInterception = async (page: Page): Promise<Result<void, Ne
     }
     return Err(new NetworkError(`Failed to set up network interception: ${String(error)}`));
   }
-};
+}
 
 /**
  * ログイン処理を行う
  * Pageの内部状態（Cookie等）を変更するだけで、新しいPageは返さない
  */
-const authenticatePage = async (
+async function authenticatePage(
   page: Page,
   credentials: BookmeterCredentials
-): Promise<Result<Page, LoginError | NetworkError>> => {
+): Promise<Result<Page, LoginError | NetworkError>> {
   try {
     await page.goto(`${BOOKMETER_BASE_URI}/login`, { waitUntil: "domcontentloaded" });
 
@@ -97,12 +97,12 @@ const authenticatePage = async (
     }
     return Err(new LoginError(`Login failed with unknown error: ${String(error)}`));
   }
-};
+}
 
 /**
  * 1冊の書籍情報をスキャンする
  */
-const scanBook = async (page: Page, bookmeterUrl: BookmeterUrl): Promise<Result<Book, ScrapeError | NetworkError>> => {
+async function scanBook(page: Page, bookmeterUrl: BookmeterUrl): Promise<Result<Book, ScrapeError | NetworkError>> {
   try {
     await Promise.all([
       waitForXPath(page, bookmeterXPath.book.amazonLink, {
@@ -145,135 +145,159 @@ const scanBook = async (page: Page, bookmeterUrl: BookmeterUrl): Promise<Result<
     }
     return Err(new ScrapeError(`Failed to scan book with unknown error: ${String(error)}`, bookmeterUrl as string));
   }
-};
+}
 
 /**
  * 欲しい本リストを取得する（ログイン時）
  */
-const fetchWishBooksAsSignedIn = async (page: Page, userId: string): Promise<BookRepository> => {
-  let pageNum = 1;
+async function fetchWishBooksAsSignedIn(page: Page, userId: string): Promise<Result<BookRepository, AppError>> {
+  try {
+    const repository = createBookRepository("wish");
+    let pageNum = 1;
 
-  for (;;) {
-    await page.goto(`${BOOKMETER_BASE_URI}/users/${userId}/books/wish?page=${pageNum}`, {
-      waitUntil: ["domcontentloaded"]
-    });
+    for (;;) {
+      await page.goto(`${BOOKMETER_BASE_URI}/users/${userId}/books/wish?page=${pageNum}`, {
+        waitUntil: ["domcontentloaded"]
+      });
 
-    const booksUrlHandle = await $x(page, bookmeterXPath.wish.login.booksUrl);
-    const amazonLinkHandle = await $x(page, bookmeterXPath.wish.login.amazonLink);
-    const isBookExistHandle = await $x(page, bookmeterXPath.wish.login.isBookExist);
+      const booksUrlHandle = await $x(page, bookmeterXPath.wish.login.booksUrl);
+      const amazonLinkHandle = await $x(page, bookmeterXPath.wish.login.amazonLink);
+      const isBookExistHandle = await $x(page, bookmeterXPath.wish.login.isBookExist);
 
-    for (let i = 0; i < booksUrlHandle.length; i++) {
-      const bookmeterUrl = String(await getNodeProperty(booksUrlHandle[i], "href")) as BookmeterUrl;
-      const amazonUrl = String(await getNodeProperty(amazonLinkHandle[i], "href"));
-      const asinString = matchAsin(amazonUrl);
+      for (let i = 0; i < booksUrlHandle.length; i++) {
+        const bookmeterUrl = String(await getNodeProperty(booksUrlHandle[i], "href")) as BookmeterUrl;
+        const amazonUrl = String(await getNodeProperty(amazonLinkHandle[i], "href"));
+        const asinString = matchAsin(amazonUrl);
 
-      if (asinString) {
-        const book = createNewBook({
-          bookmeterUrl,
-          isbnOrAsin: asinString as ISBN10 | ASIN
-        });
-        wishedBookCollection.upsert(book);
+        if (asinString) {
+          const book = createNewBook({
+            bookmeterUrl,
+            isbnOrAsin: asinString as ISBN10 | ASIN
+          });
+          repository.upsert(book);
+        }
       }
+
+      if (isBookExistHandle.length === 0) {
+        break;
+      }
+
+      pageNum++;
     }
 
-    if (isBookExistHandle.length === 0) {
-      break;
+    return Ok(repository);
+  } catch (error) {
+    if (error instanceof Error) {
+      return Err(new ScrapeError(`Failed to fetch wish books: ${error.message}`));
     }
-
-    pageNum++;
+    return Err(new ScrapeError(`Failed to fetch wish books with unknown error: ${String(error)}`));
   }
-
-  return wishedBookCollection;
-};
+}
 
 /**
  * 欲しい本リストを取得する（ゲスト時）
  */
-const fetchWishBooksAsGuest = async (page: Page, userId: string): Promise<BookRepository> => {
-  let pageNum = 1;
-  let processedCount = 0;
-  let waitSeconds = 1.5;
+async function fetchWishBooksAsGuest(page: Page, userId: string): Promise<Result<BookRepository, AppError>> {
+  try {
+    const repository = createBookRepository("wish");
+    let pageNum = 1;
+    let processedCount = 0;
+    let waitSeconds = 1.5;
 
-  for (;;) {
-    await page.goto(`${BOOKMETER_BASE_URI}/users/${userId}/books/wish?page=${pageNum}`, {
-      waitUntil: ["domcontentloaded"]
-    });
+    for (;;) {
+      await page.goto(`${BOOKMETER_BASE_URI}/users/${userId}/books/wish?page=${pageNum}`, {
+        waitUntil: ["domcontentloaded"]
+      });
 
-    const booksUrlHandle = await $x(page, bookmeterXPath.wish.guest.booksUrl);
-    if (booksUrlHandle.length === 0) {
-      break;
-    }
-    pageNum++;
+      const booksUrlHandle = await $x(page, bookmeterXPath.wish.guest.booksUrl);
+      if (booksUrlHandle.length === 0) {
+        break;
+      }
+      pageNum++;
 
-    for (const node of booksUrlHandle) {
-      const bookmeterUrl = String(await getNodeProperty(node, "href")) as BookmeterUrl;
-      const bookResult = await scanBook(page, bookmeterUrl);
+      for (const node of booksUrlHandle) {
+        const bookmeterUrl = String(await getNodeProperty(node, "href")) as BookmeterUrl;
+        const bookResult = await scanBook(page, bookmeterUrl);
 
-      if (bookResult.ok) {
-        wishedBookCollection.upsert(bookResult.value);
-      } else {
-        // エラーをログに記録して続行
-        console.warn(`Failed to scan book at ${bookmeterUrl}: ${bookResult.err.message}`);
+        if (bookResult.ok) {
+          repository.upsert(bookResult.value);
+        } else {
+          // エラーをログに記録して続行
+          console.warn(`Failed to scan book at ${bookmeterUrl}: ${bookResult.err.message}`);
+        }
+
+        processedCount++;
+        await sleep(waitSeconds * 1000);
+
+        if (BigInt(processedCount) % 10n === 0n && waitSeconds < 5.5) {
+          waitSeconds += 0.2;
+        }
       }
 
-      processedCount++;
-      await sleep(waitSeconds * 1000);
-
-      if (BigInt(processedCount) % 10n === 0n && waitSeconds < 5.5) {
-        waitSeconds += 0.2;
-      }
+      await sleep(40 * 1000);
     }
 
-    await sleep(40 * 1000);
+    return Ok(repository);
+  } catch (error) {
+    if (error instanceof Error) {
+      return Err(new ScrapeError(`Failed to fetch wish books: ${error.message}`));
+    }
+    return Err(new ScrapeError(`Failed to fetch wish books with unknown error: ${String(error)}`));
   }
-
-  return wishedBookCollection;
-};
+}
 
 /**
  * 積読本リストを取得する
  */
-const fetchStackedBooks = async (page: Page, userId: string): Promise<BookRepository> => {
-  let pageNum = 1;
+async function fetchStackedBooks(page: Page, userId: string): Promise<Result<BookRepository, AppError>> {
+  try {
+    const repository = createBookRepository("stacked");
+    let pageNum = 1;
 
-  for (;;) {
-    await page.goto(`${BOOKMETER_BASE_URI}/users/${userId}/books/stacked?page=${pageNum}`, {
-      waitUntil: ["domcontentloaded"]
-    });
+    for (;;) {
+      await page.goto(`${BOOKMETER_BASE_URI}/users/${userId}/books/stacked?page=${pageNum}`, {
+        waitUntil: ["domcontentloaded"]
+      });
 
-    const booksUrlHandle = await $x(page, bookmeterXPath.stacked.booksUrl);
-    if (booksUrlHandle.length === 0) {
-      break;
-    }
-    pageNum++;
+      const booksUrlHandle = await $x(page, bookmeterXPath.stacked.booksUrl);
+      if (booksUrlHandle.length === 0) {
+        break;
+      }
+      pageNum++;
 
-    for (const node of booksUrlHandle) {
-      const bookmeterUrl = String(await getNodeProperty(node, "href")) as BookmeterUrl;
-      const bookResult = await scanBook(page, bookmeterUrl);
+      for (const node of booksUrlHandle) {
+        const bookmeterUrl = String(await getNodeProperty(node, "href")) as BookmeterUrl;
+        const bookResult = await scanBook(page, bookmeterUrl);
 
-      if (bookResult.ok) {
-        stackedBookCollection.upsert(bookResult.value);
-      } else {
-        // エラーをログに記録して続行
-        console.warn(`Failed to scan book at ${bookmeterUrl}: ${bookResult.err.message}`);
+        if (bookResult.ok) {
+          repository.upsert(bookResult.value);
+        } else {
+          // エラーをログに記録して続行
+          console.warn(`Failed to scan book at ${bookmeterUrl}: ${bookResult.err.message}`);
+        }
       }
     }
-  }
 
-  return stackedBookCollection;
-};
+    return Ok(repository);
+  } catch (error) {
+    if (error instanceof Error) {
+      return Err(new ScrapeError(`Failed to fetch stacked books: ${error.message}`));
+    }
+    return Err(new ScrapeError(`Failed to fetch stacked books with unknown error: ${String(error)}`));
+  }
+}
 
 /**
  * スクレイピングを実行する
  * 1つのPageインスタンスをベルトコンベア式に順次使い回す
  */
-const executeScrape = async (
+async function executeScrape(
   browser: Browser,
   userId: string,
   credentials: BookmeterCredentials | undefined,
   mode: BookCollectionMode,
   options: ScrapeOptions
-): Promise<Result<BookRepository, AppError>> => {
+): Promise<Result<BookRepository, AppError>> {
   const { requireLogin } = options;
 
   // Pageを作成（このインスタンスをすべての処理で使い回す）
@@ -304,12 +328,18 @@ const executeScrape = async (
       const result = await (requireLogin
         ? fetchWishBooksAsSignedIn(page, userId)
         : fetchWishBooksAsGuest(page, userId));
-      return Ok(result);
+      if (isErr(result)) {
+        return Err(result.err);
+      }
+      return result;
     }
 
     if (mode === "stacked") {
       const result = await fetchStackedBooks(page, userId);
-      return Ok(result);
+      if (isErr(result)) {
+        return Err(result.err);
+      }
+      return result;
     }
 
     const exhaustiveCheck: never = mode;
@@ -323,7 +353,7 @@ const executeScrape = async (
     // Pageを必ずクローズ
     await page.close();
   }
-};
+}
 
 /**
  * Puppeteer を使用した書籍コレクションスクレイパーを作成する
