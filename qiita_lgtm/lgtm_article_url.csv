@@ -1,19 +1,21 @@
 title,url,lgtm,created_at,author
-README に環境構築手順を書き続けるのがつらくなったので mise を導入した話,https://qiita.com/s11142/items/3f0e7f66b3023b289bbb,133,2025-12-13T09:12:05Z,"@s11142(shota watanabe)
+【狂気の実証実験1】AIエージェントに電気ショック権限を付与したら生活が更生した,https://qiita.com/motoya0118/items/da163b7f7b53fc445f63,348,2026-01-01T03:39:34Z,@motoya0118(MOTONAO ADO)
+【リバーシ(オセロ)】変形ボードの強解決！,https://qiita.com/y-tetsu/items/6e91ceb110951d799704,7,2023-12-10T10:29:57Z,@y-tetsu
+README に環境構築手順を書き続けるのがつらくなったので mise を導入した話,https://qiita.com/s11142/items/3f0e7f66b3023b289bbb,142,2025-12-13T09:12:05Z,"@s11142(shota watanabe)
 in
 KDDIアジャイル開発センター株式会社"
 C++標準化委員会、ついに文字とは何かを理解する: char8_t,https://qiita.com/yumetodo/items/54e1a8230dbf513ea85b,1065,2018-12-22T10:33:18Z,"@yumetodo
 in
 Qiitadonユーザー会"
-「ぜったい使っちゃダメ」な乱数生成器、本当にクラックできるの？,https://qiita.com/wsysuper/items/cded0f3c6cfaf634642f,55,2025-12-24T15:29:59Z,"@wsysuper(Shaoyu Wang)
+「ぜったい使っちゃダメ」な乱数生成器、本当にクラックできるの？,https://qiita.com/wsysuper/items/cded0f3c6cfaf634642f,56,2025-12-24T15:29:59Z,"@wsysuper(Shaoyu Wang)
 in
 フューチャー株式会社"
 【AtCoder】「実はグラフ」系の問題を何とかしたい,https://qiita.com/yesantikiss/items/3911827526038fbc2188,16,2025-12-20T22:07:49Z,"@yesantikiss
 in
 OECU Programming Circle"
-Rust による状態遷移の設計と実装,https://qiita.com/shikuno_dev/items/1de5129bdf1f004e4525,40,2025-12-18T16:21:25Z,@shikuno_dev(Shikuno)
+Rust による状態遷移の設計と実装,https://qiita.com/shikuno_dev/items/1de5129bdf1f004e4525,42,2025-12-18T16:21:25Z,@shikuno_dev(Shikuno)
 大学数学未履修が青色になった方法,https://qiita.com/manuo/items/239fe9528fbb9f86c14f,36,2025-12-17T22:00:16Z,@manuo
-画像圧縮するベストな方法（2025）,https://qiita.com/fukushima1981/items/deaf8e97df2d1b9d6865,228,2025-12-15T16:03:25Z,@fukushima1981(福嶋 慶繁)
+画像圧縮するベストな方法（2025）,https://qiita.com/fukushima1981/items/deaf8e97df2d1b9d6865,232,2025-12-15T16:03:25Z,@fukushima1981(福嶋 慶繁)
 archive.today のIPアドレス一覧,https://qiita.com/CloudRemix/items/c7d6ce07d70fd512db7f,2,2020-05-16T03:10:01Z,@CloudRemix
 Ruffle を使って「おもしろフラッシュ倉庫」を復活させる,https://qiita.com/CloudRemix/items/32ecfe03617d49392049,47,2021-02-23T10:50:26Z,@CloudRemix
 ConoHa で容量無制限のマイ魚拓サービスを作成する,https://qiita.com/CloudRemix/items/0620706e33844d07a139,6,2025-12-13T22:04:48Z,@CloudRemix
@@ -24,8 +26,4 @@ FPGAファミコンのはじめかた(1) CPU編,https://qiita.com/tarusake/items
 公開APIのインターフェースで利用している外部クレートはRe-exportする（と良さそう）,https://qiita.com/tasshi/items/c6548fb38f842c769d85,18,2020-12-10T20:26:41Z,@tasshi(tasshi)
 日本語 LaTeX の新常識 2021,https://qiita.com/wtsnjp/items/76557b1598445a1fc9da,1007,2021-01-12T09:44:46Z,@wtsnjp
 【競プロC++】個人的に愛用しているテンプレ10選,https://qiita.com/e6nlaq/items/649b3ae1e30a9be6be8d,40,2025-12-05T22:06:40Z,@e6nlaq
-「新しい相関係数」について,https://qiita.com/Islay_tr/items/dd427ba86ba11bd25626,619,2025-12-05T10:47:06Z,@Islay_tr
-MCPサーバーになってみた,https://qiita.com/jugyo/items/12633900df47cecbf5c5,176,2025-12-04T06:35:46Z,"@jugyo(Kazuyuki Kohno)
-in
-株式会社with"
-総研大 統計科学コースについて,https://qiita.com/Aconitum3/items/ab7d308be2b7e0e8fd51,9,2025-11-30T21:06:21Z,@Aconitum3(とり)
+「新しい相関係数」について,https://qiita.com/Islay_tr/items/dd427ba86ba11bd25626,622,2025-12-05T10:47:06Z,@Islay_tr
