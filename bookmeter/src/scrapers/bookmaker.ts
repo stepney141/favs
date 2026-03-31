@@ -1,17 +1,22 @@
+/**
+ * Bookmeter サイトのスクレイピング実装。
+ * ログイン・ページ巡回・ISBN/ASIN 抽出を行う。
+ */
+
 import path from "path";
 
 import { config } from "dotenv";
 
-import { getNodeProperty, $x, waitForXPath } from "../.libs/pptr-utils";
-import { sleep } from "../.libs/utils";
+import { getNodeProperty, $x, waitForXPath } from "../../../.libs/pptr-utils";
+import { sleep } from "../../../.libs/utils";
+import { JOB_NAME, XPATH, BOOKMETER_BASE_URI, BOOKMETER_DEFAULT_USER_ID } from "../constants";
+import { matchASIN } from "../domain/isbn";
 
-import { JOB_NAME, XPATH, BOOKMETER_BASE_URI, BOOKMETER_DEFAULT_USER_ID } from "./constants";
-import { matchASIN } from "./utils";
-
-import type { ASIN, Book, BookList, ISBN10 } from "./types";
+import type { Book, BookList } from "../domain/book";
+import type { ASIN, ISBN10 } from "../domain/isbn";
 import type { Browser, Page } from "puppeteer";
 
-config({ path: path.join(__dirname, "../.env") });
+config({ path: path.join(__dirname, "../../../.env") });
 const bookmeter_username = process.env.BOOKMETER_ACCOUNT!.toString();
 const bookmeter_password = process.env.BOOKMETER_PASSWORD!.toString();
 
@@ -33,13 +38,10 @@ export class Bookmaker {
   constructor(browser: Browser, userId: string) {
     this.#browser = browser;
     this.#userId = userId;
-    this.#wishBookList = new Map(); //bookmeterの内部リンクをキーにする
-    this.#stackedBookList = new Map(); //bookmeterの内部リンクをキーにする
+    this.#wishBookList = new Map();
+    this.#stackedBookList = new Map();
   }
 
-  /**
-   * Amazon詳細リンクはアカウントにログインしなければ表示されないため、ログインする
-   */
   async login(): Promise<this> {
     const page = await this.#browser.newPage();
 
@@ -71,7 +73,6 @@ export class Bookmaker {
         waitUntil: "domcontentloaded"
       }),
       loginButtonHandle[0].click()
-      // ref: https://github.com/puppeteer/puppeteer/issues/8852
     ]);
 
     console.log(`${JOB_NAME}: Login Completed!`);
@@ -155,7 +156,7 @@ export class Bookmaker {
 
         for (let i = 0; i < booksUrlHandle.length; i++) {
           const bkmt_raw = await getNodeProperty(booksUrlHandle[i], "href");
-          const bkmt = String(bkmt_raw); //本の情報のbookmeter内部リンクを取得
+          const bkmt = String(bkmt_raw);
 
           const amzn_raw: string = await getNodeProperty(amazonLinkHandle[i], "href");
           const amzn = matchASIN(amzn_raw) as ISBN10 | ASIN;
@@ -185,11 +186,6 @@ export class Bookmaker {
         }
       }
     } else {
-      /*
-      未ログインでスクレイピングする場合、「読みたい本」一覧画面にAmazonのリンクが表示されない。
-      そのためISBNを一括取得することが出来ず、本の数だけ個別ページにアクセスする必要がある。
-      そうなるとすぐにアクセス制限がかかるため、大きめに間隔を設ける必要がある。
-      */
       let cnt = 0;
       let sec = 1.5;
 

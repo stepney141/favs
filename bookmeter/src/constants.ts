@@ -1,4 +1,14 @@
-import type { CiniiTarget } from "./types";
+/**
+ * bookmeter プロジェクト全体で使用する定数を定義する。
+ */
+
+export type CiniiTarget = {
+  tag: CiniiTargetOrgs;
+  cinii_kid: string;
+  opac: string;
+};
+
+type CiniiTargetOrgs = (typeof CINII_TARGET_TAGS)[number];
 
 export const JOB_NAME = "Bookmeter Wished Books";
 export const DEFAULT_CSV_FILENAME = {
@@ -23,15 +33,7 @@ export const CSV_EXPORT_COLUMNS = {
     "utokyo_opac",
     "sophia_mathlib_opac"
   ],
-  stacked: [
-    "bookmeter_url",
-    "isbn_or_asin",
-    "book_title",
-    "author",
-    "publisher",
-    "published_date"
-    // stackedでは所蔵情報は不要と仮定
-  ]
+  stacked: ["bookmeter_url", "isbn_or_asin", "book_title", "author", "publisher", "published_date"]
 } as const;
 
 export const BOOKMETER_BASE_URI = "https://bookmeter.com";
@@ -66,19 +68,8 @@ export const XPATH = {
 };
 
 export const REGEX = {
-  // ref: http://absg.hatenablog.com/entry/2016/03/17/190831
-  // ref: https://regexr.com/3gk2s
-  // ref: https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11143609671
-  // ref: https://stackoverflow.com/questions/2123131/determine-if-10-digit-string-is-valid-amazon-asin
-  amazon_asin: /[A-Z0-9]{10}|[0-9-]{9,16}[0-9X]/,
-
   // ref: https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
   isbn: /(?=[0-9X]{10}|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}|97[89][0-9]{10}|(?=(?:[0-9]+[- ]){4})[- 0-9]{17})(?:97[89])?[0-9]{1,5}[0-9]+[0-9]+[0-9X]/g,
-  isbn10:
-    /^(?:ISBN(?:-10)?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$)[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/,
-  isbn13:
-    /^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$/,
-
   ncid_in_cinii_url: /(?<=https:\/\/ci.nii.ac.jp\/ncid\/).*/
 };
 
@@ -106,8 +97,8 @@ export const CINII_TARGETS: CiniiTarget[] = [
  */
 export const CINII_TARGET_TAGS = ["sophia", "utokyo"] as const;
 
+// 数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108
 export const MATH_LIB_BOOKLIST = {
-  //数学図書館の図書リスト ref: https://mathlib-sophia.opac.jp/opac/Notice/detail/108
   ja: [
     "https://mathlib-sophia.opac.jp/opac/file/view/1965-2023_j.pdf",
     "https://mathlib-sophia.opac.jp/opac/file/view/202404-202503.pdf"

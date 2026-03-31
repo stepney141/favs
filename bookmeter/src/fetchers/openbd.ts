@@ -1,0 +1,103 @@
+/**
+ * OpenBD API からの書誌情報取得。
+ * OpenBD のレスポンス型はこのファイル内に閉じる。
+ */
+
+import { zip } from "../../../.libs/utils";
+import { JOB_NAME } from "../constants";
+
+import type { HttpClient } from "./httpClient";
+import type { BookSearchState, BiblioinfoErrorStatus } from "./types";
+import type { BookList } from "../domain/book";
+
+type OpenBDSummary = {
+  isbn: string;
+  title: string;
+  volume: string;
+  series: string;
+  publisher: string;
+  pubdate: string;
+  cover: string;
+  author: string;
+};
+
+type OpenBDCollateralDetail = {
+  TextContent?: {
+    TextType: string;
+    ContentAudience: string;
+    Text: string;
+  }[];
+};
+
+type OpenBDResponse = ({
+  summary: OpenBDSummary;
+  onix: {
+    CollateralDetail: OpenBDCollateralDetail;
+  };
+} | null)[];
+
+export async function bulkFetchOpenBD(bookList: BookList, client: HttpClient): Promise<BookSearchState[]> {
+  const bulkTargetIsbns = [...bookList.values()].map((b) => b["isbn_or_asin"]).toString();
+  const bookmeterKeys = Array.from(bookList.keys());
+
+  try {
+    const responseData = await client.get<OpenBDResponse>(`https://api.openbd.jp/v1/get?isbn=${bulkTargetIsbns}`);
+    const results: BookSearchState[] = [];
+
+    for (const [bookmeterURL, bookResp] of zip(bookmeterKeys, responseData)) {
+      if (bookResp === null) {
+        const statusText: BiblioinfoErrorStatus = "Not_found_in_OpenBD";
+        const part = {
+          book_title: statusText,
+          author: statusText,
+          publisher: statusText,
+          published_date: statusText
+        };
+        results.push({
+          book: { ...bookList.get(bookmeterURL)!, ...part },
+          isFound: false
+        });
+      } else {
+        const bookinfo = bookResp.summary;
+        const description = "";
+
+        const title = bookinfo.title === "" ? "" : `${bookinfo.title}`;
+        const volume = bookinfo.volume === "" ? "" : ` ${bookinfo.volume}`;
+        const series = bookinfo.series === "" ? "" : ` (${bookinfo.series})`;
+
+        const part = {
+          book_title: `${title}${volume}${series}`,
+          author: bookinfo.author ?? "",
+          publisher: bookinfo.publisher ?? "",
+          published_date: bookinfo.pubdate ?? "",
+          description
+        };
+        results.push({
+          book: { ...bookList.get(bookmeterURL)!, ...part },
+          isFound: true
+        });
+      }
+    }
+    return results;
+  } catch (error) {
+    logFetcherError(error, "OpenBD", `ISBN: ${bulkTargetIsbns.slice(0, 30)}...`);
+    return Array.from(bookList.keys()).map((bookmeterURL) => {
+      const statusText: BiblioinfoErrorStatus = "OpenBD_API_Error";
+      const part = {
+        book_title: statusText,
+        author: statusText,
+        publisher: statusText,
+        published_date: statusText
+      };
+      return {
+        book: { ...bookList.get(bookmeterURL)!, ...part },
+        isFound: false
+      };
+    });
+  }
+}
+
+function logFetcherError(error: unknown, apiName: string, context?: string): void {
+  const errorMessage = error instanceof Error ? error.message : String(error);
+  console.error(`${JOB_NAME}: ${apiName} APIエラー` + (context ? ` (${context})` : "") + `: ${errorMessage}`);
+}

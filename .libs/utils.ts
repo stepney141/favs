@@ -90,7 +90,7 @@ export function* zip<T extends unknown[]>(...args: Iterableify<T>): Generator<T>
     if (results.some(({ done }) => done)) {
       break;
     }
-     
+
     yield results.map(({ value }) => value) as unknown as T;
   }
 }
