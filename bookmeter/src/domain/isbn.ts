@@ -16,6 +16,10 @@ export type ASIN = Brand<string, "ASIN">;
 const REGEX_AMAZON_ASIN = /[A-Z0-9]{10}|[0-9-]{9,16}[0-9X]/;
 
 // ref: https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
+/** PDF 等の非構造テキストから ISBN を抽出するための正規表現 */
+export const REGEX_ISBN_GLOBAL =
+  /(?=[0-9X]{10}|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}|97[89][0-9]{10}|(?=(?:[0-9]+[- ]){4})[- 0-9]{17})(?:97[89])?[0-9]{1,5}[0-9]+[0-9]+[0-9X]/g;
+
 const REGEX_ISBN10 =
   /^(?:ISBN(?:-10)?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$)[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/;
 const REGEX_ISBN13 =

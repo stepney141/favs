@@ -1,6 +1,6 @@
 /**
- * ファイル I/O やCSV読み込みなど、アプリケーションレベルのユーティリティ関数。
- * ドメインロジック（ISBN操作・差分検出）は domain/ に移動済み。
+ * 前回の書籍リストを SQLite / CSV から読み出すユーティリティ。
+ * CSV ファイル名の生成もここで行う。
  */
 
 import * as fsSync from "node:fs";
@@ -8,10 +8,12 @@ import fs from "node:fs/promises";
 
 import { parse } from "papaparse";
 
-import { BOOKMETER_DEFAULT_USER_ID, DEFAULT_CSV_FILENAME, JOB_NAME } from "./constants";
+import { BOOKMETER_DEFAULT_USER_ID, JOB_NAME } from "../constants";
 
-import type { BookRepository } from "./db/bookRepository";
-import type { Book, BookList } from "./domain/book";
+import { DEFAULT_CSV_FILENAME } from "./constants";
+
+import type { BookRepository } from "./bookRepository";
+import type { Book, BookList } from "../domain/book";
 import type { ParseResult } from "papaparse";
 
 export type OutputFilePath = {
@@ -47,20 +49,6 @@ export const readBookListCSV = async (filename: string): Promise<Book[] | null> 
 };
 
 /**
- * bookmeter url のリストを配列にデシリアライズする
- */
-export const readUrlList = async (filename: string): Promise<string[] | null> => {
-  try {
-    await fs.access(filename);
-  } catch {
-    return null;
-  }
-
-  const data = await fs.readFile(filename, "utf-8");
-  return data.split("\n").filter((line) => line !== "");
-};
-
-/**
  * 前回の書籍リストを SQLite データベースから読み出す。
  * データベースが存在しない場合は CSV からフォールバックする。
  */
@@ -78,16 +66,16 @@ export const getPrevBookList = async (filename: string, repo: BookRepository): P
 
     if (fsSync.existsSync("./books.sqlite")) {
       console.log(`${JOB_NAME}: Loading previous book list from SQLite database (table: ${tableName})`);
-      try {
-        const bookList = repo.load(tableName);
-        if (bookList.size > 0) {
-          return bookList;
+      const loadResult = repo.load(tableName);
+      if (loadResult.ok) {
+        if (loadResult.value.size > 0) {
+          return loadResult.value;
         } else {
           console.log(`${JOB_NAME}: SQLite table ${tableName} exists but is empty, falling back to CSV`);
           return getPrevBookListFromCsv(filename);
         }
-      } catch (error) {
-        console.error(`${JOB_NAME}: Error loading from SQLite:`, error);
+      } else {
+        console.error(`${JOB_NAME}: Error loading from SQLite:`, loadResult.err);
         console.log(`${JOB_NAME}: Falling back to CSV file`);
         return getPrevBookListFromCsv(filename);
       }
@@ -115,19 +103,4 @@ export const getPrevBookListFromCsv = async (filename: string): Promise<BookList
     prevList.set(obj["bookmeter_url"], { ...obj });
   }
   return prevList;
-};
-
-/**
- * OPAC のリダイレクト URL を取得する。
- */
-export const getRedirectedUrl = async (targetUrl: string): Promise<string | undefined> => {
-  try {
-    const response = await fetch(targetUrl, {
-      redirect: "follow"
-    });
-    return response.url;
-  } catch (error) {
-    console.log(error);
-    return undefined;
-  }
 };

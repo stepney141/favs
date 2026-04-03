@@ -3,8 +3,13 @@
  * 「変えない層」— 外側（db / scrapers / fetchers）を import しない。
  */
 
-import type { CINII_TARGET_TAGS } from "../constants";
 import type { ASIN, ISBN10 } from "./isbn";
+
+/**
+ * 検索対象となる図書館組織タグ。
+ * この配列の順番で図書館が検索される（opacリンクは配列後方のものが優先）。
+ */
+export const CINII_TARGET_TAGS = ["sophia", "utokyo"] as const;
 
 export type CiniiTargetOrgs = (typeof CINII_TARGET_TAGS)[number];
 export type ExistIn = `exist_in_${CiniiTargetOrgs}`;

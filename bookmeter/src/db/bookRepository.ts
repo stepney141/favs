@@ -5,21 +5,28 @@
 
 import { eq, sql } from "drizzle-orm";
 
+import { Err, Ok } from "../../../.libs/lib";
 import { exportFile } from "../../../.libs/utils";
 import { JOB_NAME } from "../constants";
 
+import { DbError } from "./errors";
 import { wishTable, stackedTable } from "./schema";
 
 import type { DbClient } from "./client";
+import type { Result } from "../../../.libs/lib";
 import type { Book, BookList } from "../domain/book";
 import type { ASIN, ISBN10 } from "../domain/isbn";
 
 export interface BookRepository {
-  load(tableName: "wish" | "stacked"): BookList;
-  save(bookList: BookList, tableName: "wish" | "stacked"): void;
+  load(tableName: "wish" | "stacked"): Result<BookList, DbError>;
+  save(bookList: BookList, tableName: "wish" | "stacked"): Result<void, DbError>;
   updateDescription(tableName: "wish" | "stacked", isbnOrAsin: string, description: string): void;
   checkDescriptionExists(tableName: "wish" | "stacked", isbnOrAsin: string): boolean;
-  exportToCsv(tableName: "wish" | "stacked", csvPath: string, columns: readonly string[]): Promise<void>;
+  exportToCsv(
+    tableName: "wish" | "stacked",
+    csvPath: string,
+    columns: readonly string[]
+  ): Promise<Result<void, DbError>>;
 }
 
 function getTable(tableName: "wish" | "stacked"): typeof wishTable | typeof stackedTable {
@@ -43,28 +50,95 @@ function rowToBook(row: Record<string, unknown>): Book {
   };
 }
 
+type PersistedBookRow = {
+  bookmeter_url: string;
+  isbn_or_asin: string;
+  book_title: string;
+  author: string;
+  publisher: string;
+  published_date: string;
+  sophia_opac: string;
+  utokyo_opac: string;
+  exist_in_sophia: string;
+  exist_in_utokyo: string;
+  sophia_mathlib_opac: string;
+  description: string | null;
+};
+
+function describeSqliteValueType(value: unknown): string {
+  if (value === null) {
+    return "null";
+  }
+  if (Array.isArray(value)) {
+    return "array";
+  }
+  return typeof value;
+}
+
+function buildPersistedBookRow(
+  book: Book,
+  description: string | null,
+  tableName: "wish" | "stacked"
+): PersistedBookRow {
+  const row = {
+    bookmeter_url: book.bookmeter_url,
+    isbn_or_asin: book.isbn_or_asin,
+    book_title: book.book_title,
+    author: book.author,
+    publisher: book.publisher,
+    published_date: book.published_date,
+    sophia_opac: book.sophia_opac,
+    utokyo_opac: book.utokyo_opac,
+    exist_in_sophia: book.exist_in_sophia,
+    exist_in_utokyo: book.exist_in_utokyo,
+    sophia_mathlib_opac: book.sophia_mathlib_opac,
+    description
+  } satisfies Record<string, unknown>;
+
+  for (const [fieldName, value] of Object.entries(row)) {
+    if (typeof value === "string" || value === null) {
+      continue;
+    }
+
+    throw new DbError({
+      type: "invalidBookData",
+      tableName,
+      bookmeterUrl: book.bookmeter_url,
+      fieldName,
+      valueType: describeSqliteValueType(value)
+    });
+  }
+
+  return row;
+}
+
 export function createDrizzleBookRepository(db: DbClient): BookRepository {
   return {
     load(tableName) {
-      const table = getTable(tableName);
-      const rows = db.select().from(table).all();
-      const bookList: BookList = new Map();
+      try {
+        const table = getTable(tableName);
+        const rows = db.select().from(table).all();
+        const bookList: BookList = new Map();
 
-      for (const row of rows) {
-        const book = rowToBook(row);
-        bookList.set(book.bookmeter_url, book);
+        for (const row of rows) {
+          const book = rowToBook(row);
+          bookList.set(book.bookmeter_url, book);
+        }
+
+        return Ok(bookList);
+      } catch (e) {
+        return Err(new DbError({ type: "loadFailed", tableName }, { cause: e }));
       }
-
-      return bookList;
     },
 
     save(bookList, tableName) {
-      const table = getTable(tableName);
+      try {
+        const table = getTable(tableName);
 
-      console.log(`Synchronizing book list with database table: ${tableName}`);
+        console.log(`Synchronizing book list with database table: ${tableName}`);
 
-      // テーブルが存在しない場合は作成（Drizzle のマイグレーション未使用時のフォールバック）
-      db.run(sql`CREATE TABLE IF NOT EXISTS ${table} (
+        // テーブルが存在しない場合は作成（Drizzle のマイグレーション未使用時のフォールバック）
+        db.run(sql`CREATE TABLE IF NOT EXISTS ${table} (
         bookmeter_url TEXT PRIMARY KEY,
         isbn_or_asin TEXT,
         book_title TEXT,
@@ -79,73 +153,54 @@ export function createDrizzleBookRepository(db: DbClient): BookRepository {
         description TEXT
       )`);
 
-      // 既存の description を保持するために先に取得
-      const existingRows = db
-        .select({
-          bookmeter_url: table.bookmeter_url,
-          description: table.description
-        })
-        .from(table)
-        .all();
-      const existingData = new Map(existingRows.map((row) => [row.bookmeter_url, row.description]));
-      const existingUrls = new Set(existingRows.map((row) => row.bookmeter_url));
-      const newUrls = new Set(bookList.keys());
+        // 既存の description を保持するために先に取得
+        const existingRows = db
+          .select({
+            bookmeter_url: table.bookmeter_url,
+            description: table.description
+          })
+          .from(table)
+          .all();
+        const existingData = new Map(existingRows.map((row) => [row.bookmeter_url, row.description]));
+        const existingUrls = new Set(existingRows.map((row) => row.bookmeter_url));
+        const newUrls = new Set(bookList.keys());
 
-      // トランザクションで一括処理
-      db.transaction((tx) => {
-        // 削除
-        const urlsToDelete = [...existingUrls].filter((url) => !newUrls.has(url));
-        if (urlsToDelete.length > 0) {
-          console.log(`Deleting ${urlsToDelete.length} books from ${tableName}...`);
-          for (const url of urlsToDelete) {
-            tx.delete(table).where(eq(table.bookmeter_url, url)).run();
+        // トランザクションで一括処理
+        db.transaction((tx) => {
+          // 削除
+          const urlsToDelete = [...existingUrls].filter((url) => !newUrls.has(url));
+          if (urlsToDelete.length > 0) {
+            console.log(`Deleting ${urlsToDelete.length} books from ${tableName}...`);
+            for (const url of urlsToDelete) {
+              tx.delete(table).where(eq(table.bookmeter_url, url)).run();
+            }
           }
-        }
 
-        // 挿入 / 更新
-        console.log(`Inserting/Updating ${bookList.size} books into ${tableName}...`);
-        for (const book of bookList.values()) {
-          const descriptionToInsert =
-            book.description !== undefined && book.description !== null && book.description !== ""
-              ? book.description
-              : (existingData.get(book.bookmeter_url) ?? null);
+          // 挿入 / 更新
+          console.log(`Inserting/Updating ${bookList.size} books into ${tableName}...`);
+          for (const book of bookList.values()) {
+            const descriptionToInsert =
+              book.description !== undefined && book.description !== null && book.description !== ""
+                ? book.description
+                : (existingData.get(book.bookmeter_url) ?? null);
+            const rowToPersist = buildPersistedBookRow(book, descriptionToInsert, tableName);
+            const { bookmeter_url: _bookmeterUrl, ...updateSet } = rowToPersist;
 
-          tx.insert(table)
-            .values({
-              bookmeter_url: book.bookmeter_url,
-              isbn_or_asin: book.isbn_or_asin,
-              book_title: book.book_title,
-              author: book.author,
-              publisher: book.publisher,
-              published_date: book.published_date,
-              sophia_opac: book.sophia_opac,
-              utokyo_opac: book.utokyo_opac,
-              exist_in_sophia: book.exist_in_sophia,
-              exist_in_utokyo: book.exist_in_utokyo,
-              sophia_mathlib_opac: book.sophia_mathlib_opac,
-              description: descriptionToInsert
-            })
-            .onConflictDoUpdate({
-              target: table.bookmeter_url,
-              set: {
-                isbn_or_asin: book.isbn_or_asin,
-                book_title: book.book_title,
-                author: book.author,
-                publisher: book.publisher,
-                published_date: book.published_date,
-                sophia_opac: book.sophia_opac,
-                utokyo_opac: book.utokyo_opac,
-                exist_in_sophia: book.exist_in_sophia,
-                exist_in_utokyo: book.exist_in_utokyo,
-                sophia_mathlib_opac: book.sophia_mathlib_opac,
-                description: descriptionToInsert
-              }
-            })
-            .run();
-        }
-      });
+            tx.insert(table)
+              .values(rowToPersist)
+              .onConflictDoUpdate({
+                target: table.bookmeter_url,
+                set: updateSet
+              })
+              .run();
+          }
+        });
 
-      console.log(`Synchronization complete for ${tableName}.`);
+        console.log(`Synchronization complete for ${tableName}.`);
+        return Ok(undefined);
+      } catch (e) {
+        return Err(new DbError({ type: "saveFailed", tableName }, { cause: e }));
+      }
     },
 
     updateDescription(tableName, isbnOrAsin, description) {
@@ -181,32 +236,37 @@ export function createDrizzleBookRepository(db: DbClient): BookRepository {
     },
 
     async exportToCsv(tableName, csvPath, columns) {
-      const table = getTable(tableName);
-      console.log(
-        `${JOB_NAME}: Exporting columns [${columns.join(", ")}] from table ${tableName} to CSV file ${csvPath}`
-      );
+      try {
+        const table = getTable(tableName);
+        console.log(
+          `${JOB_NAME}: Exporting columns [${columns.join(", ")}] from table ${tableName} to CSV file ${csvPath}`
+        );
 
-      const allRows = db.select().from(table).all();
+        const allRows = db.select().from(table).all();
 
-      // 指定カラムだけを抽出
-      const dataToExport = allRows.map((row) => {
-        const filtered: Record<string, unknown> = {};
-        for (const col of columns) {
-          filtered[col] = (row as Record<string, unknown>)[col];
-        }
-        return filtered;
-      });
+        // 指定カラムだけを抽出
+        const dataToExport = allRows.map((row) => {
+          const filtered: Record<string, unknown> = {};
+          for (const col of columns) {
+            filtered[col] = (row as Record<string, unknown>)[col];
+          }
+          return filtered;
+        });
 
-      console.log(`${JOB_NAME}: Fetched ${dataToExport.length} rows from ${tableName}.`);
+        console.log(`${JOB_NAME}: Fetched ${dataToExport.length} rows from ${tableName}.`);
 
-      await exportFile({
-        fileName: csvPath,
-        payload: dataToExport,
-        targetType: "csv",
-        mode: "overwrite"
-      });
+        await exportFile({
+          fileName: csvPath,
+          payload: dataToExport,
+          targetType: "csv",
+          mode: "overwrite"
+        });
 
-      console.log(`${JOB_NAME}: Successfully exported ${dataToExport.length} books to ${csvPath}`);
+        console.log(`${JOB_NAME}: Successfully exported ${dataToExport.length} books to ${csvPath}`);
+        return Ok(undefined);
+      } catch (e) {
+        return Err(new DbError({ type: "exportFailed", csvPath }, { cause: e }));
+      }
     }
   };
 }

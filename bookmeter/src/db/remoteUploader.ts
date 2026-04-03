@@ -8,10 +8,15 @@ import fs from "node:fs";
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 
+import { Err, Ok } from "../../../.libs/lib";
 import { JOB_NAME } from "../constants";
 
+import { DbError } from "./errors";
+
+import type { Result } from "../../../.libs/lib";
+
 export interface RemoteUploader {
-  upload(localFilePath: string): Promise<void>;
+  upload(localFilePath: string): Promise<Result<void, DbError>>;
 }
 
 type FirebaseConfig = {
@@ -25,9 +30,14 @@ type FirebaseConfig = {
 
 export function createFirebaseUploader(config: FirebaseConfig, storagePath: string): RemoteUploader {
   return {
-    async upload(localFilePath: string): Promise<void> {
+    async upload(localFilePath: string) {
       if (!fs.existsSync(localFilePath)) {
-        throw new Error(`Database file ${localFilePath} does not exist.`);
+        return Err(
+          new DbError(
+            { type: "uploadFailed", filePath: localFilePath },
+            { cause: new Error(`Database file ${localFilePath} does not exist.`) }
+          )
+        );
       }
 
       try {
@@ -41,9 +51,10 @@ export function createFirebaseUploader(config: FirebaseConfig, storagePath: stri
         await uploadBytes(dbRef, fileBuffer);
 
         console.log(`${JOB_NAME}: Database uploaded successfully to ${storagePath}`);
-      } catch (error) {
-        console.error(`${JOB_NAME}: Error uploading database to Firebase:`, error);
-        throw error;
+        return Ok(undefined);
+      } catch (e) {
+        console.error(`${JOB_NAME}: Error uploading database to Firebase:`, e);
+        return Err(new DbError({ type: "uploadFailed", filePath: localFilePath }, { cause: e }));
       }
     }
   };

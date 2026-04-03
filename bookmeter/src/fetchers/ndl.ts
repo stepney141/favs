@@ -1,16 +1,19 @@
 /**
  * 国立国会図書館（NDL）書誌検索 API。
  * NDL のレスポンス型はこのファイル内に閉じる。
+ * ISBN 検索で見つからない場合はタイトル+著者で再帰的にリトライする。
  * @link https://iss.ndl.go.jp/information/api/riyou/
  */
 
 import { XMLParser } from "fast-xml-parser";
 
-import { JOB_NAME } from "../constants";
+import { Ok, mapResultErr } from "../../../.libs/lib";
 import { isIsbn10 } from "../domain/isbn";
 
+import { httpToFetcherError } from "./errors";
+
 import type { HttpClient } from "./httpClient";
-import type { BookSearchState, BiblioinfoErrorStatus } from "./types";
+import type { BiblioinfoErrorStatus, FetcherResult } from "./types";
 import type { Book } from "../domain/book";
 
 type NdlResponseJson = {
@@ -39,62 +42,52 @@ type NdlResponseJson = {
 
 const fxp = new XMLParser();
 
-export async function fetchNDL(book: Book, client: HttpClient, useIsbn: boolean = true): Promise<BookSearchState> {
+export async function fetchNDL(book: Book, client: HttpClient, useIsbn: boolean = true): Promise<FetcherResult> {
   const isbn = book["isbn_or_asin"];
   const title = encodeURIComponent(book["book_title"]);
   const author = encodeURIComponent(book["author"]);
 
   const query = isIsbn10(isbn) ? `isbn=${isbn}` : `any=${title} ${author}`;
 
-  try {
-    const responseText = await client.get<string>(`https://ndlsearch.ndl.go.jp/api/opensearch?${query}`, {
-      responseType: "text"
-    });
-    const parsedResult = fxp.parse(responseText) as NdlResponseJson;
-    const ndlResp = parsedResult.rss.channel;
+  const httpResult = await client.getSafe<string>(`https://ndlsearch.ndl.go.jp/api/opensearch?${query}`, "NDL", {
+    responseType: "text"
+  });
 
-    if ("item" in ndlResp) {
-      const bookinfo = Array.isArray(ndlResp.item) ? ndlResp.item[0] : ndlResp.item;
+  const fetcherResult = mapResultErr(httpResult, httpToFetcherError);
+  if (!fetcherResult.ok) {
+    return fetcherResult;
+  }
 
-      const ndlTitle = bookinfo["title"] ?? "";
-      const volume = bookinfo["dcndl:volume"] ?? "";
-      const series = bookinfo["dcndl:seriesTitle"] ?? "";
+  const parsedResult = fxp.parse(fetcherResult.value) as NdlResponseJson;
+  const ndlResp = parsedResult.rss.channel;
 
-      const part = {
-        book_title: `${ndlTitle}${volume === "" ? volume : " " + volume}${series === "" ? series : " / " + series}`,
-        author: bookinfo["author"] ?? "",
-        publisher: bookinfo["dc:publisher"] ?? "",
-        published_date: bookinfo["pubDate"] ?? ""
-      };
-      return { book: { ...book, ...part }, isFound: true };
-    } else {
-      if (useIsbn) {
-        return await fetchNDL(book, client, false);
-      }
+  if ("item" in ndlResp) {
+    const bookinfo = Array.isArray(ndlResp.item) ? ndlResp.item[0] : ndlResp.item;
 
-      const statusText: BiblioinfoErrorStatus = "Not_found_in_NDL";
-      const part = {
-        book_title: statusText,
-        author: statusText,
-        publisher: statusText,
-        published_date: statusText
-      };
-      return { book: { ...book, ...part }, isFound: false };
+    const ndlTitle = bookinfo["title"] ?? "";
+    const volume = bookinfo["dcndl:volume"] ?? "";
+    const series = bookinfo["dcndl:seriesTitle"] ?? "";
+
+    const part = {
+      book_title: `${ndlTitle}${volume === "" ? volume : " " + volume}${series === "" ? series : " / " + series}`,
+      author: bookinfo["author"] ?? "",
+      publisher: bookinfo["dc:publisher"] ?? "",
+      published_date: bookinfo["pubDate"] ?? ""
+    };
+    return Ok({ book: { ...book, ...part }, status: "found" as const });
+  } else {
+    // ISBN 検索で見つからなかった場合、タイトル+著者で再帰的にリトライ
+    if (useIsbn) {
+      return await fetchNDL(book, client, false);
     }
-  } catch (error) {
-    logFetcherError(error, "NDL", `Query: ${query}`);
-    const statusText: BiblioinfoErrorStatus = "NDL_API_Error";
+
+    const statusText: BiblioinfoErrorStatus = "Not_found_in_NDL";
     const part = {
       book_title: statusText,
       author: statusText,
       publisher: statusText,
       published_date: statusText
     };
-    return { book: { ...book, ...part }, isFound: false };
+    return Ok({ book: { ...book, ...part }, status: "notFound" as const });
   }
-}
-
-function logFetcherError(error: unknown, apiName: string, context?: string): void {
-  const errorMessage = error instanceof Error ? error.message : String(error);
-  console.error(`${JOB_NAME}: ${apiName} APIエラー` + (context ? ` (${context})` : "") + `: ${errorMessage}`);
 }

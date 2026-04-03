@@ -1,24 +1,5 @@
 import type { Browser } from "puppeteer";
 
-// type CrawlState<T> = Initial<T> | Prepared<T> | LoggedIn<T>;
-// type Initial<T> = {
-//   status: "Initial";
-//   payload?: T;
-//   isPrepared: false;
-//   isLoggedIn: false;
-// };
-// type Prepared<T> = {
-//   status: "Prepared";
-//   payload?: T;
-//   isPrepared: true;
-//   isLoggedIn: false;
-// };
-// type LoggedIn<T> = {
-//   status: "LoggedIn";
-//   payload?: T;
-//   isPrepared: true;
-//   isLoggedIn: true;
-// };
 export interface Crawler<T> {
   browser: Browser;
   fetchedData: T;
@@ -33,44 +14,84 @@ export interface Crawler<T> {
  * @link https://yatsbashy.hatenablog.com/entry/typescript-simple-result
  * @link https://interrupt.co.jp/blog/entry/2021/04/17/073733
  */
-export type Result<T> = OkResult<T> | ErrorResult;
-export type OkResult<T> = {
-  type: "ok";
-  payload: T;
-};
-export type ErrorResult = {
-  type: "error";
-  payload: Error;
-};
-export const Ok = <T>(payload: T): OkResult<T> => {
-  return { type: "ok", payload };
-};
-export const Err = (payload: Error): ErrorResult => {
-  return { type: "error", payload };
-};
-export const isOk = <T>(result: Result<T>): result is OkResult<T> => {
-  if (result.type === "ok") {
-    return true;
+export type Result<T, E extends Error> = Ok<T> | Err<E>;
+
+export interface Ok<T> {
+  readonly ok: true;
+  readonly value: T;
+  readonly err?: null | undefined;
+}
+
+export interface Err<E extends Error> {
+  readonly ok: false;
+  readonly value?: null | undefined;
+  readonly err: E;
+}
+
+export function Ok<T>(value: T): Ok<T> {
+  return { ok: true, err: null, value };
+}
+
+export function Err<E extends Error>(err: E): Err<E> {
+  return { ok: false, value: null, err };
+}
+
+export function isOk<T, E extends Error>(result: Result<T, E>): result is Extract<Result<T, E>, { ok: true }> {
+  return result.ok === true;
+}
+
+export function isErr<T, E extends Error>(result: Result<T, E>): result is Extract<Result<T, E>, { ok: false }> {
+  return result.ok === false;
+}
+
+export function unwrap<T, E extends Error>(result: Result<T, E>): T {
+  const { value, ok } = result;
+  if (ok === true) {
+    return value;
   } else {
-    return false;
+    throw result.err;
+  }
+}
+
+/** Ok の値を変換する */
+export const mapResult = <T, U, E extends Error>(result: Result<T, E>, fn: (val: T) => U): Result<U, E> => {
+  if (result.ok) {
+    return Ok(fn(result.value));
+  } else {
+    return result;
   }
 };
-export const isErr = <T>(result: Result<T>): result is ErrorResult => {
-  if (result.type === "error") {
-    return true;
+
+/** エラー値を変換する */
+export const mapResultErr = <T, E extends Error, F extends Error>(
+  result: Result<T, E>,
+  fn: (err: E) => F
+): Result<T, F> => {
+  if (!result.ok) {
+    return Err(fn(result.err));
   } else {
-    return false;
+    return result;
   }
 };
-export const unwrapResult = <T>(result: Result<T>): T => {
-  // payload はここでは T | Error 型
-  const { type, payload } = result;
-  if (type === "ok") {
-    // payload はこの中では T 型
-    return payload;
-  } else {
-    throw payload;
+
+/** Promise を Result に変換する（try-catch の代替） */
+export const fromPromise = async <T, E extends Error>(
+  promise: Promise<T>,
+  errorFn: (e: unknown) => E
+): Promise<Result<T, E>> => {
+  try {
+    const value = await promise;
+    return Ok(value);
+  } catch (error) {
+    return Err(errorFn(error));
   }
 };
+
+export class BaseError extends Error {
+  constructor(message: string, options?: { cause?: unknown }) {
+    super(message, options);
+    this.name = this.constructor.name;
+  }
+}
 
 export type Brand<K, T> = K & { __brand: T };

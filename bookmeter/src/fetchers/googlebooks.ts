@@ -4,10 +4,12 @@
  * @link https://developers.google.com/books/docs/v1/reference/volumes/list?hl=en
  */
 
-import { JOB_NAME } from "../constants";
+import { Err, mapResult, mapResultErr } from "../../../.libs/lib";
+
+import { FetcherError, httpToFetcherError } from "./errors";
 
 import type { HttpClient } from "./httpClient";
-import type { BookSearchState, BiblioinfoErrorStatus } from "./types";
+import type { BiblioinfoErrorStatus, FetcherResult } from "./types";
 import type { Book } from "../domain/book";
 
 type GoogleBookItem = {
@@ -33,25 +35,19 @@ type GoogleBookApiResponse = {
   totalItems: number;
 };
 
-export async function fetchGoogleBooks(book: Book, credential: string, client: HttpClient): Promise<BookSearchState> {
+export async function fetchGoogleBooks(book: Book, credential: string, client: HttpClient): Promise<FetcherResult> {
   const isbn = book["isbn_or_asin"];
 
   if (isbn === null || isbn === undefined) {
-    const statusText: BiblioinfoErrorStatus = "INVALID_ISBN";
-    const part = {
-      book_title: statusText,
-      author: statusText,
-      publisher: statusText,
-      published_date: statusText
-    };
-    return { book: { ...book, ...part }, isFound: false };
+    return Err(new FetcherError({ type: "invalidIsbn" }));
   }
 
-  try {
-    const json = await client.get<GoogleBookApiResponse>(
-      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${credential}`
-    );
+  const httpResult = await client.getSafe<GoogleBookApiResponse>(
+    `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${credential}`,
+    "GoogleBooks"
+  );
 
+  return mapResult(mapResultErr(httpResult, httpToFetcherError), (json) => {
     if (json.totalItems !== 0 && json.items !== undefined) {
       const bookinfo = json.items[0].volumeInfo;
       const subtitle = bookinfo.subtitle ?? "";
@@ -61,7 +57,7 @@ export async function fetchGoogleBooks(book: Book, credential: string, client: H
         publisher: bookinfo.publisher ?? "",
         published_date: bookinfo.publishedDate ?? ""
       };
-      return { book: { ...book, ...part }, isFound: true };
+      return { book: { ...book, ...part }, status: "found" as const };
     } else {
       const statusText: BiblioinfoErrorStatus = "Not_found_in_GoogleBooks";
       const part = {
@@ -70,22 +66,7 @@ export async function fetchGoogleBooks(book: Book, credential: string, client: H
         publisher: statusText,
         published_date: statusText
       };
-      return { book: { ...book, ...part }, isFound: false };
+      return { book: { ...book, ...part }, status: "notFound" as const };
     }
-  } catch (error) {
-    logFetcherError(error, "GoogleBooks", `ISBN: ${isbn}`);
-    const statusText: BiblioinfoErrorStatus = "GoogleBooks_API_Error";
-    const part = {
-      book_title: statusText,
-      author: statusText,
-      publisher: statusText,
-      published_date: statusText
-    };
-    return { book: { ...book, ...part }, isFound: false };
-  }
-}
-
-function logFetcherError(error: unknown, apiName: string, context?: string): void {
-  const errorMessage = error instanceof Error ? error.message : String(error);
-  console.error(`${JOB_NAME}: ${apiName} APIエラー` + (context ? ` (${context})` : "") + `: ${errorMessage}`);
+  });
 }

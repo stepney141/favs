@@ -9,8 +9,10 @@ import { config } from "dotenv";
 
 import { getNodeProperty, $x, waitForXPath } from "../../../.libs/pptr-utils";
 import { sleep } from "../../../.libs/utils";
-import { JOB_NAME, XPATH, BOOKMETER_BASE_URI, BOOKMETER_DEFAULT_USER_ID } from "../constants";
+import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID } from "../constants";
 import { matchASIN } from "../domain/isbn";
+
+import { BOOKMETER_BASE_URI, XPATH } from "./constants";
 
 import type { Book, BookList } from "../domain/book";
 import type { ASIN, ISBN10 } from "../domain/isbn";

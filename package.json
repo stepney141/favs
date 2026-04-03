@@ -9,11 +9,11 @@
     "@types/cookie": "^0.6.0",
     "@types/set-cookie-parser": "^2.4.10",
     "axios": "^1.7.8",
-    "better-sqlite3": "^11.10.0",
+    "better-sqlite3": "^12.8.0",
     "cookie": "^1.0.2",
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.43.1",
-    "fast-xml-parser": "^4.3.3",
+    "fast-xml-parser": "^5.5.9",
     "firebase": "^11.0.2",
     "fs": "^0.0.1-security",
     "inversify": "^7.5.1",
@@ -36,7 +36,7 @@
     "@types/papaparse": "^5.3.14",
     "@types/yargs": "^17.0.33",
     "@typescript-eslint/typescript-estree": "^8.17.0",
-    "drizzle-kit": "^0.31.1",
+    "drizzle-kit": "^0.18.1",
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.3",
@@ -62,6 +62,6 @@
     "test:watch": "vitest"
   },
   "volta": {
-    "node": "22.11.0"
+    "node": "25.8.2"
   }
 }

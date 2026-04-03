@@ -1,27 +1,18 @@
 /**
- * 紀伊國屋書店サイトから書籍の内容紹介をスクレイピングする。
- * DB 操作は BookRepository を通じて行う（DI）。
+ * 紀伊國屋書店サイトから書籍説明文を取得するスクレイピング層。
+ * DB 判定やブラウザのライフサイクルは呼び出し側に委譲する。
  */
 
-import puppeteer from "puppeteer-extra";
-import StealthPlugin from "puppeteer-extra-plugin-stealth";
-
-import { CHROME_ARGS } from "../../../.libs/constants";
 import { $x } from "../../../.libs/pptr-utils";
 import { sleep } from "../../../.libs/utils";
-import { DEFAULT_CSV_FILENAME, JOB_NAME } from "../constants";
-import { convertISBN10To13, isAsin, isIsbn10, routeIsbn10 } from "../domain/isbn";
-import { getPrevBookList } from "../utils";
+import { JOB_NAME } from "../constants";
+import { isAsin, isIsbn10, routeIsbn10, convertISBN10To13 } from "../domain/isbn";
 
-import type { BookRepository } from "../db/bookRepository";
+import type { Result } from "../../../.libs/lib";
+import type { DbError } from "../db/errors";
 import type { BookList } from "../domain/book";
+import type { ISBN10 } from "../domain/isbn";
 import type { Page } from "puppeteer";
-
-const stealthPlugin = StealthPlugin();
-stealthPlugin.enabledEvasions.delete("iframe.contentWindow");
-stealthPlugin.enabledEvasions.delete("navigator.plugins");
-stealthPlugin.enabledEvasions.delete("media.codecs");
-puppeteer.use(stealthPlugin);
 
 const KINOKUNIYA_XPATH = {
   出版社内容情報: '//div[@class="career_box"]/h3[text()="出版社内容情報"]/following-sibling::p[1]',
@@ -29,118 +20,76 @@ const KINOKUNIYA_XPATH = {
   目次: '//div[@class="career_box"]/h3[text()="目次"]/following-sibling::p[1]'
 };
 
-async function getBookDetails(page: Page, url: string): Promise<string> {
+async function extractBookDetails(page: Page, url: string): Promise<string> {
   await page.goto(url, { waitUntil: "networkidle2" });
   await sleep(1000);
+
   let bookDetails = "";
   for (const xpath of Object.values(KINOKUNIYA_XPATH)) {
     const [element] = await $x(page, xpath);
-    if (element) {
-      const text = await page.evaluate((el) => el.textContent, element);
-      if (text && text.trim()) {
-        bookDetails += `${text}\n`;
-      }
+    if (element === undefined) {
+      continue;
     }
+
+    const text = await page.evaluate((node) => node.textContent, element);
+    if (text === null || text.trim() === "") {
+      continue;
+    }
+
+    bookDetails += `${text}\n`;
   }
+
   console.log(`${JOB_NAME}: Extracted description length: ${bookDetails.length} characters`);
   return bookDetails;
 }
 
-/**
- * 紀伊國屋書店サイトをクロールして書籍の内容紹介を取得し、DB を更新する。
- */
-export async function crawlKinokuniya(
-  bookListToProcess: BookList | undefined,
-  mode: "wish" | "stacked" | undefined,
-  repo: Pick<BookRepository, "checkDescriptionExists" | "updateDescription" | "load">
-): Promise<void> {
-  const browser = await puppeteer.launch({
-    defaultViewport: { width: 1000, height: 1000 },
-    headless: true,
-    args: CHROME_ARGS,
-    slowMo: 15
-  });
-  const page = await browser.newPage();
-
-  console.log(`${JOB_NAME}: Starting to crawl Kinokuniya for book descriptions`);
-
-  if (bookListToProcess && mode) {
-    await processBookList(page, mode, bookListToProcess, repo);
-  } else {
-    const wishList = await getPrevBookList(DEFAULT_CSV_FILENAME.wish, repo as BookRepository);
-    const stackedList = await getPrevBookList(DEFAULT_CSV_FILENAME.stacked, repo as BookRepository);
-    if (wishList === null || stackedList === null) {
-      console.log(`${JOB_NAME}: The booklist is not found.`);
-      process.exit(1);
-    }
-
-    for (const [tableName, bookList] of [["wish", wishList] as const, ["stacked", stackedList] as const]) {
-      await processBookList(page, tableName, bookList, repo);
-    }
-  }
-
-  await browser.close();
-  console.log(`${JOB_NAME}: Finished crawling Kinokuniya for book descriptions`);
+export function canFetchKinokuniyaDescription(identifier: string): identifier is ISBN10 {
+  return identifier !== "" && isIsbn10(identifier) && !isAsin(identifier);
 }
 
-async function processBookList(
-  page: Page,
+export function buildKinokuniyaBookUrl(isbn: ISBN10): string {
+  const isbn13 = convertISBN10To13(isbn);
+  return routeIsbn10(isbn) === "Japan"
+    ? `https://www.kinokuniya.co.jp/f/dsg-01-${isbn13}`
+    : `https://www.kinokuniya.co.jp/f/dsg-02-${isbn13}`;
+}
+
+export async function fetchKinokuniyaDescription(page: Page, isbn: ISBN10): Promise<string> {
+  const url = buildKinokuniyaBookUrl(isbn);
+
+  try {
+    const description = (await extractBookDetails(page, url)).trim();
+
+    if (description === "") {
+      console.log(`${JOB_NAME}: No description found on Kinokuniya page for ISBN ${isbn}.`);
+      return "";
+    }
+
+    console.log(`${JOB_NAME}: Successfully fetched description for ISBN ${isbn}.`);
+    return description;
+  } catch (error) {
+    console.error(`${JOB_NAME}: Error fetching Kinokuniya page for ISBN ${isbn} (URL: ${url}).`, error);
+    return "";
+  }
+}
+
+export function buildExistingDescriptionMap(
   tableName: "wish" | "stacked",
-  bookList: BookList,
-  repo: Pick<BookRepository, "checkDescriptionExists" | "updateDescription" | "load">
-): Promise<void> {
-  // 既存の description をロードして保持する
-  const existingBookList = repo.load(tableName);
+  loadResult: Result<BookList, DbError>
+): Map<string, string> {
+  if (!loadResult.ok) {
+    console.error(`${JOB_NAME}: Failed to load existing descriptions from ${tableName}:`, loadResult.err);
+    return new Map();
+  }
+
   const existingDescriptions = new Map<string, string>();
-  for (const book of existingBookList.values()) {
-    if (book.description && book.description.trim().length > 0) {
-      existingDescriptions.set(book.isbn_or_asin, book.description);
+  for (const book of loadResult.value.values()) {
+    if (book.description.trim() === "") {
+      continue;
     }
+
+    existingDescriptions.set(book.isbn_or_asin, book.description);
   }
-  console.log(`${JOB_NAME}: Loaded ${existingDescriptions.size} existing descriptions from database.`);
 
-  for (const book of bookList.values()) {
-    const id = book.isbn_or_asin;
-    if (id && isIsbn10(id) && !isAsin(id)) {
-      if (existingDescriptions.has(id)) {
-        book.description = existingDescriptions.get(id)!;
-        continue;
-      }
-
-      const needsFetching = !repo.checkDescriptionExists(tableName, id);
-      console.log(`${JOB_NAME}: ISBN ${id} needs fetching: ${needsFetching}`);
-
-      if (needsFetching) {
-        console.log(`${JOB_NAME}: Fetching description for ISBN ${id} from Kinokuniya...`);
-        const id13 = convertISBN10To13(id);
-        const url =
-          routeIsbn10(id) === "Japan"
-            ? `https://www.kinokuniya.co.jp/f/dsg-01-${id13}`
-            : `https://www.kinokuniya.co.jp/f/dsg-02-${id13}`;
-
-        let descriptionToSave = "";
-        try {
-          const scrapedDoc = await getBookDetails(page, url);
-          descriptionToSave = scrapedDoc.trim();
-          if (descriptionToSave !== "") {
-            console.log(`${JOB_NAME}: Successfully fetched description for ISBN ${id}.`);
-          } else {
-            console.log(`${JOB_NAME}: No description found on Kinokuniya page for ISBN ${id}. Will save empty string.`);
-          }
-          book.description = descriptionToSave;
-        } catch (error) {
-          console.error(
-            `${JOB_NAME}: Error fetching/processing Kinokuniya page for ISBN ${id} (URL: ${url}). Will save empty string. Error:`,
-            error
-          );
-          book.description = "";
-        }
-
-        repo.updateDescription(tableName, id, descriptionToSave);
-        console.log(`${JOB_NAME}: Updated database for ISBN ${id}.`);
-      }
-    } else if (!id) {
-      console.log(`${JOB_NAME}: Skipping book with missing ISBN/ASIN: ${book.book_title}`);
-    }
-  }
+  return existingDescriptions;
 }

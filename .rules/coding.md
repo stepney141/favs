@@ -58,12 +58,15 @@ function createMoney(amount: number): Result<Money, Error> {
 ### Result型
 
 ```typescript
-type Result<T, E> = { ok: true; value: T } | { ok: false; error: E };
+type Result<T, E extends Error> = Ok<T> | Err<E>;
+interface Ok<T> { readonly ok: true; readonly value: T; }
+interface Err<E extends Error> { readonly ok: false; readonly err: E; }
 ```
 
 - 成功/失敗を明示
+- E extends Error 制約でスタックトレースとエコシステム整合性を保証
 - 早期リターンパターンを使用
-- エラー型を定義
+- エラーは BaseError を継承したクラスで定義し、context.type で細分化
 
 ### リポジトリ
 

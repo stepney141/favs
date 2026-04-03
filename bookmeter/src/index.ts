@@ -1,63 +1,36 @@
 /**
  * bookmeter CLI エントリポイント。
- * DI の組み立てをここで行い、各モジュールに注入する。
+ * DI とパイプラインのオーケストレーションのみを担当する。
  */
 
 import path from "path";
 
 import { isAxiosError } from "axios";
 import { config } from "dotenv";
-import puppeteer from "puppeteer-extra";
-import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import { CHROME_ARGS } from "../../.libs/constants";
-import { exportFile } from "../../.libs/utils";
-
-import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID, CSV_EXPORT_COLUMNS } from "./constants";
+import { describeExecutionPlan, needsBrowser, parseCliArgs, resolveExecutionPlan } from "./application/executionMode";
+import {
+  collectLatestBookList,
+  crawlDescriptionPhase,
+  exportCsvPhase,
+  fetchBiblioPhase,
+  loadPreviousSnapshot,
+  persistPhase,
+  shouldRunDownstreamPhases,
+  uploadPhase
+} from "./application/pipeline";
+import { JOB_NAME } from "./constants";
 import { createDrizzleBookRepository } from "./db/bookRepository";
 import { createDbClient } from "./db/client";
 import { createFirebaseUploader } from "./db/remoteUploader";
-import { isBookListDifferent } from "./domain/book";
-import { fetchBiblioInfo } from "./fetchers";
 import { createAxiosHttpClient } from "./fetchers/httpClient";
 import { Bookmaker } from "./scrapers/bookmaker";
-import { crawlKinokuniya } from "./scrapers/kinokuniya";
-import { buildCsvFileName, getPrevBookList } from "./utils";
+import { launchBookmeterBrowser } from "./scrapers/browser";
 
-import type { BookList } from "./domain/book";
-import type { OutputFilePath } from "./utils";
+import type { MainFuncOption } from "./application/executionMode";
 
 config({ path: path.join(__dirname, "../.env") });
-const cinii_appid = process.env.CINII_API_APPID!.toString();
-const google_books_api_key = process.env.GOOGLE_BOOKS_API_KEY!.toString();
-const isbnDb_api_key = process.env.ISBNDB_API_KEY!.toString();
 
-const stealthPlugin = StealthPlugin();
-stealthPlugin.enabledEvasions.delete("iframe.contentWindow");
-stealthPlugin.enabledEvasions.delete("navigator.plugins");
-stealthPlugin.enabledEvasions.delete("media.codecs");
-puppeteer.use(stealthPlugin);
-
-function parseArgv(argv: string[]): "wish" | "stacked" {
-  const mode = argv[2];
-  if (mode === "wish" || mode === "stacked") {
-    return mode;
-  } else {
-    throw new Error("Specify the process mode");
-  }
-}
-
-type MainFuncOption = {
-  mode: "wish" | "stacked";
-  userId?: string;
-  doLogin?: boolean;
-  outputFilePath?: OutputFilePath | null;
-  noRemoteCheck?: boolean;
-  skipBookListComparison?: boolean;
-  skipFetchingBiblioInfo?: boolean;
-};
-
-// --- DI: インフラ実装の組み立て ---
 const DB_FILE = "./books.sqlite";
 const DB_STORAGE_PATH = "bookmeter/books.sqlite";
 
@@ -76,123 +49,83 @@ const uploader = createFirebaseUploader(
 );
 const http = createAxiosHttpClient();
 
-export async function main({
-  mode,
-  userId = BOOKMETER_DEFAULT_USER_ID,
-  doLogin = true,
-  outputFilePath = null,
-  noRemoteCheck = false,
-  skipBookListComparison = false,
-  skipFetchingBiblioInfo = false
-}: MainFuncOption): Promise<void> {
+const fetcherCredentials = {
+  cinii: process.env.CINII_API_APPID!.toString(),
+  google: process.env.GOOGLE_BOOKS_API_KEY!.toString(),
+  isbnDb: process.env.ISBNDB_API_KEY!.toString()
+};
+
+export async function main(option: MainFuncOption): Promise<boolean> {
+  const executionPlanResult = resolveExecutionPlan(option);
+  if (!executionPlanResult.ok) {
+    console.error(executionPlanResult.err);
+    return false;
+  }
+
+  const executionPlan = executionPlanResult.value;
+  const browser = needsBrowser(executionPlan) ? await launchBookmeterBrowser() : null;
+
   try {
     const startTime = Date.now();
-    const csvFileName = buildCsvFileName(userId, outputFilePath);
-    if (noRemoteCheck) {
-      console.log(`${JOB_NAME}: To check the remote is disabled`);
-    }
+    console.log(`${JOB_NAME}: Execution plan => ${describeExecutionPlan(executionPlan)}`);
 
-    const browser = await puppeteer.launch({
-      defaultViewport: { width: 1000, height: 1000 },
-      headless: true,
-      args: CHROME_ARGS,
-      slowMo: 15
-    });
-
-    const prevBookList = await getPrevBookList(csvFileName[mode], repo);
-    if (prevBookList === null) {
-      console.log(`${JOB_NAME}: The previous result is not found. Path: ${csvFileName[mode]}`);
-      if (noRemoteCheck) throw new Error("前回データが存在しないのにリモートチェックをオフにすることは出来ません");
-    }
-
-    const book = new Bookmaker(browser, userId);
-    const latestBookList = noRemoteCheck
-      ? (prevBookList as BookList)
-      : doLogin
-        ? await book.login().then((book) => book.explore(mode, doLogin))
-        : await book.explore(mode, doLogin);
-    await browser.close();
-
-    const hasDifferences = isBookListDifferent(prevBookList, latestBookList, skipBookListComparison);
-    book.setHasChanges(hasDifferences);
-
-    if (hasDifferences) {
-      let updatedBooklist = latestBookList;
-
-      if (!skipFetchingBiblioInfo) {
-        try {
-          console.log(`${JOB_NAME}: Fetching bibliographic information`);
-          updatedBooklist = await fetchBiblioInfo(
-            latestBookList,
-            {
-              cinii: cinii_appid,
-              google: google_books_api_key,
-              isbnDb: isbnDb_api_key
-            },
-            http
-          );
-        } catch (error) {
-          console.error(`${JOB_NAME}: Error fetching bibliographic information:`, error);
-        }
-      } else {
-        console.log(`${JOB_NAME}: Skipping bibliographic information fetch.`);
+    const { csvPath, prevBookList } = await loadPreviousSnapshot(executionPlan, repo);
+    const latestBookList = await collectLatestBookList(
+      executionPlan,
+      prevBookList,
+      browser,
+      (activeBrowser, userId) => {
+        return new Bookmaker(activeBrowser, userId);
       }
+    );
 
-      if (book.hasChanges) {
-        try {
-          console.log(`${JOB_NAME}: Crawling Kinokuniya for book descriptions`);
-          await crawlKinokuniya(updatedBooklist, mode, repo);
-
-          console.log(`${JOB_NAME}: Saving data to SQLite database`);
-          repo.save(updatedBooklist, mode);
-
-          console.log(`${JOB_NAME}: Generating CSV from SQLite database`);
-          await repo.exportToCsv(mode, csvFileName[mode], CSV_EXPORT_COLUMNS[mode]);
-          console.log(`${JOB_NAME}: Finished writing ${csvFileName[mode]}`);
-
-          await uploader.upload(DB_FILE);
-        } catch (error) {
-          console.error(`${JOB_NAME}: Error during data processing or export:`, error);
-
-          try {
-            console.log(
-              `${JOB_NAME}: Error occurred, falling back to direct CSV export (using all columns except description)`
-            );
-            const fallbackPayload = Array.from(updatedBooklist.values()).map((book) => {
-              const { description, ...rest } = book;
-              return rest;
-            });
-            await exportFile({
-              fileName: csvFileName[mode],
-              payload: fallbackPayload,
-              targetType: "csv",
-              mode: "overwrite"
-            });
-            console.log(`${JOB_NAME}: Finished fallback writing to ${csvFileName[mode]}`);
-          } catch (csvError) {
-            console.error(`${JOB_NAME}: Error in fallback CSV export:`, csvError);
-          }
-        }
-      }
+    if (!shouldRunDownstreamPhases(executionPlan, prevBookList, latestBookList)) {
+      console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
+      return true;
     }
+
+    const enrichedBookList = await fetchBiblioPhase(executionPlan, latestBookList, fetcherCredentials, http);
+    await crawlDescriptionPhase(executionPlan, enrichedBookList, repo, browser);
+
+    const hasPersisted = persistPhase(executionPlan, enrichedBookList, repo);
+    await exportCsvPhase(executionPlan, csvPath, enrichedBookList, repo, hasPersisted);
+    await uploadPhase(executionPlan, uploader, DB_FILE, hasPersisted);
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
-  } catch (e) {
-    if (isAxiosError(e)) {
-      const { status, message } = e;
-      console.error(`Error: ${status} ${message}`);
+    return true;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      console.error(`Error: ${error.response?.status ?? "unknown"} ${error.message}`);
     } else {
-      console.log(e);
+      console.error(error);
     }
-    process.exit(1);
+    return false;
+  } finally {
+    await browser?.close();
   }
 }
 
-// usecases: https://gist.github.com/stepney141/8d3f194c15122f0134cb87b2b10708f8
+/**
+ * examples:
+ * tsx bookmeter/src/index.ts full wish
+ * tsx bookmeter/src/index.ts scrape-only stacked --no-login
+ * tsx bookmeter/src/index.ts local-downstream wish
+ * tsx bookmeter/src/index.ts full wish --user-id 42
+ */
 (async () => {
-  const mode = parseArgv(process.argv);
+  const cliOption = parseCliArgs(process.argv);
+  if (!cliOption.ok) {
+    console.error(cliOption.err);
+    process.exit(1);
+  }
 
-  // For degugging:
-  // await main({ mode, noRemoteCheck: true, skipBookListComparison: true, skipFetchingBiblioInfo: true });
-  await main({ mode });
+  if (cliOption.value.type === "help") {
+    return;
+  }
+
+  const success = await main(cliOption.value.option);
+
+  if (!success) {
+    process.exit(1);
+  }
 })();
