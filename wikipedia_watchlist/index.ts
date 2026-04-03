@@ -4,7 +4,7 @@ import path from "path";
 import axios, { isAxiosError } from "axios";
 import { config } from "dotenv";
 
-import { Err, Ok, unwrapResult } from "../.libs/lib";
+import { Err, Ok, unwrap } from "../.libs/lib";
 import { handleAxiosError } from "../.libs/utils";
 
 import { ACCOUNTS, JOB_NAME } from "./constants";
@@ -32,7 +32,7 @@ const password = process.env.WIKIPEDIA_PASSWORD!;
  */
 const getLoginToken = async (baseURI: TargetUrls): Promise<[string, string[]]> => {
   // ref: https://interrupt.co.jp/blog/entry/2021/04/17/073733
-  const response: Result<AxiosResponse<ApiTokenResponse>> = await axios({
+  const response: Result<AxiosResponse<ApiTokenResponse>, Error> = await axios({
     method: "get",
     url: `https://${baseURI}/w/api.php`,
     params: new URLSearchParams({
@@ -49,8 +49,8 @@ const getLoginToken = async (baseURI: TargetUrls): Promise<[string, string[]]> =
     .then((res) => Ok(res))
     .catch((e: Error) => Err(e));
 
-  const login_token = unwrapResult(response).data?.query.tokens.logintoken;
-  const cookies = unwrapResult(response).headers["set-cookie"]!;
+  const login_token = unwrap(response).data?.query.tokens.logintoken;
+  const cookies = unwrap(response).headers["set-cookie"]!;
 
   return [login_token, cookies];
 };
@@ -64,7 +64,7 @@ const postClientLogin = async (
   login_token: string,
   cookies: string[]
 ): Promise<[ClientLoginResponse["clientlogin"], string[]]> => {
-  const response: Result<AxiosResponse<ClientLoginResponse>> = await axios({
+  const response: Result<AxiosResponse<ClientLoginResponse>, Error> = await axios({
     method: "post",
     url: `https://${baseURI}/w/api.php`,
     data: new URLSearchParams({
@@ -84,8 +84,8 @@ const postClientLogin = async (
     .then((res) => Ok(res))
     .catch((e: Error) => Err(e));
 
-  const login_response_json = unwrapResult(response).data?.clientlogin;
-  const client_cookies: string[] = unwrapResult(response).headers["set-cookie"]!;
+  const login_response_json = unwrap(response).data?.clientlogin;
+  const client_cookies: string[] = unwrap(response).headers["set-cookie"] ?? [];
 
   return [login_response_json, client_cookies];
 };
@@ -120,7 +120,7 @@ const login = async (baseURI: TargetUrls, login_token: string, cookies: string[]
  * - https://www.mediawiki.org/wiki/Extension:TextExtracts#API
  */
 const getPageId = async (baseURI: TargetUrls, cookies: string[], page_title: string): Promise<string | -1> => {
-  const response: Result<AxiosResponse<TextExtractsResponse>> = await axios({
+  const response: Result<AxiosResponse<TextExtractsResponse>, Error> = await axios({
     method: "post",
     url: `https://${baseURI}/w/api.php`,
     data: new URLSearchParams({
@@ -140,7 +140,7 @@ const getPageId = async (baseURI: TargetUrls, cookies: string[], page_title: str
     .then((res) => Ok(res))
     .catch((e: Error) => Err(e));
 
-  const page_id = Object.keys(unwrapResult(response).data?.query.pages)[0]; // -1なら該当記事なしの意
+  const page_id = Object.keys(unwrap(response).data?.query.pages)[0]; // -1なら該当記事なしの意
   return page_id;
 };
 
@@ -165,7 +165,7 @@ const getWatchlistRaw = async (
     // 初回アクセスではwrcontinueを指定してはいけないので、undefinedを無視してくれないURLSearchParamsは使わない
     // (axiosはundefined値のプロパティを無視してくれる)
   };
-  const response: Result<AxiosResponse<WatchlistrawResponse>> = await axios({
+  const response: Result<AxiosResponse<WatchlistrawResponse>, Error> = await axios({
     method: "get",
     url: `https://${baseURI}/w/api.php`,
     params: queries,
@@ -177,8 +177,8 @@ const getWatchlistRaw = async (
     .then((res) => Ok(res))
     .catch((e: Error) => Err(e));
 
-  const watchlist_data: Watchlists = unwrapResult(response).data?.["watchlistraw"];
-  const pagination_flag: Pagination = unwrapResult(response).data?.["continue"]?.["wrcontinue"];
+  const watchlist_data: Watchlists = unwrap(response).data?.["watchlistraw"];
+  const pagination_flag: Pagination = unwrap(response).data?.["continue"]?.["wrcontinue"];
 
   return [watchlist_data, pagination_flag];
 };
