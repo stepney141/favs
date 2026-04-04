@@ -111,6 +111,13 @@ export function createAxiosHttpClient(): HttpClient {
   };
 }
 
-function toHttpError(e: unknown, source: FetcherSource): HttpError {
-  return new HttpError({ source }, { cause: e });
+const getStatusCode = (error: unknown): number | undefined => {
+  if (axios.isAxiosError(error)) {
+    return error.response?.status;
+  }
+  return undefined;
+};
+
+export function toHttpError(e: unknown, source: FetcherSource): HttpError {
+  return new HttpError({ source, status: getStatusCode(e) }, { cause: e });
 }

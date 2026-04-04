@@ -24,6 +24,9 @@ tsx bookmeter/src/index.ts scrape-only stacked --no-login
 # ローカルキャッシュから下流フェーズのみ実行（DB保存 → CSV出力 → アップロード）
 tsx bookmeter/src/index.ts local-downstream wish
 
+# ローカルキャッシュから API 補強を再実行（API取得 → DB保存 → CSV出力）
+tsx bookmeter/src/index.ts local-biblio wish
+
 # ユーザーIDを指定して実行
 tsx bookmeter/src/index.ts full wish --user-id 42
 ```
@@ -35,6 +38,7 @@ tsx bookmeter/src/index.ts full wish --user-id 42
 | `full` | スクレイピングから全フェーズを実行 |
 | `scrape-only` | スクレイピングのみ実行し、下流フェーズをスキップ |
 | `local-downstream` | スクレイピングをスキップし、ローカルキャッシュからDB保存・CSV出力・アップロードを実行 |
+| `local-biblio` | Bookmeter/紀伊國屋のスクレイピングをスキップし、ローカルキャッシュからAPI取得・DB保存・CSV出力を実行 |
 
 ### ターゲット
 

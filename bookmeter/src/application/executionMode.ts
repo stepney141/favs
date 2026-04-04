@@ -83,7 +83,7 @@ export type ExecutionPlan = {
   phases: ExecutionPhaseState;
 };
 
-export const CLI_SUBCOMMANDS = ["full", "scrape-only", "local-downstream"] as const;
+export const CLI_SUBCOMMANDS = ["full", "scrape-only", "local-downstream", "local-biblio"] as const;
 export type CliSubcommand = (typeof CLI_SUBCOMMANDS)[number];
 
 type ExecutionModeErrorContext =
@@ -108,6 +108,7 @@ export class ExecutionModeError extends BaseError {
 const NO_PHASES = createPhaseState([]);
 const FULL_PHASES = createPhaseState(EXECUTION_PHASES);
 const LOCAL_DOWNSTREAM_PHASES = ["persist", "exportCsv", "uploadDb"] as const;
+const LOCAL_BIBLIO_PHASES = ["fetchBiblio", "persist", "exportCsv"] as const;
 
 function createPhaseState(enabledPhases: readonly ExecutionPhase[]): ExecutionPhaseState {
   const enabled = new Set(enabledPhases);
@@ -251,6 +252,12 @@ function buildExecutionModeFromSubcommand(
         scrape: { type: "local-cache" },
         enabledPhases: LOCAL_DOWNSTREAM_PHASES
       };
+    case "local-biblio":
+      return {
+        type: "custom",
+        scrape: { type: "local-cache" },
+        enabledPhases: LOCAL_BIBLIO_PHASES
+      };
   }
 }
 
@@ -314,6 +321,18 @@ export function parseCliArgs(argv: string[]): Result<ParsedCliCommand, Execution
         ),
       (args) => {
         captureOption("local-downstream", args);
+      }
+    )
+    .command(
+      "local-biblio <target>",
+      "Load the local snapshot, fetch bibliographic data via APIs, then persist and export CSV",
+      (command) =>
+        configureUserIdOption(configureTargetPositional(command)).example(
+          "$0 local-biblio wish",
+          "Reuse the local wish snapshot, refresh API-backed metadata, and rebuild the CSV"
+        ),
+      (args) => {
+        captureOption("local-biblio", args);
       }
     )
     .demandCommand(1, `Specify a subcommand: ${CLI_SUBCOMMANDS.join(" | ")}`)

@@ -83,15 +83,21 @@ export const sliceByNumber = <T = object>(array: T[], n: number): T[][] =>
        console.log(elm1, elm2, elm3);
    }
  */
-export function* zip<T extends unknown[]>(...args: Iterableify<T>): Generator<T> {
-  const iterators = args.map((it) => it[Symbol.iterator]());
+type Iteratorify<T extends unknown[]> = { [K in keyof T]: Iterator<T[K]> };
+
+export function* zip<T extends unknown[]>(args: Iterableify<T>): Generator<T> {
+  const iterators = args.map((it) => it[Symbol.iterator]()) as Iteratorify<T>;
   while (true) {
-    const results = iterators.map((i) => i.next());
-    if (results.some(({ done }) => done)) {
-      break;
+    const values: unknown[] = [];
+    for (const iterator of iterators) {
+      const result = iterator.next();
+      if (result.done) {
+        return;
+      }
+      values.push(result.value);
     }
 
-    yield results.map(({ value }) => value) as unknown as T;
+    yield values as T;
   }
 }
 type Iterableify<T> = { [K in keyof T]: Iterable<T[K]> };

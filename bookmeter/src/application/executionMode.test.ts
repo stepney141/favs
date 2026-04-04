@@ -106,6 +106,20 @@ describe("parseCliArgs", () => {
     });
   });
 
+  it("maps local-biblio to the local-cache API enrichment pipeline", () => {
+    expect(unwrapOk(parseCliArgs(["node", "bookmeter", "local-biblio", "wish"]))).toEqual({
+      type: "run",
+      option: {
+        target: "wish",
+        execution: {
+          type: "custom",
+          scrape: { type: "local-cache" },
+          enabledPhases: ["fetchBiblio", "persist", "exportCsv"]
+        }
+      }
+    });
+  });
+
   it("returns help without scheduling execution", () => {
     expect(unwrapOk(parseCliArgs(["node", "bookmeter", "full", "--help"]))).toEqual({
       type: "help"

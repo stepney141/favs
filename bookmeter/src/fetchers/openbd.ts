@@ -55,7 +55,7 @@ export async function bulkFetchOpenBD(
   return mapResult(mapResultErr(httpResult, httpToFetcherError), (responseData) => {
     const results: FetchResult[] = [];
 
-    for (const [bookmeterURL, bookResp] of zip(bookmeterKeys, responseData)) {
+    for (const [bookmeterURL, bookResp] of zip([bookmeterKeys, responseData])) {
       if (bookResp === null) {
         const statusText: BiblioinfoErrorStatus = "Not_found_in_OpenBD";
         const part = {

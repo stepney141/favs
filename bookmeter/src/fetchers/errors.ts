@@ -11,16 +11,32 @@ export type FetcherSource = "OpenBD" | "ISBNdb" | "NDL" | "GoogleBooks" | "CiNii
 
 export type FetcherErrorContext =
   | { type: "notFound"; source: FetcherSource }
-  | { type: "apiError"; source: FetcherSource }
-  | { type: "networkError"; source: FetcherSource }
+  | { type: "apiError"; source: FetcherSource; status?: number }
+  | { type: "networkError"; source: FetcherSource; status?: number }
   | { type: "invalidIsbn" };
+
+const formatStatusCode = (status?: number): string => {
+  return status === undefined ? "" : ` (HTTP status code: ${status})`;
+};
+
+const toFetcherErrorMessage = (context: FetcherErrorContext): string => {
+  switch (context.type) {
+    case "notFound":
+      return `Fetcher error [${context.type}] from ${context.source}`;
+    case "apiError":
+    case "networkError":
+      return `Fetcher error [${context.type}] from ${context.source}${formatStatusCode(context.status)}`;
+    case "invalidIsbn":
+      return "Fetcher error [invalidIsbn]";
+  }
+};
 
 export class FetcherError extends BaseError {
   constructor(
     public readonly context: FetcherErrorContext,
     options?: { cause?: unknown }
   ) {
-    super(`Fetcher error [${context.type}]`, options);
+    super(toFetcherErrorMessage(context), options);
   }
 }
 
@@ -29,7 +45,7 @@ export class HttpError extends BaseError {
     public readonly context: { source: FetcherSource; status?: number },
     options?: { cause?: unknown }
   ) {
-    super(`HTTP error from ${context.source}`, options);
+    super(`HTTP error from ${context.source}${formatStatusCode(context.status)}`, options);
   }
 }
 
@@ -49,7 +65,10 @@ export const toErrorStatus = (error: FetcherError): BiblioinfoErrorStatus => {
 
 /** HttpError → FetcherError 変換 */
 export function httpToFetcherError(httpErr: HttpError): FetcherError {
-  return new FetcherError({ type: "apiError", source: httpErr.context.source }, { cause: httpErr });
+  return new FetcherError(
+    { type: "apiError", source: httpErr.context.source, status: httpErr.context.status },
+    { cause: httpErr }
+  );
 }
 
 /** エラーログ出力用のヘルパー */

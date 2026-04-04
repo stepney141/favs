@@ -108,6 +108,7 @@ export async function main(option: MainFuncOption): Promise<boolean> {
  * tsx bookmeter/src/index.ts full wish
  * tsx bookmeter/src/index.ts scrape-only stacked --no-login
  * tsx bookmeter/src/index.ts local-downstream wish
+ * tsx bookmeter/src/index.ts local-biblio wish
  * tsx bookmeter/src/index.ts full wish --user-id 42
  */
 (async () => {

@@ -7,12 +7,13 @@ import { PromiseQueue, randomWait, sleep } from "../../../.libs/utils";
 import { JOB_NAME } from "../constants";
 import { isAsin, routeIsbn10 } from "../domain/isbn";
 
-import { searchLibraries, configMathlibBookList } from "./cinii";
+import { searchLibraries } from "./cinii";
 import { logFetcherResultError } from "./errors";
 import { fetchGoogleBooks } from "./googlebooks";
 import { fetchISBNdb } from "./isbndb";
 import { fetchNDL } from "./ndl";
 import { bulkFetchOpenBD } from "./openbd";
+import { configMathlibBookList } from "./sophia";
 
 import type { HttpClient } from "./httpClient";
 import type { FetchResult, FetcherCredentials, FetcherResult } from "./types";
