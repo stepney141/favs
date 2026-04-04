@@ -57,6 +57,9 @@ type Movie = {
   type: "video" | "photo";
 };
 type MovieList = Movie[];
+type WindowWithNameHack = Window & {
+  __name?: <T extends (...args: never[]) => unknown>(func: T) => T;
+};
 
 const browserOptions = {
   executablePath: executablePath(),
@@ -181,7 +184,8 @@ const scrollToBottom = async (page: Page): Promise<void> => {
   await page.evaluate(async () => {
     // ugly hack to avoid esbuild bug...
     // ref: https://github.com/evanw/esbuild/issues/2605
-    (window as any).__name = (func: Function) => func;
+    const browserWindow = window as WindowWithNameHack;
+    browserWindow.__name = <T extends (...args: never[]) => unknown>(func: T): T => func;
 
     const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
     // scroll to bottom

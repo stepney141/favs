@@ -40,11 +40,9 @@ type Matome = { url: string; title: string; published_date: string };
 type MatomeMap = Map<string, Matome>;
 
 class Togetter {
-  #browser: Browser;
   #matomeList: { togetter: MatomeMap; posfie: MatomeMap };
 
-  constructor(browser: Browser) {
-    this.#browser = browser;
+  constructor(_browser: Browser) {
     this.#matomeList = {
       togetter: new Map(),
       posfie: new Map()
@@ -74,7 +72,7 @@ class Togetter {
       const allTitles = await $x(page, XPATH[type].allTitles);
       const allDatesPublished = await $x(page, XPATH[type].allDatesPublished);
 
-      for (const [urlElem, titleElem, publishedDateElem] of zip(allUrls, allTitles, allDatesPublished)) {
+      for (const [urlElem, titleElem, publishedDateElem] of zip([allUrls, allTitles, allDatesPublished])) {
         const url: string = await getNodeProperty(urlElem, "href");
         const title: string = await getNodeProperty(titleElem, "textContent");
         const published_date: string = await getNodeProperty(publishedDateElem, "dateTime");

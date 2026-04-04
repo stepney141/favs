@@ -48,16 +48,14 @@ type NoteApiResponse = {
 
 class Notebook {
   #browser: Browser;
-  #page_num: number;
   #notelist: NoteList;
 
   constructor(browser: Browser) {
     this.#browser = browser;
-    this.#page_num = 1;
     this.#notelist = new Map();
   }
 
-  async login() {
+  async login(): Promise<Notebook> {
     const page = await this.#browser.newPage();
 
     await page.setExtraHTTPHeaders({
@@ -87,7 +85,7 @@ class Notebook {
     return this;
   }
 
-  async explore() {
+  async explore(): Promise<NoteList> {
     const page = await this.#browser.newPage();
 
     await page.setExtraHTTPHeaders({

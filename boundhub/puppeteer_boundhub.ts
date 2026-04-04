@@ -67,7 +67,7 @@ class BoundHub {
     this.#movielist = [];
   }
 
-  async login() {
+  async login(): Promise<BoundHub> {
     const page = await this.#browser.newPage();
     await page.goto(`${baseURI}/?login`, { waitUntil: "networkidle2" });
     console.log(`${JOB_NAME}: Logging in...`);
@@ -98,7 +98,7 @@ class BoundHub {
     return this;
   }
 
-  async fetchTags() {
+  async fetchTags(): Promise<Tag[]> {
     const page = await this.#browser.newPage();
     await page.goto(`${baseURI}/tags/`, {
       waitUntil: "networkidle2"
@@ -131,7 +131,7 @@ class BoundHub {
     return tags;
   }
 
-  async explore() {
+  async explore(): Promise<MovieList> {
     const page = await this.#browser.newPage();
     await page.goto(`${baseURI}/my/favourites/videos/`, {
       waitUntil: "networkidle2"

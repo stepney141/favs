@@ -55,12 +55,12 @@ async function getLgtm(browser: Browser): Promise<ListLGTM> {
     const authorHandles = await $x(page, XPATH.author); // get author names
     const createdAtHandles = await $x(page, XPATH.created_at); // get dates that the articles were created at
 
-    for (const [url, lgtm, created_at, author] of zip(
+    for (const [url, lgtm, created_at, author] of zip([
       articleUrlHandles,
       articleLgtmHandles,
       createdAtHandles,
       authorHandles
-    )) {
+    ])) {
       const entry: LGTM = {
         title: await getNodeProperty(url, "innerHTML"), //タイトル取得
         url: await getNodeProperty(url, "href"), //記事URL取得

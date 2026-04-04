@@ -22,7 +22,7 @@ type Starred = {
   stargazers_count: number;
 };
 
-const createClient = () => new Octokit({ auth: token });
+const createClient = (): Octokit => new Octokit({ auth: token });
 
 const getStarredGists = async (app: Octokit): Promise<Gist[]> => {
   // https://docs.github.com/en/rest/gists/gists#list-starred-gists

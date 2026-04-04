@@ -135,11 +135,11 @@ class Seiga {
 
       console.log(`Reading page ${cnt}`);
 
-      for (const [illustLink_dom, created_date_dom, clipped_date_dom] of zip(
+      for (const [illustLink_dom, created_date_dom, clipped_date_dom] of zip([
         eachIllustLinks_eh,
         createdDate_eh,
         clippedDate_eh
-      )) {
+      ])) {
         const url: string = await getNodeProperty(illustLink_dom, "href");
         const title: string = await getNodeProperty(illustLink_dom, "innerText");
         const created_date: string = await getNodeProperty(created_date_dom, "innerText");
