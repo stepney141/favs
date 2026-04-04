@@ -35,7 +35,6 @@
     "@types/node-fetch": "^2.6.11",
     "@types/papaparse": "^5.3.14",
     "@types/yargs": "^17.0.33",
-    "@typescript-eslint/typescript-estree": "^8.17.0",
     "drizzle-kit": "^0.18.1",
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
@@ -47,7 +46,7 @@
     "prettier": "^3.2.4",
     "tsx": "^4.20.3",
     "typescript": "^6.0.2",
-    "typescript-eslint": "^8.32.1",
+    "typescript-eslint": "^8.58.0",
     "vitest": "^3.1.2",
     "yargs": "^17.7.2"
   },
