@@ -2,6 +2,7 @@ import fs from "node:fs";
 
 import axios from "axios";
 import { getDownloadURL, uploadBytes } from "firebase/storage";
+import * as setCookieParser from "set-cookie-parser";
 
 import type { StorageReference } from "firebase/storage";
 import type { CookieData } from "puppeteer";
@@ -99,4 +100,43 @@ export async function ensureAuthentication(
  */
 export function cookiesToString(cookies: CookieData[]): string {
   return cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join("; ");
+}
+
+/**
+ * Merge existing cookies with new cookies from set-cookie header
+ * New cookies will overwrite existing ones with the same name
+ * Uses set-cookie-parser to properly parse all cookie attributes
+ */
+export function mergeCookies(domain: string, existingCookies: CookieData[], setCookieHeaders: string[]): CookieData[] {
+  const cookieMap = new Map<string, CookieData>();
+
+  // Add existing cookies to map
+  for (const cookie of existingCookies) {
+    cookieMap.set(cookie.name, cookie);
+  }
+
+  // Parse set-cookie headers using set-cookie-parser to get all attributes
+  const parsedCookies = setCookieParser.parse(setCookieHeaders);
+
+  for (const parsed of parsedCookies) {
+    // Create new cookie preserving all server-provided attributes
+    const newCookie: CookieData = {
+      name: parsed.name,
+      value: parsed.value,
+      domain: parsed.domain || domain,
+      path: parsed.path || "/",
+      expires: parsed.expires
+        ? parsed.expires.getTime() / 1000
+        : parsed.maxAge
+          ? Date.now() / 1000 + parsed.maxAge
+          : -1,
+      httpOnly: parsed.httpOnly || false,
+      secure: parsed.secure || false,
+      sameSite: (parsed.sameSite as "Strict" | "Lax" | "None") || "Lax"
+    };
+
+    cookieMap.set(parsed.name, newCookie);
+  }
+
+  return Array.from(cookieMap.values());
 }

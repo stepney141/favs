@@ -8,12 +8,12 @@ import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
 import { CHROME_ARGS, USER_AGENT } from "../.libs/constants";
-import { getNodeProperty, waitForXPath, $x } from "../.libs/pptr-utils";
+import { getNodeProperty, waitForXPath, $x, scrollToBottom } from "../.libs/pptr-utils";
 import { exportFile, sleep } from "../.libs/utils";
 
 import { createCookieManager, ensureAuthentication } from "./../.libs/cookie";
 
-import type { Browser, Page, CookieData } from "puppeteer";
+import type { Browser, CookieData } from "puppeteer";
 
 const stealthPlugin = StealthPlugin();
 /* ref:
@@ -31,9 +31,9 @@ const baseURI = "https://www.tiktok.com";
 const COOKIE_PATH = "tiktok_cookie.json";
 
 const XPATH = {
-  loginUsernameInput: '//*[@id="loginContainer"]/div[1]/form/div[1]/input',
-  loginPasswordInput: '//*[@id="loginContainer"]/div[1]/form/div[2]/div/input',
-  loginButtonEnabled: '//*[@id="loginContainer"]/div[1]/form/button',
+  loginUsernameInput: '//input[@name="username"]',
+  loginPasswordInput: '//input[@type="password"]',
+  loginButtonEnabled: '//button[contains(text(), "ログイン")]',
   ToSavedMovies: '//span[contains(text(), "セーブ済み")]',
   savedMoviesHref: '//div[contains(@data-e2e,"favorites-item")]/div/div/a'
 };
@@ -57,9 +57,6 @@ type Movie = {
   type: "video" | "photo";
 };
 type MovieList = Movie[];
-type WindowWithNameHack = Window & {
-  __name?: <T extends (...args: never[]) => unknown>(func: T) => T;
-};
 
 const browserOptions = {
   executablePath: executablePath(),
@@ -174,34 +171,6 @@ async function performLogin(): Promise<CookieData[]> {
     await browser.close();
   }
 }
-
-/**
- * lazy loading workaround
- * https://www.mrskiro.dev/posts/playwright-for-lazy-loading
- */
-const scrollToBottom = async (page: Page): Promise<void> => {
-  console.log(`${JOB_NAME}: Scrolling to bottom...`);
-  await page.evaluate(async () => {
-    // ugly hack to avoid esbuild bug...
-    // ref: https://github.com/evanw/esbuild/issues/2605
-    const browserWindow = window as WindowWithNameHack;
-    browserWindow.__name = <T extends (...args: never[]) => unknown>(func: T): T => func;
-
-    const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
-    // scroll to bottom
-    for (let i = 0; i < document.body.scrollHeight; i += 100) {
-      window.scrollTo(0, i);
-      await delay(500);
-    }
-    await delay(3000);
-    // scroll to top
-    for (let i = document.body.scrollHeight; i > 0; i -= 100) {
-      window.scrollTo(0, i);
-      await delay(500);
-    }
-    await delay(3000);
-  });
-};
 
 class TikToker {
   #browser: Browser;

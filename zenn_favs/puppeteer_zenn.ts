@@ -8,9 +8,8 @@ import { getStorage, ref } from "firebase/storage";
 import { executablePath } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
-import * as setCookieParser from "set-cookie-parser";
 
-import { cookiesToString, createCookieManager, ensureAuthentication } from "../.libs/cookie";
+import { cookiesToString, createCookieManager, ensureAuthentication, mergeCookies } from "../.libs/cookie";
 import { $x } from "../.libs/pptr-utils";
 import { mapToArray, exportFile, sleep } from "../.libs/utils";
 
@@ -104,45 +103,6 @@ async function promptForPinCode(): Promise<string> {
   } finally {
     rl.close();
   }
-}
-
-/**
- * Merge existing cookies with new cookies from set-cookie header
- * New cookies will overwrite existing ones with the same name
- * Uses set-cookie-parser to properly parse all cookie attributes
- */
-function mergeCookies(existingCookies: CookieData[], setCookieHeaders: string[]): CookieData[] {
-  const cookieMap = new Map<string, CookieData>();
-
-  // Add existing cookies to map
-  for (const cookie of existingCookies) {
-    cookieMap.set(cookie.name, cookie);
-  }
-
-  // Parse set-cookie headers using set-cookie-parser to get all attributes
-  const parsedCookies = setCookieParser.parse(setCookieHeaders);
-
-  for (const parsed of parsedCookies) {
-    // Create new cookie preserving all server-provided attributes
-    const newCookie: CookieData = {
-      name: parsed.name,
-      value: parsed.value,
-      domain: parsed.domain || ".zenn.dev",
-      path: parsed.path || "/",
-      expires: parsed.expires
-        ? parsed.expires.getTime() / 1000
-        : parsed.maxAge
-          ? Date.now() / 1000 + parsed.maxAge
-          : -1,
-      httpOnly: parsed.httpOnly || false,
-      secure: parsed.secure || false,
-      sameSite: (parsed.sameSite as "Strict" | "Lax" | "None") || "Lax"
-    };
-
-    cookieMap.set(parsed.name, newCookie);
-  }
-
-  return Array.from(cookieMap.values());
 }
 
 /**
@@ -347,7 +307,7 @@ async function fetchZennLikes(cookies: CookieData[], page: number): Promise<Fetc
 
   if (setCookieHeader && setCookieHeader.length > 0) {
     // Merge existing cookies with new ones from set-cookie headers
-    updatedCookies = mergeCookies(cookies, setCookieHeader);
+    updatedCookies = mergeCookies(".zenn.dev", cookies, setCookieHeader);
     console.log(`${JOB_NAME}: Updated cookies received from server`);
   }
 

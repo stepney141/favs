@@ -1,62 +1,131 @@
 import path from "path";
 
+import axios from "axios";
 import { config } from "dotenv";
+import { initializeApp } from "firebase/app";
+import { getStorage, ref } from "firebase/storage";
 import { launch } from "puppeteer";
 
 import { CHROME_ARGS, USER_AGENT } from "../.libs/constants";
+import { cookiesToString, createCookieManager, ensureAuthentication, mergeCookies } from "../.libs/cookie";
 import { $x } from "../.libs/pptr-utils";
-import { sleep, mapToArray, exportFile } from "../.libs/utils";
+import { exportFile, mapToArray, sleep } from "../.libs/utils";
 
-import type { Browser } from "puppeteer";
+import type { CookieData } from "puppeteer";
 
 const baseURI = "https://note.com";
+const likedApiURI = `${baseURI}/api/v1/notes/liked`;
 const JOB_NAME = "note.com Favorites";
 const CSV_FILENAME = "note_favorites.csv";
+const COOKIE_PATH = "note_cookie.json";
 
 const XPATH = {
   useridInput: '//*[@id="email"]',
   passwordInput: '//*[@id="password"]',
-  loginButton: '//button[@data-type="primaryNext"]'
+  loginButton: '//button/*[contains(text(), "ログイン")]'
 };
 
 config({ path: path.join(__dirname, "../.env") });
-const user_name = process.env.NOTE_ACCOUNT!.toString();
+const email = process.env.NOTE_ACCOUNT!.toString();
 const password = process.env.NOTE_PASSWORD!.toString();
+const userName = "stepney141";
+
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY!,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN!,
+  projectId: process.env.FIREBASE_PROJECT_ID!,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET!,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID!,
+  appId: process.env.FIREBASE_APP_ID!
+};
 
 type Note = {
-  note_title: string;
-  note_url: string;
-  user_nickname: string;
-  publish_at: string;
-  like_count: number;
+  name: string;
+  noteUrl: string;
+  userNickname: string;
+  publishAt: string;
+  likeCount: number;
 };
 type NoteList = Map<string, Note>;
-type NoteApiEntry = {
-  key: string;
-  name: string;
-  note_url: string;
-  user: {
-    nickname: string;
+
+type NoteLikedApiResponse = {
+  data: {
+    contents: {
+      key: string;
+      name: string;
+      noteUrl: string;
+      user: {
+        nickname: string;
+      };
+      publishAt: string;
+      likeCount: number;
+    }[];
+    isLastPage: boolean;
+    totalCount: number;
   };
-  publish_at: string;
-  like_count: number;
 };
-type NoteApiResponse = {
-  last_page: boolean;
-  notes: NoteApiEntry[];
+type FetchResult = {
+  payload: NoteLikedApiResponse;
+  updatedCookies?: CookieData[];
 };
 
-class Notebook {
-  #browser: Browser;
-  #notelist: NoteList;
+const browserOptions = {
+  defaultViewport: { width: 1000, height: 1000 },
+  headless: true,
+  args: CHROME_ARGS,
+  // devtools: true,
+  slowMo: 80
+} as const;
 
-  constructor(browser: Browser) {
-    this.#browser = browser;
-    this.#notelist = new Map();
+function isNoteLikedApiResponse(value: unknown): value is NoteLikedApiResponse {
+  if (typeof value !== "object" || value === null) {
+    return false;
   }
 
-  async login(): Promise<Notebook> {
-    const page = await this.#browser.newPage();
+  const candidate = value as Record<string, unknown>;
+  if (typeof candidate.data !== "object" || candidate.data === null) {
+    return false;
+  }
+
+  const data = candidate.data as Record<string, unknown>;
+  return typeof data.last_page === "boolean" && Array.isArray(data.notes);
+}
+
+async function validateCookies(cookies: CookieData[]): Promise<boolean> {
+  if (cookies.length === 0) {
+    return false;
+  }
+
+  try {
+    const response = await axios.get(likedApiURI, {
+      headers: {
+        Cookie: cookiesToString(cookies),
+        "User-Agent": USER_AGENT,
+        Accept: "application/json",
+        "Accept-Language": "ja-JP"
+      },
+      timeout: 30000
+    });
+
+    const isValid = isNoteLikedApiResponse(response.data);
+    if (isValid) {
+      console.log(`${JOB_NAME}: Existing cookies are valid`);
+      return true;
+    }
+
+    console.log(`${JOB_NAME}: Existing cookies returned an unexpected response`);
+    return false;
+  } catch (error) {
+    console.log(`${JOB_NAME}: Existing cookies are invalid, need to login`);
+    return false;
+  }
+}
+
+async function performLogin(): Promise<CookieData[]> {
+  console.log(`${JOB_NAME}: Starting login process...`);
+  const browser = await launch(browserOptions);
+  try {
+    const page = await browser.newPage();
 
     await page.setExtraHTTPHeaders({
       "accept-language": "ja-JP"
@@ -66,107 +135,132 @@ class Notebook {
       waitUntil: "load"
     });
 
-    const useridInput_Handle = $x(page, XPATH.useridInput);
-    const passwordInput_Handle = $x(page, XPATH.passwordInput);
-    const loginButton_Handle = $x(page, XPATH.loginButton);
+    const userIdInputHandle = await $x(page, XPATH.useridInput);
+    const passwordInputHandle = await $x(page, XPATH.passwordInput);
+    const loginButtonHandle = await $x(page, XPATH.loginButton);
 
-    await (await useridInput_Handle)[0].type(user_name);
-    await (await passwordInput_Handle)[0].type(password);
+    if (userIdInputHandle.length === 0 || passwordInputHandle.length === 0 || loginButtonHandle.length === 0) {
+      throw new Error("Failed to locate note.com login form elements");
+    }
+
+    await userIdInputHandle[0].type(email);
+    await passwordInputHandle[0].type(password);
 
     await Promise.all([
       page.waitForNavigation({
         timeout: 60000,
         waitUntil: "networkidle2"
       }),
-      (await loginButton_Handle)[0].click()
+      loginButtonHandle[0].click()
     ]);
 
-    console.log(`${JOB_NAME}: Login Completed!`);
-    return this;
+    const cookies = await browser.cookies();
+    console.log(`${JOB_NAME}: Login completed successfully`);
+    return cookies;
+  } finally {
+    await browser.close();
   }
+}
 
-  async explore(): Promise<NoteList> {
-    const page = await this.#browser.newPage();
+async function getAllPages(initialCookies: CookieData[]): Promise<{ notes: NoteList; finalCookies: CookieData[] }> {
+  const allNotes: NoteList = new Map();
+  const entriesPerPage = 12; // 13以上を指定しても12に丸められる
 
-    await page.setExtraHTTPHeaders({
-      "accept-language": "ja-JP"
-    });
-    await page.setUserAgent(USER_AGENT);
+  let currentCookies = initialCookies;
+  let page = 1;
+  let hasNextPage = true;
 
-    console.log(`${JOB_NAME}: Scraping Started!`);
+  while (hasNextPage) {
+    try {
+      const fetchResult = await fetchNoteLikes(currentCookies, userName, page, entriesPerPage);
+      console.error(
+        `isLastPage: ${fetchResult.payload.data.isLastPage}, totalCount: ${fetchResult.payload.data.totalCount}`
+      );
 
-    //イベントハンドラを登録
-    let isLastPage: boolean = false;
-    page.on("response", (response) => {
-      (async () => {
-        if (response.url().includes("https://note.com/api/v1/notes/liked") === true && response.status() === 200) {
-          const internal_api_response = (await response.json()) as { data: NoteApiResponse };
-          const payload = internal_api_response["data"];
-          const articles = payload["notes"];
-          isLastPage = payload["last_page"];
-
-          for (const data of articles) {
-            const key = data["key"]; //記事IDみたいなもの？(URLの固有記事名部分)
-            const note_title = data["name"]; //記事名
-            const note_url = data["note_url"]; //記事URL
-            const user_nickname = data["user"]["nickname"]; //記事作成者名
-            const publish_at = data["publish_at"]; //公開時刻
-            const like_count = data["like_count"]; //スキされた数
-
-            this.#notelist.set(key, {
-              //記事ID的な何かをキーにする
-              note_title: note_title,
-              note_url: note_url,
-              user_nickname: user_nickname,
-              publish_at: publish_at,
-              like_count: like_count
-            });
-          }
-        }
-      })();
-    });
-
-    //スキした記事の一覧へ飛んで処理を実行
-    await page.goto(`${baseURI}/notes/liked`, {
-      timeout: 1000 * 60,
-      waitUntil: ["networkidle2", "domcontentloaded", "load"]
-    });
-
-    for (;;) {
-      if (isLastPage) {
-        break;
-      } else {
-        await page.evaluate(() => {
-          window.scrollBy(0, 5000);
+      for (const { key, name, noteUrl, user, publishAt, likeCount } of fetchResult.payload.data.contents) {
+        allNotes.set(key, {
+          name,
+          noteUrl,
+          userNickname: user.nickname,
+          publishAt,
+          likeCount
         });
       }
 
-      await sleep(3000);
-    }
+      // Update cookies if server provided new ones
+      if (fetchResult.updatedCookies) {
+        currentCookies = fetchResult.updatedCookies;
+      }
 
-    console.log(`${JOB_NAME}: Scraping Completed!`);
-    return this.#notelist;
+      // Check if there's a next page
+      hasNextPage = !fetchResult.payload.data.isLastPage;
+      if (hasNextPage) {
+        page++;
+        await sleep(1000); // Rate limiting
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
+  return { notes: allNotes, finalCookies: currentCookies };
+}
+
+/**
+ * Fetch note.com likes data using cookies and internal api
+ */
+async function fetchNoteLikes(
+  cookies: CookieData[],
+  userName: string,
+  page: number,
+  entries_per_page: number
+): Promise<FetchResult> {
+  const cookieString = cookiesToString(cookies);
+  const url = `${baseURI}/api/v2/creators/${userName}/contents?kind=likes&page=${page}&per=${entries_per_page}&disabled_pinned=false&with_notes=false`;
+  console.error(url);
+
+  const response = await axios.get(url, {
+    headers: {
+      Cookie: cookieString,
+      "User-Agent": USER_AGENT,
+      Accept: "application/json",
+      "Accept-Language": "ja-JP"
+    },
+    timeout: 30000
+  });
+
+  // Check if response contains updated cookies
+  const setCookieHeader = response.headers["set-cookie"];
+  let updatedCookies: CookieData[] | undefined;
+  if (setCookieHeader && setCookieHeader.length > 0) {
+    // Merge existing cookies with new ones from set-cookie headers
+    updatedCookies = mergeCookies("note.com", cookies, setCookieHeader);
+    console.log(`${JOB_NAME}: Updated cookies received from server`);
+  }
+
+  return {
+    payload: response.data as NoteLikedApiResponse,
+    updatedCookies
+  };
 }
 
 (async () => {
   try {
     const startTime = Date.now();
 
-    const browser = await launch({
-      defaultViewport: { width: 1000, height: 1000 },
-      headless: false,
-      args: CHROME_ARGS,
-      // devtools: true,
-      slowMo: 80
-    });
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+    const pathReference = ref(storage, COOKIE_PATH);
+    const cookieManager = createCookieManager(pathReference, JOB_NAME, COOKIE_PATH);
 
-    const note = new Notebook(browser);
-    const notelist = await note.login().then((n) => n.explore());
+    const cookies = await ensureAuthentication(cookieManager, validateCookies, performLogin);
+    const result = await getAllPages(cookies);
+
+    await cookieManager.saveToFirebase(result.finalCookies);
+    cookieManager.cleanupLocal();
 
     await exportFile({
       fileName: CSV_FILENAME,
-      payload: mapToArray(notelist),
+      payload: mapToArray(result.notes),
       targetType: "csv",
       mode: "overwrite"
     }).then(() => {
@@ -174,10 +268,8 @@ class Notebook {
     });
 
     console.log(`The processs took ${Math.round((Date.now() - startTime) / 1000)} seconds`);
-
-    await browser.close();
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
     process.exit(1);
   }
 })();
