@@ -34,7 +34,7 @@ const XPATH = {
   loginUsernameInput: '//input[@name="username"]',
   loginPasswordInput: '//input[@type="password"]',
   loginButtonEnabled: '//button[contains(text(), "ログイン")]',
-  ToSavedMovies: '//span[contains(text(), "セーブ済み")]',
+  ToSavedMovies: '//span[contains(text(), "お気に入り")]',
   savedMoviesHref: '//div[contains(@data-e2e,"favorites-item")]/div/div/a'
 };
 
@@ -60,7 +60,7 @@ type MovieList = Movie[];
 
 const browserOptions = {
   executablePath: executablePath(),
-  defaultViewport: { width: 1000, height: 1000 },
+  defaultViewport: { width: 2000, height: 1000 },
   acceptInsecureCerts: true,
   protocolTimeout: 300_000,
   ignoreDefaultArgs: ["--enable-automation"],
