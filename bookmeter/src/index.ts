@@ -34,27 +34,6 @@ config({ path: path.join(__dirname, "../.env") });
 const DB_FILE = "./books.sqlite";
 const DB_STORAGE_PATH = "bookmeter/books.sqlite";
 
-const dbClient = createDbClient(DB_FILE);
-const repo = createDrizzleBookRepository(dbClient);
-const uploader = createFirebaseUploader(
-  {
-    apiKey: process.env.FIREBASE_API_KEY!,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN!,
-    projectId: process.env.FIREBASE_PROJECT_ID!,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET!,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID!,
-    appId: process.env.FIREBASE_APP_ID!
-  },
-  DB_STORAGE_PATH
-);
-const http = createAxiosHttpClient();
-
-const fetcherCredentials = {
-  cinii: process.env.CINII_API_APPID!.toString(),
-  google: process.env.GOOGLE_BOOKS_API_KEY!.toString(),
-  isbnDb: process.env.ISBNDB_API_KEY!.toString()
-};
-
 export async function main(option: MainFuncOption): Promise<boolean> {
   const executionPlanResult = resolveExecutionPlan(option);
   if (!executionPlanResult.ok) {
@@ -63,6 +42,25 @@ export async function main(option: MainFuncOption): Promise<boolean> {
   }
 
   const executionPlan = executionPlanResult.value;
+  const dbClient = createDbClient(DB_FILE);
+  const repo = createDrizzleBookRepository(dbClient);
+  const uploader = createFirebaseUploader(
+    {
+      apiKey: process.env.FIREBASE_API_KEY!,
+      authDomain: process.env.FIREBASE_AUTH_DOMAIN!,
+      projectId: process.env.FIREBASE_PROJECT_ID!,
+      storageBucket: process.env.FIREBASE_STORAGE_BUCKET!,
+      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID!,
+      appId: process.env.FIREBASE_APP_ID!
+    },
+    DB_STORAGE_PATH
+  );
+  const http = createAxiosHttpClient();
+  const fetcherCredentials = {
+    cinii: process.env.CINII_API_APPID!.toString(),
+    google: process.env.GOOGLE_BOOKS_API_KEY!.toString(),
+    isbnDb: process.env.ISBNDB_API_KEY!.toString()
+  };
   const browser = needsBrowser(executionPlan) ? await launchBookmeterBrowser() : null;
 
   try {
