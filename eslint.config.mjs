@@ -104,7 +104,7 @@ export default tseslint.config(
     languageOptions: {
       parserOptions: {
         // プロジェクトのtsconfig.jsonを指定
-        project: ["./bookmeter-refactored/tsconfig.json", "./tsconfig.json"],
+        // project: ["./tsconfig.json"],
         projectService: true,
         tsconfigRootDir: import.meta.dirname
       }
