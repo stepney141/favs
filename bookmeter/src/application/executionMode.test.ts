@@ -20,6 +20,7 @@ describe("resolveExecutionPlan", () => {
     );
 
     expect(plan.modeName).toBe("scrape-only");
+    expect(plan.forceRefresh).toBe(false);
     expect(plan.scrape).toEqual({ type: "remote", doLogin: true });
     expect(plan.phases.compare).toBe(false);
     expect(plan.phases.fetchBiblio).toBe(false);
@@ -42,6 +43,7 @@ describe("resolveExecutionPlan", () => {
     );
 
     expect(plan.modeName).toBe("custom");
+    expect(plan.forceRefresh).toBe(false);
     expect(plan.scrape).toEqual({ type: "local-cache" });
     expect(plan.phases.compare).toBe(false);
     expect(plan.phases.fetchBiblio).toBe(false);
@@ -75,6 +77,7 @@ describe("parseCliArgs", () => {
     expect(unwrapOk(parseCliArgs(["node", "bookmeter", "scrape-only", "stacked"]))).toEqual({
       type: "run",
       option: {
+        forceRefresh: false,
         target: "stacked",
         execution: { type: "scrape-only", doLogin: true }
       }
@@ -82,9 +85,12 @@ describe("parseCliArgs", () => {
   });
 
   it("parses subcommand flags into execution options", () => {
-    expect(unwrapOk(parseCliArgs(["node", "bookmeter", "full", "wish", "--user-id", "42", "--no-login"]))).toEqual({
+    expect(
+      unwrapOk(parseCliArgs(["node", "bookmeter", "full", "wish", "--user-id", "42", "--no-login", "--force"]))
+    ).toEqual({
       type: "run",
       option: {
+        forceRefresh: true,
         target: "wish",
         userId: "42",
         execution: { type: "full", doLogin: false }
@@ -96,6 +102,7 @@ describe("parseCliArgs", () => {
     expect(unwrapOk(parseCliArgs(["node", "bookmeter", "local-downstream", "wish"]))).toEqual({
       type: "run",
       option: {
+        forceRefresh: false,
         target: "wish",
         execution: {
           type: "custom",
@@ -110,11 +117,12 @@ describe("parseCliArgs", () => {
     expect(unwrapOk(parseCliArgs(["node", "bookmeter", "local-biblio", "wish"]))).toEqual({
       type: "run",
       option: {
+        forceRefresh: false,
         target: "wish",
         execution: {
           type: "custom",
           scrape: { type: "local-cache" },
-          enabledPhases: ["fetchBiblio", "persist", "exportCsv"]
+          enabledPhases: ["fetchBiblio", "persist", "exportCsv", "uploadDb"]
         }
       }
     });

@@ -7,7 +7,6 @@ import { eq, sql } from "drizzle-orm";
 
 import { Err, Ok } from "../../../.libs/lib";
 import { exportFile } from "../../../.libs/utils";
-import { JOB_NAME } from "../constants";
 
 import { DbError } from "./errors";
 import { wishTable, stackedTable } from "./schema";
@@ -48,6 +47,14 @@ function rowToBook(row: Record<string, unknown>): Book {
     sophia_mathlib_opac: (row.sophia_mathlib_opac as string) ?? "",
     description: (row.description as string) ?? ""
   };
+}
+
+function selectAllRowsOrdered(db: DbClient, table: typeof wishTable | typeof stackedTable): Record<string, unknown>[] {
+  return db
+    .select()
+    .from(table)
+    .orderBy(sql`rowid asc`)
+    .all();
 }
 
 type PersistedBookRow = {
@@ -117,7 +124,7 @@ export function createDrizzleBookRepository(db: DbClient): BookRepository {
     load(tableName) {
       try {
         const table = getTable(tableName);
-        const rows = db.select().from(table).all();
+        const rows = selectAllRowsOrdered(db, table);
         const bookList: BookList = new Map();
 
         for (const row of rows) {
@@ -162,37 +169,19 @@ export function createDrizzleBookRepository(db: DbClient): BookRepository {
           .from(table)
           .all();
         const existingData = new Map(existingRows.map((row) => [row.bookmeter_url, row.description]));
-        const existingUrls = new Set(existingRows.map((row) => row.bookmeter_url));
-        const newUrls = new Set(bookList.keys());
 
-        // トランザクションで一括処理
+        // 現在の remote 順を rowid に反映させるため、一度全削除してから再挿入する。
         db.transaction((tx) => {
-          // 削除
-          const urlsToDelete = [...existingUrls].filter((url) => !newUrls.has(url));
-          if (urlsToDelete.length > 0) {
-            console.log(`Deleting ${urlsToDelete.length} books from ${tableName}...`);
-            for (const url of urlsToDelete) {
-              tx.delete(table).where(eq(table.bookmeter_url, url)).run();
-            }
-          }
+          tx.delete(table).run();
 
-          // 挿入 / 更新
-          console.log(`Inserting/Updating ${bookList.size} books into ${tableName}...`);
+          console.log(`Re-inserting ${bookList.size} books into ${tableName} in remote order...`);
           for (const book of bookList.values()) {
             const descriptionToInsert =
               book.description !== undefined && book.description !== null && book.description !== ""
                 ? book.description
                 : (existingData.get(book.bookmeter_url) ?? null);
             const rowToPersist = buildPersistedBookRow(book, descriptionToInsert, tableName);
-            const { bookmeter_url: _bookmeterUrl, ...updateSet } = rowToPersist;
-
-            tx.insert(table)
-              .values(rowToPersist)
-              .onConflictDoUpdate({
-                target: table.bookmeter_url,
-                set: updateSet
-              })
-              .run();
+            tx.insert(table).values(rowToPersist).run();
           }
         });
 
@@ -224,12 +213,12 @@ export function createDrizzleBookRepository(db: DbClient): BookRepository {
 
       if (result && result.description && result.description.trim().length > 0) {
         console.log(
-          `${JOB_NAME}: Description exists for isbn_or_asin: ${isbnOrAsin} (length: ${result.description.trim().length}). Skipping fetch.`
+          `Description exists for isbn_or_asin: ${isbnOrAsin} (length: ${result.description.trim().length}). Skipping fetch.`
         );
         return true;
       } else {
         console.log(
-          `${JOB_NAME}: Description missing or empty for isbn_or_asin: ${isbnOrAsin} in table ${tableName}. Needs fetching.`
+          `Description missing or empty for isbn_or_asin: ${isbnOrAsin} in table ${tableName}. Needs fetching.`
         );
         return false;
       }
@@ -238,22 +227,20 @@ export function createDrizzleBookRepository(db: DbClient): BookRepository {
     async exportToCsv(tableName, csvPath, columns) {
       try {
         const table = getTable(tableName);
-        console.log(
-          `${JOB_NAME}: Exporting columns [${columns.join(", ")}] from table ${tableName} to CSV file ${csvPath}`
-        );
+        console.log(`Exporting columns [${columns.join(", ")}] from table ${tableName} to CSV file ${csvPath}`);
 
-        const allRows = db.select().from(table).all();
+        const allRows = selectAllRowsOrdered(db, table);
 
         // 指定カラムだけを抽出
         const dataToExport = allRows.map((row) => {
           const filtered: Record<string, unknown> = {};
           for (const col of columns) {
-            filtered[col] = (row as Record<string, unknown>)[col];
+            filtered[col] = row[col];
           }
           return filtered;
         });
 
-        console.log(`${JOB_NAME}: Fetched ${dataToExport.length} rows from ${tableName}.`);
+        console.log(`Fetched ${dataToExport.length} rows from ${tableName}.`);
 
         await exportFile({
           fileName: csvPath,
@@ -262,7 +249,7 @@ export function createDrizzleBookRepository(db: DbClient): BookRepository {
           mode: "overwrite"
         });
 
-        console.log(`${JOB_NAME}: Successfully exported ${dataToExport.length} books to ${csvPath}`);
+        console.log(`Successfully exported ${dataToExport.length} books to ${csvPath}`);
         return Ok(undefined);
       } catch (e) {
         return Err(new DbError({ type: "exportFailed", csvPath }, { cause: e }));

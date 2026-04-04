@@ -11,8 +11,10 @@ import { Ok, mapResultErr } from "../../../.libs/lib";
 import { isIsbn10 } from "../domain/isbn";
 
 import { httpToFetcherError } from "./errors";
+import { normalizeExternalText } from "./normalizeText";
 
 import type { HttpClient } from "./httpClient";
+import type { ExternalTextValue } from "./normalizeText";
 import type { BiblioinfoErrorStatus, FetcherResult } from "./types";
 import type { Book } from "../domain/book";
 
@@ -25,7 +27,7 @@ type NdlResponseJson = {
             "dcndl:seriesTitle"?: string;
             "dcndl:volume"?: string;
             author: string;
-            "dc:publisher": string;
+            "dc:publisher": ExternalTextValue;
             pubDate: string;
           }
         | {
@@ -33,7 +35,7 @@ type NdlResponseJson = {
             "dcndl:seriesTitle"?: string;
             "dcndl:volume"?: string;
             author: string;
-            "dc:publisher": string;
+            "dc:publisher": ExternalTextValue;
             pubDate: string;
           }[];
     };
@@ -71,7 +73,7 @@ export async function fetchNDL(book: Book, client: HttpClient, useIsbn: boolean 
     const part = {
       book_title: `${ndlTitle}${volume === "" ? volume : " " + volume}${series === "" ? series : " / " + series}`,
       author: bookinfo["author"] ?? "",
-      publisher: bookinfo["dc:publisher"] ?? "",
+      publisher: normalizeExternalText(bookinfo["dc:publisher"]),
       published_date: bookinfo["pubDate"] ?? ""
     };
     return Ok({ book: { ...book, ...part }, status: "found" as const });

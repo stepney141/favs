@@ -4,11 +4,11 @@
  */
 
 import { exportFile } from "../../../.libs/utils";
-import { JOB_NAME } from "../constants";
 import { CSV_EXPORT_COLUMNS } from "../db/constants";
 import { buildCsvFileName, getPrevBookList } from "../db/dataLoader";
 import { isBookListDifferent } from "../domain/book";
 import { fetchBiblioInfo } from "../fetchers";
+import { formatErrorForLog } from "../fetchers/errors";
 import {
   buildExistingDescriptionMap,
   canFetchKinokuniyaDescription,
@@ -37,6 +37,29 @@ export type LoadedSnapshot = {
   prevBookList: BookList | null;
 };
 
+// 既存の wish / stacked テーブルを結合し、bookmeter_url 単位のキャッシュ索引を作る。
+export function loadCachedBookIndex(repo: Pick<BookRepository, "load">): BookList {
+  const cachedBooksByUrl: BookList = new Map();
+
+  for (const tableName of ["wish", "stacked"] as const) {
+    const loadResult = repo.load(tableName);
+    if (!loadResult.ok) {
+      console.error(`Failed to load ${tableName} cache from SQLite:`, loadResult.err);
+      continue;
+    }
+
+    for (const [bookmeterUrl, book] of loadResult.value.entries()) {
+      if (!cachedBooksByUrl.has(bookmeterUrl)) {
+        cachedBooksByUrl.set(bookmeterUrl, book);
+      }
+    }
+  }
+
+  console.log(`Loaded ${cachedBooksByUrl.size} cached books from SQLite.`);
+  return cachedBooksByUrl;
+}
+
+// 前回実行時のCSVパスと保存済み書誌一覧を読み込む。
 export async function loadPreviousSnapshot(plan: ExecutionPlan, repo: BookRepository): Promise<LoadedSnapshot> {
   const csvPath = buildCsvFileName(plan.userId, plan.outputFilePath)[plan.target];
   const prevBookList = await getPrevBookList(csvPath, repo);
@@ -46,7 +69,7 @@ export async function loadPreviousSnapshot(plan: ExecutionPlan, repo: BookReposi
   }
 
   if (prevBookList === null) {
-    console.log(`${JOB_NAME}: The previous result is not found. Path: ${csvPath}`);
+    console.log(`The previous result is not found. Path: ${csvPath}`);
   }
 
   return {
@@ -55,6 +78,7 @@ export async function loadPreviousSnapshot(plan: ExecutionPlan, repo: BookReposi
   };
 }
 
+// 実行計画に応じて最新の蔵書一覧を取得する。
 export async function collectLatestBookList(
   plan: ExecutionPlan,
   prevBookList: BookList | null,
@@ -62,7 +86,7 @@ export async function collectLatestBookList(
   createBookmaker: (browser: Browser, userId: string) => Bookmaker
 ): Promise<BookList> {
   if (plan.scrape.type === "local-cache") {
-    console.log(`${JOB_NAME}: Using the previous snapshot as the latest book list`);
+    console.log("Using the previous snapshot as the latest book list");
     return new Map(prevBookList ?? new Map());
   }
 
@@ -78,6 +102,7 @@ export async function collectLatestBookList(
   return bookmaker.explore(plan.target, plan.scrape.doLogin);
 }
 
+// 後続フェーズを実行するかどうかを判定する。
 export function shouldRunDownstreamPhases(
   plan: ExecutionPlan,
   prevBookList: BookList | null,
@@ -90,46 +115,58 @@ export function shouldRunDownstreamPhases(
     plan.phases.exportCsv !== true &&
     plan.phases.uploadDb !== true
   ) {
-    console.log(`${JOB_NAME}: No downstream phases are enabled. The pipeline will stop after scraping.`);
+    console.log("No downstream phases are enabled. The pipeline will stop after scraping.");
     return false;
   }
 
   if (plan.phases.compare !== true) {
-    console.log(`${JOB_NAME}: Skipping book list comparison.`);
+    console.log("Skipping book list comparison.");
     return true;
   }
 
-  return isBookListDifferent(prevBookList, latestBookList, false, JOB_NAME);
+  if (plan.forceRefresh) {
+    console.log("Force refresh is enabled. Downstream phases will run regardless of comparison results.");
+    return true;
+  }
+
+  return isBookListDifferent(prevBookList, latestBookList, false);
 }
 
+// 必要に応じて書誌情報を補完する。
 export async function fetchBiblioPhase(
   plan: ExecutionPlan,
   latestBookList: BookList,
   fetcherCredentials: FetcherCredentials,
-  http: HttpClient
+  http: HttpClient,
+  cachedBookUrls: ReadonlySet<string>
 ): Promise<BookList> {
   if (plan.phases.fetchBiblio !== true) {
-    console.log(`${JOB_NAME}: Skipping bibliographic information fetch.`);
+    console.log("Skipping bibliographic information fetch.");
     return latestBookList;
   }
 
   try {
-    console.log(`${JOB_NAME}: Fetching bibliographic information`);
-    return await fetchBiblioInfo(latestBookList, fetcherCredentials, http);
+    console.log("Fetching bibliographic information");
+    return await fetchBiblioInfo(latestBookList, fetcherCredentials, http, {
+      cachedBookUrls,
+      forceRefresh: plan.forceRefresh
+    });
   } catch (error) {
-    console.error(`${JOB_NAME}: Error fetching bibliographic information:`, error);
+    console.error(`Error fetching bibliographic information: ${formatErrorForLog(error)}`);
     return latestBookList;
   }
 }
 
+// 紀伊國屋書店の説明文を取得して一覧とDBを更新する。
 export async function crawlDescriptionPhase(
   plan: ExecutionPlan,
   latestBookList: BookList,
+  prevBookList: BookList | null,
   repo: Pick<BookRepository, "load" | "updateDescription">,
   browser: Browser | null
 ): Promise<void> {
   if (plan.phases.crawlDescriptions !== true) {
-    console.log(`${JOB_NAME}: Skipping Kinokuniya crawl.`);
+    console.log("Skipping Kinokuniya crawl.");
     return;
   }
 
@@ -137,10 +174,12 @@ export async function crawlDescriptionPhase(
     throw new Error("Browser is required for Kinokuniya crawling");
   }
 
-  console.log(`${JOB_NAME}: Crawling Kinokuniya for book descriptions`);
+  console.log("Crawling Kinokuniya for book descriptions");
 
   const existingDescriptions = buildExistingDescriptionMap(plan.target, repo.load(plan.target));
-  console.log(`${JOB_NAME}: Loaded ${existingDescriptions.size} existing descriptions from database.`);
+  console.log(`Loaded ${existingDescriptions.size} existing descriptions from database.`);
+  const newBookUrls: Set<string> | null =
+    prevBookList === null ? null : new Set([...latestBookList.keys()].filter((url) => !prevBookList.has(url)));
 
   const page = await browser.newPage();
 
@@ -149,7 +188,7 @@ export async function crawlDescriptionPhase(
       const identifier = book.isbn_or_asin;
 
       if (identifier === "") {
-        console.log(`${JOB_NAME}: Skipping book with missing ISBN/ASIN: ${book.book_title}`);
+        console.log(`Skipping book with missing ISBN/ASIN: ${book.book_title}`);
         continue;
       }
 
@@ -160,6 +199,13 @@ export async function crawlDescriptionPhase(
       const cachedDescription = existingDescriptions.get(identifier);
       if (cachedDescription !== undefined) {
         latestBookList.set(book.bookmeter_url, { ...book, description: cachedDescription });
+        if (!plan.forceRefresh) {
+          continue;
+        }
+      }
+
+      const isNewBook = newBookUrls === null || newBookUrls.has(book.bookmeter_url);
+      if (!plan.forceRefresh && !isNewBook) {
         continue;
       }
 
@@ -175,45 +221,29 @@ export async function crawlDescriptionPhase(
   }
 }
 
+// 最新の蔵書一覧をSQLiteに保存する。
 export function persistPhase(
   plan: ExecutionPlan,
   latestBookList: BookList,
   repo: Pick<BookRepository, "save">
 ): boolean {
   if (plan.phases.persist !== true) {
-    console.log(`${JOB_NAME}: Skipping SQLite persistence.`);
+    console.log("Skipping SQLite persistence.");
     return false;
   }
 
-  console.log(`${JOB_NAME}: Saving data to SQLite database`);
+  console.log("Saving data to SQLite database");
   const saveResult = repo.save(latestBookList, plan.target);
 
   if (!saveResult.ok) {
-    console.error(`${JOB_NAME}: Error saving to database:`, saveResult.err);
+    console.error("Error saving to database:", saveResult.err);
     return false;
   }
 
   return true;
 }
 
-function buildCsvFallbackPayload(bookList: BookList): Omit<Book, "description">[] {
-  return Array.from(bookList.values()).map((book) => {
-    return {
-      bookmeter_url: book.bookmeter_url,
-      isbn_or_asin: book.isbn_or_asin,
-      book_title: book.book_title,
-      author: book.author,
-      publisher: book.publisher,
-      published_date: book.published_date,
-      sophia_opac: book.sophia_opac,
-      utokyo_opac: book.utokyo_opac,
-      exist_in_sophia: book.exist_in_sophia,
-      exist_in_utokyo: book.exist_in_utokyo,
-      sophia_mathlib_opac: book.sophia_mathlib_opac
-    };
-  });
-}
-
+// 保存結果に応じてCSVを出力する。
 export async function exportCsvPhase(
   plan: ExecutionPlan,
   csvPath: string,
@@ -222,38 +252,58 @@ export async function exportCsvPhase(
   hasPersisted: boolean
 ): Promise<void> {
   if (plan.phases.exportCsv !== true) {
-    console.log(`${JOB_NAME}: Skipping CSV export.`);
+    console.log("Skipping CSV export.");
     return;
   }
 
   if (hasPersisted) {
-    console.log(`${JOB_NAME}: Generating CSV from SQLite database`);
+    console.log("Generating CSV from SQLite database");
     const exportResult = await repo.exportToCsv(plan.target, csvPath, CSV_EXPORT_COLUMNS[plan.target]);
 
     if (exportResult.ok) {
-      console.log(`${JOB_NAME}: Finished writing ${csvPath}`);
+      console.log(`Finished writing ${csvPath}`);
       return;
     }
 
-    console.error(`${JOB_NAME}: Error exporting CSV:`, exportResult.err);
-    console.log(`${JOB_NAME}: Falling back to direct CSV export (using all columns except description)`);
+    console.error("Error exporting CSV:", exportResult.err);
+    console.log("Falling back to direct CSV export (using all columns except description)");
   } else {
-    console.log(`${JOB_NAME}: Exporting CSV directly from the in-memory book list`);
+    console.log("Exporting CSV directly from the in-memory book list");
   }
 
   try {
+    // CSV直接出力用に説明文を除いたデータへ整形する
+    const buildCsvFallbackPayload = (bookList: BookList): Omit<Book, "description">[] => {
+      return Array.from(bookList.values()).map((book) => {
+        return {
+          bookmeter_url: book.bookmeter_url,
+          isbn_or_asin: book.isbn_or_asin,
+          book_title: book.book_title,
+          author: book.author,
+          publisher: book.publisher,
+          published_date: book.published_date,
+          sophia_opac: book.sophia_opac,
+          utokyo_opac: book.utokyo_opac,
+          exist_in_sophia: book.exist_in_sophia,
+          exist_in_utokyo: book.exist_in_utokyo,
+          sophia_mathlib_opac: book.sophia_mathlib_opac
+        };
+      });
+    };
+
     await exportFile({
       fileName: csvPath,
       payload: buildCsvFallbackPayload(latestBookList),
       targetType: "csv",
       mode: "overwrite"
     });
-    console.log(`${JOB_NAME}: Finished fallback writing to ${csvPath}`);
+    console.log(`Finished fallback writing to ${csvPath}`);
   } catch (csvError) {
-    console.error(`${JOB_NAME}: Error in fallback CSV export:`, csvError);
+    console.error("Error in fallback CSV export:", csvError);
   }
 }
 
+// 保存済みのSQLiteファイルをリモートへアップロードする。
 export async function uploadPhase(
   plan: ExecutionPlan,
   uploader: RemoteUploader,
@@ -261,17 +311,17 @@ export async function uploadPhase(
   hasPersisted: boolean
 ): Promise<void> {
   if (plan.phases.uploadDb !== true) {
-    console.log(`${JOB_NAME}: Skipping database upload.`);
+    console.log("Skipping database upload.");
     return;
   }
 
   if (!hasPersisted) {
-    console.log(`${JOB_NAME}: Skipping database upload because persistence did not run successfully.`);
+    console.log("Skipping database upload because persistence did not run successfully.");
     return;
   }
 
   const uploadResult = await uploader.upload(dbFilePath);
   if (!uploadResult.ok) {
-    console.error(`${JOB_NAME}: Error uploading database:`, uploadResult.err);
+    console.error("Error uploading database:", uploadResult.err);
   }
 }

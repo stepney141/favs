@@ -4,9 +4,9 @@
  */
 
 import { PromiseQueue, randomWait, sleep } from "../../../.libs/utils";
-import { JOB_NAME } from "../constants";
 import { isAsin, routeIsbn10 } from "../domain/isbn";
 
+import { shouldFetchBibliographicData, shouldFetchLibraryHoldings } from "./cachePolicy";
 import { searchLibraries } from "./cinii";
 import { logFetcherResultError } from "./errors";
 import { fetchGoogleBooks } from "./googlebooks";
@@ -18,6 +18,11 @@ import { configMathlibBookList } from "./sophia";
 import type { HttpClient } from "./httpClient";
 import type { FetchResult, FetcherCredentials, FetcherResult } from "./types";
 import type { Book, BookList } from "../domain/book";
+
+export type FetchBiblioInfoOptions = {
+  cachedBookUrls: ReadonlySet<string>;
+  forceRefresh: boolean;
+};
 
 /** 単一書籍の fetcher 関数シグネチャ */
 type SingleFetcher = (book: Book, client: HttpClient) => Promise<FetcherResult>;
@@ -66,7 +71,8 @@ async function fetchSingleRequestAPIs(
   searchResult: FetchResult,
   credential: FetcherCredentials,
   mathLibIsbnList: Set<string>,
-  client: HttpClient
+  client: HttpClient,
+  options: FetchBiblioInfoOptions
 ): Promise<{ bookmeterUrl: string; updatedBook: Book }> {
   const isbn = searchResult.book["isbn_or_asin"];
   if (isAsin(isbn)) {
@@ -88,6 +94,13 @@ async function fetchSingleRequestAPIs(
 
   await sleep(randomWait(1500, 0.8, 1.2));
 
+  if (!shouldFetchLibraryHoldings(updatedResult.book, options.forceRefresh, options.cachedBookUrls)) {
+    return {
+      bookmeterUrl: updatedResult.book.bookmeter_url,
+      updatedBook: updatedResult.book
+    };
+  }
+
   // CiNii 所蔵検索 + 数学図書館検索
   const updatedBook = await searchLibraries(updatedResult, credential.cinii, mathLibIsbnList, client);
 
@@ -100,29 +113,35 @@ async function fetchSingleRequestAPIs(
 export async function fetchBiblioInfo(
   booklist: BookList,
   credential: FetcherCredentials,
-  client: HttpClient
+  client: HttpClient,
+  options: FetchBiblioInfoOptions
 ): Promise<BookList> {
   try {
     const mathLibIsbnList = await configMathlibBookList("ja", client);
+    const booksToFetch = new Map(
+      Array.from(booklist.entries()).filter(([, book]) => shouldFetchBibliographicData(book, options.forceRefresh))
+    );
 
-    // OpenBD 一括検索
-    const openBdResult = await bulkFetchOpenBD(booklist, client);
+    let bookInfoList: FetchResult[] = [];
+    if (booksToFetch.size > 0) {
+      // OpenBD 一括検索
+      const openBdResult = await bulkFetchOpenBD(booksToFetch, client);
 
-    let bookInfoList: FetchResult[];
-    if (openBdResult.ok) {
-      bookInfoList = openBdResult.value;
-    } else {
-      // OpenBD の一括取得が失敗した場合、全書籍を notFound として個別 API に回す
-      logFetcherResultError(openBdResult.err, "Bulk OpenBD fetch");
-      bookInfoList = Array.from(booklist.values()).map((book) => ({
-        book,
-        status: "notFound" as const
-      }));
+      if (openBdResult.ok) {
+        bookInfoList = openBdResult.value;
+      } else {
+        // OpenBD の一括取得が失敗した場合、対象書籍を notFound として個別 API に回す
+        logFetcherResultError(openBdResult.err, "Bulk OpenBD fetch");
+        bookInfoList = Array.from(booksToFetch.values()).map((book) => ({
+          book,
+          status: "notFound" as const
+        }));
+      }
     }
 
     const ps = PromiseQueue();
     for (const bookInfo of bookInfoList) {
-      ps.add(fetchSingleRequestAPIs(bookInfo, credential, mathLibIsbnList, client));
+      ps.add(fetchSingleRequestAPIs(bookInfo, credential, mathLibIsbnList, client, options));
       const value = (await ps.wait(5)) as false | { bookmeterUrl: string; updatedBook: Book };
       if (value !== false) booklist.set(value.bookmeterUrl, value.updatedBook);
     }
@@ -130,11 +149,11 @@ export async function fetchBiblioInfo(
       booklist.set(v.bookmeterUrl, v.updatedBook);
     });
 
-    console.log(`${JOB_NAME}: Searching Completed`);
+    console.log("Searching Completed");
     return new Map(booklist);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error(`${JOB_NAME}: 書誌情報の取得中にエラーが発生しました: ${errorMessage}`);
+    console.error(`書誌情報の取得中にエラーが発生しました: ${errorMessage}`);
     return booklist;
   }
 }

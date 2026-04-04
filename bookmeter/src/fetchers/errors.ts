@@ -49,6 +49,79 @@ export class HttpError extends BaseError {
   }
 }
 
+type ParsedTimeoutDetails = {
+  attemptedAddress?: string;
+  timeoutMs?: number;
+};
+
+const isRecord = (value: unknown): value is Record<string, unknown> => {
+  return typeof value === "object" && value !== null;
+};
+
+const getNestedCause = (error: unknown): unknown => {
+  return isRecord(error) ? error["cause"] : undefined;
+};
+
+const getErrorMessage = (error: unknown): string | undefined => {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  if (isRecord(error) && typeof error["message"] === "string") {
+    return error["message"];
+  }
+  return undefined;
+};
+
+const getErrorCode = (error: unknown): string | undefined => {
+  if (isRecord(error) && typeof error["code"] === "string") {
+    return error["code"];
+  }
+  const cause = getNestedCause(error);
+  if (cause !== undefined) {
+    return getErrorCode(cause);
+  }
+  return undefined;
+};
+
+const parseTimeoutDetails = (message: string): ParsedTimeoutDetails => {
+  const attemptedAddress = message.match(/attempted address: ([^,)]+)/)?.[1];
+  const timeoutMs = message.match(/timeout: (\d+)ms/)?.[1];
+
+  return {
+    attemptedAddress,
+    timeoutMs: timeoutMs === undefined ? undefined : Number(timeoutMs)
+  };
+};
+
+export function formatErrorForLog(error: unknown): string {
+  const errorCode = getErrorCode(error);
+  const message = getErrorMessage(error);
+  const cause = getNestedCause(error);
+  const causeMessage = getErrorMessage(cause);
+
+  if (errorCode === "UND_ERR_CONNECT_TIMEOUT") {
+    const details = parseTimeoutDetails(causeMessage ?? message ?? "");
+    const parts = [
+      "接続がタイムアウトしました",
+      details.attemptedAddress === undefined ? undefined : `接続先: ${details.attemptedAddress}`,
+      details.timeoutMs === undefined ? undefined : `タイムアウト: ${details.timeoutMs}ms`,
+      `コード: ${errorCode}`
+    ].filter((part): part is string => part !== undefined);
+
+    return parts.join(" / ");
+  }
+
+  if (causeMessage !== undefined && message !== undefined && causeMessage !== message) {
+    return `${message} (原因: ${causeMessage})`;
+  }
+
+  if (message !== undefined) {
+    return message;
+  }
+
+  return String(error);
+}
+
 /** FetcherError を既存の BiblioinfoErrorStatus 文字列に変換する */
 export const toErrorStatus = (error: FetcherError): BiblioinfoErrorStatus => {
   switch (error.context.type) {
@@ -66,16 +139,21 @@ export const toErrorStatus = (error: FetcherError): BiblioinfoErrorStatus => {
 /** HttpError → FetcherError 変換 */
 export function httpToFetcherError(httpErr: HttpError): FetcherError {
   return new FetcherError(
-    { type: "apiError", source: httpErr.context.source, status: httpErr.context.status },
+    {
+      type: httpErr.context.status === undefined ? "networkError" : "apiError",
+      source: httpErr.context.source,
+      status: httpErr.context.status
+    },
     { cause: httpErr }
   );
 }
 
 /** エラーログ出力用のヘルパー */
-export function logFetcherError(error: unknown, apiName: string, context?: string): void {
-  const errorMessage = error instanceof Error ? error.message : String(error);
-  const jobName = "Bookmeter Wished Books";
-  console.error(`${jobName}: ${apiName} APIエラー` + (context ? ` (${context})` : "") + `: ${errorMessage}`);
+export function logFetcherError(error: unknown, operationName: string, context?: string, consequence?: string): void {
+  const consequenceMessage = consequence === undefined ? "" : `。${consequence}`;
+  console.error(
+    `${operationName} でエラーが発生しました${context ? ` (${context})` : ""}: ${formatErrorForLog(error)}${consequenceMessage}`
+  );
 }
 
 /** FetcherError をログ出力する */

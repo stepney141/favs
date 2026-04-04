@@ -8,7 +8,7 @@ import fs from "node:fs/promises";
 
 import { parse } from "papaparse";
 
-import { BOOKMETER_DEFAULT_USER_ID, JOB_NAME } from "../constants";
+import { DEFAULT_BOOKMETER_USER_ID } from "../application/executionMode";
 
 import { DEFAULT_CSV_FILENAME } from "./constants";
 
@@ -23,7 +23,7 @@ export type OutputFilePath = {
 
 export const buildCsvFileName = (userId: string, filePath: OutputFilePath | null = null): OutputFilePath => {
   if (filePath === null) {
-    if (userId === BOOKMETER_DEFAULT_USER_ID) return DEFAULT_CSV_FILENAME;
+    if (userId === DEFAULT_BOOKMETER_USER_ID) return DEFAULT_CSV_FILENAME;
     return {
       wish: `./csv/${userId}_bookmeter_wish_books.csv`,
       stacked: `./csv/${userId}_bookmeter_stacked_books.csv`
@@ -60,31 +60,31 @@ export const getPrevBookList = async (filename: string, repo: BookRepository): P
     } else if (filename.includes("stacked")) {
       tableName = "stacked";
     } else {
-      console.warn(`${JOB_NAME}: Could not determine table name from filename ${filename}, falling back to CSV`);
+      console.warn(`Could not determine table name from filename ${filename}, falling back to CSV`);
       return getPrevBookListFromCsv(filename);
     }
 
     if (fsSync.existsSync("./books.sqlite")) {
-      console.log(`${JOB_NAME}: Loading previous book list from SQLite database (table: ${tableName})`);
+      console.log(`Loading previous book list from SQLite database (table: ${tableName})`);
       const loadResult = repo.load(tableName);
       if (loadResult.ok) {
         if (loadResult.value.size > 0) {
           return loadResult.value;
         } else {
-          console.log(`${JOB_NAME}: SQLite table ${tableName} exists but is empty, falling back to CSV`);
+          console.log(`SQLite table ${tableName} exists but is empty, falling back to CSV`);
           return getPrevBookListFromCsv(filename);
         }
       } else {
-        console.error(`${JOB_NAME}: Error loading from SQLite:`, loadResult.err);
-        console.log(`${JOB_NAME}: Falling back to CSV file`);
+        console.error("Error loading from SQLite:", loadResult.err);
+        console.log("Falling back to CSV file");
         return getPrevBookListFromCsv(filename);
       }
     } else {
-      console.log(`${JOB_NAME}: SQLite database does not exist, falling back to CSV`);
+      console.log("SQLite database does not exist, falling back to CSV");
       return getPrevBookListFromCsv(filename);
     }
   } catch (error) {
-    console.error(`${JOB_NAME}: Error in getPrevBookList:`, error);
+    console.error("Error in getPrevBookList:", error);
     return null;
   }
 };

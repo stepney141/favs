@@ -5,7 +5,6 @@
 
 import { $x } from "../../../.libs/pptr-utils";
 import { sleep } from "../../../.libs/utils";
-import { JOB_NAME } from "../constants";
 import { isAsin, isIsbn10, routeIsbn10, convertISBN10To13 } from "../domain/isbn";
 
 import type { Result } from "../../../.libs/lib";
@@ -39,7 +38,7 @@ async function extractBookDetails(page: Page, url: string): Promise<string> {
     bookDetails += `${text}\n`;
   }
 
-  console.log(`${JOB_NAME}: Extracted description length: ${bookDetails.length} characters`);
+  console.log(`Extracted description length: ${bookDetails.length} characters`);
   return bookDetails;
 }
 
@@ -61,14 +60,14 @@ export async function fetchKinokuniyaDescription(page: Page, isbn: ISBN10): Prom
     const description = (await extractBookDetails(page, url)).trim();
 
     if (description === "") {
-      console.log(`${JOB_NAME}: No description found on Kinokuniya page for ISBN ${isbn}.`);
+      console.log(`No description found on Kinokuniya page for ISBN ${isbn}.`);
       return "";
     }
 
-    console.log(`${JOB_NAME}: Successfully fetched description for ISBN ${isbn}.`);
+    console.log(`Successfully fetched description for ISBN ${isbn}.`);
     return description;
   } catch (error) {
-    console.error(`${JOB_NAME}: Error fetching Kinokuniya page for ISBN ${isbn} (URL: ${url}).`, error);
+    console.error(`Error fetching Kinokuniya page for ISBN ${isbn} (URL: ${url}).`, error);
     return "";
   }
 }
@@ -78,7 +77,7 @@ export function buildExistingDescriptionMap(
   loadResult: Result<BookList, DbError>
 ): Map<string, string> {
   if (!loadResult.ok) {
-    console.error(`${JOB_NAME}: Failed to load existing descriptions from ${tableName}:`, loadResult.err);
+    console.error(`Failed to load existing descriptions from ${tableName}:`, loadResult.err);
     return new Map();
   }
 

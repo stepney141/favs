@@ -9,7 +9,6 @@ import { config } from "dotenv";
 
 import { getNodeProperty, $x, waitForXPath } from "../../../.libs/pptr-utils";
 import { sleep } from "../../../.libs/utils";
-import { JOB_NAME, BOOKMETER_DEFAULT_USER_ID } from "../constants";
 import { matchASIN } from "../domain/isbn";
 
 import { BOOKMETER_BASE_URI, XPATH } from "./constants";
@@ -24,6 +23,7 @@ const bookmeter_password = process.env.BOOKMETER_PASSWORD!.toString();
 
 export class Bookmaker {
   #browser: Browser;
+  #cachedBooksByUrl: Readonly<BookList>;
   #userId: string;
   #wishBookList: BookList;
   #stackedBookList: BookList;
@@ -37,11 +37,21 @@ export class Bookmaker {
     this.#hasChanges = value;
   }
 
-  constructor(browser: Browser, userId: string) {
+  constructor(browser: Browser, userId: string, cachedBooksByUrl: Readonly<BookList> = new Map()) {
     this.#browser = browser;
+    this.#cachedBooksByUrl = cachedBooksByUrl;
     this.#userId = userId;
     this.#wishBookList = new Map();
     this.#stackedBookList = new Map();
+  }
+
+  #resolveCachedBook(bookmeterUrl: string): Book | undefined {
+    const cachedBook = this.#cachedBooksByUrl.get(bookmeterUrl);
+    if (cachedBook === undefined) {
+      return undefined;
+    }
+
+    return { ...cachedBook, bookmeter_url: bookmeterUrl };
   }
 
   async login(): Promise<this> {
@@ -77,7 +87,7 @@ export class Bookmaker {
       loginButtonHandle[0].click()
     ]);
 
-    console.log(`${JOB_NAME}: Login Completed!`);
+    console.log("Login Completed!");
     return this;
   }
 
@@ -162,20 +172,25 @@ export class Bookmaker {
 
           const amzn_raw: string = await getNodeProperty(amazonLinkHandle[i], "href");
           const amzn = matchASIN(amzn_raw) as ISBN10 | ASIN;
+          const cachedBook = this.#resolveCachedBook(bkmt);
 
           this.#wishBookList.set(bkmt, {
+            ...(cachedBook ?? {
+              bookmeter_url: bkmt,
+              isbn_or_asin: amzn,
+              book_title: "",
+              author: "",
+              publisher: "",
+              published_date: "",
+              exist_in_sophia: "No",
+              exist_in_utokyo: "No",
+              sophia_opac: "",
+              utokyo_opac: "",
+              sophia_mathlib_opac: "",
+              description: ""
+            }),
             bookmeter_url: bkmt,
-            isbn_or_asin: amzn,
-            book_title: "",
-            author: "",
-            publisher: "",
-            published_date: "",
-            exist_in_sophia: "No",
-            exist_in_utokyo: "No",
-            sophia_opac: "",
-            utokyo_opac: "",
-            sophia_mathlib_opac: "",
-            description: ""
+            isbn_or_asin: amzn
           });
         }
 
@@ -207,8 +222,10 @@ export class Bookmaker {
         for (const node of booksUrlHandle) {
           const bkmt_raw = await getNodeProperty(node, "href");
           const bkmt = String(bkmt_raw);
+          const cachedBook = this.#resolveCachedBook(bkmt);
 
-          const book = await this.scanEachBook(bkmt);
+          const book =
+            cachedBook !== undefined && cachedBook.isbn_or_asin !== "" ? cachedBook : await this.scanEachBook(bkmt);
           this.#wishBookList.set(bkmt, book);
 
           cnt++;
@@ -228,7 +245,7 @@ export class Bookmaker {
       }
     }
 
-    console.log(`${JOB_NAME}: Bookmeter Scraping Completed!`);
+    console.log("Bookmeter Scraping Completed!");
     return this.#wishBookList;
   }
 
@@ -236,7 +253,7 @@ export class Bookmaker {
     let pageNum = 1;
 
     for (;;) {
-      await page.goto(`${BOOKMETER_BASE_URI}/users/${BOOKMETER_DEFAULT_USER_ID}/books/stacked?page=${pageNum}`, {
+      await page.goto(`${BOOKMETER_BASE_URI}/users/${this.#userId}/books/stacked?page=${pageNum}`, {
         waitUntil: ["domcontentloaded"]
       });
 
@@ -251,8 +268,10 @@ export class Bookmaker {
       for (const node of booksUrlHandle) {
         const bkmt_raw = await getNodeProperty(node, "href");
         const bkmt = String(bkmt_raw);
+        const cachedBook = this.#resolveCachedBook(bkmt);
 
-        const book = await this.scanEachBook(bkmt);
+        const book =
+          cachedBook !== undefined && cachedBook.isbn_or_asin !== "" ? cachedBook : await this.scanEachBook(bkmt);
         this.#stackedBookList.set(bkmt, book);
       }
     }
@@ -263,7 +282,7 @@ export class Bookmaker {
   async explore(mode: "wish" | "stacked", isSignedIn: boolean): Promise<Map<string, Book>> {
     const page = await this.#browser.newPage();
 
-    console.log(`${JOB_NAME}: Scraping Started!`);
+    console.log("Scraping Started!");
 
     await page.setRequestInterception(true);
     page.on("request", (interceptedRequest) => {
@@ -276,11 +295,15 @@ export class Bookmaker {
       })();
     });
 
-    if (mode === "wish") {
-      return await this.#getWishBooks(page, isSignedIn);
-    }
-    if (mode === "stacked") {
-      return await this.#getStackedBooks(page);
+    try {
+      if (mode === "wish") {
+        return await this.#getWishBooks(page, isSignedIn);
+      }
+      if (mode === "stacked") {
+        return await this.#getStackedBooks(page);
+      }
+    } finally {
+      await page.close();
     }
 
     throw new Error("Specify the process mode");

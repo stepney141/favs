@@ -14,15 +14,16 @@ import {
   crawlDescriptionPhase,
   exportCsvPhase,
   fetchBiblioPhase,
+  loadCachedBookIndex,
   loadPreviousSnapshot,
   persistPhase,
   shouldRunDownstreamPhases,
   uploadPhase
 } from "./application/pipeline";
-import { JOB_NAME } from "./constants";
 import { createDrizzleBookRepository } from "./db/bookRepository";
 import { createDbClient } from "./db/client";
 import { createFirebaseUploader } from "./db/remoteUploader";
+import { formatErrorForLog } from "./fetchers/errors";
 import { createAxiosHttpClient } from "./fetchers/httpClient";
 import { Bookmaker } from "./scrapers/bookmaker";
 import { launchBookmeterBrowser } from "./scrapers/browser";
@@ -65,15 +66,16 @@ export async function main(option: MainFuncOption): Promise<boolean> {
 
   try {
     const startTime = Date.now();
-    console.log(`${JOB_NAME}: Execution plan => ${describeExecutionPlan(executionPlan)}`);
+    console.log(`Execution plan => ${describeExecutionPlan(executionPlan)}`);
 
     const { csvPath, prevBookList } = await loadPreviousSnapshot(executionPlan, repo);
+    const cachedBooksByUrl = loadCachedBookIndex(repo);
     const latestBookList = await collectLatestBookList(
       executionPlan,
       prevBookList,
       browser,
       (activeBrowser, userId) => {
-        return new Bookmaker(activeBrowser, userId);
+        return new Bookmaker(activeBrowser, userId, cachedBooksByUrl);
       }
     );
 
@@ -82,8 +84,14 @@ export async function main(option: MainFuncOption): Promise<boolean> {
       return true;
     }
 
-    const enrichedBookList = await fetchBiblioPhase(executionPlan, latestBookList, fetcherCredentials, http);
-    await crawlDescriptionPhase(executionPlan, enrichedBookList, repo, browser);
+    const enrichedBookList = await fetchBiblioPhase(
+      executionPlan,
+      latestBookList,
+      fetcherCredentials,
+      http,
+      new Set(cachedBooksByUrl.keys())
+    );
+    await crawlDescriptionPhase(executionPlan, enrichedBookList, prevBookList, repo, browser);
 
     const hasPersisted = persistPhase(executionPlan, enrichedBookList, repo);
     await exportCsvPhase(executionPlan, csvPath, enrichedBookList, repo, hasPersisted);
@@ -95,7 +103,7 @@ export async function main(option: MainFuncOption): Promise<boolean> {
     if (isAxiosError(error)) {
       console.error(`Error: ${error.response?.status ?? "unknown"} ${error.message}`);
     } else {
-      console.error(error);
+      console.error(formatErrorForLog(error));
     }
     return false;
   } finally {
@@ -109,6 +117,7 @@ export async function main(option: MainFuncOption): Promise<boolean> {
  * tsx bookmeter/src/index.ts scrape-only stacked --no-login
  * tsx bookmeter/src/index.ts local-downstream wish
  * tsx bookmeter/src/index.ts local-biblio wish
+ * tsx bookmeter/src/index.ts full wish --force
  * tsx bookmeter/src/index.ts full wish --user-id 42
  */
 (async () => {

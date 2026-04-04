@@ -1,7 +1,6 @@
 import fs from "node:fs/promises";
 
 import { extractTextFromPDF } from "../../../.libs/utils";
-import { JOB_NAME } from "../constants";
 import { convertISBN10To13, isIsbn10, REGEX_ISBN_GLOBAL } from "../domain/isbn";
 
 import { MATH_LIB_BOOKLIST } from "./cinii";
@@ -55,7 +54,7 @@ export async function configMathlibBookList(
       });
 
       const parsedPdf = extractTextFromPDF(rawPdf);
-      console.log(`${JOB_NAME}: Completed fetching the list of ${listtype} books in Sophia Univ. Math Lib`);
+      console.log(`Completed fetching the list of ${listtype} books in Sophia Univ. Math Lib`);
 
       for await (const page of parsedPdf) {
         const matchedIsbn = page.matchAll(REGEX_ISBN_GLOBAL);
@@ -65,12 +64,11 @@ export async function configMathlibBookList(
         }
       }
     } catch (error) {
-      logFetcherError(error, "Math Library PDF", `URL: ${url}`);
-      console.error(`${JOB_NAME}: Failed to fetch or parse PDF from ${url}`);
+      logFetcherError(error, "Math Library PDF の取得", `URL: ${url}`, "この PDF はスキップして処理を続行します");
     }
   }
 
   await filehandle.close();
-  console.log(`${JOB_NAME}: Completed creating a list of ISBNs of ${listtype} books in Sophia Univ. Math Lib`);
+  console.log(`Completed creating a list of ISBNs of ${listtype} books in Sophia Univ. Math Lib`);
   return mathlibIsbnList;
 }

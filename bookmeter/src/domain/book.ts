@@ -68,24 +68,40 @@ export function getBookListDiff(prevMap: BookList, latestMap: BookList): BookLis
   };
 }
 
+function hasBookListOrderChanged(prevList: BookList, latestList: BookList): boolean {
+  const prevUrls = [...prevList.keys()];
+  const latestUrls = [...latestList.keys()];
+
+  if (prevUrls.length !== latestUrls.length) {
+    return true;
+  }
+
+  return prevUrls.some((bookmeterUrl, index) => bookmeterUrl !== latestUrls[index]);
+}
+
 /**
  * ローカルのデータと bookmeter のスクレイピング結果を比較し、差分があるかを判定する。
  */
 export const isBookListDifferent = (
   prevList: BookList | null,
   latestList: BookList,
-  skipBookListComparison: boolean = false,
-  jobName: string = "Bookmeter Wished Books"
+  skipBookListComparison: boolean = false
 ): boolean => {
   if (skipBookListComparison || prevList === null) {
     return true;
   }
+
   const diff = getBookListDiff(prevList, latestList);
-  if (diff.latest.length > 0) {
-    console.log(`${jobName}: Detected some diffs between the local and remote.`);
+  if (diff.latest.length > 0 || diff.prev.length > 0) {
+    console.log("Detected some diffs between the local and remote.");
     return true;
-  } else {
-    console.log(`${jobName}: Cannot find any differences between the local and remote. The process will be aborted...`);
-    return false;
   }
+
+  if (hasBookListOrderChanged(prevList, latestList)) {
+    console.log("Detected an ordering diff between the local and remote.");
+    return true;
+  }
+
+  console.log("Cannot find any differences between the local and remote. The process will be aborted...");
+  return false;
 };

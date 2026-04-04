@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { HttpError, httpToFetcherError } from "./errors";
+import { formatErrorForLog, HttpError, httpToFetcherError } from "./errors";
 import { toHttpError } from "./httpClient";
 
 describe("HttpError", () => {
@@ -18,6 +18,13 @@ describe("httpToFetcherError", () => {
     expect(fetcherError.context).toEqual({ type: "apiError", source: "NDL", status: 503 });
     expect(fetcherError.message).toBe("Fetcher error [apiError] from NDL (HTTP status code: 503)");
   });
+
+  it("maps missing HTTP status to a network error", () => {
+    const fetcherError = httpToFetcherError(new HttpError({ source: "CiNii" }));
+
+    expect(fetcherError.context).toEqual({ type: "networkError", source: "CiNii", status: undefined });
+    expect(fetcherError.message).toBe("Fetcher error [networkError] from CiNii");
+  });
 });
 
 describe("toHttpError", () => {
@@ -32,5 +39,20 @@ describe("toHttpError", () => {
 
     expect(httpError.context).toEqual({ source: "GoogleBooks", status: 404 });
     expect(httpError.cause).toBe(axiosLikeError);
+  });
+});
+
+describe("formatErrorForLog", () => {
+  it("formats undici connection timeouts with address and timeout", () => {
+    const timeoutError = new TypeError("fetch failed", {
+      cause: {
+        code: "UND_ERR_CONNECT_TIMEOUT",
+        message: "Connect Timeout Error (attempted address: www.lib.sophia.ac.jp:443, timeout: 10000ms)"
+      }
+    });
+
+    expect(formatErrorForLog(timeoutError)).toBe(
+      "接続がタイムアウトしました / 接続先: www.lib.sophia.ac.jp:443 / タイムアウト: 10000ms / コード: UND_ERR_CONNECT_TIMEOUT"
+    );
   });
 });

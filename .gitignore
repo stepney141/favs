@@ -20,3 +20,6 @@ deviantart_api/img
 deviantart_api/json
 
 .codex
+
+*.sqlite-shm
+*.sqlite-wal

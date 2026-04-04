@@ -24,8 +24,11 @@ tsx bookmeter/src/index.ts scrape-only stacked --no-login
 # ローカルキャッシュから下流フェーズのみ実行（DB保存 → CSV出力 → アップロード）
 tsx bookmeter/src/index.ts local-downstream wish
 
-# ローカルキャッシュから API 補強を再実行（API取得 → DB保存 → CSV出力）
+# ローカルキャッシュから API 補強を再実行（API取得 → DB保存 → CSV出力 → アップロード）
 tsx bookmeter/src/index.ts local-biblio wish
+
+# キャッシュを無視して書誌・所蔵・説明文を強制更新
+tsx bookmeter/src/index.ts full wish --force
 
 # ユーザーIDを指定して実行
 tsx bookmeter/src/index.ts full wish --user-id 42
@@ -38,7 +41,40 @@ tsx bookmeter/src/index.ts full wish --user-id 42
 | `full` | スクレイピングから全フェーズを実行 |
 | `scrape-only` | スクレイピングのみ実行し、下流フェーズをスキップ |
 | `local-downstream` | スクレイピングをスキップし、ローカルキャッシュからDB保存・CSV出力・アップロードを実行 |
-| `local-biblio` | Bookmeter/紀伊國屋のスクレイピングをスキップし、ローカルキャッシュからAPI取得・DB保存・CSV出力を実行 |
+| `local-biblio` | Bookmeter/紀伊國屋のスクレイピングをスキップし、ローカルキャッシュからAPI取得・DB保存・CSV出力・アップロードを実行 |
+
+`--force` を付けると、既存の SQLite キャッシュを使わずに書誌情報、CiNii 所蔵情報、紀伊國屋の説明文を再取得する。通常実行では、既知の書籍に対する再取得を避ける。
+
+#### 各モードの有効フェーズ
+
+| フェーズ | `full` | `scrape-only` | `local-downstream` | `local-biblio` |
+|---|:---:|:---:|:---:|:---:|
+| scrape（データ取得元） | remote | remote | local-cache | local-cache |
+| compare | o | - | - | - |
+| fetchBiblio | o | - | - | o |
+| crawlDescriptions | o | - | - | - |
+| persist | o | - | o | o |
+| exportCsv | o | - | o | o |
+| uploadDb | o | - | o | o |
+
+#### `--force` の有無によるキャッシュ挙動
+
+| フェーズ | `--force` なし | `--force` あり |
+|---|---|---|
+| **compare** | 前回スナップショットと比較し、差分がなければ後続フェーズをスキップ | 比較結果に関係なく後続フェーズを常に実行 |
+| **fetchBiblio — 書誌情報** | `book_title`, `author`, `publisher`, `published_date` の4項目がすべて有効値ならスキップ（空文字・`Not_found_in_*`・`*_API_Error`・`INVALID_ISBN` は欠損扱い） | 全書籍を無条件で再取得 |
+| **fetchBiblio — 所蔵検索** | `cachedBookUrls`（DB上の wish+stacked を結合した URL セット）に含まれていればスキップ | 全書籍を無条件で再検索 |
+| **crawlDescriptions** | DBに既存の説明文があれば再利用し、新規書籍のみ紀伊國屋から取得 | 既存の説明文があっても再取得 |
+| **persist / exportCsv / uploadDb** | キャッシュ判定なし（常に実行） | 同左 |
+
+#### モード別まとめ
+
+| モード | `--force` なし | `--force` あり |
+|---|---|---|
+| **full** | remote スクレイプ → 差分なしなら停止。差分ありなら未取得分のみAPI・所蔵検索、新規書籍のみ説明文取得 → 保存・出力 | remote スクレイプ → 比較を無視して全書籍の書誌・所蔵・説明文を再取得 → 保存・出力 |
+| **scrape-only** | remote スクレイプのみ。後続フェーズなし | 同左（`--force` の効果なし） |
+| **local-downstream** | 前回スナップショットをそのまま保存・CSV出力・アップロード | 同左（`--force` の効果なし） |
+| **local-biblio** | 前回スナップショットに対し、未取得分のみ書誌・所蔵検索 → 保存・CSV出力・アップロード | 前回スナップショットに対し、全書籍の書誌・所蔵を再取得 → 保存・CSV出力・アップロード |
 
 ### ターゲット
 
@@ -53,7 +89,6 @@ tsx bookmeter/src/index.ts full wish --user-id 42
 bookmeter/
 ├── src/
 │   ├── index.ts                # エントリポイント・DIオーケストレーション
-│   ├── constants.ts            # 共通定数
 │   ├── application/            # アプリケーション層（CLI解析・パイプライン制御）
 │   │   ├── executionMode.ts    # CLI引数の解析と実行計画の解決
 │   │   └── pipeline.ts         # パイプラインフェーズのオーケストレーション

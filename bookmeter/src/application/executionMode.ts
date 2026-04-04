@@ -7,12 +7,12 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
 import { BaseError, Err, Ok } from "../../../.libs/lib";
-import { BOOKMETER_DEFAULT_USER_ID } from "../constants";
 
 import type { Result } from "../../../.libs/lib";
 import type { OutputFilePath } from "../db/dataLoader";
 import type { Argv } from "yargs";
 
+export const DEFAULT_BOOKMETER_USER_ID = "1003258";
 export const BOOKMETER_TARGETS = ["wish", "stacked"] as const;
 export type BookmeterTarget = (typeof BOOKMETER_TARGETS)[number];
 
@@ -56,6 +56,7 @@ export type ExecutionMode =
     };
 
 type SharedOption = {
+  forceRefresh?: boolean;
   userId?: string;
   outputFilePath?: OutputFilePath | null;
 };
@@ -75,6 +76,7 @@ export type ParsedCliCommand =
     };
 
 export type ExecutionPlan = {
+  forceRefresh: boolean;
   target: BookmeterTarget;
   userId: string;
   outputFilePath: OutputFilePath | null;
@@ -108,7 +110,7 @@ export class ExecutionModeError extends BaseError {
 const NO_PHASES = createPhaseState([]);
 const FULL_PHASES = createPhaseState(EXECUTION_PHASES);
 const LOCAL_DOWNSTREAM_PHASES = ["persist", "exportCsv", "uploadDb"] as const;
-const LOCAL_BIBLIO_PHASES = ["fetchBiblio", "persist", "exportCsv"] as const;
+const LOCAL_BIBLIO_PHASES = ["fetchBiblio", "persist", "exportCsv", "uploadDb"] as const;
 
 function createPhaseState(enabledPhases: readonly ExecutionPhase[]): ExecutionPhaseState {
   const enabled = new Set(enabledPhases);
@@ -181,8 +183,9 @@ export function resolveExecutionPlan(option: MainFuncOption): Result<ExecutionPl
   }
 
   return Ok({
+    forceRefresh: option.forceRefresh ?? false,
     target: option.target,
-    userId: option.userId ?? BOOKMETER_DEFAULT_USER_ID,
+    userId: option.userId ?? DEFAULT_BOOKMETER_USER_ID,
     outputFilePath: option.outputFilePath ?? null,
     modeName: resolvedExecution.value.modeName,
     scrape: resolvedExecution.value.scrape,
@@ -216,6 +219,14 @@ function configureNoLoginOption<T>(parser: Argv<T>): Argv<T> {
   });
 }
 
+function configureForceOption<T>(parser: Argv<T>): Argv<T> {
+  return parser.option("force", {
+    type: "boolean",
+    default: false,
+    description: "Ignore cached bibliographic, holding, and description data and fetch them again."
+  });
+}
+
 function extractTarget(value: unknown): Result<BookmeterTarget, ExecutionModeError> {
   if (typeof value === "string" && isBookmeterTarget(value)) {
     return Ok(value);
@@ -235,6 +246,10 @@ function extractUserId(value: unknown): string | undefined {
 
 function extractLogin(value: unknown): boolean {
   return value !== false;
+}
+
+function extractForceRefresh(value: unknown): boolean {
+  return value === true;
 }
 
 function buildExecutionModeFromSubcommand(
@@ -273,6 +288,7 @@ export function parseCliArgs(argv: string[]): Result<ParsedCliCommand, Execution
     }
 
     parsedOption = {
+      forceRefresh: extractForceRefresh(args.force),
       target: targetResult.value,
       userId: extractUserId(args.userId),
       execution: buildExecutionModeFromSubcommand(subcommand, {
@@ -291,7 +307,7 @@ export function parseCliArgs(argv: string[]): Result<ParsedCliCommand, Execution
       "full <target>",
       "Scrape the remote list and run the full pipeline",
       (command) =>
-        configureNoLoginOption(configureUserIdOption(configureTargetPositional(command))).example(
+        configureForceOption(configureNoLoginOption(configureUserIdOption(configureTargetPositional(command)))).example(
           "$0 full wish --user-id 42",
           "Run the full pipeline against the wish list for user 42"
         ),
@@ -303,7 +319,7 @@ export function parseCliArgs(argv: string[]): Result<ParsedCliCommand, Execution
       "scrape-only <target>",
       "Scrape the remote list and stop before comparison and persistence",
       (command) =>
-        configureNoLoginOption(configureUserIdOption(configureTargetPositional(command))).example(
+        configureForceOption(configureNoLoginOption(configureUserIdOption(configureTargetPositional(command)))).example(
           "$0 scrape-only wish --no-login",
           "Scrape the wish list without logging in first"
         ),
@@ -315,7 +331,7 @@ export function parseCliArgs(argv: string[]): Result<ParsedCliCommand, Execution
       "local-downstream <target>",
       "Load the local snapshot and run persistence/export phases without remote enrichment",
       (command) =>
-        configureUserIdOption(configureTargetPositional(command)).example(
+        configureForceOption(configureUserIdOption(configureTargetPositional(command))).example(
           "$0 local-downstream wish",
           "Reuse the local wish snapshot and rebuild downstream artifacts"
         ),
@@ -327,7 +343,7 @@ export function parseCliArgs(argv: string[]): Result<ParsedCliCommand, Execution
       "local-biblio <target>",
       "Load the local snapshot, fetch bibliographic data via APIs, then persist and export CSV",
       (command) =>
-        configureUserIdOption(configureTargetPositional(command)).example(
+        configureForceOption(configureUserIdOption(configureTargetPositional(command))).example(
           "$0 local-biblio wish",
           "Reuse the local wish snapshot, refresh API-backed metadata, and rebuild the CSV"
         ),
@@ -402,7 +418,7 @@ export function describeExecutionPlan(plan: ExecutionPlan): string {
   const scrapeLabel = plan.scrape.type === "remote" ? `remote(login=${String(plan.scrape.doLogin)})` : "local-cache";
   const enabledPhases = EXECUTION_PHASES.filter((phase) => plan.phases[phase]);
 
-  return `mode=${plan.modeName}, target=${plan.target}, scrape=${scrapeLabel}, phases=${
+  return `mode=${plan.modeName}, target=${plan.target}, forceRefresh=${String(plan.forceRefresh)}, scrape=${scrapeLabel}, phases=${
     enabledPhases.length > 0 ? enabledPhases.join(" -> ") : "none"
   }`;
 }

@@ -10,9 +10,11 @@ import { CINII_TARGET_TAGS } from "../domain/book";
 import { isAsin } from "../domain/isbn";
 
 import { httpToFetcherError, logFetcherError, logFetcherResultError } from "./errors";
+import { normalizeExternalText } from "./normalizeText";
 import { searchSophiaMathLib } from "./sophia";
 
 import type { HttpClient } from "./httpClient";
+import type { ExternalTextValue } from "./normalizeText";
 import type { FetchResult, FetcherResult } from "./types";
 import type { Book, CiniiTargetOrgs } from "../domain/book";
 
@@ -48,18 +50,28 @@ export const MATH_LIB_BOOKLIST = {
 };
 
 const REGEX_NCID_IN_CINII_URL = /(?<=https:\/\/ci.nii.ac.jp\/ncid\/).*/;
+const OPAC_REDIRECT_TIMEOUT_MS = 10_000;
+const OPAC_REDIRECT_MAX_ATTEMPTS = 2;
 
 /**
  * OPAC のリダイレクト URL を取得する（CiNii 内部のフォールバック）。
  */
 async function getRedirectedUrl(targetUrl: string): Promise<string | undefined> {
-  try {
-    const response = await fetch(targetUrl, { redirect: "follow" });
-    return response.url;
-  } catch (error) {
-    console.log(error);
-    return undefined;
+  for (let attempt = 1; attempt <= OPAC_REDIRECT_MAX_ATTEMPTS; attempt++) {
+    try {
+      const response = await fetch(targetUrl, {
+        redirect: "follow",
+        signal: AbortSignal.timeout(OPAC_REDIRECT_TIMEOUT_MS)
+      });
+      return response.url;
+    } catch (error) {
+      if (attempt === OPAC_REDIRECT_MAX_ATTEMPTS) {
+        throw error;
+      }
+      await sleep(1000 * attempt);
+    }
   }
+  return undefined;
 }
 
 type CiNiiItem = {
@@ -67,7 +79,7 @@ type CiNiiItem = {
   "@id": string;
   "dc:creator": string;
   "dc:title": string;
-  "dc:publisher": string;
+  "dc:publisher": ExternalTextValue;
   "dc:pubDate": string;
   "dc:isbn": string;
 };
@@ -136,7 +148,7 @@ export async function isBookAvailableInCinii(
     const infoToUpdate = {
       book_title: graph.items[0]["dc:title"],
       author: graph.items[0]["dc:creator"],
-      publisher: graph.items[0]["dc:publisher"],
+      publisher: normalizeExternalText(graph.items[0]["dc:publisher"]),
       published_date: graph.items[0]["dc:pubDate"]
     };
     const owingStatus = {
@@ -168,7 +180,8 @@ export async function isBookAvailableInCinii(
       });
     }
   } catch (error) {
-    logFetcherError(error, "OPAC リダイレクト確認", `Library: ${libraryInfo.tag}, ISBN: ${isbn}`);
+    const context = `Library: ${libraryInfo.tag}, ISBN: ${isbn}, URL: ${libraryInfo.opac}/opac/opac_openurl?isbn=${isbn}`;
+    logFetcherError(error, "OPAC リダイレクト確認", context, "この OPAC 確認はスキップして処理を続行します");
   }
 
   return Ok({

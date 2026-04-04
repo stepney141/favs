@@ -9,7 +9,6 @@ import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 import { Err, Ok } from "../../../.libs/lib";
-import { JOB_NAME } from "../constants";
 
 import { DbError } from "./errors";
 
@@ -41,7 +40,7 @@ export function createFirebaseUploader(config: FirebaseConfig, storagePath: stri
       }
 
       try {
-        console.log(`${JOB_NAME}: Uploading SQLite database to Firebase Storage...`);
+        console.log("Uploading SQLite database to Firebase Storage...");
 
         const app = initializeApp(config);
         const storage = getStorage(app);
@@ -50,10 +49,10 @@ export function createFirebaseUploader(config: FirebaseConfig, storagePath: stri
         const fileBuffer = fs.readFileSync(localFilePath);
         await uploadBytes(dbRef, fileBuffer);
 
-        console.log(`${JOB_NAME}: Database uploaded successfully to ${storagePath}`);
+        console.log(`Database uploaded successfully to ${storagePath}`);
         return Ok(undefined);
       } catch (e) {
-        console.error(`${JOB_NAME}: Error uploading database to Firebase:`, e);
+        console.error("Error uploading database to Firebase:", e);
         return Err(new DbError({ type: "uploadFailed", filePath: localFilePath }, { cause: e }));
       }
     }
