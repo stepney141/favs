@@ -100,35 +100,47 @@ class BoundHub {
 
   async fetchTags(): Promise<Tag[]> {
     const page = await this.#browser.newPage();
-    await page.goto(`${baseURI}/tags/`, {
-      waitUntil: "networkidle2"
-    });
-    console.log(`${JOB_NAME}: Fetching tags...`);
+    try {
+      await page.goto(`${baseURI}/tags/`, {
+        waitUntil: "networkidle2"
+      });
+      console.log(`${JOB_NAME}: Fetching tags...`);
 
-    const tagHrefs_Handle = await $x(page, XPATH.tagHrefs);
-    const tags: Tag[] = [];
+      const tags = await page.evaluate((xpath) => {
+        const tagSnapshot = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+        return Array.from({ length: tagSnapshot.snapshotLength }, (_, index) => {
+          const tagNode = tagSnapshot.snapshotItem(index);
+          if (!(tagNode instanceof HTMLAnchorElement)) {
+            return null;
+          }
 
-    for (const tagNode of tagHrefs_Handle) {
-      const tagInfo = {
-        name: await getNodeProperty(tagNode, "textContent"),
-        url: await getNodeProperty(tagNode, "href")
-      };
-      tags.push(tagInfo);
-      // console.log(`Found tag "${tagInfo.name}" at ${tagInfo.url}`);
+          return {
+            name: tagNode.textContent ?? "",
+            url: tagNode.href
+          };
+        }).filter((tagInfo): tagInfo is Tag => tagInfo !== null);
+      }, XPATH.tagHrefs);
+
+      const sortedTags = tags.toSorted((a, b) => {
+        const nameA = a.name.toUpperCase(); // 大文字小文字を無視
+        const nameB = b.name.toUpperCase(); // 大文字小文字を無視
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+
+      for (const tagInfo of sortedTags) {
+        console.log(`Found tag "${tagInfo.name}" at ${tagInfo.url}`);
+      }
+
+      return sortedTags;
+    } finally {
+      await page.close();
     }
-    tags.sort((a, b) => {
-      const nameA = a.name.toUpperCase(); // 大文字小文字を無視
-      const nameB = b.name.toUpperCase(); // 大文字小文字を無視
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
-    });
-
-    return tags;
   }
 
   async explore(): Promise<MovieList> {
