@@ -36,6 +36,11 @@ describe("hasCompleteCachedBiblio", () => {
   it("rejects empty fields", () => {
     expect(hasCompleteCachedBiblio(makeBook({ publisher: "" }))).toBe(false);
   });
+
+  it("rejects stringified object values from previous API parsing", () => {
+    expect(hasCompleteCachedBiblio(makeBook({ publisher: "[object Object]" }))).toBe(false);
+    expect(hasCompleteCachedBiblio(makeBook({ publisher: " [object Object] " }))).toBe(false);
+  });
 });
 
 describe("shouldFetchBibliographicData", () => {

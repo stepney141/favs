@@ -8,8 +8,14 @@ import type { Book } from "../domain/book";
 const BIBLIO_FIELDS = ["book_title", "author", "publisher", "published_date"] as const;
 
 function isMissingFieldValue(value: string): boolean {
+  const trimmedValue = value.trim();
+
   return (
-    value.trim() === "" || value.startsWith("Not_found_in_") || value.endsWith("_API_Error") || value === "INVALID_ISBN"
+    trimmedValue === "" ||
+    trimmedValue === "[object Object]" ||
+    trimmedValue.startsWith("Not_found_in_") ||
+    trimmedValue.endsWith("_API_Error") ||
+    trimmedValue === "INVALID_ISBN"
   );
 }
 
