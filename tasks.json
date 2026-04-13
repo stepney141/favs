@@ -1,10 +1,10 @@
 {
-  "max_parallel": 2,
+  "max_parallel": 3,
   "tasks": [
     {
       "name": "bookmeter_wish",
       "dir": "bookmeter",
-      "cmd": "npx tsx ./index.ts wish && bash ./is_in_my_lib.sh"
+      "cmd": "npx tsx src/index.ts full wish && bash ./is_in_my_lib.sh"
     },
     {
       "name": "wikipedia_watchlist",
@@ -54,7 +54,7 @@
     {
       "name": "bookmeter_stacked",
       "dir": "bookmeter",
-      "cmd": "npx tsx ./index.ts stacked"
+      "cmd": "npx tsx src/index.ts full stacked"
     }
   ]
 }
