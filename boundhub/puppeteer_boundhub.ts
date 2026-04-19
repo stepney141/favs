@@ -201,8 +201,8 @@ class BoundHub {
       headless: true,
       // devtools: true,
       args: [
-        ...CHROME_ARGS
-        // '--proxy-server=socks5://localhost:55555' // Cloudflare GeoBlock回避用
+        ...CHROME_ARGS,
+        '--proxy-server=socks5://localhost:55555' // Cloudflare GeoBlock回避用
       ],
       slowMo: 50
     });
