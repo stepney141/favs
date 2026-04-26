@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      BOOKMETER_ACCOUNT: ${{ secrets.BOOKMETER_ACCOUNT }}
-      BOOKMETER_PASSWORD: ${{ secrets.BOOKMETER_PASSWORD }}
-      CINII_API_APPID: ${{ secrets.CINII_API_APPID }}
       BOUNDHUB_ACCOUNT: ${{ secrets.BOUNDHUB_ACCOUNT }}
       BOUNDHUB_PASSWORD: ${{ secrets.BOUNDHUB_PASSWORD }}
       NOTE_ACCOUNT: ${{ secrets.NOTE_ACCOUNT }}
@@ -50,9 +47,6 @@ jobs:
       - name: Create dotenv file
         shell: bash
         run: touch .env |
-          echo "BOOKMETER_ACCOUNT=${{ secrets.BOOKMETER_ACCOUNT }}" >> .env
-          echo "BOOKMETER_PASSWORD=${{ secrets.BOOKMETER_PASSWORD }}" >> .env
-          echo "CINII_API_APPID=${{ secrets.CINII_API_APPID }}" >> .env
           echo "BOUNDHUB_ACCOUNT=${{ secrets.BOUNDHUB_ACCOUNT }}" >> .env
           echo "BOUNDHUB_PASSWORD=${{ secrets.BOUNDHUB_PASSWORD }}" >> .env
           echo "NOTE_ACCOUNT=${{ secrets.NOTE_ACCOUNT }}" >> .env

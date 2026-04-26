@@ -2,11 +2,6 @@
   "max_parallel": 3,
   "tasks": [
     {
-      "name": "bookmeter_wish",
-      "dir": "bookmeter",
-      "cmd": "npx tsx src/index.ts full wish && bash ./is_in_my_lib.sh"
-    },
-    {
       "name": "wikipedia_watchlist",
       "dir": "wikipedia_watchlist",
       "cmd": "npx tsx ./index.ts"
@@ -50,11 +45,6 @@
       "name": "togetter",
       "dir": "togetter",
       "cmd": "npx tsx ./puppeteer_togetter.ts"
-    },
-    {
-      "name": "bookmeter_stacked",
-      "dir": "bookmeter",
-      "cmd": "npx tsx src/index.ts full stacked"
     }
   ]
 }
