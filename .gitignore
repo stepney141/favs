@@ -23,3 +23,14 @@ deviantart_api/json
 
 *.sqlite-shm
 *.sqlite-wal
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
